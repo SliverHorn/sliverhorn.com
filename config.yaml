@@ -35,7 +35,6 @@ params:
       title: songzhibin97的博客
       name: songzhibin97的博客
       url: https://www.cnblogs.com/binHome/
-  ads:
   utteranc:
     enable: true
     repo: your github repo
