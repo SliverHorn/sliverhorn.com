@@ -27,14 +27,15 @@ params:
     - douban.js
   toc: true
   links:
-    - 
+    -
       title: 牛逼哄哄 `王哥` 博客
       name: 牛逼哄哄 `王哥` 博客
       url: https://blog.leonardwang.cn/
-    - 
+    -
       title: songzhibin97的博客
       name: songzhibin97的博客
       url: https://www.cnblogs.com/binHome/
+  ads:
   utteranc:
     enable: true
     repo: your github repo
@@ -52,17 +53,17 @@ markup:
     style: github
 menu:
   main:
-    - 
+    -
       identifier: tool
       name: 工具
       url: /tool/
       weight: 1
-    - 
+    -
       identifier: archives
       name: 归档
       url: /archives/
       weight: 2
-    - 
+    -
       identifier: about
       name: 关于
       url: /about/
