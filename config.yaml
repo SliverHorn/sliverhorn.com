@@ -35,6 +35,10 @@ params:
       title: songzhibin97的博客
       name: songzhibin97的博客
       url: https://www.cnblogs.com/binHome/
+    -
+      title: 跃动指尖 – 悦动生活
+      name: 跃动指尖 – 悦动生活
+      url: https://leixf.cn/
   ads:
   utteranc:
     enable: true
@@ -54,17 +58,37 @@ markup:
 menu:
   main:
     -
+      identifier: c
+      name: C语言
+      url: /c/
+      weight: 1
+    -
+      identifier: data_structure
+      name: 数据结构
+      url: /data_structure/
+      weight: 2
+    -
+      identifier: higher_mathematics
+      name: 高数
+      url: /higher_mathematics/
+      weight: 3
+    -
+      identifier: politics
+      name: 政治
+      url: /politics/
+      weight: 4
+    -
       identifier: tool
       name: 工具
       url: /tool/
-      weight: 1
+      weight: 5
     -
       identifier: archives
       name: 归档
       url: /archives/
-      weight: 2
+      weight: 6
     -
       identifier: about
       name: 关于
       url: /about/
-      weight: 6
+      weight: 7
