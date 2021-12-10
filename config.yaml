@@ -39,6 +39,10 @@ params:
       title: 跃动指尖 – 悦动生活
       name: 跃动指尖 – 悦动生活
       url: https://leixf.cn/
+    -
+      title: 术习电报
+      name: 术习电报
+      url: https://www.treesystem.cn
   ads:
   utteranc:
     enable: true
