@@ -55,6 +55,7 @@ params:
       4.0 国际许可协议
     link: >
       https://creativecommons.org/licenses/by-nc-nd/4.0/
+  seeAlso: 0
 markup:
   highlight:
     lineNos: true
