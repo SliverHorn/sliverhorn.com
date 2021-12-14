@@ -1,10 +1,10 @@
 ---
 title: "数据结构"
 description: "导学"
-tags: ["oh-my-zsh"]
 categories: ["DataStructure"]
 date: 2021-12-10T17:17:17+17:17
 draft: false
+
 ---
 
 <!--more-->
