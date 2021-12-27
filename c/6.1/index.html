@@ -4,16 +4,16 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=referrer content="no-referrer-when-downgrade">
-<title>一维数组 二维数组 字符串 练习二 | SliverHorn的博客</title>
-<meta property="og:title" content="一维数组 二维数组 字符串 练习二 - SliverHorn的博客">
+<title>一维数组 二维数组 字符串 练习一 | SliverHorn的博客</title>
+<meta property="og:title" content="一维数组 二维数组 字符串 练习一 - SliverHorn的博客">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2021-12-22T18:18:18+08:00">
-<meta property="article:modified_time" content="2021-12-22T18:18:18+08:00">
+<meta property="article:published_time" content="2021-12-24T18:18:18+08:00">
+<meta property="article:modified_time" content="2021-12-24T18:18:18+08:00">
 <meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
 ">
-<meta name=description content="一维数组 二维数组 字符串 练习二">
+<meta name=description content="一维数组 二维数组 字符串 练习一">
 <meta name=author content="SliverHorn">
-<meta property="og:url" content="https://sliverhorn.com/c/6.2/">
+<meta property="og:url" content="https://sliverhorn.com/c/6.1/">
 <link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
 <link rel=stylesheet href=/css/normalize.css>
 <link rel=stylesheet href=/css/style.css>
@@ -56,24 +56,32 @@ SliverHorn的博客
 <div class=post-toc style=position:absolute;top:188px>
 <h2 class=post-toc-title>文章目录</h2>
 <div class=post-toc-content>
-<nav id=TableOfContents></nav>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#一维数组>一维数组</a></li>
+<li><a href=#二维数组>二维数组</a></li>
+<li><a href=#字符串>字符串</a></li>
+</ul>
+</nav>
 </div>
 </div>
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
 <article class=post>
 <header>
-<h1 class=post-title>一维数组 二维数组 字符串 练习二</h1>
+<h1 class=post-title>一维数组 二维数组 字符串 练习一</h1>
 </header>
 <date class="post-meta meta-date">
-2021年12月22日
+2021年12月24日
 </date>
 <div class=post-meta>
 <span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
 阅读</span></span>
 </div>
 <div class=post-content>
-<ol start=2>
-<li>用冒泡法对数组中的10个整数按由小到大排序，要求由键盘任意输入10个数，排序后输出排序结果。</li>
+<h2 id=一维数组>一维数组</h2>
+<p>定义数组： <strong>数据类型</strong> <strong>数组名[整数];</strong></p>
+<ol>
+<li>计算并输出一维整型数组 array[5]中所有元素的平均值。</li>
 </ol>
 <div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
@@ -91,36 +99,61 @@ SliverHorn的博客
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
 <pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
 </span><span style=color:#999;font-weight:700;font-style:italic></span>
 <span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
-    <span style=color:#458;font-weight:700>int</span> a[<span style=color:#099>10</span>] <span style=color:#000;font-weight:700>=</span> {};
-    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>10</span>; i<span style=color:#000;font-weight:700>++</span>) {
-        scanf(<span style=color:#d14>&#34;%d&#34;</span>, <span style=color:#000;font-weight:700>&amp;</span>a[i]);
+    <span style=color:#458;font-weight:700>int</span> array[<span style=color:#099>5</span>]; <span style=color:#998;font-style:italic>// 定义数组
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>int</span> sum <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; <span style=color:#998;font-style:italic>// 定义和
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>float</span> average; <span style=color:#998;font-style:italic>// 定义平均数
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>5</span>; i<span style=color:#000;font-weight:700>++</span>) {
+        scanf(<span style=color:#d14>&#34;%d&#34;</span>, <span style=color:#000;font-weight:700>&amp;</span>array[i]);
+        sum <span style=color:#000;font-weight:700>+=</span> array[i];
     }
-    <span style=color:#458;font-weight:700>int</span> t;
-    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>; i <span style=color:#000;font-weight:700>&lt;=</span> <span style=color:#099>10</span> <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>; i<span style=color:#000;font-weight:700>++</span>) {
-        <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> j <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; j <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>10</span> <span style=color:#000;font-weight:700>-</span> i; j<span style=color:#000;font-weight:700>++</span>) {
-            <span style=color:#000;font-weight:700>if</span> (a[j] <span style=color:#000;font-weight:700>&gt;</span> a[j <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>]) {
-                t <span style=color:#000;font-weight:700>=</span> a[j];
-                a[j] <span style=color:#000;font-weight:700>=</span> a[j <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>];
-                a[j <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>] <span style=color:#000;font-weight:700>=</span> t;
-            }
+    average <span style=color:#000;font-weight:700>=</span> sum <span style=color:#000;font-weight:700>/</span> <span style=color:#099>5</span>;
+    printf(<span style=color:#d14>&#34;%f</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>, average);
+    <span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><ol start=2>
+<li>定义数组 a[6] = {10, 7, 15, 20, 3, 1}, 求出该数组的最大值，并输出其下标。</li>
+</ol>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
+    <span style=color:#458;font-weight:700>int</span> a[<span style=color:#099>6</span>] <span style=color:#000;font-weight:700>=</span> {<span style=color:#099>10</span>,<span style=color:#099>7</span>, <span style=color:#099>15</span>, <span style=color:#099>20</span>, <span style=color:#099>3</span>, <span style=color:#099>1</span>};
+    <span style=color:#458;font-weight:700>int</span> max <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, index <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>6</span>; i<span style=color:#000;font-weight:700>++</span>) {
+        <span style=color:#000;font-weight:700>if</span> (a[i] <span style=color:#000;font-weight:700>&gt;</span> max) {
+            max <span style=color:#000;font-weight:700>=</span> a[i];
+            index <span style=color:#000;font-weight:700>=</span> i;
         }
     }
-  	<span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>;
+    printf(<span style=color:#d14>&#34;max = %d, index = %d&#34;</span>, max, index);
 }
 </code></pre></td></tr></table>
 </div>
 </div><ol start=3>
-<li>输入长度为10的数组， 最大的与第一个元素交换，最小的与最后一个元素交换，输出数组。</li>
+<li>编写程序实现用数组来产生Fibonacci 数列。Fibonacci 数列为 1,1,2,3,5,7,13,&mldr;. f(i) = f(i-1)+f(i-2), f(1) = 1, f(2) = 1（第一项和第二项为1， 后面的每一项都是前面两项之和）</li>
 </ol>
 <div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
@@ -137,61 +170,72 @@ SliverHorn的博客
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
 <pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
 </span><span style=color:#999;font-weight:700;font-style:italic></span>
 <span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
-    <span style=color:#458;font-weight:700>int</span> max <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, min <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
-
-    <span style=color:#458;font-weight:700>int</span> a[<span style=color:#099>10</span>] <span style=color:#000;font-weight:700>=</span> {};
-
-    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>10</span>; i<span style=color:#000;font-weight:700>++</span>) {
-        scanf(<span style=color:#d14>&#34;%d&#34;</span>, <span style=color:#000;font-weight:700>&amp;</span>a[i]);
-        <span style=color:#000;font-weight:700>if</span> (a[i] <span style=color:#000;font-weight:700>&gt;</span> a[max]) {
-            max <span style=color:#000;font-weight:700>=</span> i;
-        }
-
-        <span style=color:#000;font-weight:700>if</span> (a[i] <span style=color:#000;font-weight:700>&lt;</span> a[min]) {
-            min <span style=color:#000;font-weight:700>=</span> i;
-        }
-    }
-    <span style=color:#000;font-weight:700>if</span> (a[<span style=color:#099>0</span>] <span style=color:#000;font-weight:700>!=</span> a[max]) {
-        <span style=color:#458;font-weight:700>int</span> t <span style=color:#000;font-weight:700>=</span> a[<span style=color:#099>0</span>];
-        a[<span style=color:#099>0</span>] <span style=color:#000;font-weight:700>=</span> a[max];
-        a[max] <span style=color:#000;font-weight:700>=</span> t;
+    <span style=color:#458;font-weight:700>int</span> fibonacci[<span style=color:#099>15</span>] <span style=color:#000;font-weight:700>=</span> {<span style=color:#099>1</span>, <span style=color:#099>1</span>};
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>2</span>; i <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>15</span>; i<span style=color:#000;font-weight:700>++</span>) {
+        fibonacci[i] <span style=color:#000;font-weight:700>=</span> fibonacci[i<span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>] <span style=color:#000;font-weight:700>+</span> fibonacci[i<span style=color:#000;font-weight:700>-</span><span style=color:#099>2</span>];
     }
 
-    <span style=color:#000;font-weight:700>if</span> (a[<span style=color:#099>10</span> <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>] <span style=color:#000;font-weight:700>!=</span> a[min]) {
-        <span style=color:#458;font-weight:700>int</span> t <span style=color:#000;font-weight:700>=</span> a[<span style=color:#099>10</span> <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>];
-        a[<span style=color:#099>10</span> <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>] <span style=color:#000;font-weight:700>=</span> a[min];
-        a[min] <span style=color:#000;font-weight:700>=</span> t;
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>15</span>; i<span style=color:#000;font-weight:700>++</span>) {
+        printf(<span style=color:#d14>&#34;%d &#34;</span>, fibonacci[i]);
     }
-
     <span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>;
 }
 </code></pre></td></tr></table>
 </div>
 </div><ol start=4>
-<li>一个正整数n(1&lt;n&lt;=10)，再输入n个整数，将它们小到大排序后输出。</li>
+<li>用冒泡排序法对给定的9个整数按递增的顺序排序.</li>
+</ol>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
+    <span style=color:#458;font-weight:700>int</span> a[<span style=color:#099>9</span>] <span style=color:#000;font-weight:700>=</span> {<span style=color:#099>3</span>, <span style=color:#099>44</span>, <span style=color:#099>38</span>, <span style=color:#099>5</span>, <span style=color:#099>47</span>, <span style=color:#099>15</span>, <span style=color:#099>36</span>, <span style=color:#099>26</span>, <span style=color:#099>27</span>};
+
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> j <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>; j <span style=color:#000;font-weight:700>&lt;=</span> <span style=color:#099>9</span> <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>; j<span style=color:#000;font-weight:700>++</span>) {
+        <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>9</span> <span style=color:#000;font-weight:700>-</span> j; i<span style=color:#000;font-weight:700>++</span>) {
+            <span style=color:#000;font-weight:700>if</span> (a[i] <span style=color:#000;font-weight:700>&gt;</span> a[i<span style=color:#000;font-weight:700>+</span><span style=color:#099>1</span>]) {
+                <span style=color:#458;font-weight:700>int</span> t <span style=color:#000;font-weight:700>=</span> a[i];
+                a[i] <span style=color:#000;font-weight:700>=</span> a[i<span style=color:#000;font-weight:700>+</span><span style=color:#099>1</span>];
+                a[i<span style=color:#000;font-weight:700>+</span><span style=color:#099>1</span>] <span style=color:#000;font-weight:700>=</span> t;
+            }
+        }
+    }
+
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>9</span>; i<span style=color:#000;font-weight:700>++</span>) {
+        printf(<span style=color:#d14>&#34;%d &#34;</span>, a[i]);
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><ol start=5>
+<li>编写一个程序,将200-300之间的素数存放到一个一维数组中,并统计出素数的个数</li>
 </ol>
 <div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
@@ -223,165 +267,48 @@ SliverHorn的博客
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
 <pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
 </span><span style=color:#999;font-weight:700;font-style:italic></span>
 <span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
-    <span style=color:#458;font-weight:700>int</span> n;
-    printf(<span style=color:#d14>&#34;Enter n: &#34;</span>);
-    scanf(<span style=color:#d14>&#34;%d&#34;</span>, <span style=color:#000;font-weight:700>&amp;</span>n);
-    <span style=color:#000;font-weight:700>if</span> (n <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>1</span> <span style=color:#000;font-weight:700>||</span> n <span style=color:#000;font-weight:700>&gt;</span> <span style=color:#099>10</span>) {
-        printf(<span style=color:#d14>&#34;请输入一个 1 ~ 10 的整数&#34;</span>);
-        <span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>;
+  <span style=color:#458;font-weight:700>int</span> a[<span style=color:#099>100</span>] <span style=color:#000;font-weight:700>=</span> {}, count <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+  <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, j <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+  <span style=color:#000;font-weight:700>for</span> (i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>200</span>; i <span style=color:#000;font-weight:700>&lt;=</span> <span style=color:#099>300</span>; i<span style=color:#000;font-weight:700>++</span>) {
+    
+    <span style=color:#000;font-weight:700>for</span> (j <span style=color:#000;font-weight:700>=</span> <span style=color:#099>2</span>; j <span style=color:#000;font-weight:700>&lt;</span> i; j<span style=color:#000;font-weight:700>++</span>) {
+      <span style=color:#000;font-weight:700>if</span> (i <span style=color:#000;font-weight:700>%</span>j <span style=color:#000;font-weight:700>==</span> <span style=color:#099>0</span>) {
+        <span style=color:#000;font-weight:700>break</span>;
+      }
+    
     }
-
-    <span style=color:#458;font-weight:700>int</span> a[<span style=color:#099>10</span>] <span style=color:#000;font-weight:700>=</span> {};
-
-    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> n; i<span style=color:#000;font-weight:700>++</span>) {
-        scanf(<span style=color:#d14>&#34;%d&#34;</span>, <span style=color:#000;font-weight:700>&amp;</span>a[i]);
+    
+    <span style=color:#000;font-weight:700>if</span> (i <span style=color:#000;font-weight:700>!=</span> j) {
+      <span style=color:#000;font-weight:700>continue</span>;
     }
-
-    printf(<span style=color:#d14>&#34;Enter %d integer: &#34;</span>, n);
-    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> n; i<span style=color:#000;font-weight:700>++</span>) {
-        printf(<span style=color:#d14>&#34;%d &#34;</span>, a[i]);
-    }
-
-    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>; i <span style=color:#000;font-weight:700>&lt;</span> n; i<span style=color:#000;font-weight:700>++</span>) {
-        <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> j <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; j <span style=color:#000;font-weight:700>&lt;</span> n <span style=color:#000;font-weight:700>-</span> i; j<span style=color:#000;font-weight:700>++</span>) {
-            <span style=color:#000;font-weight:700>if</span> (a[j] <span style=color:#000;font-weight:700>&gt;</span> a[j <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>]) {
-                <span style=color:#458;font-weight:700>int</span> t <span style=color:#000;font-weight:700>=</span> a[j];
-                a[j] <span style=color:#000;font-weight:700>=</span> a[j <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>];
-                a[j <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>] <span style=color:#000;font-weight:700>=</span> t;
-            }
-        }
-    }
-
-    printf(<span style=color:#d14>&#34;</span><span style=color:#d14>\n</span><span style=color:#d14>After sorted: &#34;</span>);
-
-    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> n; i<span style=color:#000;font-weight:700>++</span>) {
-        printf(<span style=color:#d14>&#34;%d &#34;</span>, a[i]);
-    }
-    <span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>;
+    
+    a[count] <span style=color:#000;font-weight:700>=</span> i;
+    count<span style=color:#000;font-weight:700>++</span>;
+  }
+  
+  <span style=color:#000;font-weight:700>for</span> (i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> count; i<span style=color:#000;font-weight:700>++</span>) {
+    printf(<span style=color:#d14>&#34;%d &#34;</span>, a[i]);
+  }
+  printf(<span style=color:#d14>&#34;</span><span style=color:#d14>\n</span><span style=color:#d14> 素数个数: %d&#34;</span>, count);
+  <span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>;
 }
 </code></pre></td></tr></table>
 </div>
-</div><blockquote>
-<p>B B B</p>
+</div><h2 id=二维数组>二维数组</h2>
+<ol>
+<li>若定义 <code>X[][3]={1，2，3，4，5，6，7};</code> 则X数组中行的大小是()</li>
+</ol>
+<p>A.4 B.3 C.2 D.无确定值</p>
+<blockquote>
+<p>B</p>
 </blockquote>
-<ol start=5>
-<li>建立n个数的数组，在下标为偶数的数组元素中寻找最小值，并将其输出。</li>
-</ol>
-<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
-</span><span style=color:#999;font-weight:700;font-style:italic></span>
-<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
-    <span style=color:#000;font-weight:700>const</span> <span style=color:#458;font-weight:700>int</span> n <span style=color:#000;font-weight:700>=</span> <span style=color:#099>10</span>;
-    <span style=color:#458;font-weight:700>int</span> a[n] <span style=color:#000;font-weight:700>=</span> {<span style=color:#099>11</span>, <span style=color:#099>2</span>, <span style=color:#099>3</span>, <span style=color:#099>4</span>, <span style=color:#099>5</span>, <span style=color:#099>6</span>, <span style=color:#099>7</span>, <span style=color:#099>8</span>, <span style=color:#099>9</span>, <span style=color:#099>10</span>}, min <span style=color:#000;font-weight:700>=</span> a[<span style=color:#099>0</span>];
-
-    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> n; i<span style=color:#000;font-weight:700>++</span>) {
-        <span style=color:#000;font-weight:700>if</span> (i <span style=color:#000;font-weight:700>%</span> <span style=color:#099>2</span> <span style=color:#000;font-weight:700>==</span> <span style=color:#099>0</span>) {
-            <span style=color:#000;font-weight:700>if</span> (a[i] <span style=color:#000;font-weight:700>&lt;</span> min) {
-                min <span style=color:#000;font-weight:700>=</span> a[i];
-            }
-        }
-    }
-    printf(<span style=color:#d14>&#34;min = %d&#34;</span>, min);
-}
-</code></pre></td></tr></table>
-</div>
-</div><ol start=6>
-<li>编写一个程序，从键盘输入10位学生的成绩， 统计最高分、最低分和平均分。</li>
-</ol>
-<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
-</span><span style=color:#999;font-weight:700;font-style:italic></span>
-<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
-  <span style=color:#458;font-weight:700>int</span> max <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, min <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, sum <span style=color:#000;font-weight:700>=</span><span style=color:#099>0</span>;
-  <span style=color:#458;font-weight:700>int</span> scores[<span style=color:#099>10</span>] <span style=color:#000;font-weight:700>=</span> {};
-  
-  <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>10</span>; i<span style=color:#000;font-weight:700>++</span>) {
-    scanf(<span style=color:#d14>&#34;%d&#34;</span>, <span style=color:#000;font-weight:700>&amp;</span>scores[i]);
-    <span style=color:#000;font-weight:700>if</span> (i <span style=color:#000;font-weight:700>==</span> <span style=color:#099>0</span>) {
-      max <span style=color:#000;font-weight:700>=</span> scores[<span style=color:#099>0</span>];
-      min <span style=color:#000;font-weight:700>=</span> scores[<span style=color:#099>0</span>];
-    }
-    
-    <span style=color:#000;font-weight:700>if</span> (scores[i] <span style=color:#000;font-weight:700>&gt;</span> max) {
-      max <span style=color:#000;font-weight:700>=</span> scores[i];
-    }
-    
-    <span style=color:#000;font-weight:700>if</span> (scores[i] <span style=color:#000;font-weight:700>&lt;</span> min) {
-      min <span style=color:#000;font-weight:700>=</span> scores[i];
-    }
-    
-    sum <span style=color:#000;font-weight:700>+=</span> scores[i];
-  } 
-  
-  printf(<span style=color:#d14>&#34;最高分：%d, 最低分：%d, 平均分：%d</span><span style=color:#d14>\n</span><span style=color:#d14>&#34;</span>, max, min, sum <span style=color:#000;font-weight:700>/</span> <span style=color:#099>10</span>);
-}
-</code></pre></td></tr></table>
-</div>
-</div><ol start=7>
-<li>若有定义inta [3] [4]，下列对数组a的引用 中正确的是( )。</li>
+<ol start=2>
+<li>写出下面语句的输出结果</li>
 </ol>
 <div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
@@ -389,22 +316,93 @@ SliverHorn的博客
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c> A. a[<span style=color:#099>1</span><span style=color:#000;font-weight:700>/</span><span style=color:#099>2</span>][<span style=color:#099>0</span>]<span style=color:#000;font-weight:700>=</span><span style=color:#099>0</span> 
- B. <span style=color:#458;font-weight:700>int</span> a[<span style=color:#099>1</span>][<span style=color:#099>1</span>]<span style=color:#000;font-weight:700>=</span><span style=color:#099>0</span> 
- C. a[<span style=color:#099>2</span>][<span style=color:#099>4</span>]<span style=color:#000;font-weight:700>=</span><span style=color:#099>0</span> 
- D. a[<span style=color:#099>0</span>][<span style=color:#099>4</span>]<span style=color:#000;font-weight:700>=</span><span style=color:#099>0</span>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
+  <span style=color:#458;font-weight:700>int</span> k;
+  <span style=color:#458;font-weight:700>int</span> a[<span style=color:#099>3</span>][<span style=color:#099>3</span>] <span style=color:#000;font-weight:700>=</span> {<span style=color:#099>1</span>, <span style=color:#099>2</span>, <span style=color:#099>3</span>, <span style=color:#099>4</span>, <span style=color:#099>5</span>, <span style=color:#099>6</span>, <span style=color:#099>7</span>, <span style=color:#099>8</span>, <span style=color:#099>9</span>};
+  <span style=color:#000;font-weight:700>for</span> (k <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; k <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>3</span>; k<span style=color:#000;font-weight:700>++</span>) {
+    printf(<span style=color:#d14>&#34;%d&#34;</span>, a[k][<span style=color:#099>2</span><span style=color:#000;font-weight:700>-</span>k]);
+  }
+}
 </code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>C</p>
+<p>3, 5, 7</p>
 </blockquote>
-<p>9 A</p>
-<p>10 A</p>
-<p>11 A</p>
-<p>12 B</p>
-<p>13</p>
+<ol start=3>
+<li>读程序题，输出结果为</li>
+</ol>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>(<span style=color:#458;font-weight:700>void</span>) {
+  <span style=color:#458;font-weight:700>int</span> a[<span style=color:#099>3</span>][<span style=color:#099>3</span>] <span style=color:#000;font-weight:700>=</span> {<span style=color:#099>1</span>, <span style=color:#099>2</span>, <span style=color:#099>3</span>, <span style=color:#099>4</span>, <span style=color:#099>5</span>, <span style=color:#099>6</span>, <span style=color:#099>7</span>, <span style=color:#099>8</span>, <span style=color:#099>9</span>};
+  <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, s <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+  <span style=color:#000;font-weight:700>while</span> (i <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>3</span>) {
+    s <span style=color:#000;font-weight:700>=</span> s <span style=color:#000;font-weight:700>+</span> a[i][i];
+    i<span style=color:#000;font-weight:700>++</span>
+  }
+  printf(<span style=color:#d14>&#34;i = %d, s = %d&#34;</span>, i, s);
+  <span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>i = 3, s = 15</p>
+</blockquote>
+<h2 id=字符串>字符串</h2>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>函数作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>strcmp(str1,str2)</td>
+<td>比较大小</td>
+</tr>
+<tr>
+<td>strcpy(str1,str2)</td>
+<td>str2复制到str1中</td>
+</tr>
+<tr>
+<td>strcat(str1,str2)</td>
+<td>str2连接到str1后面</td>
+</tr>
+<tr>
+<td>strlen(str)</td>
+<td>字符串长度</td>
+</tr>
+</tbody>
+</table>
+<ol start=3>
+<li>编写程序,输入一串字符,如果是大写字母改变为小写字母; 如果是小写字母,则把它变为大写字母;若其他字符保持不变.</li>
+</ol>
 <div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
 <pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
@@ -423,36 +421,40 @@ SliverHorn的博客
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
 <pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
 </span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;string.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
 </span><span style=color:#999;font-weight:700;font-style:italic></span>
 <span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
-  <span style=color:#458;font-weight:700>char</span> s[<span style=color:#099>80</span>] <span style=color:#000;font-weight:700>=</span> {};
-  scanf(<span style=color:#d14>&#34;%s&#34;</span>, s);
+  <span style=color:#458;font-weight:700>char</span> str[<span style=color:#099>20</span>];
+  gets(str);
   
-  <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>80</span>; i<span style=color:#000;font-weight:700>++</span>) {
-    <span style=color:#000;font-weight:700>if</span> (s[i] <span style=color:#000;font-weight:700>&lt;=</span> <span style=color:#d14>&#39;0&#39;</span> <span style=color:#000;font-weight:700>||</span> s[i] <span style=color:#000;font-weight:700>&gt;=</span> <span style=color:#d14>&#39;9&#39;</span> ) {
-      	s[i] <span style=color:#000;font-weight:700>=</span> <span style=color:#d14>&#39; &#39;</span>;
+  <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; str[i] <span style=color:#000;font-weight:700>!=</span> <span style=color:#d14>&#39;\0&#39;</span>; i<span style=color:#000;font-weight:700>++</span>) {
+    <span style=color:#000;font-weight:700>if</span> (str[i] <span style=color:#000;font-weight:700>&gt;=</span> <span style=color:#d14>&#39;a&#39;</span> <span style=color:#000;font-weight:700>&amp;&amp;</span> str[i] <span style=color:#000;font-weight:700>&lt;=</span> <span style=color:#d14>&#39;z&#39;</span>) {
+      str[i] <span style=color:#000;font-weight:700>-=</span> <span style=color:#099>32</span>;
+    }
+    <span style=color:#000;font-weight:700>if</span> (str[i] <span style=color:#000;font-weight:700>&gt;=</span> <span style=color:#d14>&#39;A&#39;</span> <span style=color:#000;font-weight:700>&amp;&amp;</span> str[i] <span style=color:#000;font-weight:700>&lt;=</span> <span style=color:#d14>&#39;Z&#39;</span>) {
+      str[i] <span style=color:#000;font-weight:700>+=</span> <span style=color:#099>32</span>;
     }
   }
-  
-  puts(s);
-	<span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>; 
+  puts(str);
+  <span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>;
 }
 </code></pre></td></tr></table>
 </div>
-</div><p>14 A</p>
+</div>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
 <ul class=listing>
+<li><a href=/politics/12/>第十二章 全面推进国防和军队现代化</a></li>
+<li><a href=/c/5.2/>循环结构 练习二</a></li>
+<li><a href=/politics/11/>第十一章 `四个全面`战略布局</a></li>
 <li><a href=/c/5.1/>循环结构 练习一</a></li>
-<li><a href=/politics/10/>第十章 “五位一体”总体布局</a></li>
-<li><a href=/politics/9/>第九章 坚持和发展中国特色社会主义的总任务</a></li>
-<li><a href=/politics/8/>第八章 习近平新时代中国特色社会主义思想及其历史地位</a></li>
-<li><a href=/politics/7/>第七章 科学发展观</a></li>
+<li><a href=/c/6.2/>一维数组 二维数组 字符串 练习二</a></li>
 </ul>
 </div>
 <div class="post-meta meta-tags">
