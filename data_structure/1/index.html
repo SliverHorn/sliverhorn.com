@@ -4,16 +4,16 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=referrer content="no-referrer-when-downgrade">
-<title>第十二章 全面推进国防和军队现代化 | SliverHorn的博客</title>
-<meta property="og:title" content="第十二章 全面推进国防和军队现代化 - SliverHorn的博客">
+<title>第一章 绪论 | SliverHorn的博客</title>
+<meta property="og:title" content="第一章 绪论 - SliverHorn的博客">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2021-12-24T17:17:17+08:00">
-<meta property="article:modified_time" content="2021-12-24T17:17:17+08:00">
+<meta property="article:published_time" content="2021-12-28T17:17:17+08:00">
+<meta property="article:modified_time" content="2021-12-28T17:17:17+08:00">
 <meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
 ">
-<meta name=description content="第十二章 全面推进国防和军队现代化">
+<meta name=description content="第一章 绪论">
 <meta name=author content="SliverHorn">
-<meta property="og:url" content="https://sliverhorn.com/politics/12/">
+<meta property="og:url" content="https://sliverhorn.com/data_structure/1/">
 <link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
 <link rel=stylesheet href=/css/normalize.css>
 <link rel=stylesheet href=/css/style.css>
@@ -58,13 +58,24 @@ SliverHorn的博客
 <div class=post-toc-content>
 <nav id=TableOfContents>
 <ul>
-<li><a href=#习近平强军思想>习近平强军思想</a></li>
-<li><a href=#坚持党对人民军队的绝对领导>坚持党对人民军队的绝对领导</a></li>
-<li><a href=#建设世界一流军队>建设世界一流军队</a></li>
-</ul>
+<li><a href=#数据结构的基本概念>数据结构的基本概念</a></li>
+<li><a href=#数据结构三要素>数据结构三要素</a>
 <ul>
-<li><a href=#坚特富国和强军相统一>坚特富国和强军相统一</a></li>
-<li><a href=#加快形成军民融合深度发展格局>加快形成军民融合深度发展格局</a></li>
+<li><a href=#逻辑结构>逻辑结构</a></li>
+<li><a href=#存储结构>存储结构</a></li>
+<li><a href=#数据运算>数据运算</a></li>
+</ul>
+</li>
+<li><a href=#算法>算法</a>
+<ul>
+<li><a href=#加法规则>加法规则</a></li>
+</ul>
+</li>
+<li><a href=#乘法规则>乘法规则</a>
+<ul>
+<li><a href=#常见的渐近时间复杂度>常见的渐近时间复杂度</a></li>
+</ul>
+</li>
 </ul>
 </nav>
 </div>
@@ -72,60 +83,148 @@ SliverHorn的博客
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
 <article class=post>
 <header>
-<h1 class=post-title>第十二章 全面推进国防和军队现代化</h1>
+<h1 class=post-title>第一章 绪论</h1>
 </header>
 <date class="post-meta meta-date">
-2021年12月24日
+2021年12月28日
 </date>
 <div class=post-meta>
 <span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
 阅读</span></span>
 </div>
 <div class=post-content>
-<h1 id=第一节-坚持走中国特色强军之路>第一节 坚持走中国特色强军之路</h1>
-<h2 id=习近平强军思想>习近平强军思想</h2>
-<p><strong>习近平强军思想深刻回答了"新时代建设一支什么样的强大人民军队、怎样建设强大人民军队” 的时代课题</strong>，其主要内容有：</p>
+<h2 id=数据结构的基本概念>数据结构的基本概念</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>概念</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据</td>
+<td>信息的载体，是描述客观事物属性的数、字符及所有能输入到计算机中并被计算机程序识别和处理的符号的集合</td>
+</tr>
+<tr>
+<td>数据元素</td>
+<td>一个数据元素可由若干数据项组成，数据项是构成数据元素的不可分割的最小单位</td>
+</tr>
+<tr>
+<td>数据项</td>
+<td>构成数据元素的不可分割的最小单位，一个数据元素可由若干个数据项组成</td>
+</tr>
+<tr>
+<td>数据对象</td>
+<td>具有相同性质的数据元素的集合，是数据的一个子集</td>
+</tr>
+<tr>
+<td>数据类型</td>
+<td>一个值的集合和定义在此集合上的一组操作的总称</td>
+</tr>
+<tr>
+<td>数据结构</td>
+<td>相互之间存在一种或多种特定关系的元素的集合，包括：逻辑结构、存储结构和数据运算数据结构的形式定义为:数据结构是一个二元组Data Structure = (D,S)其中: 是数据元素的有限集， 是 上关系的有限集。</td>
+</tr>
+</tbody>
+</table>
+<h2 id=数据结构三要素>数据结构三要素</h2>
+<h3 id=逻辑结构>逻辑结构</h3>
+<p>逻辑结构是指数据元素之间的逻辑关系，与数据的存储无关，独立于计算机。</p>
 <ul>
-<li>
-<p>党在新时代的强军目标是</p>
+<li>线性结构 （一对一）
 <ul>
-<li><strong>建设一支听党指挥、能打胜仗、作风优良的人民军队</strong>，</li>
-<li><strong>必须同国家现代化进程相一致，全面建设世界一流军队</strong>。</li>
+<li>线性表
+<ul>
+<li>线性表</li>
+<li>栈</li>
+<li>队列</li>
+<li>串</li>
+<li>数组</li>
 </ul>
 </li>
-<li>
-<p><strong>军民融合发展是兴国之举，强军之策，必须坚持发展和安全兼顾、富国和强军统一</strong>，形成<strong>全要素、多领域、高效益军民融合深度发展格局</strong>，构建一体化的国家战略体系和能力。</p>
+</ul>
+</li>
+<li>非线性结构 （一对多 || 多对多）
+<ul>
+<li>集合</li>
+<li>树形结构</li>
+<li>图形结构（网状结构）</li>
+</ul>
 </li>
 </ul>
-<h2 id=坚持党对人民军队的绝对领导>坚持党对人民军队的绝对领导</h2>
-<p><strong>党的领导是人民军队战无不胜的根本保证</strong>。人民军队从诞生之日起，就始终在党的绝对领导下行动和战斗。<strong>党对军队绝对领导的根本原则和制度，发端于南昌起义，奠基于三湾改编，定型于古田会议，是人民军队完全区别于一切旧军队的政治特质和根本优势</strong>。</p>
-<p>党对军队的绝对领导，其<strong>基本内容是：军队必须完全地无条件地管于中国共产党的领导之下，在思想上政治上行动上始终与党中央、中央军委保持高度一致，坚决维护党中央、中央军委权威，任何时候任何情況下都坚决听从党中央、中央军委指挥</strong>。</p>
-<p><strong>军委主席负责制是党对军队绝对领导的最高实现形式</strong>,</p>
-<h2 id=建设世界一流军队>建设世界一流军队</h2>
-<p>党的十九大对全面推进国防和军队现代化作出新的战略安排：<strong>到2020 年，国防和军队建设要基本实现机械化，信息化建设取得重大进展，战略能力有大的提升</strong>;<strong>到2035年，基本实现国防和军队现代化；到本世纪中叶，把人民军队全面建成世界一流军队</strong>。</p>
-<h1 id=第二节-推动军民融合深度发展>第二节 推动军民融合深度发展</h1>
-<h2 id=坚特富国和强军相统一>坚特富国和强军相统一</h2>
-<blockquote>
-<p><strong>富国： 经济</strong></p>
-<p><strong>强军：国防</strong></p>
-<p><strong>国防是经济的保障</strong></p>
-<p><strong>军民融合是经济和国防的途径</strong></p>
-</blockquote>
-<p>富国才能强军，强军才能卫国。<strong>经济建设是国防建设的基本依托</strong>，只有国家经济实力增强了，国防建设才能有更大发限。</p>
-<h2 id=加快形成军民融合深度发展格局>加快形成军民融合深度发展格局</h2>
-<p>坚持全国一盘棋，
-健全体制机制。
-强化战略规划：
-突出重点领域。</p>
+<h3 id=存储结构>存储结构</h3>
+<p>存储结构(物理结构)是指数据结构在计算机中的表示，它包括数据元素的表示和关系的表示。</p>
+<ul>
+<li>顺序存储
+<ul>
+<li>把逻辑上相邻的元素存储在物理位置上也相邻的存储单元中，元素之间的关系由存储单元的邻接关系来体现。</li>
+<li>优点是可以实现随机存取，每个元素占用最少的存储空间；</li>
+<li>缺点是只能使用相邻的一块存储单元，因此可能产生较多的外部碎片。</li>
+</ul>
+</li>
+<li>链式存储
+<ul>
+<li>借助指示元素存储地址的指针来表示元素之间的逻辑关系。</li>
+<li>优点是不会出现碎片现象，能充分利用所有存储单元；</li>
+<li>缺点是每个元素因存储指针而占用额外的存储空间，且只能实现顺序存取。</li>
+</ul>
+</li>
+<li>索引存储
+<ul>
+<li>在存储元素信息的同时，还建立附加的索引表。</li>
+<li>优点是检索速度快；</li>
+<li>缺点是增加附加的索引表后会占用较多的存储空间。另外，在增加和删除数据时要修改索引表，因而会花费较多的时间。</li>
+</ul>
+</li>
+<li>散列存储
+<ul>
+<li>根据元素的关键字直接计算出该元素的存储地址，又称哈希( )存储</li>
+<li>优点是检索、增加和删除结点的操作都很快；</li>
+<li>缺点是若散列函数不好，则可能出现元素存储单元冲突，而解决冲突会增加时间和空间开销。</li>
+</ul>
+</li>
+</ul>
+<h3 id=数据运算>数据运算</h3>
+<p>定义是针对逻辑结构的，指出运算的功能；实现是针对存储结构的，指出运算的具体操作步骤</p>
+<h2 id=算法>算法</h2>
+<p>算法是对特定问题求解步骤的一种描述，它是指令的有限序列，其中的每条指令表示一个或多个操作。此外，一个算法还具有下列 个重要特性:</p>
+<ul>
+<li>有穷性。一个算法必须总是在执行有穷步后结束，且每一步都是在有穷时间内完成。</li>
+<li>确定性。算法中每条指令必须有确切的含义，且相同的输入只能得到相同的输出。</li>
+<li>可行性。算法中描述的操作都可以通过已经实现的基本运算执行有限次来实现。</li>
+<li>输入。一个算法有零个或多个输入。</li>
+<li>输出。一个算法有一个或多个输出。</li>
+</ul>
+<p>通常设计一个“好”的算法应考虑达到以下目标:</p>
+<ul>
+<li>(1)正确性。算法应能够正确地求解问题。</li>
+<li>(2)可读性。算法能具有良好的可读性，以帮助人们理解。</li>
+<li>(3)健壮性。输入非法数据时，算法能适当地做出反应或进行处理，而不会产生莫名其妙的输出结果。</li>
+<li>(4)效率与低存储量需求。效率是指算法执行的时间，存储量需求是指算法执行过程中所需的最大存储空间。</li>
+</ul>
+<p>算法效率的度量是通过时间复杂度和空间复杂度来描述的。 一个语句的频度是指该语句在算法中被重复执行的次数。 算法中所有语句的频度之和记为 ，它是该算法问题规模 的函数，时间复杂度主要分 析 的数量级。</p>
+<h3 id=加法规则>加法规则</h3>
+<p>$$
+T(n) = T_1(n) + T_2(n) = O(f(n)) + O(g(n)) = O(max(f(n), g(n)))
+$$</p>
+<h2 id=乘法规则>乘法规则</h2>
+<p>$$
+T(n) = T_1(n) \times T_2(n) = O(f(n)) \times O(g(n)) = O(f(n) \times g(n)))
+$$</p>
+<h3 id=常见的渐近时间复杂度>常见的渐近时间复杂度</h3>
+<p>$$
+O(1) \lt O(log_2{n}) \lt O(n) \lt O(nlog_2{2}) \lt O(n^2) \lt O(n^3) \lt O(2^n) \lt O(n!) \lt O(n^n)
+$$</p>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
 <ul class=listing>
-<li><a href=/c/5.2/>循环结构 练习二</a></li>
-<li><a href=/politics/11/>第十一章 `四个全面`战略布局</a></li>
-<li><a href=/c/6.2/>一维数组 二维数组 字符串 练习二</a></li>
-<li><a href=/c/5.1/>循环结构 练习一</a></li>
-<li><a href=/politics/10/>第十章 “五位一体”总体布局</a></li>
+<li><a href=/data_structure/1.1/>第一章 绪论 练习</a></li>
+<li><a href=/c/7.1/>第七章 用函数实现模块化 练习一</a></li>
+<li><a href=/c/7.2/>第七章 用函数实现模块化 练习二</a></li>
+<li><a href=/c/8.1/>第八章 善于使用指针 练习一</a></li>
+<li><a href=/c/10.1/>第十章 利用文件保存数据 练习一</a></li>
 </ul>
 </div>
 <div class="post-meta meta-tags">
