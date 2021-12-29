@@ -1,0 +1,461 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer-when-downgrade">
+<title>第二章 线性表 练习 | SliverHorn的博客</title>
+<meta property="og:title" content="第二章 线性表 练习 - SliverHorn的博客">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2021-12-29T17:17:17+08:00">
+<meta property="article:modified_time" content="2021-12-29T17:17:17+08:00">
+<meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
+">
+<meta name=description content="第二章 线性表 练习">
+<meta name=author content="SliverHorn">
+<meta property="og:url" content="https://sliverhorn.com/data_structure/2.1/">
+<link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
+<link rel=stylesheet href=/css/normalize.css>
+<link rel=stylesheet href=/css/style.css>
+<script type=text/javascript src=//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js></script>
+<link href=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css rel=stylesheet>
+<link rel=stylesheet href=/css/douban.css>
+<link rel=stylesheet href=/css/other.css>
+</head>
+<body>
+<header id=header class=clearfix>
+<div class=container>
+<div class=col-group>
+<div class=site-name>
+<a id=logo href=https://sliverhorn.com>
+SliverHorn的博客
+</a>
+<p class=description>Golang 开发</p>
+</div>
+<div>
+<nav id=nav-menu class=clearfix>
+<a href=https://sliverhorn.com>首页</a>
+<a href=https://sliverhorn.com/c/ title=C语言>C语言</a>
+<a href=https://sliverhorn.com/data_structure/ title=数据结构>数据结构</a>
+<a href=https://sliverhorn.com/higher_mathematics/ title=高数>高数</a>
+<a href=https://sliverhorn.com/politics/ title=政治>政治</a>
+<a href=https://sliverhorn.com/tool/ title=工具>工具</a>
+<a href=https://sliverhorn.com/archives/ title=归档>归档</a>
+<a href=https://sliverhorn.com/about/ title=关于>关于</a>
+</nav>
+</div>
+</div>
+</div>
+</header>
+<div id=body>
+<div class=container>
+<div class=col-group>
+<div class=col-8 id=main>
+<div class=res-cons>
+<style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,7%);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style>
+<div class=post-toc style=position:absolute;top:188px>
+<h2 class=post-toc-title>文章目录</h2>
+<div class=post-toc-content>
+<nav id=TableOfContents></nav>
+</div>
+</div>
+<script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
+<article class=post>
+<header>
+<h1 class=post-title>第二章 线性表 练习</h1>
+</header>
+<date class="post-meta meta-date">
+2021年12月29日
+</date>
+<div class=post-meta>
+<span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
+阅读</span></span>
+</div>
+<div class=post-content>
+<ol>
+<li>线性表是具有 个( <sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup> )的有限序列</li>
+</ol>
+<p>A. 表元素</p>
+<p>B. 字符</p>
+<p>C. 数据元素</p>
+<p>D. 数据项</p>
+<ol start=2>
+<li>
+<p>线性表采用顺序存储结构表示时，必须占用一片连续的存储单元( <sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup> )</p>
+</li>
+<li>
+<p>如果一个顺序表中第一个元素的存储地址为1000, 每个元素占 <code>4</code> 个地址单元，那么第 <code>6</code> 个元素的存储地址应是 ( <sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup> )</p>
+</li>
+</ol>
+<p>A. 1020</p>
+<p>B. 1010</p>
+<p>C. 1016</p>
+<p>D. 1024</p>
+<ol start=4>
+<li>当需要随机查找线性表的元素时，宜采用 ( <sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup> ) 存储结构。</li>
+</ol>
+<p>A. 双向链表</p>
+<p>B. 循环链表</p>
+<p>C. 顺序表</p>
+<p>D. 单链表</p>
+<ol start=5>
+<li>设顺序线性表中有 <code>n</code> 个数据元素，则删除表中第 <code>index</code> 个元素需要移动 ( <sup id=fnref:5><a href=#fn:5 class=footnote-ref role=doc-noteref>5</a></sup> ) 个元素</li>
+</ol>
+<p>A. $n-i$</p>
+<p>B.$n-i-1$</p>
+<p>C. $n-i+1$</p>
+<p>D. $i$</p>
+<ol start=6>
+<li>对于顺序存储的线性表，访问结点和增加、删除结点的时间复杂度为 ( <sup id=fnref:6><a href=#fn:6 class=footnote-ref role=doc-noteref>6</a></sup> )</li>
+</ol>
+<p>A. $O(n), O(n)$</p>
+<p>B.$O(n), O(1)$</p>
+<p>C. $O(1), O(n)$</p>
+<p>D. $O(1), O(1)$</p>
+<ol start=7>
+<li>将两个有序顺序表 合并为一个新的有序顺序表 ，并用函数返回结果顺序表。</li>
+</ol>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#998;font-style:italic>// 算法思想:首先，按顺序不断取下两个顺序表表头较小的结点存入新的顺序表中。然后， 看哪个表还有剩余，将剩下的部分添加到新的顺序表后面。
+</span><span style=color:#998;font-style:italic></span>  
+<span style=color:#458;font-weight:700>bool</span> <span style=color:#900;font-weight:700>SequenceTableMerge</span>(SequenceTable sequenceTable1, SequenceTable sequenceTable2, SequenceTable <span style=color:#000;font-weight:700>*</span>newSequenceTable) {
+    <span style=color:#000;font-weight:700>if</span> (sequenceTable1.Length <span style=color:#000;font-weight:700>+</span> sequenceTable2.Length <span style=color:#000;font-weight:700>&gt;</span> newSequenceTable<span style=color:#000;font-weight:700>-&gt;</span>MaxSize) {
+        <span style=color:#000;font-weight:700>return</span> <span style=color:#0086b3>false</span>;
+    }
+    <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, j <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, k <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    <span style=color:#000;font-weight:700>while</span> (i <span style=color:#000;font-weight:700>&lt;</span> sequenceTable1.Length <span style=color:#000;font-weight:700>&amp;&amp;</span> j <span style=color:#000;font-weight:700>&lt;</span> sequenceTable2.Length) {
+        <span style=color:#000;font-weight:700>if</span> (sequenceTable1.Data[i] <span style=color:#000;font-weight:700>&lt;=</span> sequenceTable2.Data[j]) {
+            newSequenceTable<span style=color:#000;font-weight:700>-&gt;</span>Data[k<span style=color:#000;font-weight:700>++</span>] <span style=color:#000;font-weight:700>=</span> sequenceTable1.Data[i<span style=color:#000;font-weight:700>++</span>];
+        } <span style=color:#000;font-weight:700>else</span> {
+            newSequenceTable<span style=color:#000;font-weight:700>-&gt;</span>Data[k<span style=color:#000;font-weight:700>++</span>] <span style=color:#000;font-weight:700>=</span> sequenceTable2.Data[i<span style=color:#000;font-weight:700>++</span>];
+        }
+    }
+
+    <span style=color:#000;font-weight:700>while</span> (i <span style=color:#000;font-weight:700>&lt;</span> sequenceTable1.Length) {
+        newSequenceTable<span style=color:#000;font-weight:700>-&gt;</span>Data[k<span style=color:#000;font-weight:700>++</span>] <span style=color:#000;font-weight:700>=</span> sequenceTable1.Data[i<span style=color:#000;font-weight:700>++</span>];
+    }
+
+    <span style=color:#000;font-weight:700>while</span> (i <span style=color:#000;font-weight:700>&lt;</span> sequenceTable2.Length) {
+        newSequenceTable<span style=color:#000;font-weight:700>-&gt;</span>Data[k<span style=color:#000;font-weight:700>++</span>] <span style=color:#000;font-weight:700>=</span> sequenceTable2.Data[i<span style=color:#000;font-weight:700>++</span>];
+    }
+
+    newSequenceTable<span style=color:#000;font-weight:700>-&gt;</span>Length <span style=color:#000;font-weight:700>=</span> k;
+    <span style=color:#000;font-weight:700>return</span> <span style=color:#0086b3>true</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><ol start=8>
+<li>线性表的特点是每个元素都有一个前驱和一个后继。( <sup id=fnref:7><a href=#fn:7 class=footnote-ref role=doc-noteref>7</a></sup> )</li>
+<li>线性表的顺序存储结构是一种( )的存储结构。( <sup id=fnref:8><a href=#fn:8 class=footnote-ref role=doc-noteref>8</a></sup> )</li>
+</ol>
+<p>A. 随机存取</p>
+<p>B. 顺序存取</p>
+<p>C. 索引存取</p>
+<p>D. 散列存取</p>
+<ol start=10>
+<li>下述 ( <sup id=fnref:9><a href=#fn:9 class=footnote-ref role=doc-noteref>9</a></sup> ) 是顺序存储结构的优点。</li>
+</ol>
+<p>A. 存储密度大
+B. 插入运算方便
+C. 删除运算方便
+D. 无需大片连续存储空间</p>
+<ol start=11>
+<li>两个有序顺序表分别是具有 <code>n</code> 个元素与 <code>m</code> 个元素且 $n \leq m$，现将其归并成一个有序表，其最少的比较次数是 ( <sup id=fnref:10><a href=#fn:10 class=footnote-ref role=doc-noteref>10</a></sup> )</li>
+</ol>
+<p>A. $n$
+B. $m$
+C. $n-1$
+D. $m+n$</p>
+<ol start=12>
+<li>
+<p>删除顺序表中第1个数据元素ao的时间复杂度是 $O(n)$ ( <sup id=fnref:11><a href=#fn:11 class=footnote-ref role=doc-noteref>11</a></sup> )</p>
+</li>
+<li>
+<p>在n个结点的顺序表中，算法的时问复杂度是 $O(1)$ 的操作是 ( <sup id=fnref:12><a href=#fn:12 class=footnote-ref role=doc-noteref>12</a></sup> )</p>
+</li>
+</ol>
+<p>A. 访问第 $i$ 个结点 ($1 \leq i\leq n $) 和求第 $i$ 个结点的直接前驱 ($2 \leq i \leq n$)
+B. 在第$i$个结点后插入一个新结点 ($1 \leq i \leq n$)
+C. 删除第i个结点 ($1 \leq i \leq n$)
+D. 将 $n$ 个结点从小到大排序</p>
+<ol start=14>
+<li>下面 ( <sup id=fnref:13><a href=#fn:13 class=footnote-ref role=doc-noteref>13</a></sup> ) 不是线性表的特性</li>
+</ol>
+<p>A. 除第一个元素外，每一个元素都有前驱</p>
+<p>B. 除最后一个元素外，每一个元素都有后继</p>
+<p>C. 线性表是数据元素的有限序列</p>
+<p>D. 线性表的长度等于 $n$，并且 $n$ 不等于0</p>
+<ol start=15>
+<li>
+<p>二维数组 <code>A[10][20]</code>按行优先顺序存储，每个元素占 <code>4</code> 个存储单元, <code>A[1][1]</code> 的存储地址是 <code>1000</code> , <code>A[5][6]</code> 的存储地址是 ( <sup id=fnref:14><a href=#fn:14 class=footnote-ref role=doc-noteref>14</a></sup> )</p>
+</li>
+<li>
+<p>已知长度为 $n$ 的线性表采用顺序存储结构。写一算法，删除线性表中所有值为 $x$ 的元素。</p>
+</li>
+</ol>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#000;font-weight:700>typedef</span> <span style=color:#458;font-weight:700>int</span> ElemType;
+
+<span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> {
+    ElemType <span style=color:#000;font-weight:700>*</span>Data;
+    <span style=color:#458;font-weight:700>int</span> MaxSize;
+    <span style=color:#458;font-weight:700>int</span> Length;
+} SequenceTable;
+
+<span style=color:#458;font-weight:700>bool</span> <span style=color:#900;font-weight:700>SequenceTableDelete</span>(SequenceTable <span style=color:#000;font-weight:700>*</span>sequenceTable, <span style=color:#458;font-weight:700>int</span> x) {
+  <span style=color:#458;font-weight:700>int</span> length <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+  <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> sequenceTable<span style=color:#000;font-weight:700>-&gt;</span>Length; i<span style=color:#000;font-weight:700>++</span>) {
+    <span style=color:#000;font-weight:700>if</span> (sequenceTable<span style=color:#000;font-weight:700>-&gt;</span>Data[i] <span style=color:#000;font-weight:700>!=</span> x) {
+      sequenceTable<span style=color:#000;font-weight:700>-&gt;</span>Data[k] <span style=color:#000;font-weight:700>=</span> sequenceTable<span style=color:#000;font-weight:700>-&gt;</span>Data[i]
+      k<span style=color:#000;font-weight:700>++</span>;
+    }
+  }
+  sequenceTable<span style=color:#000;font-weight:700>-&gt;</span>Length <span style=color:#000;font-weight:700>=</span> k;
+  <span style=color:#000;font-weight:700>return</span> <span style=color:#0086b3>true</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><ol start=17>
+<li>设计一个高效算法，将顺序表$L$ 的所有元素逆置</li>
+</ol>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#000;font-weight:700>typedef</span> <span style=color:#458;font-weight:700>int</span> ElemType;
+
+<span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> {
+    ElemType <span style=color:#000;font-weight:700>*</span>Data;
+    <span style=color:#458;font-weight:700>int</span> MaxSize;
+    <span style=color:#458;font-weight:700>int</span> Length;
+} SequenceTable;
+
+<span style=color:#458;font-weight:700>bool</span> <span style=color:#900;font-weight:700>SequenceTableReverse</span>(SequenceTable <span style=color:#000;font-weight:700>*</span>L) {
+  ElemType middle <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+  <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> L<span style=color:#000;font-weight:700>-&gt;</span>Length <span style=color:#000;font-weight:700>/</span> <span style=color:#099>2</span>; i<span style=color:#000;font-weight:700>++</span>) {
+    middle <span style=color:#000;font-weight:700>=</span> L<span style=color:#000;font-weight:700>-&gt;</span>Data[i];
+    L<span style=color:#000;font-weight:700>-&gt;</span>Data[i] <span style=color:#000;font-weight:700>=</span> L<span style=color:#000;font-weight:700>-&gt;</span>Data[L<span style=color:#000;font-weight:700>-&gt;</span>Length <span style=color:#000;font-weight:700>-</span> i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>];
+    L<span style=color:#000;font-weight:700>-&gt;</span>Data[L<span style=color:#000;font-weight:700>-&gt;</span>Length <span style=color:#000;font-weight:700>-</span> i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>] <span style=color:#000;font-weight:700>=</span> middle;
+  }
+}
+</code></pre></td></tr></table>
+</div>
+</div><hr>
+<section class=footnotes role=doc-endnotes>
+<hr>
+<ol>
+<li id=fn:1 role=doc-endnote>
+<p>C. 数据元素&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:2 role=doc-endnote>
+<p>正确&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:3 role=doc-endnote>
+<p>A.1020 <code>1000 + (6 - 1) * 4</code>&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:4 role=doc-endnote>
+<p>C. 顺序表&#160;<a href=#fnref:4 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:5 role=doc-endnote>
+<p>A. $n-i$&#160;<a href=#fnref:5 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:6 role=doc-endnote>
+<p>C. $O(1), O(n)$&#160;<a href=#fnref:6 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:7 role=doc-endnote>
+<p>错误&#160;<a href=#fnref:7 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:8 role=doc-endnote>
+<p>A. 随机存取&#160;<a href=#fnref:8 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:9 role=doc-endnote>
+<p>A. 存储密度大&#160;<a href=#fnref:9 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:10 role=doc-endnote>
+<p>A. $n$&#160;<a href=#fnref:10 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:11 role=doc-endnote>
+<p>正确&#160;<a href=#fnref:11 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:12 role=doc-endnote>
+<p>A. 访问第 $i$ 个结点 ($1 \leq i\leq n $) 和求第 $i$ 个结点的直接前驱 ($2 \leq i \leq n$)&#160;<a href=#fnref:12 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:13 role=doc-endnote>
+<p>D. 线性表的长度等于 $n$，并且 $n$ 不等于0&#160;<a href=#fnref:13 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:14 role=doc-endnote>
+<p>1340 解析：$1000 + ((5 - 1) \times 20 + (6 - 1)) \times 4 $&#160;<a href=#fnref:14 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+</div>
+<div class=post-archive>
+<h2>See Also</h2>
+<ul class=listing>
+<li><a href=/data_structure/2/>第二章 线性表</a></li>
+<li><a href=/data_structure/1.1/>第一章 绪论 练习</a></li>
+<li><a href=/c/7.1/>第七章 用函数实现模块化 练习一</a></li>
+<li><a href=/c/7.2/>第七章 用函数实现模块化 练习二</a></li>
+<li><a href=/c/9.1/>第九章 使用结构体类型处理组合数据--用户自定义数据类型 练习一</a></li>
+</ul>
+</div>
+<div class="post-meta meta-tags">
+没有标签
+</div>
+</article>
+<div class="post bg-white">
+<script src=https://utteranc.es/client.js repo="your github repo" issue-term=pathname theme=github-light crossorigin=anonymous async></script>
+</div>
+</div>
+<footer id=footer>
+<div>
+&copy; 2021 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
+| <a rel=nofollow target=_blank href=http://beian.miit.gov.cn/>粤ICP备19128176号</a>
+</div>
+<br>
+<div>
+<div class=github-badge>
+<a href=https://gohugo.io/ target=_black rel=nofollow><span class=badge-subject>Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+</div>
+<div class=github-badge>
+<a href=https://www.flysnow.org/ target=_black><span class=badge-subject>Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+</div>
+<div class=github-badge>
+<a href=https://github.com/flysnow-org/maupassant-hugo target=_black><span class=badge-subject>Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+</div>
+</div>
+</footer>
+<script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[['$','$']],processEscapes:!0}}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script src=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js></script>
+<a id=rocket href=#top></a>
+<script type=text/javascript src="/js/totop.js?v=0.0.0" async></script>
+<script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async></script>
+<script src=/js/douban.js></script>
+</div>
+<div id=secondary>
+<section class=widget>
+<form id=search action=https://sliverhorn.com/search/ method=get accept-charset=utf-8 target=_blank _lpchecked=1>
+<input type=text name=q maxlength=20 placeholder=Search>
+<input type=hidden name=sitesearch value=https://sliverhorn.com>
+<button type=submit class="submit icon-search"></button>
+</form>
+</section>
+<section class=widget>
+<h3 class=widget-title>最近文章</h3>
+<ul class=widget-list>
+<li>
+<a href=https://sliverhorn.com/post/linux/oh-my-zsh-install/ title="oh-my-zsh Mac 安装教程">oh-my-zsh Mac 安装教程</a>
+</li>
+</ul>
+</section>
+<section class=widget>
+<h3 class=widget-title><a href=/categories/>分类</a></h3>
+<ul class=widget-list>
+<li><a href=https://sliverhorn.com/categories/DataStructure/>DataStructure (1)</a></li>
+<li><a href=https://sliverhorn.com/categories/Linux/>Linux (1)</a></li>
+<li><a href=https://sliverhorn.com/categories/Mac/>Mac (1)</a></li>
+</ul>
+</section>
+<section class=widget>
+<h3 class=widget-title><a href=/tags/>标签</a></h3>
+<div class=tagcloud>
+<a href=https://sliverhorn.com/tags/oh-my-zsh/>oh-my-zsh</a>
+<a href=https://sliverhorn.com/tags/tool/>tool</a>
+</div>
+</section>
+<section class=widget>
+<h3 class=widget-title>友情链接</h3>
+<ul class=widget-list>
+<li>
+<a target=_blank href=https://blog.leonardwang.cn/ title="牛逼哄哄 `王哥` 博客">牛逼哄哄 `王哥` 博客</a>
+</li>
+<li>
+<a target=_blank href=https://www.cnblogs.com/binHome/ title=songzhibin97的博客>songzhibin97的博客</a>
+</li>
+<li>
+<a target=_blank href=https://leixf.cn/ title="跃动指尖 – 悦动生活">跃动指尖 – 悦动生活</a>
+</li>
+<li>
+<a target=_blank href=https://www.treesystem.cn title=术习电报>术习电报</a>
+</li>
+</ul>
+</section>
+<section class=widget>
+<h3 class=widget-title>其它</h3>
+<ul class=widget-list>
+<li><a href=https://sliverhorn.com/index.xml>文章 RSS</a></li>
+</ul>
+</section>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
