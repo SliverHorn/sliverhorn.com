@@ -90,56 +90,56 @@ $$</p>
 <table>
 <thead>
 <tr>
-<th>序号</th>
-<th>函数</th>
-<th>函数作用</th>
+<th style=text-align:center>序号</th>
+<th style=text-align:left>函数</th>
+<th style=text-align:left>函数作用</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td><code>int SequenceTableInit(SequenceTable *sequenceTable);</code></td>
-<td>初始化表。构造一个空的线性表。</td>
+<td style=text-align:center>1</td>
+<td style=text-align:left><code>int SequenceTableInit(SequenceTable *sequenceTable);</code></td>
+<td style=text-align:left>初始化表。构造一个空的线性表。</td>
 </tr>
 <tr>
-<td>2</td>
-<td><code>int SequenceTableLength(SequenceTable sequenceTable);</code></td>
-<td>求表长。返回线性表L的长度，即L中数据元素的个数。</td>
+<td style=text-align:center>2</td>
+<td style=text-align:left><code>int SequenceTableLength(SequenceTable sequenceTable);</code></td>
+<td style=text-align:left>求表长。返回线性表L的长度，即L中数据元素的个数。</td>
 </tr>
 <tr>
-<td>3</td>
-<td><code>int SequenceTableLocate(SequenceTable sequenceTable, ElemType elemType);</code></td>
-<td>按值查找操作。获取表L中查找具有给定关键宇值的元素。</td>
+<td style=text-align:center>3</td>
+<td style=text-align:left><code>int SequenceTableLocate(SequenceTable sequenceTable, ElemType elemType);</code></td>
+<td style=text-align:left>按值查找操作。获取表L中查找具有给定关键宇值的元素。</td>
 </tr>
 <tr>
-<td>4</td>
-<td><code>int SequenceTableGet(SequenceTable sequenceTable, int index);</code></td>
-<td>按位查找操作。获取表L中第i个位置的元素的值。</td>
+<td style=text-align:center>4</td>
+<td style=text-align:left><code>int SequenceTableGet(SequenceTable sequenceTable, int index);</code></td>
+<td style=text-align:left>按位查找操作。获取表L中第i个位置的元素的值。</td>
 </tr>
 <tr>
-<td>5</td>
-<td><code>bool SequenceTableInsert(SequenceTable *sequenceTable, int index, ElemType elem);</code></td>
-<td>插入操作。在表L中的第i个位置上插入指定元素e。</td>
+<td style=text-align:center>5</td>
+<td style=text-align:left><code>bool SequenceTableInsert(SequenceTable *sequenceTable, int index, ElemType elem);</code></td>
+<td style=text-align:left>插入操作。在表L中的第i个位置上插入指定元素e。</td>
 </tr>
 <tr>
-<td>6</td>
-<td><code>bool SequenceTableDelete(SequenceTable *sequenceTable, int index, ElemType *elemType);</code></td>
-<td>删除操作。州除表L中第i个位置的元素，并用e返回删除元素的值。</td>
+<td style=text-align:center>6</td>
+<td style=text-align:left><code>bool SequenceTableDelete(SequenceTable *sequenceTable, int index, ElemType *elemType);</code></td>
+<td style=text-align:left>删除操作。州除表L中第i个位置的元素，并用e返回删除元素的值。</td>
 </tr>
 <tr>
-<td>7</td>
-<td><code>void SequenceTablePrint(SequenceTable sequenceTable)</code></td>
-<td>输出操作。按前后顺序输出线性表工的元素值。</td>
+<td style=text-align:center>7</td>
+<td style=text-align:left><code>void SequenceTablePrint(SequenceTable sequenceTable)</code></td>
+<td style=text-align:left>输出操作。按前后顺序输出线性表工的元素值。</td>
 </tr>
 <tr>
-<td>8</td>
-<td><code>bool SequenceTableEmpty(SequenceTable sequenceTable)</code></td>
-<td>判空操作。</td>
+<td style=text-align:center>8</td>
+<td style=text-align:left><code>bool SequenceTableEmpty(SequenceTable sequenceTable)</code></td>
+<td style=text-align:left>判空操作。</td>
 </tr>
 <tr>
-<td>9</td>
-<td><code>void SequenceTableDestroy(SequenceTable *sequenceTable)</code></td>
-<td>销毁操作。</td>
+<td style=text-align:center>9</td>
+<td style=text-align:left><code>void SequenceTableDestroy(SequenceTable *sequenceTable)</code></td>
+<td style=text-align:left>销毁操作。</td>
 </tr>
 </tbody>
 </table>
@@ -410,7 +410,7 @@ $$</p>
 </code></pre></td></tr></table>
 </div>
 </div><h2 id=顺序表的结构>顺序表的结构</h2>
-<p>线性表的顺序存储称为顺序表，它是由一组地址连续的存储单元依次存储线性表中的数据 元素，从而使得逻辑上相邻的两个元素在物理位置上也相邻。</p>
+<p>线性表的顺序存储称为顺序表，它是由一组地址连续的存储单元依次存储线性表中的数据元素，从而使得逻辑上相邻的两个元素在物理位置上也相邻。</p>
 <p>顺序表的特点:</p>
 <ul>
 <li>顺序表最主要的特点是随机存取，即通过首地址和元素序号可在时间 $O(1)$ 内找到指定的元素。</li>
