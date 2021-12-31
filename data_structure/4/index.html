@@ -361,6 +361,50 @@ SliverHorn的博客
 </code></pre></td></tr></table>
 </div>
 </div><h2 id=用循环数组实现队列>用循环数组实现队列</h2>
+<p>用数组实现表的方法同样可用于实现队列，但这样做的效果并不好。尽管可以用一个游标来指示队尾，使得 <code>EnterQueue</code> 运算在 $O(1)$ 时间内完成，但是在执行 <code>DeleteQueue</code> 时，为了删除队首元素，必须将数组中其他所有元素都向前移动一个位置。这样当队列中有 $n$ 个元素时，执行 <code>DeleteOueue</code> 就需要 $O(n)$ 时间。</p>
+<p>为了提高运算的效率，采用另一种观点来处理数组中各单元的位置关系。设想数组 <code>queue[0:maxsize-1]</code> 中的单元不是排成一行，而是围成一个圆环，即 <code>queue[0]</code> 接在 <code>queue[maxsize-1]</code> 的后面。这种意义下的数组称为循环数组，如图4-3 所示。</p>
+<p>
+<a data-fancybox=gallery href=/data_structure/4-3.png>
+<img class=mx-auto alt=image-20211231175535877 src=/data_structure/4-3.png>
+</a>
+</p>
+<p>用循环数组实现队列时，将队列中从队首到队尾的元素按顺时针方向存放在循环数组的一段连续的单元中。当需要将新元素入队时，可将队尾游标 rear 按顺时针方向移一位，并在这个单元中存入新元素。出队运算也很简单，只要将队首游标 <code>front</code> 按顺时针方向移一位即可。容易看出，用循环数组来实现队列可以在 $O(1)$ 时间内完成 <code>EnterQueue</code> 和 <code>DeleteQueue</code> 运算。执行一系列的入队与出队运算，将使整个队列在循环数组中按顺时针方向移动。</p>
+<p>在图 4-3 中，直接用队首游标front 指向队首元素所在的单元，用队尾游标 <code>rear</code> 指向队尾元素所在的单元。另</p>
+<p>外，也可以用队首游标 <code>front</code> 指向队首元素所在单元的前一个单元或用队尾游标 rear 指向队尾元素所在单元的下有一个单元的方法来表示队列在循环数组中的位置，如图4-4所示。</p>
+<p>
+<a data-fancybox=gallery href=/data_structure/4-4.png>
+<img class=mx-auto alt=image-20211231175902555 src=/data_structure/4-4.png>
+</a>
+</p>
+<p>在循环数组中，不论用哪一种方式来指示队首与队尾元素，都要解决一个细节问题，即如何表示满队列和空队列。例如，在图4-5中，<code>maxsize=6</code> ，队列中已有3个元素，分别用上述了3种方法来表示队首和队尾元素，如图 4-5 (a),(b)和(c)所示。</p>
+<p>
+<a data-fancybox=gallery href=/data_structure/4-5.png>
+<img class=mx-auto alt=image-20211231180133913 src=/data_structure/4-5.png>
+</a>
+</p>
+<p>现在又有3个元素 $a(4),a(5),a(6)$ 相继入队，使队列呈“满”的状态，如图 4-6 (a),(b)和(c)所示。</p>
+<p>
+<a data-fancybox=gallery href=/data_structure/4-6.png>
+<img class=mx-auto alt=image-20211231180133913 src=/data_structure/4-6.png>
+</a>
+</p>
+<p>如果在图 4-5 中，3个元素 $a(1),a(2),a(3)$ 相继出队，使队列呈“空” 的状态，如图 4-7 (a),(b)和(c)所示。</p>
+<p>
+<a data-fancybox=gallery href=/data_structure/4-7.png>
+<img class=mx-auto alt=image-20211231180133913 src=/data_structure/4-7.png>
+</a>
+</p>
+<p>比较图 4-6 和图 4-7可以看出，不论采用哪一种方式表示队首和队尾元素的位置，都需要附加说明或约定才能区分满队列和空队列。
+通常有两种处理方法来解决这个问题。</p>
+<ul>
+<li>其一是另设一个布尔量来注明队列是空还是满。</li>
+<li>其二是约定当循环数组中元素个数达到 <code>maxsize-1</code> 时队列为满。这样，就可以用队列满和队列空时的队首和队尾游标的不同状态来区分这两种情况。例如，在图4-5中，当元素 $a(4)和a(5)$ 相继入队后，就使队列呈”满”的状态，如图 4-8 (a),(b)和(c)所示。</li>
+</ul>
+<p>
+<a data-fancybox=gallery href=/data_structure/4-8.png>
+<img class=mx-auto alt=image-20211231180133913 src=/data_structure/4-8.png>
+</a>
+</p>
 <h3 id=queue_cyclic_arrayh>queue_cyclic_array.h</h3>
 <div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
