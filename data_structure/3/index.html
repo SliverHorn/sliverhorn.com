@@ -4,14 +4,14 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=referrer content="no-referrer-when-downgrade">
-<title>第三章 栈和队列 | SliverHorn的博客</title>
-<meta property="og:title" content="第三章  栈和队列 - SliverHorn的博客">
+<title>第三章 栈 | SliverHorn的博客</title>
+<meta property="og:title" content="第三章 栈 - SliverHorn的博客">
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="2021-12-30T17:17:17+08:00">
 <meta property="article:modified_time" content="2021-12-30T17:17:17+08:00">
 <meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
 ">
-<meta name=description content="第三章  栈和队列">
+<meta name=description content="第三章 栈">
 <meta name=author content="SliverHorn">
 <meta property="og:url" content="https://sliverhorn.com/data_structure/3/">
 <link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
@@ -56,13 +56,30 @@ SliverHorn的博客
 <div class=post-toc style=position:absolute;top:188px>
 <h2 class=post-toc-title>文章目录</h2>
 <div class=post-toc-content>
-<nav id=TableOfContents></nav>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#栈的基本概念>栈的基本概念</a></li>
+<li><a href=#共享栈>共享栈</a></li>
+<li><a href=#用数组实现栈>用数组实现栈</a>
+<ul>
+<li><a href=#stack_arrayh>stack_array.h</a></li>
+<li><a href=#stack_arrayc>stack_array.c</a></li>
+</ul>
+</li>
+<li><a href=#用指针实现栈>用指针实现栈</a>
+<ul>
+<li><a href=#stack_pointerh>stack_pointer.h</a></li>
+<li><a href=#stack_pointerc>stack_pointer.c</a></li>
+</ul>
+</li>
+</ul>
+</nav>
 </div>
 </div>
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
 <article class=post>
 <header>
-<h1 class=post-title>第三章 栈和队列</h1>
+<h1 class=post-title>第三章 栈</h1>
 </header>
 <date class="post-meta meta-date">
 2021年12月30日
@@ -72,6 +89,45 @@ SliverHorn的博客
 阅读</span></span>
 </div>
 <div class=post-content>
+<h2 id=栈的基本概念>栈的基本概念</h2>
+<p>栈是一种特殊的表,这种表只在表首进行插入和删除操作。因此,表首对于栈来说具有特殊的意义,称为栈顶。相应地,表尾称为栈底。</p>
+<p>栈顶：表首</p>
+<p>空栈：不含任何元素的栈称</p>
+<p>特性：先进后出, 后进先出(LIFO[Last In First Out])， 也称为LIFO表</p>
+<p>
+<a data-fancybox=gallery href=/data_structure/3-1.png>
+<img class=mx-auto alt=栈的基本概念 src=/data_structure/3-1.png>
+</a>
+</p>
+<p>假设一个栈S中的元素为 $a(n),a(n-1), &mldr; , a(1)$ ，则称 $a(1)$ 为栈底元素，$a(n)$ 为栈顶元素。栈中元素按 $a(1),a(2), &mldr; , a(n)$ 的次序 进栈。在任何时候，出栈的元素都是栈顶元素。换句话说，栈 的修改是按后进先出的原则进行的，如图3-1所示。因此，栈又称为后进先出(Last In First Out)表，简称为LIFO表。</p>
+<p>栈也是一种抽象数据类型。常用的栈运算如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>StackEmpty(S); <span style=color:#998;font-style:italic>// 测试栈S是否为空
+</span><span style=color:#998;font-style:italic></span>StackFull(S); <span style=color:#998;font-style:italic>// 测试栈S是否已满
+</span><span style=color:#998;font-style:italic></span>StackTop(S); <span style=color:#998;font-style:italic>// 返回栈S的栈顶元素
+</span><span style=color:#998;font-style:italic></span>Push(x, S); <span style=color:#998;font-style:italic>// 在栈S的栈顶插入元素x， 简称为讲元素x入栈
+</span><span style=color:#998;font-style:italic></span>Pop(S); <span style=color:#998;font-style:italic>// 删除并返回栈S的栈顶元素， 简称为抛栈
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id=共享栈>共享栈</h2>
+<p>利用栈底位置相对不变的特性，可让两个顺序栈共享一个一维数组空间，将两个栈的 栈底分别设置在共享空间的两端，两个栈顶向共享空间的中间延伸。</p>
+<p>
+<a data-fancybox=gallery href=/data_structure/3-2.png>
+<img class=mx-auto alt=共享栈 src=/data_structure/3-2.png>
+</a>
+</p>
+<p>两个栈的栈顶指针都指向栈顶元素， $top_0 = -1$ 时 $0$ 号栈为空，$top_1 = MaxSize$ 时 $1$ 号栈为空;仅当两个栈顶指针相邻 $(top_1 - top_0 = 1)$ 时，判断为栈满.当 $0$ 号栈进栈时 $top_0$ 先加 $1$ 再赋值，$1$ 号栈进栈时 $top_1$ 先减 $1$ 再赋值;出栈时则刚好相反。</p>
+<p>共享栈是为了更有效的利用存储空间，两个栈的空间相互调节，只有在整个存储空间 被占满时才发生上溢。</p>
+<h2 id=用数组实现栈>用数组实现栈</h2>
+<h3 id=stack_arrayh>stack_array.h</h3>
 <div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
 <pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
@@ -84,17 +140,385 @@ SliverHorn的博客
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
 </span></code></pre></td>
 <td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#define MaxSize 50;
-</span><span style=color:#999;font-weight:700;font-style:italic></span>
-<span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> {
-  ElemType data[MaxSize];
-  <span style=color:#458;font-weight:700>int</span> top
-}Stack;
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#000;font-weight:700>typedef</span> <span style=color:#458;font-weight:700>int</span> StackArrayItem;
+<span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> stackArray <span style=color:#000;font-weight:700>*</span>StackArray;
 
-<span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>StackInit</span>(Stack <span style=color:#000;font-weight:700>*</span>S) {
-  s <span style=color:#000;font-weight:700>=</span> (Stack<span style=color:#000;font-weight:700>*</span>)malloc()
+<span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> stackArray {
+    <span style=color:#458;font-weight:700>int</span> Top; <span style=color:#998;font-style:italic>// 栈顶
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>int</span> MaxTop; <span style=color:#998;font-style:italic>// 栈空间上界
+</span><span style=color:#998;font-style:italic></span>    StackArrayItem <span style=color:#000;font-weight:700>*</span>Data; <span style=color:#998;font-style:italic>// 存储栈元素的数组
+</span><span style=color:#998;font-style:italic></span>} stackArray;
+
+<span style=color:#999;font-weight:700;font-style:italic>#ifndef DATA_STRUCT_STACK_ARRAY_H
+</span><span style=color:#999;font-weight:700;font-style:italic>#define DATA_STRUCT_STACK_ARRAY_H
+</span><span style=color:#999;font-weight:700;font-style:italic></span><span style=color:#998;font-style:italic>// StackArrayShow 输出栈元素
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>StackArrayShow</span>(StackArrayItem x);
+
+<span style=color:#998;font-style:italic>// StackArrayInit 创建一个容量为size的空栈
+</span><span style=color:#998;font-style:italic></span>StackArray <span style=color:#900;font-weight:700>StackArrayInit</span>(<span style=color:#458;font-weight:700>int</span> size);
+
+<span style=color:#998;font-style:italic>// StackArrayEmpty 当Top=-1时当前栈为空栈
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>StackArrayEmpty</span>(StackArray stack);
+
+<span style=color:#998;font-style:italic>// StackArrayFull 当 Top == MaxTop 时当前栈满
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>StackArrayFull</span>(StackArray stack);
+
+<span style=color:#998;font-style:italic>// StackArrayTop 栈顶元素存储在 Data[Top]中
+</span><span style=color:#998;font-style:italic></span>StackArrayItem <span style=color:#900;font-weight:700>StackArrayTop</span>(StackArray stack);
+
+<span style=color:#998;font-style:italic>// StackArrayPush 新栈顶元素 item 应该存储在 Data[Top+1]
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>StackArrayPush</span>(StackArrayItem item, StackArray stack);
+
+<span style=color:#998;font-style:italic>// StackArrayPop 删除栈顶元素后, 新栈顶元素在 Data[Top-1]中
+</span><span style=color:#998;font-style:italic></span>StackArrayItem <span style=color:#900;font-weight:700>StackArrayPop</span>(StackArray stack);
+
+<span style=color:#998;font-style:italic>// StackArrayFree 由于数组 Data 是动态分配的， 在使用结束时应由 StackArrayFree 释放分配给 Data 的空间，以免产生泄露
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>StackArrayFree</span>(StackArray stack);
+<span style=color:#999;font-weight:700;font-style:italic>#endif </span><span style=color:#998;font-style:italic>//DATA_STRUCT_STACK_ARRAY_H
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id=stack_arrayc>stack_array.c</h3>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;stack_array.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// StackArrayShow 输出栈元素
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>StackArrayShow</span>(StackArrayItem x) {
+}
+
+<span style=color:#998;font-style:italic>// StackArrayInit 创建一个容量为size的空栈
+</span><span style=color:#998;font-style:italic></span>StackArray <span style=color:#900;font-weight:700>StackArrayInit</span>(<span style=color:#458;font-weight:700>int</span> size) {
+    StackArray stack <span style=color:#000;font-weight:700>=</span> (StackArray) malloc(<span style=color:#000;font-weight:700>sizeof</span> <span style=color:#000;font-weight:700>*</span>stack);
+    stack<span style=color:#000;font-weight:700>-&gt;</span>Data <span style=color:#000;font-weight:700>=</span> (StackArrayItem <span style=color:#000;font-weight:700>*</span>) malloc(size <span style=color:#000;font-weight:700>*</span> <span style=color:#000;font-weight:700>sizeof</span>(StackArrayItem));
+    stack<span style=color:#000;font-weight:700>-&gt;</span>MaxTop <span style=color:#000;font-weight:700>=</span> size;
+    stack<span style=color:#000;font-weight:700>-&gt;</span>Top <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>;
+    <span style=color:#000;font-weight:700>return</span> stack;
+}
+
+<span style=color:#998;font-style:italic>// StackArrayEmpty 当Top=-1时当前栈为空栈
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>StackArrayEmpty</span>(StackArray stack) {
+    <span style=color:#000;font-weight:700>return</span> stack<span style=color:#000;font-weight:700>-&gt;</span>Top <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>0</span>;
+}
+
+<span style=color:#998;font-style:italic>// StackArrayFull 当 Top == MaxTop 时当前栈满
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>StackArrayFull</span>(StackArray stack) {
+    <span style=color:#000;font-weight:700>return</span> stack<span style=color:#000;font-weight:700>-&gt;</span>Top <span style=color:#000;font-weight:700>==</span> stack<span style=color:#000;font-weight:700>-&gt;</span>MaxTop;
+}
+
+<span style=color:#998;font-style:italic>// StackArrayTop 栈顶元素存储在 Data[Top]中
+</span><span style=color:#998;font-style:italic></span>StackArrayItem <span style=color:#900;font-weight:700>StackArrayTop</span>(StackArray stack) {
+    <span style=color:#000;font-weight:700>if</span> (StackArrayEmpty(stack)) { <span style=color:#998;font-style:italic>// 判断栈非空
+</span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
+    }
+    <span style=color:#000;font-weight:700>return</span> stack<span style=color:#000;font-weight:700>-&gt;</span>Data[stack<span style=color:#000;font-weight:700>-&gt;</span>Top];
+}
+
+<span style=color:#998;font-style:italic>// StackArrayPush 新栈顶元素 item 应该存储在 Data[Top+1]
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>StackArrayPush</span>(StackArrayItem item, StackArray stack) {
+    <span style=color:#000;font-weight:700>if</span> (StackArrayFull(stack)) {
+        exit(<span style=color:#099>1</span>);
+    }
+    stack<span style=color:#000;font-weight:700>-&gt;</span>Data[<span style=color:#000;font-weight:700>++</span>stack<span style=color:#000;font-weight:700>-&gt;</span>Top] <span style=color:#000;font-weight:700>=</span> item;
+}
+
+<span style=color:#998;font-style:italic>// StackArrayPop 删除栈顶元素后, 新栈顶元素在 Data[Top-1]中
+</span><span style=color:#998;font-style:italic></span>StackArrayItem <span style=color:#900;font-weight:700>StackArrayPop</span>(StackArray stack) {
+    <span style=color:#000;font-weight:700>if</span> (StackArrayEmpty(stack)) {
+        exit(<span style=color:#099>1</span>);
+    }
+    <span style=color:#000;font-weight:700>return</span> stack<span style=color:#000;font-weight:700>-&gt;</span>Data[stack<span style=color:#000;font-weight:700>-&gt;</span>Top<span style=color:#000;font-weight:700>--</span>];
+}
+
+<span style=color:#998;font-style:italic>// StackArrayFree 由于数组 Data 是动态分配的， 在使用结束时应由 StackArrayFree 释放分配给 Data 的空间，以免产生泄露
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>StackArrayFree</span>(StackArray stack) {
+    free(stack<span style=color:#000;font-weight:700>-&gt;</span>Data);
+    free(stack);
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=用指针实现栈>用指针实现栈</h2>
+<h3 id=stack_pointerh>stack_pointer.h</h3>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>
+<span style=color:#998;font-style:italic>// StackPointerItem 栈元素类型
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#458;font-weight:700>int</span> StackChainItem;
+
+<span style=color:#998;font-style:italic>// StackChain 栈结点指针类型
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> stackChain <span style=color:#000;font-weight:700>*</span>StackChain;
+
+<span style=color:#998;font-style:italic>// stackChain 栈结构
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> stackChain {
+    StackChainItem Element; <span style=color:#998;font-style:italic>// 栈元素
+</span><span style=color:#998;font-style:italic></span>    StackChain Next; <span style=color:#998;font-style:italic>// 下一个结点的指针
+</span><span style=color:#998;font-style:italic></span>} stackChain;
+
+<span style=color:#998;font-style:italic>// StackPointer 栈指针类型
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> stackPointer <span style=color:#000;font-weight:700>*</span>StackPointer;
+
+<span style=color:#998;font-style:italic>// stackPointer 栈结构
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> stackPointer {
+    StackChain Top; <span style=color:#998;font-style:italic>// 栈顶指针
+</span><span style=color:#998;font-style:italic></span>} stackPointer;
+
+<span style=color:#999;font-weight:700;font-style:italic>#ifndef DATA_STRUCT_STACK_POINTER_H
+</span><span style=color:#999;font-weight:700;font-style:italic>#define DATA_STRUCT_STACK_POINTER_H
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// NewStackChain 创建一个新结点
+</span><span style=color:#998;font-style:italic></span>StackChain <span style=color:#900;font-weight:700>NewStackChain</span>();
+
+<span style=color:#998;font-style:italic>// StackPointerInit 将 Top 置为 空指针, 创建一个空栈
+</span><span style=color:#998;font-style:italic></span>StackPointer <span style=color:#900;font-weight:700>StackPointerInit</span>();
+
+<span style=color:#998;font-style:italic>// StackPointerEmpty 简单的检测指向栈顶的指针 Top 是否为空指针
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>StackPointerEmpty</span>(StackPointer stack);
+
+<span style=color:#998;font-style:italic>// StackPointerTop 返回栈 stack 的栈顶结点中的元素
+</span><span style=color:#998;font-style:italic></span>StackChainItem <span style=color:#900;font-weight:700>StackPointerTop</span>(StackPointer stack);
+
+<span style=color:#998;font-style:italic>// StackPointerPush
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span>  <span style=color:#900;font-weight:700>StackPointerPush</span>(StackPointer stack, StackChainItem item);
+
+<span style=color:#998;font-style:italic>// StackPointerPop 先将 stack 的栈顶元素存于 item 中,然后修改栈顶指针使其指向栈顶元素的下一个元素,从而删除栈顶元素,最后返回 item 。
+</span><span style=color:#998;font-style:italic></span>StackChainItem  <span style=color:#900;font-weight:700>StackPointerPop</span>(StackPointer stack);
+
+<span style=color:#999;font-weight:700;font-style:italic>#endif </span><span style=color:#998;font-style:italic>//DATA_STRUCT_STACK_POINTER_H
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id=stack_pointerc>stack_pointer.c</h3>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;stack_pointer.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// NewStackChain 创建一个新结点
+</span><span style=color:#998;font-style:italic></span>StackChain <span style=color:#900;font-weight:700>NewStackChain</span>() {
+    <span style=color:#000;font-weight:700>return</span> (StackChain)malloc(<span style=color:#000;font-weight:700>sizeof</span>(stackChain));
+}
+
+<span style=color:#998;font-style:italic>// StackPointerInit 将 Top 置为 空指针, 创建一个空栈
+</span><span style=color:#998;font-style:italic></span>StackPointer <span style=color:#900;font-weight:700>StackPointerInit</span>() {
+    StackPointer stack <span style=color:#000;font-weight:700>=</span> (StackPointer) malloc(<span style=color:#000;font-weight:700>sizeof</span> <span style=color:#000;font-weight:700>*</span>stack);
+    stack<span style=color:#000;font-weight:700>-&gt;</span>Top <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    <span style=color:#000;font-weight:700>return</span> stack;
+}
+
+<span style=color:#998;font-style:italic>// StackPointerEmpty 简单的检测指向栈顶的指针 Top 是否为空指针
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>StackPointerEmpty</span>(StackPointer stack) {
+    <span style=color:#000;font-weight:700>return</span> stack<span style=color:#000;font-weight:700>-&gt;</span>Top <span style=color:#000;font-weight:700>==</span> <span style=color:#099>0</span>;
+}
+
+<span style=color:#998;font-style:italic>// StackPointerTop 返回栈 stack 的栈顶结点中的元素
+</span><span style=color:#998;font-style:italic></span>StackChainItem <span style=color:#900;font-weight:700>StackPointerTop</span>(StackPointer stack) {
+    <span style=color:#000;font-weight:700>if</span> (StackPointerEmpty(stack)) { <span style=color:#998;font-style:italic>// 判断栈非空
+</span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
+    }
+    <span style=color:#000;font-weight:700>return</span> stack<span style=color:#000;font-weight:700>-&gt;</span>Top<span style=color:#000;font-weight:700>-&gt;</span>Element;
+}
+
+<span style=color:#998;font-style:italic>// StackPointerPush
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span>  <span style=color:#900;font-weight:700>StackPointerPush</span>(StackPointer stack, StackChainItem item) {
+    StackChain chain <span style=color:#000;font-weight:700>=</span> NewStackChain();
+    chain<span style=color:#000;font-weight:700>-&gt;</span>Element <span style=color:#000;font-weight:700>=</span> item;
+    chain<span style=color:#000;font-weight:700>-&gt;</span>Next <span style=color:#000;font-weight:700>=</span> stack<span style=color:#000;font-weight:700>-&gt;</span>Top;
+    stack<span style=color:#000;font-weight:700>-&gt;</span>Top <span style=color:#000;font-weight:700>=</span> chain;
+}
+
+<span style=color:#998;font-style:italic>// StackPointerPop 先将 stack 的栈顶元素存于 item 中,然后修改栈顶指针使其指向栈顶元素的下一个元素,从而删除栈顶元素,最后返回 item 。
+</span><span style=color:#998;font-style:italic></span>StackChainItem  <span style=color:#900;font-weight:700>StackPointerPop</span>(StackPointer stack) {
+    <span style=color:#000;font-weight:700>if</span> (StackPointerEmpty(stack)) { <span style=color:#998;font-style:italic>// 判断栈非空
+</span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
+    }
+    StackChainItem item <span style=color:#000;font-weight:700>=</span> stack<span style=color:#000;font-weight:700>-&gt;</span>Top<span style=color:#000;font-weight:700>-&gt;</span>Element;
+    StackChain chain <span style=color:#000;font-weight:700>=</span> stack<span style=color:#000;font-weight:700>-&gt;</span>Top;
+    stack<span style=color:#000;font-weight:700>-&gt;</span>Top <span style=color:#000;font-weight:700>=</span> chain<span style=color:#000;font-weight:700>-&gt;</span>Next;
+    free(chain);
+    <span style=color:#000;font-weight:700>return</span> item;
 }
 </code></pre></td></tr></table>
 </div>
