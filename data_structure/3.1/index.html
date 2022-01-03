@@ -1,0 +1,335 @@
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer-when-downgrade">
+<title>第三章 栈 练习 | SliverHorn的博客</title>
+<meta property="og:title" content="第三章 栈 练习 - SliverHorn的博客">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2021-12-30T17:17:17+08:00">
+<meta property="article:modified_time" content="2021-12-30T17:17:17+08:00">
+<meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
+">
+<meta name=description content="第三章 栈 练习">
+<meta name=author content="SliverHorn">
+<meta property="og:url" content="https://sliverhorn.com/data_structure/3.1/">
+<link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
+<link rel=stylesheet href=/css/normalize.css>
+<link rel=stylesheet href=/css/style.css>
+<script type=text/javascript src=//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js></script>
+<link href=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css rel=stylesheet>
+<link rel=stylesheet href=/css/douban.css>
+<link rel=stylesheet href=/css/other.css>
+</head>
+<body>
+<header id=header class=clearfix>
+<div class=container>
+<div class=col-group>
+<div class=site-name>
+<a id=logo href=https://sliverhorn.com>
+SliverHorn的博客
+</a>
+<p class=description>Golang 开发</p>
+</div>
+<div>
+<nav id=nav-menu class=clearfix>
+<a href=https://sliverhorn.com>首页</a>
+<a href=https://sliverhorn.com/c/ title=C语言>C语言</a>
+<a href=https://sliverhorn.com/data_structure/ title=数据结构>数据结构</a>
+<a href=https://sliverhorn.com/higher_mathematics/ title=高数>高数</a>
+<a href=https://sliverhorn.com/politics/ title=政治>政治</a>
+<a href=https://sliverhorn.com/tool/ title=工具>工具</a>
+<a href=https://sliverhorn.com/archives/ title=归档>归档</a>
+<a href=https://sliverhorn.com/about/ title=关于>关于</a>
+</nav>
+</div>
+</div>
+</div>
+</header>
+<div id=body>
+<div class=container>
+<div class=col-group>
+<div class=col-8 id=main>
+<div class=res-cons>
+<style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,7%);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style>
+<div class=post-toc style=position:absolute;top:188px>
+<h2 class=post-toc-title>文章目录</h2>
+<div class=post-toc-content>
+<nav id=TableOfContents></nav>
+</div>
+</div>
+<script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
+<article class=post>
+<header>
+<h1 class=post-title>第三章 栈 练习</h1>
+</header>
+<date class="post-meta meta-date">
+2021年12月30日
+</date>
+<div class=post-meta>
+<span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
+阅读</span></span>
+</div>
+<div class=post-content>
+<ol>
+<li>
+<p>限定仅在表尾进行插入和删除操作的线性表称为 (<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>)，它的修改是按 (<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>) 的原则进行的。</p>
+</li>
+<li>
+<p>若进栈序列为 $a, b, c$ ，则通过入栈操作可能得到的 $a, b, c$ 出栈的不同排列个数 (<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>)。</p>
+</li>
+</ol>
+<p>A. 4</p>
+<p>B. 5</p>
+<p>C. 6</p>
+<p>D. 7</p>
+<blockquote>
+<p>$n$ 不同元素进栈, 出栈元素不同排列的个数为 $\frac {1}{n+1}C_{2n}^{n}$</p>
+</blockquote>
+<ol start=3>
+<li>向顺序栈中压入新元素，应当 (<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>)。</li>
+</ol>
+<p>A. 先移动栈顶指针，再存入元素</p>
+<p>B. 先存入元素，再移动栈顶指针</p>
+<p>C. 先后次序无关紧要</p>
+<p>D. 同时进行</p>
+<ol start=4>
+<li>一个栈的入栈序列是 $1, 2, 3, 4, 5$ ，则栈的不可能输出序列是 (<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup>)。</li>
+</ol>
+<p>A. 43512</p>
+<p>B. 54321</p>
+<p>C. 45321</p>
+<p>D. 12345</p>
+<ol start=5>
+<li>栈内元素从栈底到栈顶依次为 (<sup id=fnref:5><a href=#fn:5 class=footnote-ref role=doc-noteref>5</a></sup>)。</li>
+</ol>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>ListStack myStack;
+myStack.push(<span style=color:#d14>&#34;A&#34;</span>);
+myStack.push(<span style=color:#d14>&#34;K&#34;</span>);
+myStack.push(<span style=color:#d14>&#34;D&#34;</span>);
+myStack.pop();
+myStack.push(<span style=color:#d14>&#34;H&#34;</span>);
+myStack.push(<span style=color:#d14>&#34;K&#34;</span>);
+myStack.pop();
+myStack.pop();
+myStack.push(<span style=color:#d14>&#34;D&#34;</span>);
+</code></pre></td></tr></table>
+</div>
+</div><ol start=6>
+<li>若栈采用顺序存储方式存储，现两栈共享空间 $V[1&mldr;m]$ ， $top1$ ， $top2$ ，分别代表第一和第二个栈的栈顶，栈 $1$ 的底在 $V[1]$ ，栈 $2$ 的底在 $V[2]$ ，则栈满的条件是 (<sup id=fnref:6><a href=#fn:6 class=footnote-ref role=doc-noteref>6</a></sup>)。</li>
+</ol>
+<p>A. $|top2 - top1| = 0$</p>
+<p>B. $top1 + 1 = top2$</p>
+<p>C. $top1 + top2 = m$</p>
+<p>D. $top1 = top2$</p>
+<ol start=7>
+<li>链栈对比顺序栈主要优点在于 (<sup id=fnref:7><a href=#fn:7 class=footnote-ref role=doc-noteref>7</a></sup>)。</li>
+</ol>
+<p>A. 通常不会出现栈满的情况</p>
+<p>B. 通常不会出现栈空的情况</p>
+<p>C. 插入操作更加方便</p>
+<p>D. 删除操作更加方便</p>
+<ol start=8>
+<li>将一个递归算法改为对应的非递归算法时，通常需要使用</li>
+</ol>
+<p>A. 栈</p>
+<p>B. 队列</p>
+<p>C. 循环队列</p>
+<p>D. 优先队列</p>
+<ol start=9>
+<li>栈的 $push$ 和 $pop$ 操作均在 (<sup id=fnref:8><a href=#fn:8 class=footnote-ref role=doc-noteref>8</a></sup>) 进行</li>
+</ol>
+<p>A. 栈顶位置</p>
+<p>B. 栈底位置</p>
+<p>C. 任意位置</p>
+<p>D. 中间位置</p>
+<ol start=10>
+<li>栈又称先进先出的线性表 (<sup id=fnref:9><a href=#fn:9 class=footnote-ref role=doc-noteref>9</a></sup>)。</li>
+<li>若已知一个栈的入栈序列是 $1, 2, 3,&mldr;,n$ ， 其输出序列为 $P_1, P_2, P_3,&mldr;P_n$ ， 若 $P_1 = n$ ，则 $P_i$ 为 (<sup id=fnref:10><a href=#fn:10 class=footnote-ref role=doc-noteref>10</a></sup>)。</li>
+</ol>
+<p>A. <code>i</code></p>
+<p>B. <code>n - i</code></p>
+<p>C. <code>n-i+1</code></p>
+<p>D. 不确定</p>
+<ol start=12>
+<li>由两个栈共享一个向量空间的好处是 (<sup id=fnref:11><a href=#fn:11 class=footnote-ref role=doc-noteref>11</a></sup>)。</li>
+</ol>
+<p>A. 减少存取时间，降低下溢发生的概率</p>
+<p>B. 节省存储空间，降低上溢发生的概率</p>
+<p>C. 减少存取时间，降低上溢发生的概率</p>
+<p>D. 节省存储空间，降低下溢发生的概率</p>
+<ol start=13>
+<li>设栈 $S$ 和队列 $Q$ 的初始状态为空，元素 $e_1, e_2, e_3, e_4, e_5, e_6$ 依次通过栈 $S$ ，一个元素进栈后即进队列 $Q$ ，若六个元素出栈的序列是 $e_2, e_4, e_3, e_6, e_5, e_1$ ，则栈S的容量至少应该是 (<sup id=fnref:12><a href=#fn:12 class=footnote-ref role=doc-noteref>12</a></sup>) 。</li>
+<li>解决括号匹配问题，最适合使用 (<sup id=fnref:13><a href=#fn:13 class=footnote-ref role=doc-noteref>13</a></sup>) 数据结构。</li>
+</ol>
+<p>A. 堆</p>
+<p>B. 栈</p>
+<p>C. 队列</p>
+<p>D.二叉树</p>
+<hr>
+<section class=footnotes role=doc-endnotes>
+<hr>
+<ol>
+<li id=fn:1 role=doc-endnote>
+<p>栈，后进先出&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:2 role=doc-endnote>
+<p>B. 5&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:3 role=doc-endnote>
+<p>A. 先移动栈顶指针，再存入元素&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:4 role=doc-endnote>
+<p>A. 43512&#160;<a href=#fnref:4 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:5 role=doc-endnote>
+<p>AKD&#160;<a href=#fnref:5 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:6 role=doc-endnote>
+<p>B. $top1 + 1 = top2$&#160;<a href=#fnref:6 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:7 role=doc-endnote>
+<p>A. 通常不会出现栈满的情况&#160;<a href=#fnref:7 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:8 role=doc-endnote>
+<p>A. 栈顶位置&#160;<a href=#fnref:8 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:9 role=doc-endnote>
+<p>错误。栈是先进后出，后进先出。&#160;<a href=#fnref:9 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:10 role=doc-endnote>
+<p>C. <code>n-i+1</code>&#160;<a href=#fnref:10 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:11 role=doc-endnote>
+<p>B. 节省存储空间，降低上溢发生的概率&#160;<a href=#fnref:11 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:12 role=doc-endnote>
+<p>3&#160;<a href=#fnref:12 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:13 role=doc-endnote>
+<p>B. 栈&#160;<a href=#fnref:13 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+</div>
+<div class=post-archive>
+<h2>See Also</h2>
+<ul class=listing>
+<li><a href=/data_structure/3/>第三章 栈</a></li>
+<li><a href=/data_structure/2.1/>第二章 线性表 练习</a></li>
+<li><a href=/data_structure/2/>第二章 线性表</a></li>
+<li><a href=/data_structure/1.1/>第一章 绪论 练习</a></li>
+<li><a href=/c/7.1/>第七章 用函数实现模块化 练习一</a></li>
+</ul>
+</div>
+<div class="post-meta meta-tags">
+没有标签
+</div>
+</article>
+<div class="post bg-white">
+<script src=https://utteranc.es/client.js repo="your github repo" issue-term=pathname theme=github-light crossorigin=anonymous async></script>
+</div>
+</div>
+<footer id=footer>
+<div>
+&copy; 2022 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
+| <a rel=nofollow target=_blank href=http://beian.miit.gov.cn/>粤ICP备19128176号</a>
+</div>
+<br>
+<div>
+<div class=github-badge>
+<a href=https://gohugo.io/ target=_black rel=nofollow><span class=badge-subject>Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+</div>
+<div class=github-badge>
+<a href=https://www.flysnow.org/ target=_black><span class=badge-subject>Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+</div>
+<div class=github-badge>
+<a href=https://github.com/flysnow-org/maupassant-hugo target=_black><span class=badge-subject>Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+</div>
+</div>
+</footer>
+<script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[['$','$']],processEscapes:!0}}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script src=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js></script>
+<a id=rocket href=#top></a>
+<script type=text/javascript src="/js/totop.js?v=0.0.0" async></script>
+<script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async></script>
+<script src=/js/douban.js></script>
+</div>
+<div id=secondary>
+<section class=widget>
+<form id=search action=https://sliverhorn.com/search/ method=get accept-charset=utf-8 target=_blank _lpchecked=1>
+<input type=text name=q maxlength=20 placeholder=Search>
+<input type=hidden name=sitesearch value=https://sliverhorn.com>
+<button type=submit class="submit icon-search"></button>
+</form>
+</section>
+<section class=widget>
+<h3 class=widget-title>最近文章</h3>
+<ul class=widget-list>
+<li>
+<a href=https://sliverhorn.com/post/2021/ title="2021 年度总结">2021 年度总结</a>
+</li>
+<li>
+<a href=https://sliverhorn.com/post/linux/oh-my-zsh-install/ title="oh-my-zsh Mac 安装教程">oh-my-zsh Mac 安装教程</a>
+</li>
+</ul>
+</section>
+<section class=widget>
+<h3 class=widget-title><a href=/categories/>分类</a></h3>
+<ul class=widget-list>
+<li><a href=https://sliverhorn.com/categories/DataStructure/>DataStructure (1)</a></li>
+<li><a href=https://sliverhorn.com/categories/Linux/>Linux (1)</a></li>
+<li><a href=https://sliverhorn.com/categories/Mac/>Mac (1)</a></li>
+</ul>
+</section>
+<section class=widget>
+<h3 class=widget-title><a href=/tags/>标签</a></h3>
+<div class=tagcloud>
+<a href=https://sliverhorn.com/tags/oh-my-zsh/>oh-my-zsh</a>
+<a href=https://sliverhorn.com/tags/tool/>tool</a>
+</div>
+</section>
+<section class=widget>
+<h3 class=widget-title>友情链接</h3>
+<ul class=widget-list>
+<li>
+<a target=_blank href=https://blog.leonardwang.cn/ title="牛逼哄哄 `王哥` 博客">牛逼哄哄 `王哥` 博客</a>
+</li>
+<li>
+<a target=_blank href=https://www.cnblogs.com/binHome/ title=songzhibin97的博客>songzhibin97的博客</a>
+</li>
+<li>
+<a target=_blank href=https://leixf.cn/ title="跃动指尖 – 悦动生活">跃动指尖 – 悦动生活</a>
+</li>
+<li>
+<a target=_blank href=https://www.treesystem.cn title=术习电报>术习电报</a>
+</li>
+</ul>
+</section>
+<section class=widget>
+<h3 class=widget-title>其它</h3>
+<ul class=widget-list>
+<li><a href=https://sliverhorn.com/index.xml>文章 RSS</a></li>
+</ul>
+</section>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

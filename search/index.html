@@ -73,7 +73,7 @@ SliverHorn的博客
 <script type=text/javascript>var getUrlParameter=function(d){var e=window.location.search.substring(1),c=e.split('&'),a,b;for(b=0;b<c.length;b++)if(a=c[b].split('='),a[0]===d)return a[1]===void 0||decodeURIComponent(a[1])};$(document).ready(function(){var a=getUrlParameter("q");$("span.keyword").text(a),$("article.post").remove(),$.ajax({url:'https://sliverhorn.com/index.xml',dataType:"xml",success:function(b){$(b).find("item").each(function(){var b=$(this),e=b.find("title").text(),f,c,d;e.toLowerCase().indexOf(a.toLowerCase())>=0&&(f=b.find("link").text(),c=`<article class="post"><header><h1 class="post-title"><a href="`+f+`">`+e+`</a></h1></header>`,d=new Date(b.find("pubDate").text()),c+=`<date class="post-meta meta-date">`+d.getFullYear()+`年`+(d.getMonth()+1)+`月`+d.getDate()+`日</date>`,c+=`<div class="post-content">`+b.find("description").text()+`……<p class="readmore"><a href="`+f+`">阅读全文</a></p></div></article>`,$("div.res-cons").append(c))})}})})</script>
 <footer id=footer>
 <div>
-&copy; 2021 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
+&copy; 2022 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
 | <a rel=nofollow target=_blank href=http://beian.miit.gov.cn/>粤ICP备19128176号</a>
 </div>
 <br>

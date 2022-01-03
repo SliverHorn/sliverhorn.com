@@ -4,14 +4,16 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=referrer content="no-referrer-when-downgrade">
-<title> | SliverHorn的博客</title>
-<meta property="og:title" content=" - SliverHorn的博客">
+<title>第四章 队列 练习 | SliverHorn的博客</title>
+<meta property="og:title" content="第四章 队列 练习 - SliverHorn的博客">
 <meta property="og:type" content="article">
+<meta property="article:published_time" content="2021-12-31T17:17:17+08:00">
+<meta property="article:modified_time" content="2021-12-31T17:17:17+08:00">
 <meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
 ">
-<meta name=description content>
+<meta name=description content="第四章 队列 练习">
 <meta name=author content="SliverHorn">
-<meta property="og:url" content="https://sliverhorn.com/c/c/">
+<meta property="og:url" content="https://sliverhorn.com/data_structure/4.1/">
 <link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
 <link rel=stylesheet href=/css/normalize.css>
 <link rel=stylesheet href=/css/style.css>
@@ -54,36 +56,107 @@ SliverHorn的博客
 <div class=post-toc style=position:absolute;top:188px>
 <h2 class=post-toc-title>文章目录</h2>
 <div class=post-toc-content>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#c语言>C语言</a></li>
-</ul>
-</nav>
+<nav id=TableOfContents></nav>
 </div>
 </div>
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
 <article class=post>
 <header>
-<h1 class=post-title></h1>
+<h1 class=post-title>第四章 队列 练习</h1>
 </header>
 <date class="post-meta meta-date">
-1年1月1日
+2021年12月31日
 </date>
 <div class=post-meta>
 <span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
 阅读</span></span>
 </div>
 <div class=post-content>
-<h2 id=c语言>C语言</h2>
+<ol>
+<li>
+<p>队列是一种操作受限的线性表，它与栈不同的是，队列中所有的插入操作均限制在表的一段进行，而所有的删除操作都限制在表的另一端进行，允许插入的一端称为 (<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>) ，允许删除的一端称为 (<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>) ，队列具有 (<sup id=fnref:1><a href=#fn:1 class=footnote-ref role=doc-noteref>1</a></sup>) 的特点。</p>
+</li>
+<li>
+<p>一个队列的入队序列是 $a, b, c, d$ ，则队列的输出序列是 (<sup id=fnref:2><a href=#fn:2 class=footnote-ref role=doc-noteref>2</a></sup>) 。</p>
+</li>
+</ol>
+<p>A. $a, b, c, d$</p>
+<p>B. $a, d, c, b$</p>
+<p>C. $c, b, d, a$</p>
+<p>D. $d, c, b, a$</p>
+<ol start=3>
+<li>循环队列用数组 $A[0&mldr;m-1]$ 存放其元素，已知其头尾指针分别是 <code>front</code> 和 <code>rear</code> ，则当前队列的元素个数是 (<sup id=fnref:3><a href=#fn:3 class=footnote-ref role=doc-noteref>3</a></sup>) 。</li>
+<li>循环队列 的数据元素值存放在长度为 $Q$ 的数组中，且此数组最多只能存放 $m$ 个数据元素.已知头尾指针分别是 $Q.front$ 和 $Q.rear$ ，则判断 $Q$ 为满队列的条件是 (<sup id=fnref:4><a href=#fn:4 class=footnote-ref role=doc-noteref>4</a></sup>) 。</li>
+</ol>
+<p>A. $Q.front == Q.rear$</p>
+<p>B. $Q.front == (Q.rear + 1) % m$</p>
+<p>C. $Q.front != Q.rear$</p>
+<p>D. B. $Q.front != (Q.rear + 1) % m$</p>
+<ol start=5>
+<li>在一个链队列中，假定 $front$ 和 $rear$ 分别为队首指针和队尾指针，则删除一个结点的操作为 (<sup id=fnref:5><a href=#fn:5 class=footnote-ref role=doc-noteref>5</a></sup>) 。</li>
+</ol>
+<p>A. <code>front = front->next</code></p>
+<p>B. <code>rear = rear->next</code></p>
+<p>C. <code>rear = front->next</code></p>
+<p>D. <code>front = rear -> next</code></p>
+<ol start=6>
+<li>在循环顺序队列中，假设以设置一个计数变量 <code>num</code> 的方法来区分队列判满和判空的条件，<code>front</code> 和 <code>rear</code> 分别为队首和队尾指针，它们分别指向队首元素和队尾元素的下一个存储单元。队列的最大存储容量为 <code>MaxSize</code>，则下面不是队列判满或判空条件是 (<sup id=fnref:6><a href=#fn:6 class=footnote-ref role=doc-noteref>6</a></sup>)。</li>
+</ol>
+<p>A. <code>front == rear</code></p>
+<p>B. <code>front == rear && num == 0</code></p>
+<p>C. <code>front == rear &&num > 0</code></p>
+<p>D. <code>num == MaxSize</code></p>
+<ol start=7>
+<li>
+<p>在具有n个单元的循环队列中，队满时共有 (<sup id=fnref:7><a href=#fn:7 class=footnote-ref role=doc-noteref>7</a></sup>) 个元素。</p>
+</li>
+<li>
+<p>栈和队列的共同点是 (<sup id=fnref:8><a href=#fn:8 class=footnote-ref role=doc-noteref>8</a></sup>) 。</p>
+</li>
+</ol>
+<p>A. 都是先进先出</p>
+<p>B. 都是先进后出</p>
+<p>C. 只允许在端点处插入和删除元素</p>
+<p>D. 没有共同点</p>
+<hr>
+<section class=footnotes role=doc-endnotes>
+<hr>
+<ol>
+<li id=fn:1 role=doc-endnote>
+<p><code>队尾，队首，先进先出 </code>&#160;<a href=#fnref:1 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:2 role=doc-endnote>
+<p>A. $a, b, c, d$&#160;<a href=#fnref:2 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:3 role=doc-endnote>
+<p><code>(rear + m - front) % m</code>&#160;<a href=#fnref:3 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:4 role=doc-endnote>
+<p>B. $Q.front == (Q.rear + 1) % m$&#160;<a href=#fnref:4 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:5 role=doc-endnote>
+<p>A. <code>front = front->next</code>&#160;<a href=#fnref:5 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:6 role=doc-endnote>
+<p>A. <code>front == rear</code>&#160;<a href=#fnref:6 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:7 role=doc-endnote>
+<p><code>n-1</code>&#160;<a href=#fnref:7 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+<li id=fn:8 role=doc-endnote>
+<p>C. 只允许在端点处插入和删除元素&#160;<a href=#fnref:8 class=footnote-backref role=doc-backlink>&#8617;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
 <ul class=listing>
-<li><a href=/post/2021/>2021 年度总结</a></li>
-<li><a href=/data_structure/4.1/>第四章 队列 练习</a></li>
 <li><a href=/data_structure/4/>第四章 队列</a></li>
-<li><a href=/data_structure/3/>第三章 栈</a></li>
 <li><a href=/data_structure/3.1/>第三章 栈 练习</a></li>
+<li><a href=/data_structure/3/>第三章 栈</a></li>
+<li><a href=/data_structure/2.1/>第二章 线性表 练习</a></li>
+<li><a href=/data_structure/2/>第二章 线性表</a></li>
 </ul>
 </div>
 <div class="post-meta meta-tags">
