@@ -75,6 +75,11 @@ SliverHorn的博客
 <li><a href=#三划分快速排序算法>三划分快速排序算法</a></li>
 </ul>
 </li>
+<li><a href=#合并排序算法>合并排序算法</a>
+<ul>
+<li><a href=#基本思想及实现>基本思想及实现</a></li>
+</ul>
+</li>
 </ul>
 </nav>
 </div>
@@ -754,6 +759,264 @@ $$</p>
     }
     SortThreeDivisions(a, l, j);
     SortThreeDivisions(a, i, r);
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>三划分快速排序算法在待排序数组 $a[l:r]$ 中有大量键值相同的元素时效率较高。另一方面，当待排序数组 $a[l:r]$ 中没有大量键值相同的元素时，三划分快速排序算法也不降低原快速排序算法的效率。</p>
+<h2 id=合并排序算法>合并排序算法</h2>
+<h3 id=基本思想及实现>基本思想及实现</h3>
+<p>合并排序算法是用分治策略实现对 $n$ 个元素排序的算法。其基本思想是：当 $n = 1$ 时终止排序，否则将待排序元素分成大小大致相同的两个子集，分别对两个子集进行排序，最终将排好序的子集合并为所求的排好序的集合。</p>
+<p>合并排序算法可递归地描述如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_merge.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// mergeAB 合并 a[l:m] 和 a[m+1:r] 到 b[l:r]
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>mergeAB</span>(element a[], element b[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> m, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l, j <span style=color:#000;font-weight:700>=</span> m <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>, k <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+    <span style=color:#000;font-weight:700>while</span> ((i <span style=color:#000;font-weight:700>&lt;=</span> m) <span style=color:#000;font-weight:700>&amp;&amp;</span> (j <span style=color:#000;font-weight:700>&lt;=</span> r)) { <span style=color:#998;font-style:italic>// 取两段中较小元素到数组b中
+</span><span style=color:#998;font-style:italic></span>        <span style=color:#000;font-weight:700>if</span> (less(a[i], a[j])) {
+            b[k<span style=color:#000;font-weight:700>++</span>] <span style=color:#000;font-weight:700>=</span> a[i<span style=color:#000;font-weight:700>++</span>];
+        } <span style=color:#000;font-weight:700>else</span> {
+            b[k<span style=color:#000;font-weight:700>++</span>] <span style=color:#000;font-weight:700>=</span> a[j<span style=color:#000;font-weight:700>++</span>];
+        }
+    }
+  	<span style=color:#998;font-style:italic>// 处理剩余元素
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#000;font-weight:700>if</span> (i <span style=color:#000;font-weight:700>&gt;</span> m) {
+        <span style=color:#000;font-weight:700>for</span> (i <span style=color:#000;font-weight:700>=</span> j; i <span style=color:#000;font-weight:700>&lt;</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+            b[k<span style=color:#000;font-weight:700>++</span>] <span style=color:#000;font-weight:700>=</span> a[i];
+        }
+    } <span style=color:#000;font-weight:700>else</span> {
+        <span style=color:#000;font-weight:700>for</span> (; i <span style=color:#000;font-weight:700>&lt;</span> m; i<span style=color:#000;font-weight:700>++</span>) {
+            b[k<span style=color:#000;font-weight:700>++</span>] <span style=color:#000;font-weight:700>=</span> a[i];
+        }
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>其中，在第7行由算法 <code>mergeAB</code> 把两个排好序的数组段合并到一个新的数组 $b$ 中，然后在第8行由函数 <code>copy</code> 将合并后的数组段复制回数组 $a$ 中。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_merge.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// copy
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>copy</span>(element b[], element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+        a[i] <span style=color:#000;font-weight:700>=</span> b[i];
+    }
+}
+
+<span style=color:#998;font-style:italic>// SortMerge 合并排序算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortMerge</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#458;font-weight:700>int</span> m <span style=color:#000;font-weight:700>=</span> (r <span style=color:#000;font-weight:700>+</span> l) <span style=color:#000;font-weight:700>/</span> <span style=color:#099>2</span>; <span style=color:#998;font-style:italic>// 取中点
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#000;font-weight:700>if</span> (r <span style=color:#000;font-weight:700>&lt;=</span> l) {
+        <span style=color:#000;font-weight:700>return</span>;
+    }
+    element b[] <span style=color:#000;font-weight:700>=</span> {};
+    SortMerge(a, l, m); <span style=color:#998;font-style:italic>// 对左半段排序
+</span><span style=color:#998;font-style:italic></span>    SortMerge(a, m <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>, r); <span style=color:#998;font-style:italic>// 对右半段排序
+</span><span style=color:#998;font-style:italic></span>    mergeAB(a, b, l, m, r); <span style=color:#998;font-style:italic>// 合并到数组b
+</span><span style=color:#998;font-style:italic></span>    copy(b, a, l, r); <span style=color:#998;font-style:italic>// 复制回数组a
+</span><span style=color:#998;font-style:italic></span>}
+</code></pre></td></tr></table>
+</div>
+</div><p><code>mergeAB</code> 和 <code>copy</code> 显然可在 $O(n)$ 时间内完成，因此合并排序算法对八个元素进行排序，在最坏情况下所需的计算时间 $T(n)$ 满足
+$$
+T(n) =
+\begin{cases}
+O(1), & n \leq 1 \
+2T(\frac{n}{2})+O(n), & n \gt 1
+\end{cases}
+$$</p>
+<p>解此递归方程可知 $T(n)=O(nlogn)$ 。由于排序问题的计算时间下界为 $\Omega(nlogn)$，所以合并
+排序算法是一个渐近最优算法。</p>
+<p>对合并算法的改进</p>
+<p>虽然上述合并排序算法已是一个渐近最优算法，但仍有改进的余地。首先对于算法 <code>mergeAB</code> 可以改进如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_merge.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_merge_improve.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_three_median.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// merge a b 数组合并 优化版-1
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>merge</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> m, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, j <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, k <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    element b[] <span style=color:#000;font-weight:700>=</span> {};
+    <span style=color:#000;font-weight:700>for</span> (i <span style=color:#000;font-weight:700>=</span> m <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>; i <span style=color:#000;font-weight:700>&gt;</span> l; i<span style=color:#000;font-weight:700>--</span>) {
+        b[i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>] <span style=color:#000;font-weight:700>=</span> a[i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>];
+    }
+    <span style=color:#000;font-weight:700>for</span> (j <span style=color:#000;font-weight:700>=</span> m; j <span style=color:#000;font-weight:700>&lt;</span> r; j<span style=color:#000;font-weight:700>++</span>) {
+        b[r <span style=color:#000;font-weight:700>+</span> m <span style=color:#000;font-weight:700>-</span> j] <span style=color:#000;font-weight:700>=</span> a[j <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>];
+    }
+    <span style=color:#000;font-weight:700>for</span> (k <span style=color:#000;font-weight:700>=</span> l; k <span style=color:#000;font-weight:700>&lt;=</span> r; k<span style=color:#000;font-weight:700>++</span>) {
+        <span style=color:#000;font-weight:700>if</span> (less(b[i], b[j])) {
+            a[k] <span style=color:#000;font-weight:700>=</span> b[i<span style=color:#000;font-weight:700>++</span>];
+        } <span style=color:#000;font-weight:700>else</span> {
+            a[k] <span style=color:#000;font-weight:700>=</span> b[j<span style=color:#000;font-weight:700>--</span>];
+        }
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>该算法借助于辅助数组 $b$ 将合并后的数组仍存放在数组 $a$ 中。先将 $a[l:m]$ 顺序复制到 $b[l:m]$ 中， $a[m+1:r]$ 逆序复制到 $b[m+1:r]$ 中，然后从 $b[l:r]$ 的两头开始，合并到数组 $a$ 中。</p>
+<p>利用此合并技术实现的合并排序算法如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_merge.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_merge_improve.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_three_median.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// SortMergeImprove 合并排序算法 优化版-1
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortMergeImprove</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#458;font-weight:700>int</span> m <span style=color:#000;font-weight:700>=</span> (r <span style=color:#000;font-weight:700>+</span> l) <span style=color:#000;font-weight:700>/</span> <span style=color:#099>2</span>;
+    <span style=color:#000;font-weight:700>if</span> (r <span style=color:#000;font-weight:700>&lt;=</span> l) {
+        <span style=color:#000;font-weight:700>return</span>;
+    }
+    SortMergeImprove(a, l, m);
+    SortMergeImprove(a, m <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>, r);
+    merge(a, l, m, r);
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>上述算法形式上消除了从数组 $b$ 复制回数组 $a$ 的 <code>copy</code> 运算，但实际上并没有省去这些运算。在算法递归调用时，交替地把数组 $b$ 和数组 $a$ 作为辅助数组使用可以省去复制运算。另方面，在数组规模较小时终止递归，改用非递归算法排序可以有效地提高递归算法的效率。采用上述改进措施可使算法效率提高约 40%。</p>
+<p>改进后的合并排序算法如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_merge.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_merge_improve.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_three_median.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// mergeImproveAB a b 数组合并 优化版-2
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>improveMergeAB</span>(element a[], element b[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#458;font-weight:700>int</span> m <span style=color:#000;font-weight:700>=</span> (l <span style=color:#000;font-weight:700>+</span> r) <span style=color:#000;font-weight:700>/</span> <span style=color:#099>2</span>;
+    <span style=color:#000;font-weight:700>if</span> (r <span style=color:#000;font-weight:700>-</span> l <span style=color:#000;font-weight:700>&lt;=</span> <span style=color:#099>10</span>) {
+        insertion(a, l, r);
+        <span style=color:#000;font-weight:700>return</span>;
+    }
+    improveMergeAB(b, a, l, m);
+    improveMergeAB(b, a, m <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>, r);
+    mergeAB(b, a, l, m, r);
+}
+<span style=color:#998;font-style:italic>// SortImproveMerge 合并排序算法 优化版-2
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortImproveMerge</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    element b[] <span style=color:#000;font-weight:700>=</span> {};
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+        b[i] <span style=color:#000;font-weight:700>=</span> a[i];
+    }
+    improveMergeAB(a, b, l, r);
 }
 </code></pre></td></tr></table>
 </div>
