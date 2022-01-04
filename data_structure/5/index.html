@@ -56,7 +56,27 @@ SliverHorn的博客
 <div class=post-toc style=position:absolute;top:188px>
 <h2 class=post-toc-title>文章目录</h2>
 <div class=post-toc-content>
-<nav id=TableOfContents></nav>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#简单排序算法>简单排序算法</a>
+<ul>
+<li><a href=#冒泡排序算法>冒泡排序算法</a></li>
+<li><a href=#插入排序算法>插入排序算法</a></li>
+<li><a href=#选择排序算法>选择排序算法</a></li>
+</ul>
+</li>
+<li><a href=#快速排序算法>快速排序算法</a>
+<ul>
+<li><a href=#基本思想与实现>基本思想与实现</a></li>
+<li><a href=#时间复杂度-3>时间复杂度</a></li>
+<li><a href=#随机快速排序算法>随机快速排序算法</a></li>
+<li><a href=#非递归快速排序算法>非递归快速排序算法</a></li>
+<li><a href=#三数取中划分算法>三数取中划分算法</a></li>
+<li><a href=#三划分快速排序算法>三划分快速排序算法</a></li>
+</ul>
+</li>
+</ul>
+</nav>
 </div>
 </div>
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
@@ -72,6 +92,672 @@ SliverHorn的博客
 阅读</span></span>
 </div>
 <div class=post-content>
+<h2 id=简单排序算法>简单排序算法</h2>
+<p>按照某个线性序（如数的小于关系）对一些对象进行排序是用计算机处理信息时经常要做的一项基本工作，有必要对它进行详细的讨论。在一般情况下，排序问题的输入是 $n$ 个数 $a[0], a[1],&mldr;,a[n-1]$ 的一个序列，要设计一个有效的排序算法，产生输入序列的一个重排，使序列元素按从小到大的顺序排列。输入序列通常是一个有n 个元素的数组，当然也可以用其他形式来表示输入，如链表等。在实际应用中，待排序的对象往往不是单一的数而是一个记录，其中有一个关键字域key，它是排序的根据。在key 的数据类型上定义了某个线性序。例如，整数、实数和字符串等都可以作为键。记录的其他数据称为卫星数据，即它们都是以 key 为中心的。在一个实际的排序算法中对关键字重排时，卫星数据也要随关键字一起移动。如果每个记录都很大，就可以对一组指向各个记录的指针进行排序，以减少数据移动量。对于排序算法来说，不论待排序对象是单个数值还是记录，它们的排序方法都一样。在排序时，待排序记录的键值可,能有相同的，对于键值相同的记录，通常并不要求它们之间进行排列，只要求在最后输出时，键值小者排在键值大者之前。</p>
+<p>对排序算法计算时间的分析可以遵循若干种不同的准则，通常以排序过程中所需要的算法步数作为度量，有时也以排序过程中所进行的键值比较次数作为度量。特别是当一次键值比较需要较长时间，如当键是较长的字符串时，常以键值比较次数作为排序算法计算时间复杂性的度量。当排序算法需要移动记录，且记录都很大时，还应该考虑记录的移动次数。</p>
+<blockquote>
+<p>以下介绍的 3 个算法对待排序数组元素 $a[0], a[2],&mldr;, a[n-1]$ 排序都需要 $O(n^2)$ 计算时间，并且对每个算法都存在某个由 $n$ 个元素组成的输入序列，使它们确实需要 $\Omega(n^2)$ 计算时间。</p>
+</blockquote>
+<h3 id=冒泡排序算法>冒泡排序算法</h3>
+<p>最简单的排序算法是冒泡排序算法。这种算法的基本思想是，将待排序的记录看成竖着排列的 “气泡”，键值较小的记录比较轻，因而要往上浮。在冒泡排序算法中，要对这个“气泡”序列处理若干遍。所谓处理一遍，就是自底向上检查一遍这个序列，并时刻注意两个相邻的记录的顺序是否正确。如果发现两个相邻记录的顺序不对，即“轻”的记录在下面，就变换它们的位置。显然，处理一遍之后，“最轻”的记录就浮到了最高位置：处理两遍之后，“次轻”的
+记录就浮到了次高位置。在进行第二遍处理时，由于最高位置上的记录己是“最轻”记录，所以不必检查。一般地，第 $i$ 遍处理时，不必检查第 $i$ 高位置以上的记录。设待排序的数组段是 <code>a[l]~a[r]</code> ，则冒泡排序算法可实现如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#998;font-style:italic>// element 待排序元素类型
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#458;font-weight:700>int</span> element;
+
+<span style=color:#998;font-style:italic>// Element 待排序元素指针类型
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> element <span style=color:#000;font-weight:700>*</span>Element;
+
+<span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortBubble</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span> ) {
+        <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> j <span style=color:#000;font-weight:700>=</span> i; j <span style=color:#000;font-weight:700>&lt;</span> l; j<span style=color:#000;font-weight:700>--</span>) {
+            compswap(a[j<span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>], a[j]);
+        }
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>上述冒泡排序算法中，待排序元素类型是 <code>element</code>，算法根据 Item 类型元素的键值对数组元素 <code>a[l]~a[r]</code> 进行排序。算法中用到的关于 <code>element</code> 类型变量的一些常用运算，如交换两个元素 A 和 B 值的运算 <code>swap(A,B)</code> 等，许多排序算法中都会用到，定义如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#define key(A) (A)
+</span><span style=color:#999;font-weight:700;font-style:italic></span><span style=color:#998;font-style:italic>// less(A,B) 比较 A 和 B 的键值，等价于 key(A) &lt; key(B)
+</span><span style=color:#998;font-style:italic></span><span style=color:#999;font-weight:700;font-style:italic>#define less(A,B) (key(A) &lt; key(B))
+</span><span style=color:#999;font-weight:700;font-style:italic></span><span style=color:#998;font-style:italic>// eq(A,B) 等价于 `key(A) == key(B)`
+</span><span style=color:#998;font-style:italic></span><span style=color:#999;font-weight:700;font-style:italic>#define eq(A,B) (!less(A,B) &amp;&amp; !less(B,A))
+</span><span style=color:#999;font-weight:700;font-style:italic></span><span style=color:#998;font-style:italic>// swap(A,B) 交换两个元素 A 和 B 的值；
+</span><span style=color:#998;font-style:italic></span><span style=color:#999;font-weight:700;font-style:italic>#define swap(A,B) {element t = A; A = B; B = t;}
+</span><span style=color:#999;font-weight:700;font-style:italic></span><span style=color:#998;font-style:italic>// compswap(A,B) 等价于语句 `if (less(B,A)) swap(A,B)` ，即当 `key(B) &lt; key(A)` 时，交换 A 和 B 的值。
+</span><span style=color:#998;font-style:italic></span><span style=color:#999;font-weight:700;font-style:italic>#define compswap(A,B) if (less(B,A)) swap(A,B)
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id=时间复杂度>时间复杂度</h4>
+<p>由于 <code>compswap</code> 运算需要 $O(1)$ 计算时间，所以冒泡排序算法的
+循环体耗时 $O(1)$ 。由此可知整个算法所需的时间为
+$$
+\sum_{i=2}^n\sum_{j=0}^{i-2}O(1) =O(\sum_{i=1}^{n-1}\sum_{j=1}^{i}1) = O(n^2)
+$$
+最坏情况在输入元素序列完全逆序排列时发生。另一方面，即使不需要交换位置，即输入的元素序列己经排好序，算法仍需执行 $n(n-1)/2$ 次元素比较，因此算法至少需要 $\Omega(n^2)$ 计算时间。</p>
+<h3 id=插入排序算法>插入排序算法</h3>
+<p>插入排序算法的基本思想是，对数组元素 <code>a[l]~a[l]</code> ，经过前 <code>i-l</code> 遍处理后，$a[l], a[l+1],&mldr;,a[i-l]$ 己排好序。下一遍处理就是要将 $a[i]$ 插入 $a[l], a[l+1],&mldr;,a[i-l]$ 的适当位置，使得 $a[l], a[l+1],&mldr;a[i]$ 是排好序的序列。要达到这个目的，可以用顺序比较的方法，首先比较 $a[i]$ 和 $a[i-1]$ ，若 $a[i-1] \leq a[i]$ ，则 $a[l], a[l+1],&mldr;a[i]$ 已排好序，第 $i$ 遍处理就结束了；否则交换 $a[i-1]$ 与 $a][1]$ 的位 置，继续比较 $a[i-1]$ 和 $a[i-2]$，直到找到某一个位置 $j(1 \leq j \leq i-1)$，使得当 $a[j] \leq a[j+1]$ 时为止。上述元素插入过程由算法 <code>insert</code> 来完成。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_select.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// insert 元素 a[i] 插入 数组 a[l:i]
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>insert</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> i) {
+    element v <span style=color:#000;font-weight:700>=</span> a[i];
+    <span style=color:#000;font-weight:700>while</span> (i <span style=color:#000;font-weight:700>&gt;</span> l <span style=color:#000;font-weight:700>&amp;&amp;</span> less(v, a[i<span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>])) {
+        a[i] <span style=color:#000;font-weight:700>=</span> a[i<span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>]; i<span style=color:#000;font-weight:700>--</span>;
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>插入入排序算法通过反复调用 <code>insert</code> 来完成排序任务。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_select.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// SortInsert 插入排序算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortInsert</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+        insert(a, l, i);
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=时间复杂度-1>时间复杂度</h4>
+<p>插入排序算法对固定的 $i$ ， $insert(a, 0, i)$ 在最坏情况下需要 $O(i)$ 计算时间。因此整个插入排序算法所需的时间为
+$$
+\sum_{i=1}^{n-1}O(i) =O(\sum_{i=1}^{n-1}i) = O(n^2)
+$$
+最坏情况在输入元素序列完全逆序排列时发生。此时对任意的 $i$ ，算法 <code>insert</code> 需要进行 $i$ 次比较和交换。因此在整个插入排序算法中执行的比我利交换次数为 $\sum_{i=1}^{n-1}i=n(n-1)/2$ 。由此可知，在最坏情况下，插入排序算法需要 $\Omega(n^2)$ 计算时间。</p>
+<h3 id=选择排序算法>选择排序算法</h3>
+<p>选择排序算法的基本思想是对待排序的元素序列 <code>a[l] ~ a[r]</code> 进行 $r-l$ 遍处理，第 $i$ 遍处理是将 $a[l+i-1], a[l+i],&mldr;,a[r]$ 中最小者与 a[l+i-1] 交换位置。这样，经过 $i$ 遍处理之后，较小的 $i$ 个元
+素的位置己经是正确的了。确定 $a[i:r]$ 中最小元素下标的算法 <code>mini</code> 可表述如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#998;font-style:italic>// mini 确认 a[i:r] 中的最小元素下标
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>mini</span>(element a[], <span style=color:#458;font-weight:700>int</span> i, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#458;font-weight:700>int</span> min <span style=color:#000;font-weight:700>=</span> i;
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> j <span style=color:#000;font-weight:700>=</span> i <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>; j <span style=color:#000;font-weight:700>&lt;=</span> r; j<span style=color:#000;font-weight:700>++</span>) {
+        <span style=color:#000;font-weight:700>if</span> (less(a[j], a[min])) {
+            min <span style=color:#000;font-weight:700>=</span> j;
+        }
+    }
+    <span style=color:#000;font-weight:700>return</span> min;
+}
+
+
+</code></pre></td></tr></table>
+</div>
+</div><p>利用函数 <code>mini</code> ，选择排序算法可实现如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#998;font-style:italic>// SortSelect 选择排序算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortSelect</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l; i <span style=color:#000;font-weight:700>&lt;</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+        <span style=color:#458;font-weight:700>int</span> j <span style=color:#000;font-weight:700>=</span> mini(a, i, r);
+        swap(a[i], a[j]);
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=时间复杂度-2>时间复杂度</h4>
+<p>选择排序算法的第 $i$ 遍处理是将 $a[i-1], a[i],&mldr;,a[n-1]$ 中最小者与 $a[i-1]$ 交换位置。而确定 $a[i-1:n-1]$ 中最小元素下标的算法 <code>mini</code> 需要 $O(n-i)$ 计算时间。因此整个算法需要的计算时间为
+$$
+\sum_{i=1}^{n-1}O(n-i) =O(\sum_{i=1}^{n-1}(n-i)) = O(n^2)
+$$
+另一方面，对于任何输入序列，选择排序算法总要执行 $n(n-1)/2$ 次元素比较，因此选择排
+序算法至少需要 $\Omega(n^2)$ 计算时间。</p>
+<h2 id=快速排序算法>快速排序算法</h2>
+<p>事实上，在判定树计算模型下，任何一个基于比较的排序算法都需要 $O(nlogn)$ 计算时间。若能设计一个
+需要 $O(nlogn)$ 时间的排序算法，则在渐近的意义上，这个排序算法是最优的。</p>
+<h3 id=基本思想与实现>基本思想与实现</h3>
+<p>快速排序算法是基于分治策略的排序算法。其基本思想是，对于输入的子数组 $a[l:r]$，按以下3个步骤进行排序。</p>
+<ul>
+<li>(1) 分解：以 $a[r]$ 为基准元素将 $a[l:r]$ 划分成3段 $a[l:i-1]$ ， $a[i]$ 和 $a[i+1:r]$ ，使得 $a[l:i-1]$ 中任何一个元素小于等于 $a[i]$ ，$a[i+1:r]$ 中任何一个元素大于等于 $a[i]$ 。下标 $i$ 在划分过程中确定。</li>
+<li>(2) 递归求解：通过递归调用快速排序算法分别对 a[l:i-1] 和 a[i+1:r] 进行排序。</li>
+<li>(3) 合并：由于对 $a[l:i-1]$ 和 a[i+1:r] 的排序是就地进行的，所以在 $a[l:i-1]$ 和 $a[i+1:r]$ 都己排好序后不需要执行任何计算， $a[l:r]$ 就己排好序。</li>
+</ul>
+<p>基于这个思想，可实现快速排序算法如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_quick.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// SortQuick 快速排序算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortQuick</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#000;font-weight:700>if</span> (r <span style=color:#000;font-weight:700>&lt;=</span> l) {
+        <span style=color:#000;font-weight:700>return</span>;
+    }
+    <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> partition(a, l, r);
+    SortQuick(a, l, i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>); <span style=color:#998;font-style:italic>// 对左半段排序
+</span><span style=color:#998;font-style:italic></span>    SortQuick(a, i <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>, r); <span style=color:#998;font-style:italic>// 对右半段排序
+</span><span style=color:#998;font-style:italic></span>}
+</code></pre></td></tr></table>
+</div>
+</div><p>对含有 $n$ 个元素的数组 $a[0:n-1]$ 进行快速排序只要调用 <code>SortQuick(a, 0, n-1)</code> 即可。
+上述算法中的函数 <code>partition</code> ，以一个确定的基准元素 $a[r]$ 对子数组 $a[l:r]$ 进行划分，它是快速排序算法的关键。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_quick.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// partition 元素划分算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>partition</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>, j <span style=color:#000;font-weight:700>=</span> r;
+    element v <span style=color:#000;font-weight:700>=</span> a[r];
+    <span style=color:#000;font-weight:700>for</span> (;;) {
+        <span style=color:#000;font-weight:700>while</span> (less(a[<span style=color:#000;font-weight:700>++</span>i], v));
+        <span style=color:#000;font-weight:700>while</span> (less(v, a[<span style=color:#000;font-weight:700>--</span>j])) {
+            <span style=color:#000;font-weight:700>if</span> (j <span style=color:#000;font-weight:700>==</span> l) {
+                <span style=color:#000;font-weight:700>break</span>;
+            }
+        }
+        <span style=color:#000;font-weight:700>if</span> (i <span style=color:#000;font-weight:700>&gt;=</span> j) {
+            <span style=color:#000;font-weight:700>break</span>;
+        }
+        swap(a[i], a[j]);
+    }
+    swap(a[i], a[r]);
+    <span style=color:#000;font-weight:700>return</span> i;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>函数 <code>partition</code> 对叫进行划分时，以元素 <code>v = a[r]</code> 作为划分的基准，分别从左、右两端开始，扩展两区域 $a[l:r]$ 和 $a[j:r]$ ，使得 $a[l:r]$ 中元素小于或等于 <code>v</code> ，而 $a[j:r]$ 中元素大于或等于 <code>v</code> 。初始时，<code>i = l - 1</code> 且 <code>j = r</code> 。</p>
+<p>在第7~10行的for 循环体中，下标 $j$ 逐渐减小， $i$ 逐渐增大，直到 $a[i] \ge v \ge a[j]$。若这两个不等式是严格的，则 $a[i]$ 不会是左边区域的元素，而 $a[j]$ 不会是右边区域的元素。此时若 $i \lt j$ ，则交换 $a[i]$ 与 $a[j]$ 的位置，扩展左右两个区域。</p>
+<p>for 循环重复至的 $i \ge j$ 时结束。这时 $a[l:r]$ 己被划分成 $a[l:i-1]$ ，$a[i]$ 和 $a[i+1:r]$ ，且满足 a[l:i-1] 中元素不大于 $a[i+1:r]$ 中元素。在两数 <code>partition</code> 结束时返回划分点 $i$ 。</p>
+<p>事实上，函数 <code>partitio</code> 的主要功能就是将小于 <code>v</code> 的元素放在原数组的左半部分；而将大于 <code>v</code> ，的元素放在原数组的右半部分。其中，有一些细节需要注意。例如，算法中的下标 $i$ 和 $j$ ；不会超出 $a[l:r]$ 的下标界。另外，在快速排序算法中选取 $a[r]$ 作为基准可以保证算法正常结束。</p>
+<h3 id=时间复杂度-3>时间复杂度</h3>
+<p>对于输入序列 a[l:r]，函数 <code>partition</code> 的计算时间显然为 O(r-l-1) 。
+对含有 n 个元素的数组 a[0:n-1] 进行快速排序的运行时间与划分是否对称有关，其最坏情况发生在划分过程中产生的两个区域分别包含 $n-1$ 个元素和 $1$ 个元素的时候。由于函数 <code>partition</code> 的计算时间为 $O(n)$ ，所以若两数 <code>partition</code> 的每一步都出现这种不对称划分，则其时间复杂性 $T(n)$ 满足
+$$
+T(n) =
+\begin{cases}
+O(1), & n \leq 1\
+T(n-1)+O(n), & n \gt 1
+\end{cases}
+$$
+解此递归方程可得 $T(n) = O(n^2)$</p>
+<p>在最好情况下，每次划分所取的基准都恰好为中值，即每次划分都产生两个大小为 $n/2$ 的区域，此时，两数<code>partition</code> 的计算时间 $T(n)$ 满足
+$$
+T(n) =
+\begin{cases}
+O(1), & n \leq 1\
+2T(n/2)+O(n), & n \gt 1
+\end{cases}
+$$
+其解为 $T(n) = O(nlogn)$ 。
+可以证明，快速排序算法在平均情况下的时间复杂性也是 $O(nlogn)$ ，这在基于比较的排序算法类中算是快速的了，快速排序算法也因此而得名。</p>
+<h3 id=随机快速排序算法>随机快速排序算法</h3>
+<p>快速排序算法的性能取决于划分的对称性。通过修改函数 <code>partition</code>，可以设计出采用随机选择策略的快速排序算法。在快速排序算法的每一步，当数组还没有被划分时，可以在 $a[l:r]$ 中随机选出一个元素作为划分基准，这样可以使划分基准的选择是随机的，从而可以期望划分是较对称的。</p>
+<p>随机化划分算法可实现如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_random_quick.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_quick.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// RandomPartition 随机化划分算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>RandomPartition</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> Random(l, r);
+    swap(a[i], a[l]);
+    <span style=color:#000;font-weight:700>return</span> partition(a, l, r);
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>其中，函数 <code>Random(l, r)</code> 产生 <code>l</code> 和 <code>r</code> 之间的一个随机整数，且产生不同整数的概率相同。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// Random 随机选取划分基准
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>Random</span>(<span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#000;font-weight:700>return</span> l <span style=color:#000;font-weight:700>+</span> (r <span style=color:#000;font-weight:700>-</span> l) <span style=color:#000;font-weight:700>*</span> (<span style=color:#099>1.0</span> <span style=color:#000;font-weight:700>*</span> rand() <span style=color:#000;font-weight:700>/</span> RAND_MAX);
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>随机化的快速排序算法通过调用函数 <code>RandomPartition</code> 产生随机划分。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_random_quick.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// SortRandomQuick 随机快速排序算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortRandomQuick</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#000;font-weight:700>if</span> (r <span style=color:#000;font-weight:700>&lt;=</span> l) {
+        <span style=color:#000;font-weight:700>return</span>;
+    }
+    <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> RandomPartition(a, l, r);
+    SortRandomQuick(a, l, i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>); <span style=color:#998;font-style:italic>// 对左半段排序
+</span><span style=color:#998;font-style:italic></span>    SortRandomQuick(a, i <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>, r); <span style=color:#998;font-style:italic>// 对右半段排序
+</span><span style=color:#998;font-style:italic></span>}
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=非递归快速排序算法>非递归快速排序算法</h3>
+<p>对快速排序算法的另一个改进是模拟递归。当待排序数组 $a[l:r]$ 中有 $n$ 个元素时，快速排序算法 <code>SortQuick</code> 的递归调用在最坏情况下可能耗费 $O(n)$ 栈空间。若让左半段数组 $a[l:i-1]$ 和右半段数组 $a[i+1:r]$ 中元素个数较少者先排序，则在最坏情况下只耗费 $logn$ 栈空间。事实上，设待排序数组大小为n时，快速排序算法所需栈空间为 $s(n)$ ，若采用小者优先递归的策略，则 $s(n)$ 满足
+$$
+s(n) =
+\begin{cases}
+0, & n \leq 1 \
+s(\frac{n}{2}), & n \gt 1
+\end{cases}
+$$</p>
+<p>由此可见，$s(n) \leq logn$。
+用上述策略对快速排序算法的改进如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_non_recursive_quick.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_quick.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// SortNonRecursiveQuick 快速排序算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortNonRecursiveQuick</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#000;font-weight:700>if</span> (r <span style=color:#000;font-weight:700>&lt;=</span> l) {
+        <span style=color:#000;font-weight:700>return</span>;
+    }
+    <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> partition(a, l, r);
+    <span style=color:#000;font-weight:700>if</span> (i <span style=color:#000;font-weight:700>-</span> l <span style=color:#000;font-weight:700>&gt;</span> r <span style=color:#000;font-weight:700>-</span> i) {
+        SortNonRecursiveQuick(a, i <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>, r); <span style=color:#998;font-style:italic>// 对右半段排序
+</span><span style=color:#998;font-style:italic></span>        SortNonRecursiveQuick(a, l, i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>); <span style=color:#998;font-style:italic>// 对左半段排序
+</span><span style=color:#998;font-style:italic></span>    } <span style=color:#000;font-weight:700>else</span> {
+        SortNonRecursiveQuick(a, l, i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>); <span style=color:#998;font-style:italic>// 对左半段排序
+</span><span style=color:#998;font-style:italic></span>        SortNonRecursiveQuick(a, i <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>, r); <span style=color:#998;font-style:italic>// 对右半段排序
+</span><span style=color:#998;font-style:italic></span>    }
+}
+
+</code></pre></td></tr></table>
+</div>
+</div><p>进一步采用模拟递归技术可以消去算法的递归调用。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_non_recursive_quick.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_quick.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;../stack/stack_pointer.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// SortNonRecursiveQuickWithStack 非递归快速排序算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortNonRecursiveQuickWithStack</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    StackPointer stack <span style=color:#000;font-weight:700>=</span> StackPointerInit();
+    Push(stack, l, r);
+    <span style=color:#000;font-weight:700>while</span> (<span style=color:#000;font-weight:700>!</span>StackPointerEmpty(stack)) {
+        l <span style=color:#000;font-weight:700>=</span> StackPointerPop(stack);
+        r <span style=color:#000;font-weight:700>=</span> StackPointerPop(stack);
+        <span style=color:#000;font-weight:700>if</span> (r <span style=color:#000;font-weight:700>&lt;=</span> l) {
+            <span style=color:#000;font-weight:700>continue</span>;
+        }
+        <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> partition(a, l, r);
+        <span style=color:#000;font-weight:700>if</span> (i <span style=color:#000;font-weight:700>-</span> l <span style=color:#000;font-weight:700>&gt;</span> r <span style=color:#000;font-weight:700>-</span> i) {
+            Push(stack, l, i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>);
+            Push(stack, i <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>, r);
+        } <span style=color:#000;font-weight:700>else</span> {
+            Push(stack, i <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>, r);
+            Push(stack, l, i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>);
+        }
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=三数取中划分算法>三数取中划分算法</h3>
+<p>从递归算法的递归树可以看出，递归算法做了大量小规模数组递归调用。如果在递归算法中遇到小规模数组时终止递归，改用非递归算法，将有效地改进递归算法的性能。例如，在快速排序算法的开头增加以下语句：<code>if(r-l &lt;= M) insertion(a, l, r); </code> 在数组规模较小时终止递归，改用非递归算法 <code>inserion(a, l, r)</code>进行排序可以改进快速排序算法的性能。其中，参数 $M$ 用于控制何时终止递归。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_three_median.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// insertion 非递归算法 进行排序可以改进快速排序算法的性能.
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>insertion</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+        compswap(a[l], a[i]);
+    }
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l <span style=color:#000;font-weight:700>+</span> <span style=color:#099>2</span>; i <span style=color:#000;font-weight:700>&lt;</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+        <span style=color:#458;font-weight:700>int</span> j <span style=color:#000;font-weight:700>=</span> i;
+        element v <span style=color:#000;font-weight:700>=</span> a[i];
+        <span style=color:#000;font-weight:700>while</span> (less(v, a[j <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>])) {
+            a[j] <span style=color:#000;font-weight:700>=</span> a[j <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>];
+            j<span style=color:#000;font-weight:700>--</span>;
+        }
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>实验表明 $M$ 的值在 5 ~ 25 之间效果较好。采用这个策略可以使快速排序算法的效率提高 10% 左右。</p>
+<p>上述思想还可以用下面的办法来实现。在快速排序算法的开头增加以下语句：<code>if (r - l &lt;= M) return;</code>终止递归。在整个算法结束后再用 <code>insertion(a, l, r)</code>将已大致排好序的数组排序。</p>
+<p>对快速排序算法的划分对称性还有可以改进的余地。三数取中划分算法的主要思想基于划分基准的选取。对于待排序数组 $a[l:r]$ ，算法选取 $a[l], a[r], a[(l+r)/2]$ 这3个数的中位数作为划分基准，从而改进划分的对称性。综合上述改进策略的三数取中快速排序算法如下</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_three_median.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_quick.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// 三数取中快速排序算法 内部实现方法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>sortThreeMedian</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#000;font-weight:700>if</span> (r <span style=color:#000;font-weight:700>-</span> l <span style=color:#000;font-weight:700>&lt;=</span> M) {
+        <span style=color:#000;font-weight:700>return</span>;
+    }
+    swap(a[(l <span style=color:#000;font-weight:700>+</span> r) <span style=color:#000;font-weight:700>/</span> <span style=color:#099>2</span>], a[r <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>]);
+    compswap(a[l], a[r <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>]);
+    compswap(a[l], a[r]);
+    compswap(a[r <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>], a[r]);
+    <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> partition(a, l <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>, r <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>);
+    sortThreeMedian(a, l, i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>);
+    sortThreeMedian(a, i <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>, r);
+}
+
+<span style=color:#998;font-style:italic>// 三数取中快速排序算法 对外开放方法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortThreeMedian</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    sortThreeMedian(a, l, r);
+    insertion(a, l, r);
+}
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>三数取中快速排序算法比原快速排序算法的效率提高 20%~25%。</p>
+</blockquote>
+<h3 id=三划分快速排序算法>三划分快速排序算法</h3>
+<p>当待排序数组 $a[l:r]$ 中有大量键值相同的元素时，采用三划分快速排序算法可以明显改进算法的性能。该算法的基本思想是，在划分阶段以 <code>v = a[r]</code> 为划分基准，将待排序数组 $a[l:r]$ 划分为左、中、右三段 $a[l:j], a[j+1:i-1], a[i:r]$ 。其中，左段数组 $a[l:j]$ 中元素键值小于 <code>v</code> ，中段数组 $a[j+1:i-1]$ 中元素键值等于 <code>v</code> ，右段数组 $a[i:r]$ 中元素键值大于 <code>v</code> 。其后，算法对左右两段数组递归排序。在具体实现三划分快速排序算法时，先将键值与 ，相同的元素分别交换到左右两段数组的左右两端。在搜索游标i和;交叉后，再将这些元素交换到中段数组中。</p>
+<p>实现上述思想的三划分快速排序算法描述如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_three_divisions.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// SortThreeDivisions 三划分快速排序算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortThreeDivisions</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>, j <span style=color:#000;font-weight:700>=</span> r, p <span style=color:#000;font-weight:700>=</span> l <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>, q <span style=color:#000;font-weight:700>=</span> r;
+    element v <span style=color:#000;font-weight:700>=</span> a[r];
+    <span style=color:#000;font-weight:700>if</span> (r <span style=color:#000;font-weight:700>&lt;=</span> l) {
+        <span style=color:#000;font-weight:700>return</span>;
+    }
+    <span style=color:#000;font-weight:700>for</span> (;;) {
+        <span style=color:#000;font-weight:700>while</span> (less(a[<span style=color:#000;font-weight:700>++</span>i], v));
+        <span style=color:#000;font-weight:700>while</span> (less(v, a[<span style=color:#000;font-weight:700>--</span>j])) {
+            <span style=color:#000;font-weight:700>if</span> (j <span style=color:#000;font-weight:700>==</span> l) {
+                <span style=color:#000;font-weight:700>break</span>;
+            }
+        }
+        <span style=color:#000;font-weight:700>if</span> (i <span style=color:#000;font-weight:700>&gt;=</span> j) {
+            <span style=color:#000;font-weight:700>break</span>;
+        }
+        <span style=color:#000;font-weight:700>if</span> (eq(a[i], v)) {
+            p<span style=color:#000;font-weight:700>++</span>;swap(a[p], a[i]);
+        }
+        <span style=color:#000;font-weight:700>if</span> (eq(v, a[j])) {
+            q<span style=color:#000;font-weight:700>--</span>;swap(a[q], a[j]);
+        }
+    }
+    swap(a[i], a[r]); j <span style=color:#000;font-weight:700>=</span> i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>; i <span style=color:#000;font-weight:700>=</span> i <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>;
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> k <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; k <span style=color:#000;font-weight:700>&lt;</span> p; k<span style=color:#000;font-weight:700>++</span>, j<span style=color:#000;font-weight:700>--</span>) {
+        swap(a[k], a[j]);
+    }
+
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> k <span style=color:#000;font-weight:700>=</span> r <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>; k <span style=color:#000;font-weight:700>&gt;</span> q; k<span style=color:#000;font-weight:700>--</span>, i<span style=color:#000;font-weight:700>++</span>) {
+        swap(a[k], a[i]);
+    }
+    SortThreeDivisions(a, l, j);
+    SortThreeDivisions(a, i, r);
+}
+</code></pre></td></tr></table>
+</div>
+</div>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
