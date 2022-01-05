@@ -170,6 +170,11 @@ $$
 $$
 最坏情况在输入元素序列完全逆序排列时发生。另一方面，即使不需要交换位置，即输入的元素序列己经排好序，算法仍需执行 $n(n-1)/2$ 次元素比较，因此算法至少需要 $\Omega(n^2)$ 计算时间。</p>
 <h2 id=插入排序>插入排序</h2>
+<p>
+<a data-fancybox=gallery href=https://camo.githubusercontent.com/0a9709002864a76aa5430f7ab33365200a2cdc4904761f9a13452792c537c498/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d393435356666313362633866626463362e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+<img class=mx-auto alt=插入排序 src=https://camo.githubusercontent.com/0a9709002864a76aa5430f7ab33365200a2cdc4904761f9a13452792c537c498/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d393435356666313362633866626463362e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+</a>
+</p>
 <p>插入排序算法的基本思想是，对数组元素 <code>a[l]~a[l]</code> ，经过前 <code>i-l</code> 遍处理后，$a[l], a[l+1],&mldr;,a[i-l]$ 己排好序。下一遍处理就是要将 $a[i]$ 插入 $a[l], a[l+1],&mldr;,a[i-l]$ 的适当位置，使得 $a[l], a[l+1],&mldr;a[i]$ 是排好序的序列。要达到这个目的，可以用顺序比较的方法，首先比较 $a[i]$ 和 $a[i-1]$ ，若 $a[i-1] \leq a[i]$ ，则 $a[l], a[l+1],&mldr;a[i]$ 已排好序，第 $i$ 遍处理就结束了；否则交换 $a[i-1]$ 与 $a][1]$ 的位 置，继续比较 $a[i-1]$ 和 $a[i-2]$，直到找到某一个位置 $j(1 \leq j \leq i-1)$，使得当 $a[j] \leq a[j+1]$ 时为止。上述元素插入过程由算法 <code>insert</code> 来完成。</p>
 <div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
@@ -232,8 +237,26 @@ $$
 <img class=mx-auto alt=希尔排序 src=https://camo.githubusercontent.com/68a3945dc668bee934f15515e942a2e5c2a6b3871933359cda5432b5cd42820d/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d616363366336663136623039363739342e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
 </a>
 </p>
-<p>选择一个增量序列 t1，t2，……，tk，其中 ti > tj, tk = 1；</p>
+<ul>
+<li>选择一个增量序列 $t_1, t_2 ,&mldr;, t_k$，其中 $t_i > t_j$ , $t_k = 1$；</li>
+<li>按增量序列个数 k，对序列进行 $k$ 趟排序；</li>
+<li>每趟排序，根据对应的增量 $t_i$，将待排序列分割成若干长度为 $m$ 的子序列，分别对各子表进行直接插入排序。仅增量因子为 $1$ 时，整个序列作为一个表来处理，表长度即为整个序列的长度</li>
+</ul>
+<blockquote>
+<p>空间效率: 仅使用了常数个辅助单元，因而空间复杂度为 。</p>
+</blockquote>
+<blockquote>
+<p>时间效率: 由于希尔排序的时间复杂度依赖于增量序列的函数，所以其时间复杂度分析比较困难。</p>
+</blockquote>
+<blockquote>
+<p>稳定性:不稳定。</p>
+</blockquote>
 <h2 id=选择排序>选择排序</h2>
+<p>
+<a data-fancybox=gallery href=https://camo.githubusercontent.com/0a9709002864a76aa5430f7ab33365200a2cdc4904761f9a13452792c537c498/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d393435356666313362633866626463362e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+<img class=mx-auto alt=选择排序 src=https://camo.githubusercontent.com/0a9709002864a76aa5430f7ab33365200a2cdc4904761f9a13452792c537c498/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d393435356666313362633866626463362e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+</a>
+</p>
 <p>选择排序算法的基本思想是对待排序的元素序列 <code>a[l] ~ a[r]</code> 进行 $r-l$ 遍处理，第 $i$ 遍处理是将 $a[l+i-1], a[l+i],&mldr;,a[r]$ 中最小者与 a[l+i-1] 交换位置。这样，经过 $i$ 遍处理之后，较小的 $i$ 个元
 素的位置己经是正确的了。确定 $a[i:r]$ 中最小元素下标的算法 <code>mini</code> 可表述如下。</p>
 <div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
@@ -297,6 +320,11 @@ $$
 另一方面，对于任何输入序列，选择排序算法总要执行 $n(n-1)/2$ 次元素比较，因此选择排
 序算法至少需要 $\Omega(n^2)$ 计算时间。</p>
 <h2 id=快速排序>快速排序</h2>
+<p>
+<a data-fancybox=gallery href=https://camo.githubusercontent.com/eddb0d91c28d3a312ebbb9df0af5620176f191d5094e54925f8f9b7de14d0048/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d366430316661663037613231653733302e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+<img class=mx-auto alt=快速排序 src=https://camo.githubusercontent.com/eddb0d91c28d3a312ebbb9df0af5620176f191d5094e54925f8f9b7de14d0048/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d366430316661663037613231653733302e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+</a>
+</p>
 <p>事实上，在判定树计算模型下，任何一个基于比较的排序算法都需要 $O(nlogn)$ 计算时间。若能设计一个
 需要 $O(nlogn)$ 时间的排序算法，则在渐近的意义上，这个排序算法是最优的。</p>
 <p>快速排序算法是基于分治策略的排序算法。其基本思想是，对于输入的子数组 $a[l:r]$，按以下3个步骤进行排序。</p>
@@ -412,6 +440,11 @@ $$
 其解为 $T(n) = O(nlogn)$ 。
 可以证明，快速排序算法在平均情况下的时间复杂性也是 $O(nlogn)$ ，这在基于比较的排序算法类中算是快速的了，快速排序算法也因此而得名。</p>
 <h2 id=合并排序>合并排序</h2>
+<p>
+<a data-fancybox=gallery href=https://camo.githubusercontent.com/f1271f5697f6d1c3d4b37ee800c5324222bc858549cafa1b4d42cbb68c5f3e7f/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d643364343030363836626336316333302e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+<img class=mx-auto alt=合并排序 src=https://camo.githubusercontent.com/f1271f5697f6d1c3d4b37ee800c5324222bc858549cafa1b4d42cbb68c5f3e7f/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d643364343030363836626336316333302e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+</a>
+</p>
 <p>合并排序算法是用分治策略实现对 $n$ 个元素排序的算法。其基本思想是：当 $n = 1$ 时终止排序，否则将待排序元素分成大小大致相同的两个子集，分别对两个子集进行排序，最终将排好序的子集合并为所求的排好序的集合。</p>
 <p>合并排序算法可递归地描述如下。</p>
 <div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
@@ -525,9 +558,318 @@ O(1), & n \leq 1 \
 $$</p>
 <p>解此递归方程可知 $T(n)=O(nlogn)$ 。由于排序问题的计算时间下界为 $\Omega(nlogn)$，所以合并排序算法是一个渐近最优算法。</p>
 <h2 id=堆排序>堆排序</h2>
+<p>
+<a data-fancybox=gallery href=https://camo.githubusercontent.com/374302b5edfc5aa8f7f811437d966841f29bcd67643a918542ef3e7a4bfe275a/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d303437613930376431363261346130622e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+<img class=mx-auto alt=堆排序 src=https://camo.githubusercontent.com/374302b5edfc5aa8f7f811437d966841f29bcd67643a918542ef3e7a4bfe275a/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d303437613930376431363261346130622e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+</a>
+</p>
 <h2 id=计数排序>计数排序</h2>
+<p>
+<a data-fancybox=gallery href=https://camo.githubusercontent.com/bdead06c3a5b84b73fe4bbc6472cd4a563709b4b849ceff08c7fd4f29cb7dfb5/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d656131316135326465646166303739352e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+<img class=mx-auto alt=计数排序 src=https://camo.githubusercontent.com/bdead06c3a5b84b73fe4bbc6472cd4a563709b4b849ceff08c7fd4f29cb7dfb5/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d656131316135326465646166303739352e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+</a>
+</p>
+<p>计数排序算法的基本思想是：对每一个输入元素 $x$ ，确定输入序列中键值小于 $x$ 的元素个数。一旦有了这个信息，就可以将 $x$ 直接存放到最终的输出序列的正确位置上。</p>
+<p>为便于讨论，在下面的计数排序算法中，假设输入的 $n$ 个元素存放在数组 $a[0:n-1]$ 中；输出的排序结果存放在数组 $b[0:n-1]$ 中。数组 a 和 b 中的每个元素均为 <code>0~m</code> 之间的一个整数。算法中还用到一个辅助数组 $cnt[0:m]$ 用于对输入元素进行计数。</p>
+<p>计数排序算法描述如下。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_count.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#define m 10
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// SortCount 计数排序算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortCount</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    element <span style=color:#000;font-weight:700>*</span>b <span style=color:#000;font-weight:700>=</span> (element <span style=color:#000;font-weight:700>*</span>) malloc(<span style=color:#000;font-weight:700>sizeof</span>(element) <span style=color:#000;font-weight:700>*</span> (r <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>));
+    <span style=color:#458;font-weight:700>int</span> cnt[m] <span style=color:#000;font-weight:700>=</span> {<span style=color:#099>0</span>};
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+        cnt[a[i]]<span style=color:#000;font-weight:700>++</span>;
+    }
+
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>; i <span style=color:#000;font-weight:700>&lt;</span> m; i<span style=color:#000;font-weight:700>++</span>) { <span style=color:#998;font-style:italic>// cnt[i] 中存放的是 a[l, r] 中键值等于 i 的元素个数
+</span><span style=color:#998;font-style:italic></span>        cnt[i] <span style=color:#000;font-weight:700>+=</span> cnt[i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>];
+    }
+
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> r; i <span style=color:#000;font-weight:700>&gt;=</span> l; i<span style=color:#000;font-weight:700>--</span>) { <span style=color:#998;font-style:italic>// cnt[i] 中存放的是 a[l, r] 中键值小于或等于 i 的元素个数
+</span><span style=color:#998;font-style:italic></span>        b[<span style=color:#000;font-weight:700>--</span>cnt[a[i]]] <span style=color:#000;font-weight:700>=</span> a[i];
+    }
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+        a[i] <span style=color:#000;font-weight:700>=</span> b[i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>];
+    }
+    free(b);
+}
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>时间复杂度</p>
+</blockquote>
+<p>对数组 <code>cnt</code> 初始化需要 $O(m)$ 时间。顺序检查每个输入元素需要 $O(n)$ 时间。对每个 $i = 1, 2,&mldr;, m$ ，统计值小于或等手i的输入元素个数需要 $O(m)$ 时间。最后，将每个元素输出到数组 $b$ 中需要 $O(n)$ 时间。这样，整个算法所需的计算时间为 $O(m+n)$。当 $m = O(n)$ 时，算法的计算时间复杂性为 $O(n)$。</p>
+<p>计数排序算法没有比较元素大小，它利用元素的值来确定其正确的输出位置。因此，计数排序算法不是一个基于比较的排序算法，从而它的计算时间下界不再是 $\Omega(nlogn)$。另一方面，计数排序算法之所以能取得线性计算时间上界，是因为对元素的取值范围作了一定限制，即 $m = O(n)$ 。如果 $m = n^2, n^3,&mldr;$ 就得不到线性时间上界。</p>
+<p>计数排序算法的另一个重要性质是，在输入和输出序列中，具有相同值元素的相对次序不变。计数排序算法是一个稳定的排序算法。</p>
 <h2 id=桶排序>桶排序</h2>
+<p>
+<a data-fancybox=gallery href=https://camo.githubusercontent.com/0976a87ffacde6a53f8fa3001740774ca092139e1cd33807d55199386b09a7bc/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d613161373563666366633064356662642e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+<img class=mx-auto alt=桶排序 src=https://camo.githubusercontent.com/0976a87ffacde6a53f8fa3001740774ca092139e1cd33807d55199386b09a7bc/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d613161373563666366633064356662642e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+</a>
+</p>
+<p>桶排序算法的基本思想是：设置若干个桶，将键值等于 $i$ 的元素全部装入第 $i$ 个桶中：然后，按桶的顺序将桶中元素顺序连接起来。</p>
+<p>由于每个桶中元素键值相同，可以将第 $i$ 个桶看成键值为 $i$ 的元素组成的一个表。用数组<code>bottom</code> 表示桶底，<code>bottom[i]</code> 指向第i个桶中第一个元素。用数组 <code>top</code> 表示桶顶，<code>top[i]</code> 指向第 $i$ 个桶中最后一个元素。这样很容易按桶的顺序将桶中元素顺序连接在一起。</p>
+<p>下面给出桶排序算法。该算法假定输入序列以单链表形式给出，桶排序算法返回排序后的单链表。元素键值上界为 $m$ 。</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_bucket.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;../table/table_single_chain.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// SortBucket 桶排序算法
+</span><span style=color:#998;font-style:italic></span>TableSingleNode <span style=color:#900;font-weight:700>SortBucket</span>(TableSingleNode node) {
+    <span style=color:#458;font-weight:700>int</span> b <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; <span style=color:#998;font-style:italic>// 桶下标
+</span><span style=color:#998;font-style:italic></span>    TableSingleNode bottom[m <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>], top[m <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>];
+    TableSingleNode p <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    <span style=color:#000;font-weight:700>for</span> (b <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; b <span style=color:#000;font-weight:700>&lt;=</span> m; b<span style=color:#000;font-weight:700>++</span>) { <span style=color:#998;font-style:italic>// 桶初始化
+</span><span style=color:#998;font-style:italic></span>        bottom[b] <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    }
+    <span style=color:#000;font-weight:700>for</span> (; node; node <span style=color:#000;font-weight:700>=</span> node<span style=color:#000;font-weight:700>-&gt;</span>Next) { <span style=color:#998;font-style:italic>// 将元素装入桶中
+</span><span style=color:#998;font-style:italic></span>        b <span style=color:#000;font-weight:700>=</span> node<span style=color:#000;font-weight:700>-&gt;</span>Element;
+        <span style=color:#000;font-weight:700>if</span> (bottom[b]) { <span style=color:#998;font-style:italic>// 桶非空
+</span><span style=color:#998;font-style:italic></span>            top[b]<span style=color:#000;font-weight:700>-&gt;</span>Next <span style=color:#000;font-weight:700>=</span> node;
+            top[b] <span style=color:#000;font-weight:700>=</span> node;
+        } <span style=color:#000;font-weight:700>else</span> { <span style=color:#998;font-style:italic>// 桶空
+</span><span style=color:#998;font-style:italic></span>            bottom[b] <span style=color:#000;font-weight:700>=</span> top[b] <span style=color:#000;font-weight:700>=</span> node;
+        }
+    }
+
+    <span style=color:#000;font-weight:700>for</span> (b <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; b <span style=color:#000;font-weight:700>&lt;=</span> m; b<span style=color:#000;font-weight:700>++</span>) {
+        <span style=color:#000;font-weight:700>if</span> (bottom[b]) { <span style=color:#998;font-style:italic>// 桶非空
+</span><span style=color:#998;font-style:italic></span>            <span style=color:#000;font-weight:700>if</span> (p) { <span style=color:#998;font-style:italic>// 不是第一个非空桶
+</span><span style=color:#998;font-style:italic></span>                p<span style=color:#000;font-weight:700>-&gt;</span>Next <span style=color:#000;font-weight:700>=</span> bottom[b];
+            } <span style=color:#000;font-weight:700>else</span> { <span style=color:#998;font-style:italic>// 第一个非空桶
+</span><span style=color:#998;font-style:italic></span>                node <span style=color:#000;font-weight:700>=</span> bottom[b];
+            }
+            p <span style=color:#000;font-weight:700>=</span> top[b];
+        }
+    }
+    <span style=color:#000;font-weight:700>if</span> (p) {
+        p<span style=color:#000;font-weight:700>-&gt;</span>Next <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    }
+    <span style=color:#000;font-weight:700>return</span> node;
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>桶排序算法所需的计算时间与计数排序算法所需的计算时间大致相同，它们都需要 $O(m+n)$ 计算时间。初始化空桶需要 $O(m)$ 时间。将所有输入元素装入桶中共需 $O(n)$ 时间。将桶中元素依序连接共需 $O(m)$ 时间。于是，整个桶排序算法共用 $O(m+n)$ 时间。与计数排序算法类似，若 $m = O(n)$ ，则桶排序算法只需要 $O(n)$ 计算时间。</p>
 <h2 id=基数排序>基数排序</h2>
+<p>
+<a data-fancybox=gallery href=https://camo.githubusercontent.com/fee89acc9fcce338264c446a83d6ae5964f05405dd55fc27a8ef970251a8491b/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d663739353332343435366535373137642e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+<img class=mx-auto alt=基数排序 src=https://camo.githubusercontent.com/fee89acc9fcce338264c446a83d6ae5964f05405dd55fc27a8ef970251a8491b/687474703a2f2f75706c6f61642d696d616765732e6a69616e7368752e696f2f75706c6f61645f696d616765732f313934303331372d663739353332343435366535373137642e6769663f696d6167654d6f6772322f6175746f2d6f7269656e742f7374726970>
+</a>
+</p>
+<p>基数排序算法是一个与计数排序和桶排序算法十分类似的线性时间排序算法。其基本思想是将输入数据看成具有相同长度的正整数，长度较短的数在高位用 $0$ 补齐；然后，从最低位开始，按照从低位到高位的次序，依次对上一轮排序后数据的高一位数值做一次排序，直至最高位后完成排序</p>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;sort_radix.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#define RADIX 7
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// SortRadix 一般基数排序算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortRadixGeneral</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#458;font-weight:700>int</span> max <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, pow <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+    <span style=color:#458;font-weight:700>int</span> <span style=color:#000;font-weight:700>*</span>b <span style=color:#000;font-weight:700>=</span> (element <span style=color:#000;font-weight:700>*</span>) malloc(<span style=color:#000;font-weight:700>sizeof</span>(element) <span style=color:#000;font-weight:700>*</span> (r <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>));
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+        <span style=color:#000;font-weight:700>if</span> (a[i] <span style=color:#000;font-weight:700>&gt;</span> max) { <span style=color:#998;font-style:italic>// max 是 a[l, r]中的最大整数, 用于确定 while 循环的次数
+</span><span style=color:#998;font-style:italic></span>            max <span style=color:#000;font-weight:700>=</span> a[i];
+        }
+    }
+    <span style=color:#000;font-weight:700>while</span> (max <span style=color:#000;font-weight:700>/</span> pow <span style=color:#000;font-weight:700>&gt;</span> <span style=color:#099>0</span>) {
+        <span style=color:#458;font-weight:700>int</span> cnt[RADIX] <span style=color:#000;font-weight:700>=</span> {<span style=color:#099>0</span>}; <span style=color:#998;font-style:italic>// 清空计数器
+</span><span style=color:#998;font-style:italic></span>        <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span>) { <span style=color:#998;font-style:italic>// 按位计数
+</span><span style=color:#998;font-style:italic></span>            cnt[a[i] <span style=color:#000;font-weight:700>/</span> pow <span style=color:#000;font-weight:700>%</span> RADIX]<span style=color:#000;font-weight:700>++</span>; <span style=color:#998;font-style:italic>// cnt[i] 中存放的是 a[l,r] 中键值 p 位等于 i 的元素个数
+</span><span style=color:#998;font-style:italic></span>        }
+        <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>; i <span style=color:#000;font-weight:700>&lt;</span> RADIX; i<span style=color:#000;font-weight:700>++</span>) { <span style=color:#998;font-style:italic>// 前缀和
+</span><span style=color:#998;font-style:italic></span>            cnt[i] <span style=color:#000;font-weight:700>+=</span> cnt[i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>]; <span style=color:#998;font-style:italic>// cnt[i] 中存放的是 a[l, r] 中键值 p 位 小于或者等于 i 的元素个数
+</span><span style=color:#998;font-style:italic></span>        }
+        <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> r; i <span style=color:#000;font-weight:700>&gt;=</span> l; i<span style=color:#000;font-weight:700>--</span>) { <span style=color:#998;font-style:italic>// 按位排序
+</span><span style=color:#998;font-style:italic></span>            b[<span style=color:#000;font-weight:700>--</span>cnt[a[i] <span style=color:#000;font-weight:700>/</span> pow <span style=color:#000;font-weight:700>%</span> RADIX]] <span style=color:#000;font-weight:700>=</span> a[i];
+        }
+        <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> r; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+            a[i] <span style=color:#000;font-weight:700>=</span> b[i <span style=color:#000;font-weight:700>-</span> l]; <span style=color:#998;font-style:italic>// 回写a
+</span><span style=color:#998;font-style:italic></span>        }
+        pow <span style=color:#000;font-weight:700>*=</span> RADIX;  <span style=color:#998;font-style:italic>// 进位
+</span><span style=color:#998;font-style:italic></span>    }
+    free(b);
+}
+
+<span style=color:#998;font-style:italic>// SortCount 按位计数排序
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortCount</span>(element a[], element b[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r, <span style=color:#458;font-weight:700>int</span> p) {
+    <span style=color:#458;font-weight:700>int</span> cnt[RADIX] <span style=color:#000;font-weight:700>=</span> {<span style=color:#099>0</span>}; <span style=color:#998;font-style:italic>// 清空计数器
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span>) { <span style=color:#998;font-style:italic>// 按位计数
+</span><span style=color:#998;font-style:italic></span>        cnt[a[i] <span style=color:#000;font-weight:700>/</span> p <span style=color:#000;font-weight:700>%</span> RADIX]<span style=color:#000;font-weight:700>++</span>; <span style=color:#998;font-style:italic>// cnt[i] 中存放的是 a[l,r] 中键值 p 位等于 i 的元素个数
+</span><span style=color:#998;font-style:italic></span>    }
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>; i <span style=color:#000;font-weight:700>&lt;</span> RADIX; i<span style=color:#000;font-weight:700>++</span>) { <span style=color:#998;font-style:italic>// 前缀和
+</span><span style=color:#998;font-style:italic></span>        cnt[i] <span style=color:#000;font-weight:700>+=</span> cnt[i <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>]; <span style=color:#998;font-style:italic>// cnt[i] 中存放的是 a[l, r] 中键值 p 位 小于或者等于 i 的元素个数
+</span><span style=color:#998;font-style:italic></span>    }
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> r; i <span style=color:#000;font-weight:700>&gt;=</span> l; i<span style=color:#000;font-weight:700>--</span>) { <span style=color:#998;font-style:italic>// 按位排序
+</span><span style=color:#998;font-style:italic></span>        b[<span style=color:#000;font-weight:700>--</span>cnt[a[i] <span style=color:#000;font-weight:700>/</span> p <span style=color:#000;font-weight:700>%</span> RADIX]] <span style=color:#000;font-weight:700>=</span> a[i];
+    }
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> r; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+        a[i] <span style=color:#000;font-weight:700>=</span> b[i <span style=color:#000;font-weight:700>-</span> l]; <span style=color:#998;font-style:italic>// 回写a
+</span><span style=color:#998;font-style:italic></span>    }
+}
+
+<span style=color:#998;font-style:italic>// SortRadix 基数排序算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SortRadix</span>(element a[], <span style=color:#458;font-weight:700>int</span> l, <span style=color:#458;font-weight:700>int</span> r) {
+    <span style=color:#458;font-weight:700>int</span> max <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>, pow <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+    <span style=color:#458;font-weight:700>int</span> <span style=color:#000;font-weight:700>*</span>b <span style=color:#000;font-weight:700>=</span> (element <span style=color:#000;font-weight:700>*</span>) malloc(<span style=color:#000;font-weight:700>sizeof</span>(element) <span style=color:#000;font-weight:700>*</span> (r <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>));
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> l; i <span style=color:#000;font-weight:700>&lt;=</span> r; i<span style=color:#000;font-weight:700>++</span>) {
+        <span style=color:#000;font-weight:700>if</span> (a[i] <span style=color:#000;font-weight:700>&gt;</span> max) { <span style=color:#998;font-style:italic>// max 是 a[l, r]中的最大整数, 用于确定 while 循环的次数
+</span><span style=color:#998;font-style:italic></span>            max <span style=color:#000;font-weight:700>=</span> a[i];
+        }
+    }
+    <span style=color:#000;font-weight:700>while</span> (max <span style=color:#000;font-weight:700>/</span> pow <span style=color:#000;font-weight:700>&gt;</span> <span style=color:#099>0</span>) {
+        SortCount(a, b, l, r, pow); <span style=color:#998;font-style:italic>// 按位计数排序
+</span><span style=color:#998;font-style:italic></span>        pow <span style=color:#000;font-weight:700>*=</span> RADIX; <span style=color:#998;font-style:italic>// 进位
+</span><span style=color:#998;font-style:italic></span>    }
+    free(b);
+}
+</code></pre></td></tr></table>
+</div>
+</div><p>对于输入数据 $a[0:n-1]$ ，按位计数排序算法 <code>SortCount</code> 所需计算时间是 $O(n)$。若输入数据的最高位是 $w$ ，则基数排序算法 <code>RadixSort</code> 所需计算时间显然是 $O(wn)$ 。在一般情况下 $w$ 是一个常数，从而基数排序算法 <code>SortRadix</code> 是一个线性时问算法。由计数排序算法的稳定性可知，基数排序算法 <code>SortRadix</code> 是稳定排序算法。</p>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
