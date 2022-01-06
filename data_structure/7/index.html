@@ -56,7 +56,16 @@ SliverHorn的博客
 <div class=post-toc style=position:absolute;top:188px>
 <h2 class=post-toc-title>文章目录</h2>
 <div class=post-toc-content>
-<nav id=TableOfContents></nav>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#集合的基本概念>集合的基本概念</a></li>
+<li><a href=#用位向量实现集合>用位向量实现集合</a>
+<ul>
+<li><a href=#具体代码实现>具体代码实现</a></li>
+</ul>
+</li>
+</ul>
+</nav>
 </div>
 </div>
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
@@ -72,6 +81,344 @@ SliverHorn的博客
 阅读</span></span>
 </div>
 <div class=post-content>
+<h2 id=集合的基本概念>集合的基本概念</h2>
+<p><strong>集合是由元素(成员)组成的一个类</strong>。集合的成员可以是一个集合，也可以是一个原子，通常集合的成员是互不相同的，即同一个元素在一个集合中不能多次出现。</p>
+<p>有时需要表示有重复元素的集合，这时允许同一元素在集合中多次出现。这样的集合称为多重集合。</p>
+<p>当集合中的原子具有线性序关系(或称全序关系) " $\lt$ " 时，称集合为一有序集（全序集或
+线性序集)。 " $\lt$ " 是集合的一个线性序，它有如下性质：</p>
+<ul>
+<li>(1) 若 $a, b$ 是集合中任意两个原子，则 $a \lt b$，$ a = b$ 和 $b \lt a$ 三者必居其一</li>
+<li>(2) 若 $a, b, c$ 是集合中的原子，且 $a \lt b$ , $b \lt c$ ，则 $a \lt c$ (传递性)。</li>
+</ul>
+<p>整数、实数、字符和字符串都有一个自然的线性序，用 " $\lt$ " 表示。在数据结构和算法设计中，通常将集合中的元素称为记录，每个记录有多个项(或域)来表示元素的各种属性。</p>
+<p>表示一个由原子组成的集合，一般是把它的元素列举在一个花括号中。</p>
+<p>表示集合的另一种方法是给出集合中元素应满足的条件，即把集合表述为：${x | 关于 x 的 说明}$。其中，关于 $x$ 的说明是一个谓词，它确切地指出元素 $x$ 要成为集合的一个成员应满足的条件。</p>
+<p>成员关系是集合的基本关系。$x \in A$ 表示 $x$ 是集合 $A$ 的成员。这里 $x$ 可以是一个原子，也可以是一个集合，但 $A$ 一定是一个集合。当 $y$ 是一个原子时， $x \in y$ 没有意义。 $x \notin A$ 表示 $x$ 不是 $A$ 的成员。不含任何元素的集合称为空集合，记作 $\emptyset$ 。$x \in \emptyset$ 对任何 $x$ 都不成立。</p>
+<p>如果集合 $A$ 中每个元素也都是集合 $B$ 的元素，就说集合 $A$ 包含于集合 $B$ 中，或说集合 $B$ 包含集合 $A$ ，记为 $A \subseteq B$ 。这时，称集合 $A$ 是集合 $B$ 的子集，或集合 $B$ 是集合 $A$ 的扩集。每个集合都包含其自身及空集合。如果两个集合互相包含，就说这两个集合相等。若 $A \subseteq B$ 且 $A \ne B$ ，则称 $A$ 是 $B$ 的真子集，$B$ 是 $A$ 的真扩集。</p>
+<p>关于集合的最基本的运算是并、交、差运算。设 $A$ 和 $B$ 是两个集合。 $A$ 与 $B$ 的并集是由 $A$ 的成员和 $B$ 的成员合在一起得到的集合，记为 $A \cup B$ 。 $A$ 与 $B$ 的交集是由 $A$ 与 $B$ 所共有的成员组成的集合，记为 $A \cap B$。$A$ 与 $B$ 的差集是由属于 $A$ 但不属于 $B$ 的元素组成的集合，记为 $A - B$ 。</p>
+<h2 id=用位向量实现集合>用位向量实现集合</h2>
+<p>当所讨论的集合都是全集合 ${1, 2,&mldr;, n}$ 的子集，而且 $n$ 是一个不大的固定整数时，可以用位向量来实现集合。此时，对于任何一个集合 $A \subseteq {1, 2, &mldr; , n}$ ，可以定义它的特征函数为
+$$
+\delta_A(x) =
+\begin{cases}
+1, & x \in A \
+0, & x \notin A
+\end{cases}
+$$
+用一个 $n$ 位的向量，来存储集合 $A$ 的特征函数值 $v[i] = \delta_A(i)$ ，$i = 1, 2, &mldr; , n$，可以唯一地表
+示集合 $A$ 。位向量 $v$ 的第 $i$ 位为 $1$ 当且仅当 $i$ 属于集合 $A$。</p>
+<h3 id=具体代码实现>具体代码实现</h3>
+<h4 id=set_bit_vectorh>set_bit_vector.h</h4>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#998;font-style:italic>// SetBitVector 位向量集合指针类型
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> setBitVector <span style=color:#000;font-weight:700>*</span>SetBitVector;
+
+<span style=color:#998;font-style:italic>// setBitVector 位向量集合
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> setBitVector {
+    <span style=color:#458;font-weight:700>int</span> SetSize; <span style=color:#998;font-style:italic>// 集合大小
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>int</span> ArraySize; <span style=color:#998;font-style:italic>// 位数组大小
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>unsigned</span> <span style=color:#458;font-weight:700>short</span> <span style=color:#000;font-weight:700>*</span>BitArray; <span style=color:#998;font-style:italic>// 位数组
+</span><span style=color:#998;font-style:italic></span>} setBitVector;
+
+<span style=color:#999;font-weight:700;font-style:italic>#ifndef DATA_STRUCT_SET_BIT_VECTOR_H
+</span><span style=color:#999;font-weight:700;font-style:italic>#define DATA_STRUCT_SET_BIT_VECTOR_H
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// SetBitVectorInit 创建一个用位向量实现的空集
+</span><span style=color:#998;font-style:italic></span>SetBitVector <span style=color:#900;font-weight:700>SetBitVectorInit</span>(<span style=color:#458;font-weight:700>int</span> size);
+
+<span style=color:#998;font-style:italic>// SetBitVectorAssign 集合赋值运算
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SetBitVectorAssign</span>(SetBitVector A, SetBitVector B);
+
+<span style=color:#998;font-style:italic>// SetBitVectorMember 成员属性判断
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>SetBitVectorMember</span>(SetBitVector A, <span style=color:#458;font-weight:700>int</span> x);
+
+<span style=color:#998;font-style:italic>// SetBitVectorArrayIndex 右移 4 位获得 x 在数组中的位置
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>SetBitVectorArrayIndex</span>(<span style=color:#458;font-weight:700>int</span> x);
+
+<span style=color:#998;font-style:italic>// SetBitVectorBitMask 确认 x 在相应数组单元中的准确位置
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>unsigned</span> <span style=color:#458;font-weight:700>short</span> <span style=color:#900;font-weight:700>SetBitVectorBitMask</span>(<span style=color:#458;font-weight:700>int</span> x);
+
+<span style=color:#998;font-style:italic>// SetBitVectorEqual 判断集合 A 和 B 是否相等
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>SetBitVectorEqual</span>(SetBitVector A, SetBitVector B);
+
+<span style=color:#998;font-style:italic>// SetBitVectorUnion 并集运算
+</span><span style=color:#998;font-style:italic></span>SetBitVector <span style=color:#900;font-weight:700>SetBitVectorUnion</span>(SetBitVector A, SetBitVector B);
+
+<span style=color:#998;font-style:italic>// SetBitVectorIntersection 交集运算
+</span><span style=color:#998;font-style:italic></span>SetBitVector <span style=color:#900;font-weight:700>SetBitVectorIntersection</span>(SetBitVector A, SetBitVector B);
+
+<span style=color:#998;font-style:italic>// SetBitVectorDifference 差集运算
+</span><span style=color:#998;font-style:italic></span>SetBitVector <span style=color:#900;font-weight:700>SetBitVectorDifference</span>(SetBitVector A, SetBitVector B);
+
+<span style=color:#998;font-style:italic>// SetBitVectorInsert 插入运算
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SetBitVectorInsert</span>(SetBitVector set, <span style=color:#458;font-weight:700>int</span> x);
+
+<span style=color:#998;font-style:italic>// SetBitVectorDelete 删除运算
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SetBitVectorDelete</span>(SetBitVector set, <span style=color:#458;font-weight:700>int</span> x);
+
+<span style=color:#999;font-weight:700;font-style:italic>#endif </span><span style=color:#998;font-style:italic>//DATA_STRUCT_SET_BIT_VECTOR_H
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id=set_bit_vectorc>set_bit_vector.c</h4>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;set_bit_vector.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// SetBitVectorInit 创建一个用位向量实现的空集
+</span><span style=color:#998;font-style:italic></span>SetBitVector <span style=color:#900;font-weight:700>SetBitVectorInit</span>(<span style=color:#458;font-weight:700>int</span> size) {
+    SetBitVector set <span style=color:#000;font-weight:700>=</span> (SetBitVector) malloc(<span style=color:#000;font-weight:700>sizeof</span> <span style=color:#000;font-weight:700>*</span>set);
+    set<span style=color:#000;font-weight:700>-&gt;</span>SetSize <span style=color:#000;font-weight:700>=</span> size;
+    set<span style=color:#000;font-weight:700>-&gt;</span>ArraySize <span style=color:#000;font-weight:700>=</span> (size <span style=color:#000;font-weight:700>+</span> <span style=color:#099>15</span>) <span style=color:#000;font-weight:700>&gt;&gt;</span> <span style=color:#099>4</span>; <span style=color:#998;font-style:italic>// 存储大小为 SetSize 的集合所需的无符号短整数位数
+</span><span style=color:#998;font-style:italic></span>    set<span style=color:#000;font-weight:700>-&gt;</span>BitArray <span style=color:#000;font-weight:700>=</span> (<span style=color:#458;font-weight:700>unsigned</span> <span style=color:#458;font-weight:700>short</span> <span style=color:#000;font-weight:700>*</span>) malloc(size <span style=color:#000;font-weight:700>*</span> <span style=color:#000;font-weight:700>sizeof</span>(<span style=color:#458;font-weight:700>unsigned</span> <span style=color:#458;font-weight:700>short</span>));
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> size; i<span style=color:#000;font-weight:700>++</span>) {
+        set<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i] <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    }
+    <span style=color:#000;font-weight:700>return</span> set;
+}
+
+<span style=color:#998;font-style:italic>// SetBitVectorAssign 集合赋值运算
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SetBitVectorAssign</span>(SetBitVector A, SetBitVector B) {
+    <span style=color:#000;font-weight:700>if</span> (A<span style=color:#000;font-weight:700>-&gt;</span>SetSize <span style=color:#000;font-weight:700>!=</span> B<span style=color:#000;font-weight:700>-&gt;</span>SetSize) {
+        exit(<span style=color:#099>1</span>);
+    }
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> A<span style=color:#000;font-weight:700>-&gt;</span>ArraySize; i<span style=color:#000;font-weight:700>++</span>) {
+        A<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i] <span style=color:#000;font-weight:700>=</span> B<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i];
+    }
+}
+
+<span style=color:#998;font-style:italic>// SetBitVectorMember 成员属性判断
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>SetBitVectorMember</span>(SetBitVector set, <span style=color:#458;font-weight:700>int</span> x) {
+    <span style=color:#000;font-weight:700>if</span> (x <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>0</span> <span style=color:#000;font-weight:700>||</span> x <span style=color:#000;font-weight:700>&gt;=</span> set<span style=color:#000;font-weight:700>-&gt;</span>SetSize) {
+        exit(<span style=color:#099>1</span>);
+    }
+    <span style=color:#000;font-weight:700>return</span> set<span style=color:#000;font-weight:700>-&gt;</span>BitArray[SetBitVectorArrayIndex(x)] <span style=color:#000;font-weight:700>&amp;</span> SetBitVectorBitMask(x);
+}
+
+<span style=color:#998;font-style:italic>// SetBitVectorArrayIndex 右移 4 位获得 x 在数组中的位置
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>SetBitVectorArrayIndex</span>(<span style=color:#458;font-weight:700>int</span> x) {
+    <span style=color:#000;font-weight:700>return</span> x <span style=color:#000;font-weight:700>&gt;&gt;</span> <span style=color:#099>4</span>;
+}
+
+<span style=color:#998;font-style:italic>// SetBitVectorBitMask 确认 x 在相应数组单元中的准确位置
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>unsigned</span> <span style=color:#458;font-weight:700>short</span> <span style=color:#900;font-weight:700>SetBitVectorBitMask</span>(<span style=color:#458;font-weight:700>int</span> x) {
+    <span style=color:#000;font-weight:700>return</span> <span style=color:#099>1</span> <span style=color:#000;font-weight:700>&lt;&lt;</span> (x <span style=color:#000;font-weight:700>&amp;</span> <span style=color:#099>15</span>);
+}
+
+<span style=color:#998;font-style:italic>// SetBitVectorEqual 判断集合 A 和 B 是否相等
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>SetBitVectorEqual</span>(SetBitVector A, SetBitVector B) {
+    <span style=color:#000;font-weight:700>if</span> (A<span style=color:#000;font-weight:700>-&gt;</span>SetSize <span style=color:#000;font-weight:700>!=</span> B<span style=color:#000;font-weight:700>-&gt;</span>SetSize) {
+        exit(<span style=color:#099>1</span>);
+    }
+    <span style=color:#458;font-weight:700>int</span> index <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> A<span style=color:#000;font-weight:700>-&gt;</span>ArraySize; i<span style=color:#000;font-weight:700>++</span>) {
+        <span style=color:#000;font-weight:700>if</span> (A<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i] <span style=color:#000;font-weight:700>!=</span> B<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i]) {
+            index <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+            <span style=color:#000;font-weight:700>break</span>;
+        }
+    }
+    <span style=color:#000;font-weight:700>return</span> index;
+}
+
+<span style=color:#998;font-style:italic>// SetBitVectorUnion 并集运算
+</span><span style=color:#998;font-style:italic></span>SetBitVector <span style=color:#900;font-weight:700>SetBitVectorUnion</span>(SetBitVector A, SetBitVector B) {
+    SetBitVector result <span style=color:#000;font-weight:700>=</span> SetBitVectorInit(A<span style=color:#000;font-weight:700>-&gt;</span>SetSize);
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> A<span style=color:#000;font-weight:700>-&gt;</span>ArraySize; i<span style=color:#000;font-weight:700>++</span>) {
+        result<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i] <span style=color:#000;font-weight:700>=</span> A<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i] <span style=color:#000;font-weight:700>|</span> B<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i];
+    }
+    <span style=color:#000;font-weight:700>return</span> result;
+}
+
+<span style=color:#998;font-style:italic>// SetBitVectorIntersection 交集运算
+</span><span style=color:#998;font-style:italic></span>SetBitVector <span style=color:#900;font-weight:700>SetBitVectorIntersection</span>(SetBitVector A, SetBitVector B) {
+    SetBitVector result <span style=color:#000;font-weight:700>=</span> SetBitVectorInit(A<span style=color:#000;font-weight:700>-&gt;</span>SetSize);
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> A<span style=color:#000;font-weight:700>-&gt;</span>ArraySize; i<span style=color:#000;font-weight:700>++</span>) {
+        result<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i] <span style=color:#000;font-weight:700>=</span> A<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i] <span style=color:#000;font-weight:700>&amp;</span> B<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i];
+    }
+    <span style=color:#000;font-weight:700>return</span> result;
+}
+
+<span style=color:#998;font-style:italic>// SetBitVectorDifference 差集运算
+</span><span style=color:#998;font-style:italic></span>SetBitVector <span style=color:#900;font-weight:700>SetBitVectorDifference</span>(SetBitVector A, SetBitVector B) {
+    SetBitVector result <span style=color:#000;font-weight:700>=</span> SetBitVectorInit(A<span style=color:#000;font-weight:700>-&gt;</span>SetSize);
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> A<span style=color:#000;font-weight:700>-&gt;</span>ArraySize; i<span style=color:#000;font-weight:700>++</span>) {
+        result<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i] <span style=color:#000;font-weight:700>=</span> A<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i] <span style=color:#000;font-weight:700>^</span> (B<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i] <span style=color:#000;font-weight:700>&amp;</span> A<span style=color:#000;font-weight:700>-&gt;</span>BitArray[i]);
+    }
+    <span style=color:#000;font-weight:700>return</span> result;
+}
+
+<span style=color:#998;font-style:italic>// SetBitVectorInsert 插入运算
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SetBitVectorInsert</span>(SetBitVector set, <span style=color:#458;font-weight:700>int</span> x) {
+    <span style=color:#000;font-weight:700>if</span> (x <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>0</span> <span style=color:#000;font-weight:700>||</span> x <span style=color:#000;font-weight:700>&gt;=</span> set<span style=color:#000;font-weight:700>-&gt;</span>SetSize) {
+        exit(<span style=color:#099>1</span>);
+    }
+    set<span style=color:#000;font-weight:700>-&gt;</span>BitArray[SetBitVectorArrayIndex(x)] <span style=color:#000;font-weight:700>|=</span> SetBitVectorBitMask(x);
+}
+
+<span style=color:#998;font-style:italic>// SetBitVectorDelete 删除运算
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>SetBitVectorDelete</span>(SetBitVector set, <span style=color:#458;font-weight:700>int</span> x) {
+    <span style=color:#000;font-weight:700>if</span> (x <span style=color:#000;font-weight:700>&lt;</span> <span style=color:#099>0</span> <span style=color:#000;font-weight:700>||</span> x <span style=color:#000;font-weight:700>&gt;=</span> set<span style=color:#000;font-weight:700>-&gt;</span>SetSize) {
+        exit(<span style=color:#099>1</span>);
+    }
+    set<span style=color:#000;font-weight:700>-&gt;</span>BitArray[SetBitVectorArrayIndex(x)] <span style=color:#000;font-weight:700>&amp;=</span> <span style=color:#000;font-weight:700>~</span>SetBitVectorBitMask(x);
+}
+</code></pre></td></tr></table>
+</div>
+</div>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
