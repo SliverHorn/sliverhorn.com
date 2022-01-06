@@ -84,6 +84,8 @@ SliverHorn的博客
 <li><a href=#具体实现代码-1>具体实现代码</a></li>
 </ul>
 </li>
+<li><a href=#散列函数及其效率>散列函数及其效率</a></li>
+<li><a href=#闭散列的重新散列技术>闭散列的重新散列技术</a></li>
 </ul>
 </nav>
 </div>
@@ -1366,7 +1368,33 @@ SetOrderLinkNode <span style=color:#900;font-weight:700>NewSetOrderLinkNode</spa
 }
 </code></pre></td></tr></table>
 </div>
-</div>
+</div><h2 id=散列函数及其效率>散列函数及其效率</h2>
+<p>要在常数时间内实现符号表各运算的关键在于选择一个好的散列两数，它能将集合中的 $n$ 个元素均匀地散列到 $B$ 个桶中，这样每个桶中平均有$n/B$ 个元素。在开散列表中，<code>TableOpenHashInsert</code> ， <code>TableOpenHashDelete</code> 和 <code>TableOpenHashMember</code> 运算就只要 $O(n/B)$ 平均时间。当 $n/B$ 为一常数时，每个符号表运算可在常数时间内完成。</p>
+<p>计算简单且效果较好的散列函数构造方法:</p>
+<ol>
+<li>
+<p>除余法</p>
+</li>
+<li>
+<p>数乘法</p>
+</li>
+<li>
+<p>平方取中法</p>
+</li>
+<li>
+<p>基数转换法</p>
+</li>
+<li>
+<p>随机数法</p>
+</li>
+</ol>
+<h2 id=闭散列的重新散列技术>闭散列的重新散列技术</h2>
+<p>在闭散列中，插入及其他运算所耗费的时间不仅依赖于散列西数的选取，而且与重新散列技术有关。采用线性重新散列技术不可避免地会出现散列表中元素的“聚集” 现象，即散列表中成块的连续地址被占用。为了减少聚集的机会，应该采用跳跃式的重新散列技术。下面介绍另外三种散列技术，它们大大减少了元素聚集的可能性。</p>
+<ol>
+<li>二次散列技术</li>
+<li>随机重新散列技术</li>
+<li>双重散列技术</li>
+</ol>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
