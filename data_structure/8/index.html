@@ -65,7 +65,8 @@ SliverHorn的博客
 <li><a href=#具体代码实现>具体代码实现</a></li>
 </ul>
 </li>
-<li><a href=#可并优先队列-用左偏树实现>可并优先队列-用左偏树实现</a>
+<li><a href=#可并优先队列-用左偏树实现>可并优先队列-用左偏树实现</a></li>
+<li><a href=#左偏树的定义>左偏树的定义</a>
 <ul>
 <li><a href=#函数时间复杂度-1>函数时间复杂度</a></li>
 <li><a href=#具体代码实现-1>具体代码实现</a></li>
@@ -374,6 +375,41 @@ SliverHorn的博客
 </code></pre></td></tr></table>
 </div>
 </div><h2 id=可并优先队列-用左偏树实现>可并优先队列-用左偏树实现</h2>
+<p>可并优先队列也是一个以集合为基础的抽象数据类型。除必须支持优先队列的 <code>HeapLeftTreeInsert</code> 和
+<code>HeapLeftTreeDeleteMinimum</code> 运算外，可并优先队列还支持两个不同优先队列的合并运算 <code>HeapLeftTreeConcatenate</code>。</p>
+<p>用堆来实现优先队列，可在 $O(logn)$ 时间内支持同一优先队列中的基本运算，但合并两个不同优先队列的效率不高。下面讨论的左偏树结构不但能在 $O(logn)$ 时间内支持同一优先队列中的基本运算，还能有效地支持两个不同优先队列的合并运算 <code>HeapLeftTreeConcatenate</code> 。</p>
+<h2 id=左偏树的定义>左偏树的定义</h2>
+<p>左偏树是一类特殊的优先级树。与优先级树类似，左偏树也有极小化左偏树与极大化左偏树之分。为了确定起见，下面所讨论的左偏树均为极小化左偏树。常用的左偏树有左偏高树和左偏重树两种不同类型。顾名思义，左偏高树的左子树偏高，而左偏重树的左子树偏重。下面给出其严格定义。</p>
+<p>若将二叉树结点中的空指针看成指向一个空结点，则称这类空结点为二叉树的前端结点。并规定所有前端结点的高度（重量）为 $0$ 。
+对于二叉树中任意一个结点 $x$ ，递归地定义其高度 $s(x)$ 为
+$$
+s(x) = min (s(L), s(R)) + 1
+$$</p>
+<blockquote>
+<p>$L$ 和 $R$ 分别是结点 $x$ 的左儿子结点和右儿子结点。</p>
+</blockquote>
+<p>一棵优先级树是一棵左偏高树，当且仅当在该树的每个内结点处，其左儿子结点的高 $(s值)$ 大于或等于其右儿子结点的高 $(s值)$ 。</p>
+<p>对于二又树中任意一个结点x，其重量 $w(x)$ 递归地定义为
+$$
+w(x) = w(L) + w(R) + 1
+$$</p>
+<blockquote>
+<p>$L$ 和 $R$ 分别是结点 $x$ 的左儿子结点和右儿子结点。</p>
+</blockquote>
+<p>一棵优先级树是一棵左偏重树，当且仅当在该树的每个内结点处，其左儿子结点的重 $(w值)$ 大于或等于其右儿子结点的重 $(w值)$ 。</p>
+<p>左偏高树具有下面的性质。
+设 $x$ 是一棵左偏高树的任意一个内结点，有：</p>
+<ul>
+<li>①以为根的子树中至少有 $2^{s(x)} - 1$ 个结点：</li>
+<li>② 若以为根的子树中有 $m$ 个结点，则 $s(x)$ 的值不超过 $log(m+1)$；</li>
+<li>③ 从 $x$ 出发的最右路经的长度恰为 $s(x)$ 。</li>
+</ul>
+<p>证明：</p>
+<ul>
+<li>①设结点 x 位于树的第 $k$ 层。由 $s(x)$ 的定义知，以 $x$ 为根的子树在第 $k+j$ 层的每个结点怡有两个儿子结点， $0 \leq j \leq s(x)-1$ 。因此，以 $x$ 为根的子树在第 $k+j$ 层恰有 $2^j$ 个结点，。 从而 $0 \leq j \leq s(x)-1$ ，以 $x$ 为根的子树中至少有 $\sum_{j=0}^{s(x)-1}2^j = 2^{s(x)} - 1$ 个纬点。</li>
+<li>② 由 ① 可立即推出。</li>
+<li>③ 由 $s(x)$ 的定义，以及在左偏高树中每个内结点处，其左儿子结点的 $s$ 值大于或等于其右儿子结点的 $s$ 值，即可推出。</li>
+</ul>
 <h3 id=函数时间复杂度-1>函数时间复杂度</h3>
 <table>
 <thead>
@@ -390,12 +426,12 @@ SliverHorn的博客
 <td>~</td>
 </tr>
 <tr>
-<td>HeapLeftTree HeapLeftTreeInit();</td>
+<td><code>HeapLeftTree HeapLeftTreeInit();</code></td>
 <td>将 Root 置为空指针, 创建一棵空树</td>
 <td>~</td>
 </tr>
 <tr>
-<td>HeapLeftTreeConcatenate(HeapLeftTreeNode x, HeapLeftTreeNode y);</td>
+<td><code>HeapLeftTreeConcatenate(HeapLeftTreeNode x, HeapLeftTreeNode y);</code></td>
 <td>将两棵分别为 x 和 y 根的左偏树合并为一课新的以 x 为根的左偏树</td>
 <td>$O(logn)$</td>
 </tr>
