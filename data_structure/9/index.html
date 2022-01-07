@@ -64,6 +64,12 @@ SliverHorn的博客
 <li><a href=#具体代码实现>具体代码实现</a></li>
 </ul>
 </li>
+<li><a href=#用父结点数组实现并查集>用父结点数组实现并查集</a></li>
+<li><a href=#具体代码实现-1>具体代码实现</a>
+<ul>
+<li></li>
+</ul>
+</li>
 </ul>
 </nav>
 </div>
@@ -205,6 +211,301 @@ SliverHorn的博客
         }
     }
     <span style=color:#000;font-weight:700>return</span> i;
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=用父结点数组实现并查集>用父结点数组实现并查集</h2>
+<p>采用树结构实现并查集的基本思想是：每个集合用一棵树来表示，树的结点用于存储集合中的元素名和一个指向其父结点的指针，树根结点处的元素代表该树所表示的集合，利用映射可以找到集合中元素所对应的树结点。</p>
+<h2 id=具体代码实现-1>具体代码实现</h2>
+<h4 id=union_find_parent_array_1h>union_find_parent_array_1.h</h4>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#998;font-style:italic>// UnionFindParentArray1 并查集指针类型
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> unionFindParentArray1 <span style=color:#000;font-weight:700>*</span>UnionFindParentArray1;
+
+<span style=color:#998;font-style:italic>// unionFindParentArray1 并查集结构
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> unionFindParentArray1 {
+    <span style=color:#458;font-weight:700>int</span> <span style=color:#000;font-weight:700>*</span>Parent; <span style=color:#998;font-style:italic>// 父结点数组
+</span><span style=color:#998;font-style:italic></span>} unionFindParentArray;
+
+<span style=color:#999;font-weight:700;font-style:italic>#ifndef DATA_STRUCT_UNION_FIND_PARENT_ARRAY_1_H
+</span><span style=color:#999;font-weight:700;font-style:italic>#define DATA_STRUCT_UNION_FIND_PARENT_ARRAY_1_H
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// UnionFindParent1ArrayInit 初始化成单元素集合
+</span><span style=color:#998;font-style:italic></span>UnionFindParentArray1 <span style=color:#900;font-weight:700>UnionFindParent1ArrayInit</span>(<span style=color:#458;font-weight:700>int</span> size);
+
+<span style=color:#998;font-style:italic>// UnionFindParentArray1Find 找出包含元素 e 的集合
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>UnionFindParentArray1Find</span>(UnionFindParentArray1 u, <span style=color:#458;font-weight:700>int</span> e);
+
+<span style=color:#998;font-style:italic>// UnionFindParentArray1Union 合并集合
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>UnionFindParentArray1Union</span>(UnionFindParentArray1 u, <span style=color:#458;font-weight:700>int</span> i, <span style=color:#458;font-weight:700>int</span> j);
+
+<span style=color:#999;font-weight:700;font-style:italic>#endif </span><span style=color:#998;font-style:italic>//DATA_STRUCT_UNION_FIND_PARENT_ARRAY_1_H
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id=union_find_parent_array_1c>union_find_parent_array_1.c</h4>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;union_find_parent_array_1.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// UnionFindParent1ArrayInit 初始化成单元素集合
+</span><span style=color:#998;font-style:italic></span>UnionFindParentArray1 <span style=color:#900;font-weight:700>UnionFindParent1ArrayInit</span>(<span style=color:#458;font-weight:700>int</span> size) {
+    UnionFindParentArray1 unionFindParentArray1 <span style=color:#000;font-weight:700>=</span> (UnionFindParentArray1) malloc(<span style=color:#000;font-weight:700>sizeof</span> <span style=color:#000;font-weight:700>*</span>unionFindParentArray1);
+    unionFindParentArray1<span style=color:#000;font-weight:700>-&gt;</span>Parent <span style=color:#000;font-weight:700>=</span> (<span style=color:#458;font-weight:700>int</span> <span style=color:#000;font-weight:700>*</span>) malloc((size <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>) <span style=color:#000;font-weight:700>*</span> <span style=color:#000;font-weight:700>sizeof</span>(<span style=color:#458;font-weight:700>int</span> ));
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> e <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; e <span style=color:#000;font-weight:700>&lt;=</span> size; e<span style=color:#000;font-weight:700>++</span>) {
+        unionFindParentArray1<span style=color:#000;font-weight:700>-&gt;</span>Parent[e] <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    }
+    <span style=color:#000;font-weight:700>return</span> unionFindParentArray1;
+}
+
+<span style=color:#998;font-style:italic>// UnionFindParentArray1Find 找出包含元素 e 的集合
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>UnionFindParentArray1Find</span>(UnionFindParentArray1 u, <span style=color:#458;font-weight:700>int</span> e) {
+    <span style=color:#000;font-weight:700>while</span> (u<span style=color:#000;font-weight:700>-&gt;</span>Parent[e]) {
+        e <span style=color:#000;font-weight:700>=</span> u<span style=color:#000;font-weight:700>-&gt;</span>Parent[e]; <span style=color:#998;font-style:italic>// 上移
+</span><span style=color:#998;font-style:italic></span>    }
+    <span style=color:#000;font-weight:700>return</span> e;
+}
+
+<span style=color:#998;font-style:italic>// UnionFindParentArray1Union 合并集合
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>UnionFindParentArray1Union</span>(UnionFindParentArray1 u, <span style=color:#458;font-weight:700>int</span> i, <span style=color:#458;font-weight:700>int</span> j) {
+    u<span style=color:#000;font-weight:700>-&gt;</span>Parent[j] <span style=color:#000;font-weight:700>=</span> i;
+    <span style=color:#000;font-weight:700>return</span> i;
+}
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=union_find_parent_array_2h>union_find_parent_array_2.h</h4>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c>
+<span style=color:#998;font-style:italic>// UnionFindParentArray2 并查集指针类型
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> unionFindParentArray2 <span style=color:#000;font-weight:700>*</span>UnionFindParentArray2;
+
+<span style=color:#998;font-style:italic>// unionFindParentArray2 并查集结构
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> unionFindParentArray2 {
+    <span style=color:#458;font-weight:700>int</span> <span style=color:#000;font-weight:700>*</span>Parent; <span style=color:#998;font-style:italic>// 父结点数组
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>int</span> <span style=color:#000;font-weight:700>*</span>Root; <span style=color:#998;font-style:italic>// 根结点数组
+</span><span style=color:#998;font-style:italic></span>} unionFindParentArray;
+<span style=color:#999;font-weight:700;font-style:italic>#ifndef DATA_STRUCT_UNION_FIND_PARENT_ARRAY_2_H
+</span><span style=color:#999;font-weight:700;font-style:italic>#define DATA_STRUCT_UNION_FIND_PARENT_ARRAY_2_H
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// UnionFindParent2ArrayInit 初始化成单元素集合
+</span><span style=color:#998;font-style:italic></span>UnionFindParentArray2 <span style=color:#900;font-weight:700>UnionFindParent2ArrayInit</span>(<span style=color:#458;font-weight:700>int</span> size);
+
+<span style=color:#998;font-style:italic>// UnionFindParentArray2Find 找出包含元素 e 的集合
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>UnionFindParentArray2Find</span>(UnionFindParentArray2 u, <span style=color:#458;font-weight:700>int</span> e);
+
+<span style=color:#998;font-style:italic>// UnionFindParentArray2Union 合并集合
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>UnionFindParentArray2Union</span>(UnionFindParentArray2 u, <span style=color:#458;font-weight:700>int</span> i, <span style=color:#458;font-weight:700>int</span> j);
+
+<span style=color:#998;font-style:italic>// UnionFindParentArray2Free 释放所分配的空间
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>UnionFindParentArray2Free</span>(UnionFindParentArray2 u);
+
+<span style=color:#999;font-weight:700;font-style:italic>#endif </span><span style=color:#998;font-style:italic>//DATA_STRUCT_UNION_FIND_PARENT_ARRAY_2_H
+</span><span style=color:#998;font-style:italic></span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=union_find_parent_array_2c>union_find_parent_array_2.c</h4>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;union_find_parent_array_2.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// UnionFindParent2ArrayInit 初始化成单元素集合
+</span><span style=color:#998;font-style:italic></span>UnionFindParentArray2 <span style=color:#900;font-weight:700>UnionFindParent2ArrayInit</span>(<span style=color:#458;font-weight:700>int</span> size) {
+    UnionFindParentArray2 unionFindParentArray2 <span style=color:#000;font-weight:700>=</span> (UnionFindParentArray2) malloc(<span style=color:#000;font-weight:700>sizeof</span> <span style=color:#000;font-weight:700>*</span>unionFindParentArray2);
+    unionFindParentArray2<span style=color:#000;font-weight:700>-&gt;</span>Parent <span style=color:#000;font-weight:700>=</span> (<span style=color:#458;font-weight:700>int</span> <span style=color:#000;font-weight:700>*</span>) malloc((size <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>) <span style=color:#000;font-weight:700>*</span> <span style=color:#000;font-weight:700>sizeof</span>(<span style=color:#458;font-weight:700>int</span>));
+    unionFindParentArray2<span style=color:#000;font-weight:700>-&gt;</span>Root <span style=color:#000;font-weight:700>=</span> (<span style=color:#458;font-weight:700>int</span> <span style=color:#000;font-weight:700>*</span>) malloc((size <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>) <span style=color:#000;font-weight:700>*</span> <span style=color:#000;font-weight:700>sizeof</span>(<span style=color:#458;font-weight:700>int</span>));
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;=</span> size; i<span style=color:#000;font-weight:700>++</span>) {
+        unionFindParentArray2<span style=color:#000;font-weight:700>-&gt;</span>Root[i] <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+        unionFindParentArray2<span style=color:#000;font-weight:700>-&gt;</span>Parent[i] <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+    }
+    <span style=color:#000;font-weight:700>return</span> unionFindParentArray2;
+}
+
+<span style=color:#998;font-style:italic>// UnionFindParentArray2Find 找出包含元素 e 的集合
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>UnionFindParentArray2Find</span>(UnionFindParentArray2 u, <span style=color:#458;font-weight:700>int</span> e) {
+<span style=color:#998;font-style:italic>//    while (!u-&gt;Root[e]) {
+</span><span style=color:#998;font-style:italic>//        e = u-&gt;Parent[e]; // 上移
+</span><span style=color:#998;font-style:italic>//    }
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>int</span> i, j <span style=color:#000;font-weight:700>=</span> e;
+    <span style=color:#000;font-weight:700>while</span> (<span style=color:#000;font-weight:700>!</span>u<span style=color:#000;font-weight:700>-&gt;</span>Root[j]) {
+        j <span style=color:#000;font-weight:700>=</span> u<span style=color:#000;font-weight:700>-&gt;</span>Parent[j]; <span style=color:#998;font-style:italic>// 上移
+</span><span style=color:#998;font-style:italic></span>    }
+    <span style=color:#000;font-weight:700>while</span> (j <span style=color:#000;font-weight:700>!=</span> e) {
+        i <span style=color:#000;font-weight:700>=</span> u<span style=color:#000;font-weight:700>-&gt;</span>Parent[e];
+        u<span style=color:#000;font-weight:700>-&gt;</span>Parent[e] <span style=color:#000;font-weight:700>=</span> j;
+        e <span style=color:#000;font-weight:700>=</span> i;
+    }
+    <span style=color:#000;font-weight:700>return</span> e;
+}
+
+<span style=color:#998;font-style:italic>// UnionFindParentArray2Union 合并集合
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>UnionFindParentArray2Union</span>(UnionFindParentArray2 u, <span style=color:#458;font-weight:700>int</span> i, <span style=color:#458;font-weight:700>int</span> j) {
+    <span style=color:#000;font-weight:700>if</span> (i <span style=color:#000;font-weight:700>==</span> j) {
+        <span style=color:#000;font-weight:700>return</span> i;
+    }
+    <span style=color:#000;font-weight:700>if</span> (u<span style=color:#000;font-weight:700>-&gt;</span>Parent[i] <span style=color:#000;font-weight:700>&lt;</span> u<span style=color:#000;font-weight:700>-&gt;</span>Parent[j]) { <span style=color:#998;font-style:italic>// i 成为 j 的子树
+</span><span style=color:#998;font-style:italic></span>        u<span style=color:#000;font-weight:700>-&gt;</span>Parent[j] <span style=color:#000;font-weight:700>+=</span> u<span style=color:#000;font-weight:700>-&gt;</span>Parent[i];
+        u<span style=color:#000;font-weight:700>-&gt;</span>Root[i] <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+        u<span style=color:#000;font-weight:700>-&gt;</span>Parent[i] <span style=color:#000;font-weight:700>=</span> j;
+        <span style=color:#000;font-weight:700>return</span> j;
+    } <span style=color:#000;font-weight:700>else</span> { <span style=color:#998;font-style:italic>// j 成为 i 的子树
+</span><span style=color:#998;font-style:italic></span>        u<span style=color:#000;font-weight:700>-&gt;</span>Parent[i] <span style=color:#000;font-weight:700>+=</span> u<span style=color:#000;font-weight:700>-&gt;</span>Parent[j];
+        u<span style=color:#000;font-weight:700>-&gt;</span>Root[j] <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+        u<span style=color:#000;font-weight:700>-&gt;</span>Parent[j] <span style=color:#000;font-weight:700>=</span> i;
+        <span style=color:#000;font-weight:700>return</span> i;
+    }
+}
+
+<span style=color:#998;font-style:italic>// UnionFindParentArray2Free 释放所分配的空间
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>UnionFindParentArray2Free</span>(UnionFindParentArray2 u) {
+    free(u<span style=color:#000;font-weight:700>-&gt;</span>Parent);
+    free(u<span style=color:#000;font-weight:700>-&gt;</span>Root);
+    free(u);
+    u <span style=color:#000;font-weight:700>=</span> <span style=color:#0086b3>NULL</span>;
 }
 </code></pre></td></tr></table>
 </div>
