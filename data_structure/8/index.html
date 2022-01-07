@@ -56,7 +56,23 @@ SliverHorn的博客
 <div class=post-toc style=position:absolute;top:188px>
 <h2 class=post-toc-title>文章目录</h2>
 <div class=post-toc-content>
-<nav id=TableOfContents></nav>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#优先队列的定义>优先队列的定义</a></li>
+<li><a href=#用数组实现堆>用数组实现堆</a>
+<ul>
+<li><a href=#函数时间复杂度>函数时间复杂度</a></li>
+<li><a href=#具体代码实现>具体代码实现</a></li>
+</ul>
+</li>
+<li><a href=#可并优先队列-用左偏树实现>可并优先队列-用左偏树实现</a>
+<ul>
+<li><a href=#函数时间复杂度-1>函数时间复杂度</a></li>
+<li><a href=#具体代码实现-1>具体代码实现</a></li>
+</ul>
+</li>
+</ul>
+</nav>
 </div>
 </div>
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
@@ -72,6 +88,639 @@ SliverHorn的博客
 阅读</span></span>
 </div>
 <div class=post-content>
+<h2 id=优先队列的定义>优先队列的定义</h2>
+<p>优先队列也是一个以集合为基础的抽象数据类型。优先队列中的每一个元素都有一个优先级。优先队列中元素x的优先级记为 $p(x)$ ，它可以是一个实数，也可以是一个一般的全序集中的元素。</p>
+<p>定义在优先队列上的基本运算如下:</p>
+<p>① <code>Min(H)</code>：返回优先队列H 中具有最小优先级的元素。</p>
+<p>② <code>Insert(x, H)</code>：将元素 <code>x</code> 插入优先队列 <code>H</code> 。</p>
+<p>③ <code>DeleteMin(H)</code> ：删除并返回优先队列 <code>H</code> 中具有最小优先级的元素。</p>
+<p>优先队列这个词可解释如下：“队列”说明人或事物在排队等待某种服务。若服务是按照排队顺序进行的，即先到者先得到服务，则这种队列就是通常的队列。在优先队列中，“优先”说明服务并不是按排队顺序进行的，而是按照每个对象的优先级顺序进行的。</p>
+<h2 id=用数组实现堆>用数组实现堆</h2>
+<p>由于堆具有一些特殊的性质，所以可以用特殊的方法来实现。当堆中有 $n$ 个元素时，可以将这些元素存放在数组 $A$ 的前 $n$ 个单元里。其中，堆的根结点中元素存放在 $A[1]$ 中。一般地，$A$ 的左儿子结点中的元素 （若存在）存放在 $A[2 * i]$ 中： $A[i]$ 的右儿子结点中的元素（若存在）存放在 $A[2*i+1]$ 中。换句话说，当 $i \gt 1$ 时， $A$ 己的父结点中的元素存放在 $A[i / 2]$ 中。直观地看，元素 $A[1], A[2], &mldr; , A[n]$ 是堆中元素按层序列表，即从根结点开始逐层往下，每层从左到右地将结点中元素列出。</p>
+<h3 id=函数时间复杂度>函数时间复杂度</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>函数说明</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>HeapArray HeapArrayInit(int size);</code></td>
+<td>创建一个空堆，其中堆数组的最大长度为 size 。</td>
+<td>~</td>
+</tr>
+<tr>
+<td><code>void HeapArrayInsert(HeapArray heap, Element element);</code></td>
+<td>在堆 heap 中插入一个元素 element 的算法</td>
+<td></td>
+</tr>
+<tr>
+<td><code>Element HeapArrayDeleteMinimum(HeapArray heap);</code></td>
+<td>在 heap 中抽取最小元的算法</td>
+<td></td>
+</tr>
+<tr>
+<td><code>HeapArray HeapArrayBuild(Element elements[], int size, int arraySize);</code></td>
+<td>在 O(n) 时间内将数组 elements 调整为一个堆。</td>
+<td>$O(n)$</td>
+</tr>
+<tr>
+<td><code>void HeapArraySort(Element elements[], int n);</code></td>
+<td>利用上述堆结构进行排序的算法称为堆排序算法，它可在 O(nlog_{n}) 时间内实现对给定数组a就地排序。</td>
+<td>$O(nlog{n})$</td>
+</tr>
+</tbody>
+</table>
+<h3 id=具体代码实现>具体代码实现</h3>
+<h4 id=heap_arrayh>heap_array.h</h4>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;priority_queue.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// HeapArray 极小化堆指针类型
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> heapArray <span style=color:#000;font-weight:700>*</span>HeapArray;
+
+<span style=color:#998;font-style:italic>// heapArray 极小化堆类型
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> heapArray {
+    <span style=color:#458;font-weight:700>int</span> Last; <span style=color:#998;font-style:italic>// 最后一个单元
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>int</span> MaxSize; <span style=color:#998;font-style:italic>// 堆数组的最大长度
+</span><span style=color:#998;font-style:italic></span>    Element <span style=color:#000;font-weight:700>*</span>Heap; <span style=color:#998;font-style:italic>// 元素数组
+</span><span style=color:#998;font-style:italic></span>} heapArray;
+
+<span style=color:#999;font-weight:700;font-style:italic>#ifndef DATA_STRUCT_HEAP_ARRAY_H
+</span><span style=color:#999;font-weight:700;font-style:italic>#define DATA_STRUCT_HEAP_ARRAY_H
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// HeapArrayInit 创建一个空堆，其中堆数组的最大长度为 size 。
+</span><span style=color:#998;font-style:italic></span>HeapArray <span style=color:#900;font-weight:700>HeapArrayInit</span>(<span style=color:#458;font-weight:700>int</span> size);
+
+<span style=color:#998;font-style:italic>// HeapArrayInsert 在堆 heap 中插入一个元素 element 的算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>HeapArrayInsert</span>(HeapArray heap, Element element);
+
+<span style=color:#998;font-style:italic>// HeapArrayDeleteMinimum 在 heap 中抽取最小元的算法
+</span><span style=color:#998;font-style:italic></span>Element <span style=color:#900;font-weight:700>HeapArrayDeleteMinimum</span>(HeapArray heap);
+
+<span style=color:#998;font-style:italic>// HeapArrayBuild 在 O(n) 时间内将数组 elements 调整为一个堆。
+</span><span style=color:#998;font-style:italic></span>HeapArray <span style=color:#900;font-weight:700>HeapArrayBuild</span>(Element elements[], <span style=color:#458;font-weight:700>int</span> size, <span style=color:#458;font-weight:700>int</span> arraySize);
+
+<span style=color:#998;font-style:italic>// HeapArraySort 利用上述堆结构进行排序的算法称为堆排序算法，它可在 O(nlog_{n}) 时间内实现对给定数组a就地排序。
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>HeapArraySort</span>(Element elements[], <span style=color:#458;font-weight:700>int</span> n);
+
+<span style=color:#999;font-weight:700;font-style:italic>#endif </span><span style=color:#998;font-style:italic>//DATA_STRUCT_HEAP_ARRAY_H
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id=heap_arrayc>heap_array.c</h4>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">81
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;heap_array.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// HeapArrayInit )创建一个空堆，其中堆数组的最大长度为 size 。
+</span><span style=color:#998;font-style:italic></span>HeapArray <span style=color:#900;font-weight:700>HeapArrayInit</span>(<span style=color:#458;font-weight:700>int</span> size) {
+    HeapArray heap <span style=color:#000;font-weight:700>=</span> (HeapArray) malloc(<span style=color:#000;font-weight:700>sizeof</span> <span style=color:#000;font-weight:700>*</span>heap);
+    heap<span style=color:#000;font-weight:700>-&gt;</span>MaxSize <span style=color:#000;font-weight:700>=</span> size;
+    heap<span style=color:#000;font-weight:700>-&gt;</span>Heap <span style=color:#000;font-weight:700>=</span> (Element <span style=color:#000;font-weight:700>*</span>) malloc((heap<span style=color:#000;font-weight:700>-&gt;</span>MaxSize <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>) <span style=color:#000;font-weight:700>*</span> <span style=color:#000;font-weight:700>sizeof</span>(Element));
+    heap<span style=color:#000;font-weight:700>-&gt;</span>Last <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    <span style=color:#000;font-weight:700>return</span> heap;
+}
+
+<span style=color:#998;font-style:italic>// HeapArrayInsert 在堆 heap 中插入一个元素 element 的算法
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>HeapArrayInsert</span>(HeapArray heap, Element element) {
+    <span style=color:#000;font-weight:700>if</span> (heap<span style=color:#000;font-weight:700>-&gt;</span>Last <span style=color:#000;font-weight:700>==</span> heap<span style=color:#000;font-weight:700>-&gt;</span>MaxSize) { <span style=color:#998;font-style:italic>// 堆已满
+</span><span style=color:#998;font-style:italic></span>        <span style=color:#000;font-weight:700>return</span>;
+    }
+    <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>++</span>heap<span style=color:#000;font-weight:700>-&gt;</span>Last;
+    <span style=color:#000;font-weight:700>while</span> (i <span style=color:#000;font-weight:700>!=</span> <span style=color:#099>1</span> <span style=color:#000;font-weight:700>&amp;&amp;</span> less(element, heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[i <span style=color:#000;font-weight:700>/</span> <span style=color:#099>2</span>])) {
+        heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[i] <span style=color:#000;font-weight:700>=</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[i <span style=color:#000;font-weight:700>/</span> <span style=color:#099>2</span>];
+        i <span style=color:#000;font-weight:700>/=</span> <span style=color:#099>2</span>; <span style=color:#998;font-style:italic>// 向上搜索
+</span><span style=color:#998;font-style:italic></span>    }
+    heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[i] <span style=color:#000;font-weight:700>=</span> element;
+}
+
+<span style=color:#998;font-style:italic>// HeapArrayDeleteMinimum 在 heap 中抽取最小元的算法
+</span><span style=color:#998;font-style:italic></span>Element <span style=color:#900;font-weight:700>HeapArrayDeleteMinimum</span>(HeapArray heap) {
+    <span style=color:#000;font-weight:700>if</span> (heap<span style=color:#000;font-weight:700>-&gt;</span>Last <span style=color:#000;font-weight:700>==</span> <span style=color:#099>0</span>) { <span style=color:#998;font-style:italic>// 堆已空
+</span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
+    }
+    Element min <span style=color:#000;font-weight:700>=</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[<span style=color:#099>1</span>]; <span style=color:#998;font-style:italic>// 堆中最小元
+</span><span style=color:#998;font-style:italic></span>    Element last <span style=color:#000;font-weight:700>=</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[heap<span style=color:#000;font-weight:700>-&gt;</span>Last<span style=color:#000;font-weight:700>--</span>]; <span style=color:#998;font-style:italic>// 堆中最后一个元素
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>; <span style=color:#998;font-style:italic>// 堆的当前位置
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>int</span> ci <span style=color:#000;font-weight:700>=</span> <span style=color:#099>2</span>; <span style=color:#998;font-style:italic>// i 的儿子结点在堆中位置
+</span><span style=color:#998;font-style:italic></span>    <span style=color:#000;font-weight:700>while</span> (ci <span style=color:#000;font-weight:700>&lt;</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Last) {
+        <span style=color:#000;font-weight:700>if</span> (ci <span style=color:#000;font-weight:700>&lt;</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Last <span style=color:#000;font-weight:700>&amp;&amp;</span> less(heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[ci <span style=color:#000;font-weight:700>+</span> i], heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[ci])) { <span style=color:#998;font-style:italic>// 搜索 last 的插入位置
+</span><span style=color:#998;font-style:italic></span>            ci<span style=color:#000;font-weight:700>++</span>;
+        }
+        <span style=color:#000;font-weight:700>if</span> (<span style=color:#000;font-weight:700>!</span>less(heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[ci], last)) { <span style=color:#998;font-style:italic>// 可在 heap[i] 处插入
+</span><span style=color:#998;font-style:italic></span>            <span style=color:#000;font-weight:700>break</span>;
+        }
+        heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[i] <span style=color:#000;font-weight:700>=</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[ci]; <span style=color:#998;font-style:italic>// 儿子结点上升
+</span><span style=color:#998;font-style:italic></span>        i <span style=color:#000;font-weight:700>=</span> ci; <span style=color:#998;font-style:italic>// 当前结点下降
+</span><span style=color:#998;font-style:italic></span>        ci <span style=color:#000;font-weight:700>*=</span> <span style=color:#099>2</span>;
+    }
+    heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[i] <span style=color:#000;font-weight:700>=</span> last;
+    <span style=color:#000;font-weight:700>return</span> min;
+}
+
+<span style=color:#998;font-style:italic>// HeapArrayBuild 在 O(n) 时间内将数组 elements 调整为一个堆。
+</span><span style=color:#998;font-style:italic></span>HeapArray <span style=color:#900;font-weight:700>HeapArrayBuild</span>(Element elements[], <span style=color:#458;font-weight:700>int</span> size, <span style=color:#458;font-weight:700>int</span> arraySize) {
+    HeapArray heap <span style=color:#000;font-weight:700>=</span> HeapArrayInit(arraySize);
+    heap<span style=color:#000;font-weight:700>-&gt;</span>Heap <span style=color:#000;font-weight:700>=</span> elements;
+    heap<span style=color:#000;font-weight:700>-&gt;</span>Last <span style=color:#000;font-weight:700>=</span> size;
+    heap<span style=color:#000;font-weight:700>-&gt;</span>MaxSize <span style=color:#000;font-weight:700>=</span> arraySize;
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Last <span style=color:#000;font-weight:700>/</span> <span style=color:#099>2</span>; i <span style=color:#000;font-weight:700>&gt;=</span> <span style=color:#099>1</span>; i<span style=color:#000;font-weight:700>--</span>) {
+        Element element <span style=color:#000;font-weight:700>=</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[i]; <span style=color:#998;font-style:italic>// 栈顶
+</span><span style=color:#998;font-style:italic></span>        <span style=color:#458;font-weight:700>int</span> c <span style=color:#000;font-weight:700>=</span> <span style=color:#099>2</span> <span style=color:#000;font-weight:700>*</span> i;
+        <span style=color:#000;font-weight:700>while</span> (c <span style=color:#000;font-weight:700>&lt;=</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Last) {
+            <span style=color:#000;font-weight:700>if</span> (c <span style=color:#000;font-weight:700>&gt;</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Last <span style=color:#000;font-weight:700>&amp;&amp;</span> less(heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[c<span style=color:#000;font-weight:700>+</span><span style=color:#099>1</span>], heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[c])) {
+                c<span style=color:#000;font-weight:700>++</span>;
+            }
+            <span style=color:#000;font-weight:700>if</span> (<span style=color:#000;font-weight:700>!</span>less(heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[c], element)) { <span style=color:#998;font-style:italic>// 可在 heap[c / 2] 处插入 element
+</span><span style=color:#998;font-style:italic></span>                <span style=color:#000;font-weight:700>break</span>;
+            }
+            heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[c <span style=color:#000;font-weight:700>/</span> <span style=color:#099>2</span>] <span style=color:#000;font-weight:700>=</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Heap[c]; <span style=color:#998;font-style:italic>// heap[c] 上升
+</span><span style=color:#998;font-style:italic></span>            c <span style=color:#000;font-weight:700>*=</span> <span style=color:#099>2</span>; <span style=color:#998;font-style:italic>// 当前结点 c 下降
+</span><span style=color:#998;font-style:italic></span>        }
+    }
+    <span style=color:#000;font-weight:700>return</span> heap;
+}
+
+<span style=color:#998;font-style:italic>// HeapArraySort 利用上述堆结构进行排序的算法称为堆排序算法，它可在 O(nlog_{n}) 时间内实现对给定数组a就地排序。
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>HeapArraySort</span>(Element elements[], <span style=color:#458;font-weight:700>int</span> n) {
+    HeapArray heap <span style=color:#000;font-weight:700>=</span> HeapArrayBuild(elements, n, n);
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> n <span style=color:#000;font-weight:700>-</span> <span style=color:#099>1</span>; i <span style=color:#000;font-weight:700>&gt;=</span> <span style=color:#099>1</span>; i<span style=color:#000;font-weight:700>--</span>) {
+        Element element <span style=color:#000;font-weight:700>=</span> HeapArrayDeleteMinimum(heap);
+        elements[i <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>] <span style=color:#000;font-weight:700>=</span> element;
+    }
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=可并优先队列-用左偏树实现>可并优先队列-用左偏树实现</h2>
+<h3 id=函数时间复杂度-1>函数时间复杂度</h3>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>函数说明</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>HeapLeftTreeNode NewHeapLeftTreeNode(Element element, int height);</code></td>
+<td>创建新结点</td>
+<td>~</td>
+</tr>
+<tr>
+<td>HeapLeftTree HeapLeftTreeInit();</td>
+<td>将 Root 置为空指针, 创建一棵空树</td>
+<td>~</td>
+</tr>
+<tr>
+<td>HeapLeftTreeConcatenate(HeapLeftTreeNode x, HeapLeftTreeNode y);</td>
+<td>将两棵分别为 x 和 y 根的左偏树合并为一课新的以 x 为根的左偏树</td>
+<td>$O(logn)$</td>
+</tr>
+<tr>
+<td><code>void HeapLeftTreeInsert(HeapLeftTree heap, Element element);</code></td>
+<td>要在左偏高树中插入一个元素 x, 可先创建存储元素 x 的单结点左偏高树，然后将新创建的单结点左偏高树与待插入的左偏高树合并即可。</td>
+<td>$O(logn)$</td>
+</tr>
+<tr>
+<td><code>Element HeapLeftTreeMinimum(HeapLeftTree heap);</code></td>
+<td>运算只要返回 heap 的根结点中的最小元素即可</td>
+<td>$O(1)$</td>
+</tr>
+<tr>
+<td><code>Element HeapLeftTreeDeleteMinimum(HeapLeftTree heap);</code></td>
+<td>运算删除 heap 的根结点后, 将根结点的左, 右子树合并</td>
+<td>$O(logn)$</td>
+</tr>
+<tr>
+<td><code>HeapLeftTree HeapLeftTreeBuild(Element elements[], int height);</code></td>
+<td>左偏高树的建树运算用给定数组 elements 中的 n 个元素创建一棵存储这个n个元素的左偏高树</td>
+<td>$O(n)$</td>
+</tr>
+</tbody>
+</table>
+<h3 id=具体代码实现-1>具体代码实现</h3>
+<h4 id=heap_left_treeh>heap_left_tree.h</h4>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;priority_queue.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// LeftTreeNode 左偏树的结点指针类型
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> heapLeftTreeNode <span style=color:#000;font-weight:700>*</span>HeapLeftTreeNode;
+
+<span style=color:#998;font-style:italic>// heapLeftTreeNode 左偏树的结点类型
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> heapLeftTreeNode {
+    <span style=color:#458;font-weight:700>int</span> Height; <span style=color:#998;font-style:italic>// 结点高度
+</span><span style=color:#998;font-style:italic></span>    Element Element; <span style=color:#998;font-style:italic>// 有序集元素
+</span><span style=color:#998;font-style:italic></span>    HeapLeftTreeNode Left; <span style=color:#998;font-style:italic>// 左子树指针
+</span><span style=color:#998;font-style:italic></span>    HeapLeftTreeNode Right; <span style=color:#998;font-style:italic>// 右子树指针
+</span><span style=color:#998;font-style:italic></span>} heapLeftTreeNode;
+
+<span style=color:#998;font-style:italic>// HeapLeftTree 极小化左偏树指针结构
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> heapLeftTree <span style=color:#000;font-weight:700>*</span>HeapLeftTree;
+
+<span style=color:#998;font-style:italic>// heapLeftTree 极小化左偏树结构
+</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> heapLeftTree {
+    HeapLeftTreeNode Root; <span style=color:#998;font-style:italic>// 根结点指针
+</span><span style=color:#998;font-style:italic></span>} heapLeftTree;
+
+<span style=color:#999;font-weight:700;font-style:italic>#ifndef DATA_STRUCT_DYADIC_PRIORITY_QUEUE_LEFT_DEVIATION_TREE_H
+</span><span style=color:#999;font-weight:700;font-style:italic>#define DATA_STRUCT_DYADIC_PRIORITY_QUEUE_LEFT_DEVIATION_TREE_H
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// NewHeapLeftTreeNode 创建新结点
+</span><span style=color:#998;font-style:italic></span>HeapLeftTreeNode <span style=color:#900;font-weight:700>NewHeapLeftTreeNode</span>(Element element, <span style=color:#458;font-weight:700>int</span> height);
+
+<span style=color:#998;font-style:italic>// HeapLeftTreeInit 将 Root 置为空指针, 创建一棵空树
+</span><span style=color:#998;font-style:italic></span>HeapLeftTree <span style=color:#900;font-weight:700>HeapLeftTreeInit</span>();
+
+<span style=color:#998;font-style:italic>// HeapLeftTreeConcatenate 将两棵分别为 x 和 y 根的左偏树合并为一课新的以 x 为根的左偏树
+</span><span style=color:#998;font-style:italic></span>HeapLeftTreeNode <span style=color:#900;font-weight:700>HeapLeftTreeConcatenate</span>(HeapLeftTreeNode x, HeapLeftTreeNode y);
+
+<span style=color:#998;font-style:italic>// HeapLeftTreeInsert 要在左偏高树中插入一个元素 x, 可先创建存储元素 x 的单结点左偏高树，
+</span><span style=color:#998;font-style:italic>// 然后将新创建的单结点左偏高树与待插入的左偏高树合并即可。
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>HeapLeftTreeInsert</span>(HeapLeftTree heap, Element element);
+
+<span style=color:#998;font-style:italic>// HeapLeftTreeMinimum 运算只要返回 heap 的根结点中的最小元素即可
+</span><span style=color:#998;font-style:italic></span>Element <span style=color:#900;font-weight:700>HeapLeftTreeMinimum</span>(HeapLeftTree heap);
+
+<span style=color:#998;font-style:italic>// HeapLeftTreeDeleteMinimum 运算删除 heap 的根结点后, 将根结点的左, 右子树合并
+</span><span style=color:#998;font-style:italic></span>Element <span style=color:#900;font-weight:700>HeapLeftTreeDeleteMinimum</span>(HeapLeftTree heap);
+
+<span style=color:#998;font-style:italic>// HeapLeftTreeBuild 左偏高树的建树运算用给定数组 elements 中的 n 个元素创建一棵存储这个n个元素的左偏高树
+</span><span style=color:#998;font-style:italic></span>HeapLeftTree <span style=color:#900;font-weight:700>HeapLeftTreeBuild</span>(Element elements[], <span style=color:#458;font-weight:700>int</span> height);
+
+<span style=color:#999;font-weight:700;font-style:italic>#endif </span><span style=color:#998;font-style:italic>//DATA_STRUCT_DYADIC_PRIORITY_QUEUE_LEFT_DEVIATION_TREE_H
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id=heap_left_treec>heap_left_tree.c</h4>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">95
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;heap_left_tree.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;../queue/queue_pointer.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#998;font-style:italic>// NewHeapLeftTreeNode 创建新结点
+</span><span style=color:#998;font-style:italic></span>HeapLeftTreeNode <span style=color:#900;font-weight:700>NewHeapLeftTreeNode</span>(Element element, <span style=color:#458;font-weight:700>int</span> height) {
+    HeapLeftTreeNode node <span style=color:#000;font-weight:700>=</span> malloc(<span style=color:#000;font-weight:700>sizeof</span>(heapLeftTreeNode));
+    node<span style=color:#000;font-weight:700>-&gt;</span>Element <span style=color:#000;font-weight:700>=</span> element;
+    node<span style=color:#000;font-weight:700>-&gt;</span>Height <span style=color:#000;font-weight:700>=</span> height;
+    node<span style=color:#000;font-weight:700>-&gt;</span>Left <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    node<span style=color:#000;font-weight:700>-&gt;</span>Right <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    <span style=color:#000;font-weight:700>return</span> node;
+}
+
+<span style=color:#998;font-style:italic>// HeapLeftTreeInit 将 Root 置为空指针, 创建一棵空树
+</span><span style=color:#998;font-style:italic></span>HeapLeftTree <span style=color:#900;font-weight:700>HeapLeftTreeInit</span>() {
+    HeapLeftTree heap <span style=color:#000;font-weight:700>=</span> (HeapLeftTree) malloc(<span style=color:#000;font-weight:700>sizeof</span> <span style=color:#000;font-weight:700>*</span>heap);
+    heap<span style=color:#000;font-weight:700>-&gt;</span>Root <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    <span style=color:#000;font-weight:700>return</span> heap;
+}
+
+<span style=color:#998;font-style:italic>// HeapLeftTreeConcatenate 将两棵分别为 x 和 y 根的左偏树合并为一课新的以 x 为根的左偏树
+</span><span style=color:#998;font-style:italic></span>HeapLeftTreeNode <span style=color:#900;font-weight:700>HeapLeftTreeConcatenate</span>(HeapLeftTreeNode x, HeapLeftTreeNode y) {
+    <span style=color:#000;font-weight:700>if</span> (<span style=color:#000;font-weight:700>!</span>y) { <span style=color:#998;font-style:italic>// y 是空树
+</span><span style=color:#998;font-style:italic></span>        <span style=color:#000;font-weight:700>return</span> x;
+    }
+    <span style=color:#000;font-weight:700>if</span> (<span style=color:#000;font-weight:700>!</span>x) { <span style=color:#998;font-style:italic>// y 是空树
+</span><span style=color:#998;font-style:italic></span>        <span style=color:#000;font-weight:700>return</span> y;
+    }
+    <span style=color:#000;font-weight:700>if</span> (less(y<span style=color:#000;font-weight:700>-&gt;</span>Element, x<span style=color:#000;font-weight:700>-&gt;</span>Element)) {
+        swap(x, y)
+    }
+    x<span style=color:#000;font-weight:700>-&gt;</span>Element <span style=color:#000;font-weight:700>=</span> HeapLeftTreeConcatenate(x<span style=color:#000;font-weight:700>-&gt;</span>Right, y);
+    <span style=color:#000;font-weight:700>if</span> (<span style=color:#000;font-weight:700>!</span>x<span style=color:#000;font-weight:700>-&gt;</span>Left) { <span style=color:#998;font-style:italic>// x 的 左子树为空树
+</span><span style=color:#998;font-style:italic></span>        x<span style=color:#000;font-weight:700>-&gt;</span>Left <span style=color:#000;font-weight:700>=</span> x<span style=color:#000;font-weight:700>-&gt;</span>Right; <span style=color:#998;font-style:italic>// 交换其左,右子树
+</span><span style=color:#998;font-style:italic></span>        x<span style=color:#000;font-weight:700>-&gt;</span>Right <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+        x<span style=color:#000;font-weight:700>-&gt;</span>Height <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+    } <span style=color:#000;font-weight:700>else</span> { <span style=color:#998;font-style:italic>// 若 x 的左子树高则交换其左,右子树
+</span><span style=color:#998;font-style:italic></span>        <span style=color:#000;font-weight:700>if</span> (x<span style=color:#000;font-weight:700>-&gt;</span>Left<span style=color:#000;font-weight:700>-&gt;</span>Height <span style=color:#000;font-weight:700>&gt;</span> x<span style=color:#000;font-weight:700>-&gt;</span>Right<span style=color:#000;font-weight:700>-&gt;</span>Height) {
+            swap(x<span style=color:#000;font-weight:700>-&gt;</span>Left, x<span style=color:#000;font-weight:700>-&gt;</span>Right)
+        }
+        x<span style=color:#000;font-weight:700>-&gt;</span>Height <span style=color:#000;font-weight:700>=</span> x<span style=color:#000;font-weight:700>-&gt;</span>Right<span style=color:#000;font-weight:700>-&gt;</span>Height <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>;
+    }
+    <span style=color:#000;font-weight:700>return</span> x;
+}
+
+<span style=color:#998;font-style:italic>// HeapLeftTreeInsert 要在左偏高树中插入一个元素 x, 可先创建存储元素 x 的单结点左偏高树，
+</span><span style=color:#998;font-style:italic>// 然后将新创建的单结点左偏高树与待插入的左偏高树合并即可。
+</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>HeapLeftTreeInsert</span>(HeapLeftTree heap, Element element) {
+    HeapLeftTreeNode node <span style=color:#000;font-weight:700>=</span> NewHeapLeftTreeNode(element, <span style=color:#099>1</span>);
+    heap<span style=color:#000;font-weight:700>-&gt;</span>Root <span style=color:#000;font-weight:700>=</span> HeapLeftTreeConcatenate(heap<span style=color:#000;font-weight:700>-&gt;</span>Root, node);
+}
+
+<span style=color:#998;font-style:italic>// HeapLeftTreeMinimum 运算只要返回 heap 的根结点中的最小元素即可
+</span><span style=color:#998;font-style:italic></span>Element <span style=color:#900;font-weight:700>HeapLeftTreeMinimum</span>(HeapLeftTree heap) {
+    <span style=color:#000;font-weight:700>if</span> (heap<span style=color:#000;font-weight:700>-&gt;</span>Root <span style=color:#000;font-weight:700>==</span> <span style=color:#099>0</span>) {
+        exit(<span style=color:#099>1</span>);
+    }
+    <span style=color:#000;font-weight:700>return</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Root<span style=color:#000;font-weight:700>-&gt;</span>Element;
+}
+
+<span style=color:#998;font-style:italic>// HeapLeftTreeDeleteMinimum 运算删除 heap 的根结点后, 将根结点的左, 右子树合并
+</span><span style=color:#998;font-style:italic></span>Element <span style=color:#900;font-weight:700>HeapLeftTreeDeleteMinimum</span>(HeapLeftTree heap) {
+    <span style=color:#000;font-weight:700>if</span> (heap<span style=color:#000;font-weight:700>-&gt;</span>Root <span style=color:#000;font-weight:700>==</span> <span style=color:#099>0</span>) {
+        exit(<span style=color:#099>1</span>);
+    }
+    Element min <span style=color:#000;font-weight:700>=</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Root<span style=color:#000;font-weight:700>-&gt;</span>Element; <span style=color:#998;font-style:italic>// 最小元
+</span><span style=color:#998;font-style:italic></span>    HeapLeftTreeNode left <span style=color:#000;font-weight:700>=</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Root<span style=color:#000;font-weight:700>-&gt;</span>Left;
+    HeapLeftTreeNode right <span style=color:#000;font-weight:700>=</span> heap<span style=color:#000;font-weight:700>-&gt;</span>Root<span style=color:#000;font-weight:700>-&gt;</span>Right;
+    free(heap<span style=color:#000;font-weight:700>-&gt;</span>Root);
+    heap<span style=color:#000;font-weight:700>-&gt;</span>Root <span style=color:#000;font-weight:700>=</span> HeapLeftTreeConcatenate(left, right);
+    <span style=color:#000;font-weight:700>return</span> min;
+}
+
+<span style=color:#998;font-style:italic>// HeapLeftTreeBuild 左偏高树的建树运算用给定数组 elements 中的 n 个元素创建一棵存储这个n个元素的左偏高树
+</span><span style=color:#998;font-style:italic></span>HeapLeftTree <span style=color:#900;font-weight:700>HeapLeftTreeBuild</span>(Element elements[], <span style=color:#458;font-weight:700>int</span> height) {
+    QueuePointer queue <span style=color:#000;font-weight:700>=</span> QueuePointerInit();
+    HeapLeftTree heap <span style=color:#000;font-weight:700>=</span> HeapLeftTreeInit();
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>; i <span style=color:#000;font-weight:700>&lt;=</span> height; i<span style=color:#000;font-weight:700>++</span>) {
+        HeapLeftTreeNode node <span style=color:#000;font-weight:700>=</span> NewHeapLeftTreeNode(elements[i], <span style=color:#099>1</span>);
+        QueuePointerEnter(queue, node);
+    }
+
+    <span style=color:#000;font-weight:700>for</span> (<span style=color:#458;font-weight:700>int</span> i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>; i <span style=color:#000;font-weight:700>&lt;=</span> height; i<span style=color:#000;font-weight:700>++</span>) {
+        HeapLeftTreeNode left <span style=color:#000;font-weight:700>=</span> QueuePointerDelete(queue);
+        HeapLeftTreeNode right <span style=color:#000;font-weight:700>=</span> QueuePointerDelete(queue);
+        left <span style=color:#000;font-weight:700>=</span> HeapLeftTreeConcatenate(left, right);
+        QueuePointerEnter(queue, left);
+    }
+    <span style=color:#000;font-weight:700>if</span> (height) {
+        heap<span style=color:#000;font-weight:700>-&gt;</span>Root <span style=color:#000;font-weight:700>=</span> QueuePointerDelete(queue);
+    }
+    <span style=color:#000;font-weight:700>return</span> heap
+}
+</code></pre></td></tr></table>
+</div>
+</div>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
