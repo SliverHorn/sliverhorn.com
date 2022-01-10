@@ -4,16 +4,16 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=referrer content="no-referrer-when-downgrade">
-<title>数据结构 | SliverHorn的博客</title>
-<meta property="og:title" content="数据结构 - SliverHorn的博客">
+<title>第一章 程序设计与C语言 | SliverHorn的博客</title>
+<meta property="og:title" content="第一章 程序设计与C语言 - SliverHorn的博客">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2021-12-10T17:17:17+08:00">
-<meta property="article:modified_time" content="2021-12-10T17:17:17+08:00">
+<meta property="article:published_time" content="2022-01-01T17:17:17+08:00">
+<meta property="article:modified_time" content="2022-01-01T17:17:17+08:00">
 <meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
 ">
-<meta name=description content="导学">
+<meta name=description content="第一章 程序设计与C语言">
 <meta name=author content="SliverHorn">
-<meta property="og:url" content="https://sliverhorn.com/data_structure/data_structure/">
+<meta property="og:url" content="https://sliverhorn.com/c/1/">
 <link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
 <link rel=stylesheet href=/css/normalize.css>
 <link rel=stylesheet href=/css/style.css>
@@ -58,14 +58,10 @@ SliverHorn的博客
 <div class=post-toc-content>
 <nav id=TableOfContents>
 <ul>
-<li><a href=#第一章-绪论>第一章 绪论</a></li>
-<li><a href=#第二章-线性表>第二章 线性表</a></li>
-<li><a href=#第三章-栈和队列>第三章 栈和队列</a></li>
-<li><a href=#第四章-串>第四章 串</a></li>
-<li><a href=#第五章-树和二叉树>第五章 树和二叉树</a></li>
-<li><a href=#第六章-图>第六章 图</a></li>
-<li><a href=#第七章-查找>第七章 查找</a></li>
-<li><a href=#第八章-排序>第八章 排序</a></li>
+<li><a href=#计算机与程序程序设计语言>计算机与程序、程序设计语言</a></li>
+<li><a href=#简单的c程序介绍>简单的C程序介绍</a></li>
+<li><a href=#运行c程序的步骤与方法>运行C程序的步骤与方法</a></li>
+<li><a href=#本章小结>本章小结</a></li>
 </ul>
 </nav>
 </div>
@@ -73,37 +69,62 @@ SliverHorn的博客
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
 <article class=post>
 <header>
-<h1 class=post-title>数据结构</h1>
+<h1 class=post-title>第一章 程序设计与C语言</h1>
 </header>
 <date class="post-meta meta-date">
-2021年12月10日
+2022年1月1日
 </date>
-<div class=post-meta>
-<span>|</span>
-<span class=meta-category><a href=/categories/DataStructure>DataStructure</a></span>
-</div>
 <div class=post-meta>
 <span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
 阅读</span></span>
 </div>
 <div class=post-content>
-<h2 id=第一章-绪论>第一章 绪论</h2>
-<h2 id=第二章-线性表>第二章 线性表</h2>
-<h2 id=第三章-栈和队列>第三章 栈和队列</h2>
-<h2 id=第四章-串>第四章 串</h2>
-<h2 id=第五章-树和二叉树>第五章 树和二叉树</h2>
-<h2 id=第六章-图>第六章 图</h2>
-<h2 id=第七章-查找>第七章 查找</h2>
-<h2 id=第八章-排序>第八章 排序</h2>
+<h2 id=计算机与程序程序设计语言>计算机与程序、程序设计语言</h2>
+<p><strong>机器语言(低级语言)：由 0 和 1 所组成的一系列的指令</strong></p>
+<p><strong>高级语言：C(面向过程语言)、C++(面向对象语言)、Java(面向对象语言)</strong></p>
+<h2 id=简单的c程序介绍>简单的C程序介绍</h2>
+<p>C语言的组成：</p>
+<ol>
+<li>C程序主要是由函数构成的。一个C源程序必须包含一个 <code>main</code> 函数，也可以包含一个 <code>main</code> 函数和若干个其他函数。函数是C程序的基本单位。</li>
+<li>一个函数由两部分
+<ol>
+<li>函数首部</li>
+<li>函数体
+<ol>
+<li>声明部分：在这部分中定义所用到的变量和对所调用函数的声明。</li>
+<li>执行部分：由若干个语句组成。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>一个C语言总是从 <code>main</code> 函数开始执行的。</li>
+<li>C语言书写格式自由。</li>
+<li>每个语句和数据声明的最后必须有一个分号。分号是C语言的必要组成部分。</li>
+<li>C语言本身没有输入输出语句。</li>
+<li>可以用 <code>//</code> 对C程序中的任何一行或数行做注释。</li>
+</ol>
+<h2 id=运行c程序的步骤与方法>运行C程序的步骤与方法</h2>
+<p>程序：一组计算机能识别和执行的指令。</p>
+<p>源程序(soure program)：高级语言编写的程序。</p>
+<p>目标程序(object program): 使用 “编译程序” 的软件把源程序翻译成二进制形式的“目标程序”</p>
+<p>可执行目标程序：将目标程序与系统的函数库已经其他目标程序连接起来。</p>
+<h2 id=本章小结>本章小结</h2>
+<p>(1) 计算机是由程序控制的，要使计算机按照人们的意图工作,必须用计算机语言编写程序。
+(2) 机器语言和汇编语言依赖于具体计算机,属于低级语言,难学难用，无通用性。高级语言接近人类自然语言和数学语言,容易学习和推广，不依赖于具体计算机,通用性强。
+(3) C语言是目前在世界上使用最广泛的一种计算机语言,语言简洁紧凑，使用方便灵活,功能很强,既有高级语言的优点，又具有低级语言的功能;既可用于编写系统软件，又可用于编写应用软件。掌握C语言程序设计是程序设计人员的一项基本功。
+(4) 一个C语言程序是由一个或多个两数构成的，必须有一个 <code>main</code> 两数。程序由 <code>main</code> 函数开始执行。在两数体内可以包括若千个语句,语句以分号结束。一行内可以写多个语句，一个语句可以分写为多行。
+(5) 上机运行一个C程序必须经过4个步骤：编辑、编译、连接和执行。
+(6) 用C语言写好程序后,可以用不同的C编译系统对它进行编译。目前所用的编译系统多采用集成环境：把编辑、编译、连接和执行等步骤在一个集成环境中完成
+(7) 日前所用的C++ 集成环境功能强，使用方便。由于C++和C兼容,可以用C++集成环境对 C程序进行编译、连接和运行，</p>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
 <ul class=listing>
-<li><a href=/post/linux/oh-my-zsh-install/>oh-my-zsh Mac 安装教程</a></li>
-<li><a href=/tool/mac/>Mac Tool</a></li>
-<li><a href=/about/>关于</a></li>
-<li><a href=/higher_mathematics/higher_mathematics/></a></li>
-<li><a href=/c/c/></a></li>
+<li><a href=/post/2021/>2021 年度总结</a></li>
+<li><a href=/data_structure/6/>第六章 树</a></li>
+<li><a href=/data_structure/5/>第五章 排序与选择算法</a></li>
+<li><a href=/data_structure/4/>第四章 队列</a></li>
+<li><a href=/data_structure/3/>第三章 栈</a></li>
 </ul>
 </div>
 <div class="post-meta meta-tags">
