@@ -84,6 +84,9 @@ SliverHorn的博客
 <ul>
 <li><a href=#fracinftyinfty-型>$\frac{\infty}{\infty}$ 型</a></li>
 <li><a href=#frac00-型>$\frac{0}{0}$ 型</a></li>
+<li><a href=#0-cdot-infty-型>$0 \cdot \infty$ 型</a></li>
+<li><a href=#infty---infty-型>$\infty - \infty$ 型</a></li>
+<li><a href=#uv-型>$u^v$ 型</a></li>
 </ul>
 </li>
 </ul>
@@ -284,6 +287,79 @@ ln(1+x)-x \sim -\frac{1}{2}x^2\
 \end{array}
 \right.
 $$</p>
+<p>​</p>
+<h3 id=0-cdot-infty-型>$0 \cdot \infty$ 型</h3>
+<p>$$
+0 \cdot \infty \Rightarrow
+\left {
+\begin{array}{c}
+对0取倒数，下放分母： 0 \cdot \infty = \frac{\infty}{\frac{1}{0}} = \frac{\infty}{\infty} & \
+对 \infty 取倒数，下放分母： 0 \cdot \infty = \frac{\infty}{\frac{1}{\infty}} = \frac{0}{0} & \
+\end{array}
+\right.
+$$</p>
+<h4 id=下放原则>下放原则</h4>
+<ol>
+<li>一般来讲，下放简单易求导的函数</li>
+<li>遇到有三角函数( $tanx, cotx$ ), 先化简</li>
+</ol>
+<p>$$
+\left {
+\begin{array}{c}
+tanx = \frac{sinx}{cosx} \
+cotx = \frac{cosx}{sinx} \
+secx = \frac{1}{cosx} \
+\end{array}
+\right.
+$$</p>
+<blockquote>
+<p>$$
+幂 \cdot 对数 \Rightarrow x^a \cdot ln x = 0
+$$</p>
+</blockquote>
+<h3 id=infty---infty-型>$\infty - \infty$ 型</h3>
+<ul>
+<li>分式 =》 通分</li>
+<li>根式 =》有理化（利用 $(a+b)(a-b)=a^2-b^2$ 去根号）</li>
+</ul>
+<h3 id=uv-型>$u^v$ 型</h3>
+<ul>
+<li>
+<p>$1^\infty$</p>
+<ul>
+<li>
+<p>第二极限：$\lim\limits_{x\rightarrow 0}(1+x)^{\frac{1}{x}}) = e$</p>
+</li>
+<li>
+<p>解法</p>
+<ul>
+<li>
+<p>$$
+u^v \Rightarrow e^{\lim\limits_{}(u-1) \cdot v)}
+$$</p>
+</li>
+<li>
+<p>$$
+次方很多 \Rightarrow e^{lnx} = x \Leftrightarrow u^v = e^{v \cdot lnu}(幂指函数对数化)
+$$</p>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>不是 $1^\infty (0^0,\infty^0)$</p>
+<ul>
+<li>
+<p>$$
+u^v = e^v \cdot lnu(复合型极限)
+$$</p>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
