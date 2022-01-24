@@ -82,7 +82,40 @@ SliverHorn的博客
 </ul>
 </li>
 <li><a href=#导数的四则运算>导数的四则运算</a></li>
-<li><a href=#导数的复合运算法则>导数的复合运算法则</a></li>
+<li><a href=#导数的复合运算法则>导数的复合运算法则</a>
+<ul>
+<li><a href=#类型一具体函数求导>类型一：具体函数求导</a></li>
+<li><a href=#类型二抽象复合函数>类型二：抽象复合函数</a></li>
+</ul>
+</li>
+<li><a href=#分段函数求导>分段函数求导</a>
+<ul>
+<li><a href=#求导原则>求导原则</a></li>
+</ul>
+</li>
+<li><a href=#隐函数求导>隐函数求导</a>
+<ul>
+<li><a href=#隐函数定义>隐函数定义</a></li>
+<li><a href=#解法>解法</a></li>
+</ul>
+</li>
+<li><a href=#参数方程求导>参数方程求导</a>
+<ul>
+<li><a href=#定义-1>定义</a></li>
+<li><a href=#求导原则-1>求导原则</a></li>
+</ul>
+</li>
+<li><a href=#幂指函数求导>幂指函数求导</a>
+<ul>
+<li><a href=#幂指函数定义>幂指函数定义</a></li>
+<li><a href=#求导方法>求导方法</a></li>
+</ul>
+</li>
+<li><a href=#变限积分求导>变限积分求导</a>
+<ul>
+<li><a href=#定义-2>定义</a></li>
+</ul>
+</li>
 </ul>
 </nav>
 </div>
@@ -176,26 +209,39 @@ $$</p>
 <h3 id=三角函数>三角函数</h3>
 <p>$$
 \begin{array}{l}
-(sinx)^{'} = cosx \
-(cosx)^{'} = -sinx \
-(tanx)^{'} = sec^2{x} \
-(cotx)^{'} = -csc^2{x} \
-(secx)^{'} = secx \cdot tanx \
-(cscx)^{'} = -cscx \cdot cotx \
+(\sin x)^{'} = \cos x \
+(\cos x)^{'} = -\sin x \
+(\tan x)^{'} = \sec^2{x} \
+(\cot x)^{'} = -\csc^2{x} \
+(\sec x)^{'} = \sec x \cdot \tan x \
+(\csc x)^{'} = -\csc x \cdot \cot x \
 \end{array}
 $$</p>
 <blockquote>
-<p>含 ”c“ 的三角函数的导出必含负号</p>
+<p>含 ”c“ 的三角函数的导出必含负号
+$$
+\sec x = \frac{1}{\cos x} \
+\csc x = \frac{1}{\sin x}
+$$</p>
 </blockquote>
 <h3 id=反三角函数>反三角函数</h3>
 <p>$$
 \begin{array}{l}
-(arcsinx)^{'} = \frac{1}{\sqrt{1-x^2}} \
-(arccosx)^{'} = -\frac{1}{\sqrt{1-x^2}} \
-(arctanx)^{'} = \frac{1}{1+x^2} \
-(arccotx)^{'} = -\frac{1}{1+x^2} \
+(\arcsin x)^{'} = \frac{1}{\sqrt{1-x^2}} \
+(\arccos x)^{'} = -\frac{1}{\sqrt{1-x^2}} \
+(\arctan x)^{'} = \frac{1}{1+x^2} \
+(\arccot x)^{'} = -\frac{1}{1+x^2} \
 \end{array}
 $$</p>
+<blockquote>
+<p>$$
+\begin{array}{l}
+ln\frac{b}{a} = lnb - lna \
+ln{a} \cdot {b} = lna + lnb \
+lna^b = blna \
+\end{array}
+$$</p>
+</blockquote>
 <h2 id=导数的四则运算>导数的四则运算</h2>
 <p>设 $u、v为函数$</p>
 <ol>
@@ -211,7 +257,7 @@ $$</p>
 </li>
 <li>
 <p>$$
-(u \cdot v)^{'} = u^{'}v + u \cdot v^{'}
+(u \cdot v)^{'} = u^{'} \cdot v + u \cdot v^{'}
 $$</p>
 <blockquote>
 <p><strong>前导后不导，前不导后导</strong></p>
@@ -228,12 +274,127 @@ $$</p>
 </ol>
 <h2 id=导数的复合运算法则>导数的复合运算法则</h2>
 <p>原则：从外向里，层层求导，每层相乘</p>
+<h3 id=类型一具体函数求导>类型一：具体函数求导</h3>
+<h3 id=类型二抽象复合函数>类型二：抽象复合函数</h3>
+<blockquote>
+<p>$f[g(x)]$ 中的f也要求导，即 $f(x) \rightarrow(求导) f^{'}(x)$</p>
+</blockquote>
+<h2 id=分段函数求导>分段函数求导</h2>
+<h3 id=求导原则>求导原则</h3>
+<ol>
+<li>分段点两侧直接求导</li>
+<li>中间分段点处，用定义求导</li>
+</ol>
+<h2 id=隐函数求导>隐函数求导</h2>
+<h3 id=隐函数定义>隐函数定义</h3>
+<p>形如 $y=f(x)$ 称为显函数， 如 $y = e^x, y = x^2$</p>
+<p>隐函数：不是 $y = f(x)$ 形式的函数。(非显即隐)</p>
+<h3 id=解法>解法</h3>
+<h4 id=公式法>公式法</h4>
+<ol>
+<li>
+<p>对题干函数移项（用方程的”$左边-右边$“），得 $F(x, y) = 0$</p>
+</li>
+<li>
+<p>求偏导。</p>
+<ol>
+<li>$F_x$ : 对 $x$ 求导， $y$ 看作是常数。</li>
+<li>$F_y$ : 对 $y$ 求导， x看作是常数。</li>
+</ol>
+</li>
+<li>
+<p>套公式</p>
+</li>
+</ol>
+<p>$$
+\frac{dy}{dx} = - \frac{F_x}{F_y}
+$$</p>
+<h2 id=参数方程求导>参数方程求导</h2>
+<h3 id=定义-1>定义</h3>
+<p>x 与 y 通过中间变量 t 间接建立的函数关系式</p>
+<ul>
+<li></li>
+</ul>
+<p>$$
+写法:
+\begin{Bmatrix}y = y(t) \
+x = x(t)\
+\end{Bmatrix} (t为参数)
+$$</p>
+<h3 id=求导原则-1>求导原则</h3>
+<ol>
+<li>
+<p>$$
+\frac{dy}{dx} = \frac{y^{'}(t)}{x^{'}(t)} = \frac{y对t求导}{x对t求导} \rightarrow (一阶导)
+$$</p>
+</li>
+<li>
+<p>$$
+\frac{d^2y}{dx^2} = \frac{(\frac{dy}{dx})^{'}t}{x^{'}(t)} = \frac{一阶导对t求导}{x对t求导} \rightarrow (二阶导)
+$$</p>
+</li>
+</ol>
+<h2 id=幂指函数求导>幂指函数求导</h2>
+<h3 id=幂指函数定义>幂指函数定义</h3>
+<p>形如 $u^v$ 的函数叫幂指函数，（其中， $u,v$ 均是函数），如 $x^{sinx}, (\frac{x}{1+x})^{x^2}$</p>
+<h3 id=求导方法>求导方法</h3>
+<ol>
+<li>
+<p>对数求导法</p>
+<ol>
+<li>
+<p>遇 $y=u^v$</p>
+</li>
+<li>
+<p>两边同时取对数</p>
+<ul>
+<li>$$
+\ln y = \ln u^v \rightarrow \ln y =v \cdot \ln u
+$$</li>
+</ul>
+</li>
+<li>
+<p>两边同时求导(把 $y$ 看作 $x$ 的函数，$y$ 需求导)</p>
+<ul>
+<li>$$
+\frac{1}{y} \cdot y^{'} = (v \cdot \ln u)^{'}
+$$</li>
+</ul>
+</li>
+<li>
+<p>化简.</p>
+<ul>
+<li>$$
+y^{'} = (v \cdot \ln u)^{'} \cdot y
+$$</li>
+</ul>
+</li>
+<li>
+<p>回代，$y$ 用 $u^v$ 表示，则 $y^{'} = (v \cdot \ln u)^{'} \cdot u^v$</p>
+</li>
+</ol>
+</li>
+<li>
+<p>公式变形法，用 $u^v = e^{v \cdot \ln u}$ 变成符合函数求导</p>
+</li>
+</ol>
+<blockquote>
+<p>使用方法选择</p>
+<ol>
+<li>遇到单个 $y = u^v$， 两种方法都可以</li>
+<li>遇到单个 $y = u^v$，含连乘、除、根号复合型，首选对数求导法</li>
+<li>遇到 $y =u^v \pm g(x)$ ，只可选公式变形法( $u^v = e^{v \cdot \ln u}$ )</li>
+</ol>
+</blockquote>
+<h2 id=变限积分求导>变限积分求导</h2>
+<h3 id=定义-2>定义</h3>
+<p>形如 $\int_{g(x)}^{f(x)} h(x) dt$ ，叫变限积分函数</p>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
 <ul class=listing>
-<li><a href=/c/1/>第一章 程序设计与C语言</a></li>
 <li><a href=/higher_mathematics/1/>第一章 函数与极限</a></li>
+<li><a href=/c/1/>第一章 程序设计与C语言</a></li>
 <li><a href=/post/2021/>2021 年度总结</a></li>
 <li><a href=/data_structure/6/>第六章 树</a></li>
 <li><a href=/data_structure/5/>第五章 排序与选择算法</a></li>
