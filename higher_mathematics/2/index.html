@@ -114,6 +114,39 @@ SliverHorn的博客
 <li><a href=#变限积分求导>变限积分求导</a>
 <ul>
 <li><a href=#定义-2>定义</a></li>
+<li><a href=#求导方法-1>求导方法</a></li>
+</ul>
+</li>
+<li><a href=#高阶导数>高阶导数</a>
+<ul>
+<li><a href=#定义-3>定义</a></li>
+<li><a href=#常见n阶导公式>常见n阶导公式</a></li>
+<li><a href=#高阶导数的题型及解法>高阶导数的题型及解法</a></li>
+</ul>
+</li>
+<li><a href=#函数的微分>函数的微分</a>
+<ul>
+<li><a href=#定义-4>定义</a></li>
+<li><a href=#计算公式>计算公式</a></li>
+<li><a href=#理解>理解</a></li>
+</ul>
+</li>
+<li><a href=#导数的几何应用>导数的几何应用</a>
+<ul>
+<li><a href=#切线的引入>切线的引入</a></li>
+<li><a href=#题型一-1>题型一</a></li>
+<li><a href=#题型二-1>题型二</a></li>
+</ul>
+</li>
+<li><a href=#一阶导数确定函数单调性>一阶导数确定函数单调性</a>
+<ul>
+<li><a href=#求-fx-单调区间的方法>求 f(x) 单调区间的方法</a></li>
+</ul>
+</li>
+<li><a href=#函数的极值>函数的极值</a>
+<ul>
+<li><a href=#极值的定义>极值的定义</a></li>
+<li><a href=#极值点的出处>极值点的出处</a></li>
 </ul>
 </li>
 </ul>
@@ -389,6 +422,134 @@ $$</li>
 <h2 id=变限积分求导>变限积分求导</h2>
 <h3 id=定义-2>定义</h3>
 <p>形如 $\int_{g(x)}^{f(x)} h(x) dt$ ，叫变限积分函数</p>
+<h3 id=求导方法-1>求导方法</h3>
+<p>$$
+[\int_{下限}^{上限} f(t) dt]^{'} = f(上限) \cdot 上限^{'} - f(下限) \cdot 下限^{'}
+$$</p>
+<h2 id=高阶导数>高阶导数</h2>
+<h3 id=定义-3>定义</h3>
+<p>二阶及其以上的导数，如 $y^{''}, y^{'''}, y^{(4)}&mldr;&mldr;$</p>
+<blockquote>
+<p>$y^{(n)}: 叫y的n阶导$</p>
+</blockquote>
+<h3 id=常见n阶导公式>常见n阶导公式</h3>
+<ol>
+<li>
+<p>$$
+[\sin (ax+b)]^{(n)} = a^n \cdot \sin(ax+b+n \cdot \frac{\pi}{2})
+$$</p>
+</li>
+<li>
+<p>$$
+[\cos(ax+b)]^{(n)} = a^n \cdot \cos(ax+b+n \cdot \frac{\pi}{2})
+$$</p>
+</li>
+<li>
+<p>$$
+[\frac{1}{ax \pm b}]^{(n)} = \frac{(-1)^n \cdot n! \cdot a^n}{(ax \pm b)^{n+1}}
+$$</p>
+</li>
+</ol>
+<h3 id=高阶导数的题型及解法>高阶导数的题型及解法</h3>
+<h4 id=题型一>题型一</h4>
+<p>求具体函数，如求 $y^{''}$ => 直接求导</p>
+<blockquote>
+<p><strong>幂函数</strong></p>
+<ol>
+<li><strong>$(x^a)^{(a)}$ 求导不会超过 $a$ 次</strong></li>
+<li>$(x^a)^{(a)} = a!$</li>
+</ol>
+</blockquote>
+<h4 id=题型二>题型二</h4>
+<p>求 $y^{(n)}$ 解法：求 $2$ 或者 $3$ 次导数，找规律</p>
+<blockquote>
+<p>$$
+\frac{1}{小 \cdot 大} = (\frac{1}{小} - \frac{1}{大}) \cdot \frac{1}{大 - 小} \</p>
+<p>如：\frac{1}{(x -4)(x + 2)} = \frac{1}{6} \cdot (\frac{1}{x-4} - \frac{1}{x+2})
+$$</p>
+</blockquote>
+<h2 id=函数的微分>函数的微分</h2>
+<h3 id=定义-4>定义</h3>
+<p>$\mathrm{d}y$ 叫做函数 $y$ 的微分</p>
+<h3 id=计算公式>计算公式</h3>
+<p>$$
+\mathrm{d}y = y^{'}\mathrm{d}x \
+推广： \mathrm{d}\Box = \Box^{'}\mathrm{d}x
+$$</p>
+<h3 id=理解>理解</h3>
+<p>$$
+y^{'} = \frac{\mathrm{d}y}{\mathrm{d}x} \Longleftrightarrow (左右同乘 \mathrm{d}x) \Longleftrightarrow y^{'}\mathrm{d}x = \mathrm{d}y
+$$</p>
+<h2 id=导数的几何应用>导数的几何应用</h2>
+<h3 id=切线的引入>切线的引入</h3>
+<p>$f(x_0)$ 描述 f(x) 在 $[x_0, f(x_0)]$ 切线的斜率 $k(k = f(x_0))$</p>
+<blockquote>
+<p>$(x_0, f(x_0))$ 是切点，</p>
+</blockquote>
+<h4 id=切线方程>切线方程</h4>
+<p>$$
+f(x) - f(x_0) = k (x - x_0) \
+也可以写成 y - y_0 = k(x - x_0)
+$$</p>
+<h4 id=法线方程>法线方程</h4>
+<p>$$
+f(x) - f(x_0) = - \frac{1}{k} (x - x_0) \
+也可以写成 y - y_0 = - \frac{1}{k}(x - x_0)
+$$</p>
+<h3 id=题型一-1>题型一</h3>
+<p>已知切点 $[x_0, f(x_0)]$</p>
+<p>解法：</p>
+<ol>
+<li>对曲线或方程组求导的到斜率</li>
+<li>利用切点和斜率，结合切线方程或者法线方程算出切线和法线的方程</li>
+</ol>
+<h3 id=题型二-1>题型二</h3>
+<p>若切点未知</p>
+<p>解法：</p>
+<ol>
+<li>设切点为 $[a, f(a)]$ 算出切线：$y-f(a) = f^{'}(a)(x-a)$</li>
+<li>利用题干切线满足条件，算出 $a$ 的值</li>
+</ol>
+<h2 id=一阶导数确定函数单调性>一阶导数确定函数单调性</h2>
+<p>设 f(x) 在 (a, b) 可导</p>
+<ol>
+<li>$f^{'}(x) \gt 0$ ，则 $f^{'}(x)$ 在 $(a, b)$ 区间单调递增，$(a, b)$ 为 增区间</li>
+<li>$f^{'}(x) \lt 0$ ，则 $f^{'}(x)$ 在 $(a, b)$ 区间单调递减，$(a, b)$ 为 减区间</li>
+<li>$f^{'}(x_0) = 0$ ，称 $x_0$ 为 驻点</li>
+</ol>
+<h3 id=求-fx-单调区间的方法>求 f(x) 单调区间的方法</h3>
+<ol>
+<li>
+<p>确定 $f(x)$ 定义域</p>
+</li>
+<li>
+<p>求 $f^{'}(x)$ 且 令 $f^{'}(x)$ ，找到全部的驻点及 $f^{'}(x)$ 不存在的点(无定义点)</p>
+</li>
+</ol>
+<blockquote>
+<p>尖点不可导</p>
+</blockquote>
+<ol start=3>
+<li>利用这些点将定义域分割</li>
+<li>列表讨论各子区间 $f^{'}(x)$ 的符号
+<ol>
+<li>$f^{'}(x) \gt 0 \Longrightarrow 单调递增$</li>
+<li>$f^{'}(x) \lt 0 \Longrightarrow 单调递减$</li>
+</ol>
+</li>
+</ol>
+<h2 id=函数的极值>函数的极值</h2>
+<h3 id=极值的定义>极值的定义</h3>
+<p>指 $f(x)$ 的局部的最值</p>
+<ol>
+<li>极大值：指局部范围最大值</li>
+<li>极小值：指局部范围最小值</li>
+</ol>
+<h3 id=极值点的出处>极值点的出处</h3>
+<ol>
+<li>$f^{'}(x) = 0$ 的点 => 驻点</li>
+<li>$f^{'}(x)$ 不存在的点(无定义) => 不可导点</li>
+</ol>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
