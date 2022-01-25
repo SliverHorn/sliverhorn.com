@@ -147,6 +147,16 @@ SliverHorn的博客
 <ul>
 <li><a href=#极值的定义>极值的定义</a></li>
 <li><a href=#极值点的出处>极值点的出处</a></li>
+<li><a href=#极值的判断>极值的判断</a></li>
+<li><a href=#求极值的步骤>求极值的步骤</a></li>
+</ul>
+</li>
+<li><a href=#极值点和驻点的关系>极值点和驻点的关系</a></li>
+<li><a href=#函数的最值>函数的最值</a></li>
+<li><a href=#函数的凹凸性>函数的凹凸性</a>
+<ul>
+<li><a href=#曲线凹凸性判断>曲线凹凸性判断</a></li>
+<li><a href=#求解-fx-的定义域>求解 $f(x)$ 的定义域</a></li>
 </ul>
 </li>
 </ul>
@@ -550,12 +560,90 @@ $$</p>
 <li>$f^{'}(x) = 0$ 的点 => 驻点</li>
 <li>$f^{'}(x)$ 不存在的点(无定义) => 不可导点</li>
 </ol>
+<h3 id=极值的判断>极值的判断</h3>
+<h4 id=方法一>方法一</h4>
+<p>利用单调性( $f^{'}(x)$ )判断：</p>
+<ol>
+<li>先增后减为极大值</li>
+<li>先减后增为极小值</li>
+</ol>
+<h4 id=方法二>方法二</h4>
+<p>利用 $f^{''}(x)$ 判断</p>
+<ol>
+<li>$f^{''}(x) \lt 0 \Longrightarrow 极大值$</li>
+<li>$f^{''}(x) \gt 0 \Longrightarrow 极小值$</li>
+</ol>
+<h3 id=求极值的步骤>求极值的步骤</h3>
+<ol>
+<li>确定 $f(x)$ 定义域</li>
+<li>求 $f^{'}(x)$ 且 令 $f^{'}(x)$ ，找到全部的驻点及 $f^{'}(x)$ 不存在的点(无定义点)</li>
+<li>利用这些点，分割定义域形成子区间</li>
+<li>列表讨论子区间内的单调性，即 $f^{'}(x)$ 的正负性确定是极大值还是极小值</li>
+</ol>
+<h2 id=极值点和驻点的关系>极值点和驻点的关系</h2>
+<ul>
+<li>
+<p>极值点来源</p>
+<ul>
+<li>驻点：$f^{'}(x_0) = 0$</li>
+<li>不可导点：$f^{'}(x_0)$ 不存在</li>
+</ul>
+</li>
+<li>
+<p>极值点与驻点的关系 => <strong>无半毛钱 直接关系</strong></p>
+</li>
+<li>
+<p>考点 $\Longleftrightarrow$ 极值点与驻点唯一确定的关系：<strong>可导函数有极值，则该点定为驻点</strong></p>
+</li>
+<li>
+<p>充分，必要，充分必要</p>
+<ul>
+<li>$A \Longrightarrow B$ ：$A$ 是 $B$ 的充分条件</li>
+<li>$A \Longrightarrow B$ ：$B$ 是 $A$ 的必要条件</li>
+<li>$A \Longleftrightarrow B$ ：$A$ 是 $B$ 的充分必要条件</li>
+</ul>
+</li>
+</ul>
+<h2 id=函数的最值>函数的最值</h2>
+<p>解法：</p>
+<ol>
+<li>确定 $f(x)$ 的定义域</li>
+<li>求端点值及极值</li>
+<li>比较端点值和极值
+<ol>
+<li>最大 => 最大值</li>
+<li>最小 => 最小值</li>
+</ol>
+</li>
+</ol>
+<h2 id=函数的凹凸性>函数的凹凸性</h2>
+<blockquote>
+<p>二阶导数应用</p>
+</blockquote>
+<h3 id=曲线凹凸性判断>曲线凹凸性判断</h3>
+<ul>
+<li>
+<p>$f^{''}(x) \gt 0 \Longrightarrow f(x) 凹 $</p>
+</li>
+<li>
+<p>$f^{''}(x) \lt 0 \Longrightarrow f(x) 凸$</p>
+</li>
+<li>
+<p>$f^{''}(x) = 0 或者 f^{''}(x)不存在 \Longrightarrow 拐点(曲线凹凸性发生改变的点， 记(x_0, f(x_0))， (x_0, f(x_0))是坐标点 )$</p>
+</li>
+</ul>
+<h3 id=求解-fx-的定义域>求解 $f(x)$ 的定义域</h3>
+<ol>
+<li>确定 $f(x)$ 定义域</li>
+<li>求 $f^{''}(x)$ 且令 $f^{''}(x) = 0$ ，或者 $f^{''}(x)$ 不存在的点</li>
+<li>x列表 用这些点分割定义域，讨论子区间 $f^{''}(x)$ 正负性得到 $f(x)$ 凹凸性</li>
+</ol>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
 <ul class=listing>
-<li><a href=/higher_mathematics/1/>第一章 函数与极限</a></li>
 <li><a href=/c/1/>第一章 程序设计与C语言</a></li>
+<li><a href=/higher_mathematics/1/>第一章 函数与极限</a></li>
 <li><a href=/post/2021/>2021 年度总结</a></li>
 <li><a href=/data_structure/6/>第六章 树</a></li>
 <li><a href=/data_structure/5/>第五章 排序与选择算法</a></li>
