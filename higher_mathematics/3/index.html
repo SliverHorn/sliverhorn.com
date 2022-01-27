@@ -100,6 +100,17 @@ SliverHorn的博客
 </ul>
 </li>
 </ul>
+<ul>
+<li><a href=#定义>定义</a></li>
+<li><a href=#几何意义>几何意义</a></li>
+<li><a href=#比较大小>比较大小</a></li>
+<li><a href=#性质>性质</a></li>
+<li><a href=#计算公式>计算公式</a>
+<ul>
+<li></li>
+</ul>
+</li>
+</ul>
 </nav>
 </div>
 </div>
@@ -395,7 +406,7 @@ $$</p>
 <h2 id=分部积分>分部积分</h2>
 <h3 id=来源>来源</h3>
 <p>$$
-\int{u}\cdot\text{d}x = {u}\cdot{v}-\int{v}\cdot{u}^{'}\text{d}x
+\int{u}\cdot{v}^{'}\text{d}x = {u}\cdot{v}-\int{v}\cdot{u}^{'}\text{d}x
 $$</p>
 <h3 id=使用条件>使用条件</h3>
 <ol>
@@ -417,15 +428,57 @@ $$</p>
 <h3 id=题型四>题型四</h3>
 <p>积分式子中含有 $f^{'}(x), f^{''}(x)$ => 分部积分优先</p>
 <h1 id=定积分>定积分</h1>
+<h2 id=定义>定义</h2>
+<p>指用来求曲边图形面积的工具，$\int_{a}^{b}f(x)\text{d}x$</p>
+<h2 id=几何意义>几何意义</h2>
+<p>$\int_{a}^{b}f(x)\text{d}x$ : 指由函数曲线 $y=f(x)$ ，及 $x=a,x=b$ ，$x$ 轴所围成的图形各部分面积的代数和</p>
+<ul>
+<li>
+<p>$f(x)\gt0$ 时 ，$\int_{a}^{b}f(x)\text{d}x \gt0$</p>
+</li>
+<li>
+<p>$f(x)\lt0$ 时 ，$\int_{a}^{b}f(x)\text{d}x \lt0$</p>
+</li>
+</ul>
+<h2 id=比较大小>比较大小</h2>
+<p>看 $(a, b)$ 范围，$f(x)$ 与 $g(x)$ 大小</p>
+<p>$f(x) \ge g(x)$ => $\int_{a}^{b}f(x)\text{d}x \ge \int_{a}^{b}g(x)\text{d}x$</p>
+<h2 id=性质>性质</h2>
+<ol>
+<li>
+<p>$\int_{a}^{b}{f(x)}\pm{g(x)}\text{d}x=\int_{a}^{b}{f(x)}\text{d}x\pm\int_{a}^{b}{g(x)}\text{d}x$</p>
+</li>
+<li>
+<p>$\int_{a}^{b}{k}\cdot{f(x)}\text{d}x=k\int_{a}^{b}{f(x)}\text{d}x$ ($k与x无关$)</p>
+</li>
+<li>
+<p>$\int_{a}^{b}{f(x)}\text{d}x=\int_{a}^{c}{f(x)}\text{d}x+\int_{c}^{b}{f(x)}\text{d}x$ (分段函数)</p>
+</li>
+<li>
+<p>$\int_{a}^{b}{f(x)}\text{d}x = -\int_{b}^{a}{f(x)}\text{d}x$ (上下限调换，计算结果添负号)</p>
+</li>
+<li>
+<p>$\int_{a}^{b}1\text{d}x=\int_{a}^{b}\text{d}x=b-a$</p>
+</li>
+</ol>
+<h2 id=计算公式>计算公式</h2>
+<h4 id=牛顿莱布尼茨公式>牛顿—莱布尼茨公式</h4>
+<p>$$
+\int_{a}^{b}{f(x)}\text{d}x=F(x)|_{a}^{b}=F(b)-F(a)
+$$</p>
+<h4 id=分部积分公式>分部积分公式</h4>
+<p>$$
+\int_{a}^{b}{u}\cdot{v}^{'}\text{d}x = {u}\cdot{v}|<em>{a}^{b}-\int</em>{a}^{b}{v}\cdot{u}^{'}\text{d}x
+$$</p>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
 <ul class=listing>
 <li><a href=/data_structure/8/>第八章 优先队列</a></li>
-<li><a href=/higher_mathematics/2/>第二章 一元函数微分学</a></li>
 <li><a href=/c/2/>第二章 数据的存储与运算</a></li>
+<li><a href=/higher_mathematics/2/>第二章 一元函数微分学</a></li>
 <li><a href=/data_structure/7/>第七章 散列表</a></li>
-<li><a href=/c/1/>第一章 程序设计与C语言</a></li>
+<li><a href=/higher_mathematics/1/>第一章 函数与极限</a></li>
 </ul>
 </div>
 <div class="post-meta meta-tags">
