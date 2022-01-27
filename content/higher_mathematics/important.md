@@ -88,16 +88,20 @@ $$
 
 ### 三角关系
 
-| 三角关系公式                                    | 广东普通专升本 | 重要程度· |
-| ----------------------------------------------- | :------------: | :-------: |
-| $\sin \alpha = \frac{a}{c} = \frac{对边}{斜边}$ |                |           |
-| $\cos \alpha = \frac{b}{c} = \frac{邻边}{斜边}$ |                |           |
-| $\tan \alpha = \frac{a}{b} = \frac{对边}{邻边}$ |                |           |
-| $\tan \alpha = \frac{a}{b} = \frac{对边}{邻边}$ |                |           |
-| $\cot \alpha = \frac{b}{a} = \frac{邻边}{对边}$ |                |           |
-| $\sec \alpha = \frac{1}{\cos \alpha}$           |                |           |
-| $\csc \alpha = \frac{1}{\sin \alpha}$           |                |           |
-| $\frac{1}{\cos^2{x}}=\sec^2{x}$                 |                |           |
+|      | 三角关系公式                                    | 广东普通专升本 | 重要程度· |
+| ---- | ----------------------------------------------- | :------------: | :-------: |
+| 正弦 | $\sin \alpha = \frac{a}{c} = \frac{对边}{斜边}$ |                |           |
+| 余弦 | $\cos \alpha = \frac{b}{c} = \frac{邻边}{斜边}$ |                |           |
+| 正切 | $\tan \alpha = \frac{a}{b} = \frac{对边}{邻边}$ |                |           |
+| 余切 | $\cot \alpha = \frac{b}{a} = \frac{邻边}{对边}$ |                |           |
+| 正割 | $\sec\alpha=\frac{c}{b}=\frac{斜边}{邻边}$      |                |           |
+| 余割 | $\csc\alpha=\frac{c}{a}=\frac{斜边}{对边}$      |                |           |
+
+### 三角函数转换
+
+1. $\sec \alpha = \frac{1}{\cos \alpha}$
+2. $\csc \alpha = \frac{1}{\sin \alpha}$ 
+3. $\frac{1}{\cos^2{x}}=\sec^2{x}$
 
 ### 常见三角函数化简公式
 
