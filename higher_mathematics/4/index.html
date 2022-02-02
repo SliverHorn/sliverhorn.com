@@ -69,6 +69,29 @@ SliverHorn的博客
 </ul>
 </li>
 <li><a href=#全微分>全微分</a></li>
+<li><a href=#可微与偏导的关系>可微与偏导的关系</a></li>
+<li><a href=#可微的本质>可微的本质</a>
+<ul>
+<li><a href=#可微>可微</a></li>
+<li><a href=#一元函数>一元函数</a></li>
+<li><a href=#二元函数>二元函数</a></li>
+</ul>
+</li>
+<li><a href=#二阶偏导>二阶偏导</a></li>
+<li><a href=#二元隐函数偏导>二元隐函数偏导</a>
+<ul>
+<li><a href=#隐函数>隐函数</a></li>
+<li><a href=#一阶偏导>一阶偏导</a></li>
+<li><a href=#二阶偏导-1>二阶偏导</a></li>
+</ul>
+</li>
+<li><a href=#多元复合函数求导>多元复合函数求导</a>
+<ul>
+<li><a href=#求导原则>求导原则</a></li>
+<li><a href=#链式法则>链式法则</a></li>
+<li><a href=#题型>题型</a></li>
+</ul>
+</li>
 </ul>
 <ul>
 <li><a href=#定义>定义</a></li>
@@ -150,7 +173,124 @@ SliverHorn的博客
 <p>$\frac{\partial{Z}}{\partial{x}}$ ：指对 $x$ 求偏导，$y$ 固定为一个常数（暂时看为常数）</p>
 <p>$\frac{\partial{Z}}{\partial{y}}$ ：指对 $y$ 求偏导，$x$ 固定为一个常数（暂时看为常数）</p>
 <h2 id=全微分>全微分</h2>
-<p>$\text{d}Z=\frac{\partial{Z}}{\partial{x}}\text{d}{x}+\frac{\partial{Z}}{\partial{y}}\text{d}{y}$</p>
+<p>$$
+\text{d}Z=\frac{\partial{Z}}{\partial{x}}\text{d}{x}+\frac{\partial{Z}}{\partial{y}}\text{d}{y}\tag{1}\label{1}
+$$</p>
+<h2 id=可微与偏导的关系>可微与偏导的关系</h2>
+<ul>
+<li>
+<p>可微 $\Longleftrightarrow$ 可导 $\Longrightarrow$ 连续 $\Longrightarrow$ 极限</p>
+<blockquote>
+<p>极限 不能推出 函数值</p>
+</blockquote>
+</li>
+<li>
+<p>$Z=f(x,y)$ ，<strong>偏导存在</strong>且<strong>连续</strong> $\Longrightarrow$ $f(x,y)$ 可微($\ref{1}$)</p>
+</li>
+<li>
+<p>$Z=f(x,y)$ ，可微 $\Longrightarrow$ 连续 $\Longrightarrow$ 极限</p>
+</li>
+<li>
+<p>$Z=f(x,y)$ ，可微 $\Longrightarrow$ 偏导存在</p>
+</li>
+<li>
+<p><strong>偏导存在，与连续无关</strong></p>
+</li>
+</ul>
+<h2 id=可微的本质>可微的本质</h2>
+<h3 id=可微>可微</h3>
+<p>指用 $f(x,y)$ ，在 $(x_0,y_0)$ 处切线上的增量 $\triangle{y}$ 来代替了曲线 $f(x)$ 本身的增量 $\triangle{y}$</p>
+<blockquote>
+<p><strong>若 $\triangle{y_{切}}=\triangle{y}$ ，则称可微</strong> ，条件 $\triangle{y}-\triangle{y_{切}}=\triangle{y}-f^{'}(x_0)\cdot\triangle{x}\Longrightarrow{0}$ ，且 $\triangle{x}$ 的高阶无穷小量</p>
+</blockquote>
+<h3 id=一元函数>一元函数</h3>
+<ol>
+<li>写增量：$\triangle{y}=f(x_0+\triangle{x})-f(x_0)$</li>
+<li>写线性增量：${A}\triangle{x}=f^{'}{x_0}\triangle{x}$</li>
+<li>作极限：$\lim\limits_{\triangle{x}\rightarrow0}{\frac{\triangle{y}-{A}\triangle{x}}{\triangle{x}}}$ 趋于0，即可微</li>
+</ol>
+<h3 id=二元函数>二元函数</h3>
+<blockquote>
+<p>$Z=f(x,y)$</p>
+</blockquote>
+<ol>
+<li>全增量：$\triangle{Z}={f({x_0}+{\triangle{x}},{y_0}+{\triangle{y}})}-{f({x_0},{y_0})}$</li>
+<li>线性增量：$\triangle{Z_{线}}=A\triangle{x}+B\triangle{y}$</li>
+<li>作极限：$\lim\limits_{\triangle{x}\rightarrow0}{\frac{\triangle{Z}-\triangle{Z_{线}}}{\sqrt{\triangle{x^2}}+\triangle{y^2}}}$
+<ol>
+<li>$\triangle{Z}=A\triangle{x}+B\triangle{y}+0(\rho)$
+<ol>
+<li>$\rho=\sqrt{\triangle{x^2}+\triangle{y^2}}$</li>
+<li>$A=\frac{\partial{Z}}{\partial{x}}$</li>
+<li>$B=\frac{\partial{Z}}{\partial{y}}$</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id=二阶偏导>二阶偏导</h2>
+<ol>
+<li>
+<p>$\frac{\partial^{2}{Z}}{\partial{x^2}}$ ：指 $Z$ 对 $x$ 求两次偏导</p>
+</li>
+<li>
+<p>$\frac{\partial^{2}{Z}}{\partial{y^2}}$ ：指 $Z$ 对 $y$ 求两次偏导</p>
+</li>
+<li>
+<p>$\frac{\partial^{2}{Z}}{\partial{y}\partial{x}}$ ：指 $Z$ 先对 $y$ 后对 $x$ 的二阶混合偏导</p>
+</li>
+<li>
+<p>$\frac{\partial^{2}{Z}}{\partial{x}\partial{y}}$ ：指 $Z$ 先对 $x$ 后对 $y$ 的二阶混合偏导</p>
+</li>
+</ol>
+<blockquote>
+<p>$Z=f(x,y)$ 的两个混合偏导 $\frac{\partial^{2}{Z}}{\partial{y}\partial{x}}$ ，$\frac{\partial^{2}{Z}}{\partial{x}\partial{y}}$ 在闭区间 $D$ 内连续，则有以下结论
+$$
+\frac{\partial^{2}{Z}}{\partial{y}\partial{x}}=\frac{\partial^{2}{Z}}{\partial{x}\partial{y}}
+$$</p>
+</blockquote>
+<h2 id=二元隐函数偏导>二元隐函数偏导</h2>
+<h3 id=隐函数>隐函数</h3>
+<p>不是 $Z=f(x,y)$ 的二元函数</p>
+<h3 id=一阶偏导>一阶偏导</h3>
+<ol>
+<li>令 $F(x,y,Z)$</li>
+<li>求 $F_x,F_y,F_Z$</li>
+<li>套公式 $\frac{\partial{Z}}{\partial{x}}=-\frac{F_x}{F_{Z}},\frac{\partial{Z}}{\partial{y}}=-\frac{F_y}{F_{Z}}$</li>
+</ol>
+<h3 id=二阶偏导-1>二阶偏导</h3>
+<ol>
+<li>先用公式法求一阶导</li>
+<li>用导数公式直接求二阶导</li>
+</ol>
+<blockquote>
+<p>在求二阶导时，切记 $Z$ 是关于 $x,y$ 的函数需要求导的</p>
+</blockquote>
+<h2 id=多元复合函数求导>多元复合函数求导</h2>
+<h3 id=求导原则>求导原则</h3>
+<p>从外向里，层层求导并相乘</p>
+<h3 id=链式法则>链式法则</h3>
+<p>将每层函数关系罗列（树状图）</p>
+<blockquote>
+<p>分线相加，连线相乘</p>
+</blockquote>
+<h3 id=题型>题型</h3>
+<ol>
+<li>
+<p>具体多元复合函数求导：直接代入法</p>
+</li>
+<li>
+<p>抽象的复合函数求导：面向含 $f(\Box,\triangle)$ 的复合求导</p>
+<blockquote>
+<ol>
+<li>从外向量逐层求导</li>
+<li>勿忘 $f$ 要导为 $f^{'}$</li>
+<li>&ldquo;$\Box$&rdquo; 用 &ldquo;$1$&rdquo; 代替，"$\triangle$" 用 &ldquo;2&rdquo; 代替</li>
+<li>计算结果内容可省略不写括号</li>
+</ol>
+</blockquote>
+</li>
+</ol>
 <h1 id=二重积分>二重积分</h1>
 <h2 id=定义>定义</h2>
 <p>二重积分是用来求解曲顶柱体的工具，记为 $\iint_{D}{f(x,y)}\text{d}x\text{d}y$ ，其中 $f(x, y)$ 叫被积函数，$\text{d}x\text{d}y$ 叫面积元素，$D$ 为积分区域（底面积）</p>
@@ -330,8 +470,8 @@ $$</p>
 <li><a href=/data_structure/9/>第九章 并集查</a></li>
 <li><a href=/higher_mathematics/3/>第三章 一元函数积分学</a></li>
 <li><a href=/data_structure/8/>第八章 优先队列</a></li>
-<li><a href=/c/2/>第二章 数据的存储与运算</a></li>
 <li><a href=/higher_mathematics/2/>第二章 一元函数微分学</a></li>
+<li><a href=/c/2/>第二章 数据的存储与运算</a></li>
 </ul>
 </div>
 <div class="post-meta meta-tags">
