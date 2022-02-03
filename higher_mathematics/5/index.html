@@ -37,7 +37,7 @@ SliverHorn的博客
 <a href=https://sliverhorn.com>首页</a>
 <a href=https://sliverhorn.com/c/ title=C语言>C语言</a>
 <a href=https://sliverhorn.com/data_structure/ title=数据结构>数据结构</a>
-<a href=https://sliverhorn.com/higher_mathematics/ title=高数>高数</a>
+<a href=https://sliverhorn.com/higher_mathematics/ title=高等数学>高等数学</a>
 <a href=https://sliverhorn.com/politics/ title=政治>政治</a>
 <a href=https://sliverhorn.com/tool/ title=工具>工具</a>
 <a href=https://sliverhorn.com/archives/ title=归档>归档</a>
@@ -56,7 +56,37 @@ SliverHorn的博客
 <div class=post-toc style=position:absolute;top:188px>
 <h2 class=post-toc-title>文章目录</h2>
 <div class=post-toc-content>
-<nav id=TableOfContents></nav>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#基本概念>基本概念</a></li>
+<li><a href=#题型>题型</a>
+<ul>
+<li><a href=#阶数的识别>阶数的识别</a></li>
+<li><a href=#线性微分方程识别>线性微分方程识别</a></li>
+<li><a href=#齐次方程的识别>齐次方程的识别</a></li>
+<li><a href=#解的类型判断>解的类型判断</a></li>
+</ul>
+</li>
+<li><a href=#微分方程的求解>微分方程的求解</a>
+<ul>
+<li><a href=#直接积分法>直接积分法</a></li>
+</ul>
+</li>
+<li><a href=#一阶线性微分方程的求解>一阶线性微分方程的求解</a>
+<ul>
+<li><a href=#可分离变量微分方程的求解>可分离变量微分方程的求解</a></li>
+<li><a href=#一阶齐次微分方程的求解>一阶齐次微分方程的求解</a></li>
+<li><a href=#一阶线性微分方程>一阶线性微分方程</a></li>
+</ul>
+</li>
+<li><a href=#二阶微分方程>二阶微分方程</a>
+<ul>
+<li></li>
+<li><a href=#二阶齐次微分方程的解法>二阶齐次微分方程的解法</a></li>
+</ul>
+</li>
+</ul>
+</nav>
 </div>
 </div>
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
@@ -72,6 +102,139 @@ SliverHorn的博客
 阅读</span></span>
 </div>
 <div class=post-content>
+<h1 id=常微分方程>常微分方程</h1>
+<h2 id=基本概念>基本概念</h2>
+<ol>
+<li>
+<p>称含有 $y$ 及相关导数的方程叫微分方程</p>
+</li>
+<li>
+<p>方程的阶：指方程中最高阶导数</p>
+</li>
+<li>
+<p>方程的解：满足方程的函数 $y$</p>
+</li>
+<li>
+<p>方程的解的类型</p>
+<ol>
+<li>
+<p>通解：满足方程的所有解，特点：1. 含有独立任意常数 $C$ ，2. 且 $C$ 的个数与阶数相同</p>
+</li>
+<li>
+<p>特解：满足方程的一个特殊解，特点：不含 $C$</p>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id=题型>题型</h2>
+<h3 id=阶数的识别>阶数的识别</h3>
+<h4 id=储备>储备</h4>
+<ol>
+<li>$y^(n)$ ：叫n阶导</li>
+<li>$\frac{\text{d}{y}}{\text{d}{x}}=y^{'}$ ，$\frac{\text{d}^{2}{y}}{\text{d}{x^{2}}}=y^{''}$</li>
+<li>导数取决与整个方程中导数的最高阶导，而不是变量的次数</li>
+<li>导数不是幂函数，别自己做数学家，$(y^{''})^3\neq{y}^{''''''}$ ，$(y^{''})\cdot(y^{''}=y^{''''})$</li>
+</ol>
+<h3 id=线性微分方程识别>线性微分方程识别</h3>
+<p>称方程中的位置函数 $y$ 及其各阶导数 $y^{'},y^{''}$ 等均是一次方</p>
+<h3 id=齐次方程的识别>齐次方程的识别</h3>
+<p>称 $y$ 及其相关导数 $=Q(x)$</p>
+<ol>
+<li>$(x)=0$ 齐次</li>
+<li>$(x)\neq{0}$ 非齐次</li>
+</ol>
+<h3 id=解的类型判断>解的类型判断</h3>
+<ol>
+<li>$C$ 的个数与阶数相同 $\Longrightarrow$ 通解</li>
+<li>不含 $C$ 的解 $\Longrightarrow$ 特解</li>
+<li>满足方程的解 $\Longrightarrow$ 解</li>
+</ol>
+<h2 id=微分方程的求解>微分方程的求解</h2>
+<h3 id=直接积分法>直接积分法</h3>
+<p>遇到 $y^{n}=Q(x)$ 时，如：$y^{''}=x+1$</p>
+<h2 id=一阶线性微分方程的求解>一阶线性微分方程的求解</h2>
+<h3 id=可分离变量微分方程的求解>可分离变量微分方程的求解</h3>
+<p>当方程中 $x$ 相关函数和 $y$ 相关函数可分开成 $f(x)\text{d}{x}=g(y)\text{d}{y}$ 的形式，称这样的方程为可分离变量方程</p>
+<h3 id=一阶齐次微分方程的求解>一阶齐次微分方程的求解</h3>
+<h4 id=储备-1>储备</h4>
+<ol>
+<li>
+<p>”齐次“指 $x,y$ 各项次数或乘积次数相同</p>
+<blockquote>
+<p>${x^{2}}\cdot{y^{2}}$ ，$x,y$ 都叫2次</p>
+</blockquote>
+</li>
+<li>
+<p>解题关键：在进行变量分离过程中，将 $x,y$ 项变成 $\frac{y}{x}$ 的形式</p>
+</li>
+<li>
+<p>常考一般为二次时 $\Longrightarrow$ 选择等号两边同除 $x^2$</p>
+</li>
+</ol>
+<h4 id=概念>概念</h4>
+<p>称 $\frac{\text{d}{y}}{\text{d}{x}}=\varphi(\frac{y}{x})$ 的方程叫齐次方程</p>
+<h4 id=解法>解法</h4>
+<ol>
+<li>
+<p>将方程通过移项，乘除化为 $\frac{\text{d}{y}}{\text{d}{x}}=\varphi(\frac{y}{x})$ 的形式</p>
+</li>
+<li>
+<p>换元：令 $\frac{y}{x}=u$ ，则 $y={u}\cdot{x}\Longrightarrow{y^{'}}={u^{'}x}+{u}$ 即：$\frac{\text{d}{y}}{\text{d}{x}}=\frac{\text{d}{u}}{\text{d}{x}}\cdot{x}+u$</p>
+</li>
+<li>
+<p>将上诉换元回代方程 $\frac{\text{d}{y}}{\text{d}{x}}=\varphi(\frac{y}{x})$ 中</p>
+</li>
+<li>
+<p>分离变量，积分后用 $u=\frac{y}{x}$ 回代即得通解</p>
+</li>
+</ol>
+<h3 id=一阶线性微分方程>一阶线性微分方程</h3>
+<h4 id=形式一>形式一</h4>
+<p>$$
+{y^{'}}+{{P(x)}\cdot{y}}=Q(x)
+$$</p>
+<p>解法：$y=e^{-\int{P(x)\text{d}{x}}}\cdot[\int{Q(x)}\text{d}{x}+C]$</p>
+<h4 id=形式二>形式二</h4>
+<p>$$
+{x^{'}}+{P(y)}\cdot{x}=Q(y)
+$$</p>
+<p>解法：$x=e^{-\int{P(y)}\text{d}{y}}\cdot[\int{Q(y)}\cdot{e^{\int{P(y)}\text{d}{y}}}]$</p>
+<h2 id=二阶微分方程>二阶微分方程</h2>
+<h4 id=定义>定义</h4>
+<p>称 $ay^{''}+by^{'}+cy=f(x)$ 为二阶微分方程</p>
+<ol>
+<li>当 $f(x)=0$ 为二阶齐次线性微分方程</li>
+<li>当 $f(x)={P(x)}\cdot{e^{\lambda{x}}}$ 为二阶非齐次线性微分方程</li>
+</ol>
+<h3 id=二阶齐次微分方程的解法>二阶齐次微分方程的解法</h3>
+<h4 id=标准形式>标准形式：</h4>
+<p>$$
+ay^{''}+by^{'}+cy=0
+$$</p>
+<h4 id=解法-1>解法</h4>
+<ol>
+<li>
+<p>写出特征方程：$ar^{2}+br+c=0$</p>
+</li>
+<li>
+<p>特征根： $r_{1,2}=\frac{{-b}\pm{\sqrt{b^2-4ac}}}{2a}$</p>
+</li>
+<li>
+<p>套公式：
+$$
+{r_1}\neq{r_2}, y={C_1}{e^{r_{1}x}}+{C_2}{e^{r_{2}x}}\tag{1}\label{1}
+$$</p>
+<p>$$
+{r_1}={r_2},y=({C_1+C_{2}x})\cdot{e^{r_{1}x}}\tag{2}\label{2}
+$$</p>
+<p>$$
+r_{1,2}={a}\pm{bi},y={e^{ax}}\cdot{({C_{1}\cos{bx}}+{C_{2}\sin{bx}})}\tag{3}\label{3}
+$$</p>
+<blockquote>
+<p>$i^2=-1$ ，如：$\sqrt{-4}=\sqrt{4i^2}=2i$</p>
+</blockquote>
+</li>
+</ol>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
