@@ -4,16 +4,16 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=referrer content="no-referrer-when-downgrade">
-<title>第二章 数据的存储与运算 | SliverHorn的博客</title>
-<meta property="og:title" content="第二章 数据的存储与运算 - SliverHorn的博客">
+<title>第六章 常数项级数 | SliverHorn的博客</title>
+<meta property="og:title" content="第六章 常数项级数 - SliverHorn的博客">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2022-01-02T17:17:17+08:00">
-<meta property="article:modified_time" content="2022-01-02T17:17:17+08:00">
+<meta property="article:published_time" content="2022-01-06T17:17:17+08:00">
+<meta property="article:modified_time" content="2022-01-06T17:17:17+08:00">
 <meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
 ">
-<meta name=description content="第二章 数据的存储与运算">
+<meta name=description content="第六章 常数项级数">
 <meta name=author content="SliverHorn">
-<meta property="og:url" content="https://sliverhorn.com/c/2/">
+<meta property="og:url" content="https://sliverhorn.com/higher_mathematics/6/">
 <link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
 <link rel=stylesheet href=/css/normalize.css>
 <link rel=stylesheet href=/css/style.css>
@@ -58,16 +58,16 @@ SliverHorn的博客
 <div class=post-toc-content>
 <nav id=TableOfContents>
 <ul>
-<li><a href=#数据在计算机中是怎么存储的>数据在计算机中是怎么存储的</a>
+<li><a href=#无穷级数>无穷级数</a></li>
+<li><a href=#收敛与发散>收敛与发散</a></li>
+<li><a href=#常见数列求和>常见数列求和</a>
 <ul>
-<li><a href=#不同的数据类型的存储方式>不同的数据类型的存储方式</a></li>
+<li><a href=#等差数列>等差数列</a></li>
+<li><a href=#等比数列求和>等比数列求和</a></li>
 </ul>
 </li>
-<li><a href=#整型数据的运算与分析>整型数据的运算与分析</a>
-<ul>
-<li><a href=#整型常量与整型变量>整型常量与整型变量</a></li>
-</ul>
-</li>
+<li><a href=#裂项相消>裂项相消</a></li>
+<li><a href=#收敛级数性质>收敛级数性质</a></li>
 </ul>
 </nav>
 </div>
@@ -75,70 +75,90 @@ SliverHorn的博客
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
 <article class=post>
 <header>
-<h1 class=post-title>第二章 数据的存储与运算</h1>
+<h1 class=post-title>第六章 常数项级数</h1>
 </header>
 <date class="post-meta meta-date">
-2022年1月2日
+2022年1月6日
 </date>
 <div class=post-meta>
 <span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
 阅读</span></span>
 </div>
 <div class=post-content>
-<h2 id=数据在计算机中是怎么存储的>数据在计算机中是怎么存储的</h2>
-<p>数据在计算机中是以二进制形式存储的。</p>
-<p>二进制的特点是“逢二进一”， 每一位的值只有0和1两种可能。</p>
+<h2 id=无穷级数>无穷级数</h2>
+<p>将无穷多个数求和。记为 $\sum\limits_{n=1}^{\infty}{U_n}=u_1+u_2+u_3+&mldr;+u_n+&mldr;$</p>
 <blockquote>
-<p>十进制数 $10$ ， 用二进制表示是 $1010$ 。它的含义是：</p>
-<p>$1 \times 2^3 + 0 \times 2^2 + 1 \times 2^1 + 0 \times 2^0$</p>
+<p>$u_n\Longrightarrow$ 通项</p>
 </blockquote>
-<h3 id=不同的数据类型的存储方式>不同的数据类型的存储方式</h3>
-<ul>
-<li>整数是以补码形式存放的</li>
-<li>实数一律采用指数形式存储</li>
-<li>字符是以 ASCII码</li>
-</ul>
-<h2 id=整型数据的运算与分析>整型数据的运算与分析</h2>
-<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#a61717;background-color:#e3d2d2>类型名</span> <span style=color:#a61717;background-color:#e3d2d2>变量名</span>;
-</code></pre></td></tr></table>
-</div>
-</div><p>所有的变量都必须在使用前定义，指的是它们的类型。</p>
-<h3 id=整型常量与整型变量>整型常量与整型变量</h3>
-<h4 id=常量和变量>常量和变量</h4>
-<p>在计算机语言中数据有两种基本表现形式: 常量和变量</p>
-<p>常量是指在程序运行的过程中不能改变的量。</p>
-<p>变量是指在程序运行过程中其值可以改变的量。</p>
-<p>变量名就是以一个容易记忆的名字代表一个存储单元的地址。</p>
-<p>变量名的取名规则：</p>
+<h2 id=收敛与发散>收敛与发散</h2>
+<p>部分和（前n项和）：$S_n=\sum\limits_{n=1}^{\infty}{u_i}=u_1+u_2+u_3+&mldr;+u_n$</p>
 <ol>
-<li>第一个字符必须是字母或者下画线，其后的字符必须是字母，数字或者下画线。</li>
+<li>$\lim\limits_{x\rightarrow\infty}{S_n}=常数$ ，称 $\sum\limits_{n=1}^{\infty}{U_n}$ 收敛</li>
+<li>$\lim\limits_{x\rightarrow\infty}{S_n}=\infty$ (不存在) ，称 $\sum\limits_{n=1}^{\infty}{U_n}$ 发散</li>
 </ol>
+<h2 id=常见数列求和>常见数列求和</h2>
+<h3 id=等差数列>等差数列</h3>
+<h4 id=通项>通项</h4>
+<p>$$
+a_n=a_1+(n+1)d
+$$</p>
+<h4 id=求和>求和</h4>
+<p>$$
+S_n=\frac{(a_1+a_n)\cdot{n}}{2}
+$$</p>
+<h3 id=等比数列求和>等比数列求和</h3>
+<h4 id=通项-1>通项</h4>
+<p>$$
+a_n={a_1}\cdot{q^{n-1}}
+$$</p>
+<h4 id=求和-1>求和</h4>
+<p>$$
+S_n=\frac{{a_1}\cdot{(1-q^n)}}{1-q} (q\neq1)
+$$</p>
 <blockquote>
-<p><strong>在C语言中，把用来表示对象(包括变量、函数、数组、类型等)名字的有效字符系列称为标识符(identifier)</strong></p>
+<p>当 ${|q|}\lt{1}$ 且 ${n}\rightarrow{\infty}$ 时，${q^n}\rightarrow{0}$
+$$
+S_n=\frac{a_1}{1-q} ({|q|}\lt{1})
+$$</p>
 </blockquote>
-<ol start=2>
-<li>大小写字母代表不同的字符。</li>
-<li>变量名的长度不是无限的。</li>
-<li>变量名尽量简单易记</li>
-<li>在同一个程度的同一函数中，不同的变量不能取相同的变量名，以免混淆。</li>
-<li>变量必须要先“定义”后“使用”。</li>
+<h2 id=裂项相消>裂项相消</h2>
+<p>$\frac{1}{{n}\cdot{n+1}}=\frac{1}{n}-\frac{1}{n+1}$</p>
+<p>$\sum\limits_{n=1}^{\infty}\frac{1}{{n}\cdot{n+1}}=\sum\limits_{n=1}^{\infty}(\frac{1}{n}-\frac{1}{n+1})=1$</p>
+<blockquote>
+<p>$=(1-\frac{1}{2})+(\frac{1}{2}-\frac{1}{3})+(\frac{1}{3}-\frac{1}{4})+&mldr;++(\frac{1}{n}-\frac{1}{n+1})$</p>
+<p>$=1-\frac{1}{n+1}$ ，当 $n\rightarrow\infty$ 时，$\frac{1}{n+1}\rightarrow{0}$</p>
+<p>$=1$</p>
+</blockquote>
+<h2 id=收敛级数性质>收敛级数性质</h2>
+<ol>
+<li>
+<p>$\sum\limits_{n=1}^{\infty}{U_n}$ 收敛于 $A$ ，则 $\sum\limits_{n=1}^{\infty}{{k}\cdot{U_n}}={k}\cdot{\sum\limits_{n=1}^{\infty}{U_n}}$ 也收敛且收敛与 ${k}\cdot{A}$</p>
+</li>
+<li>
+<p>$收\pm收=收，收\pm发=发$ ，其他不一定成立</p>
+<blockquote>
+<p>$发\pm发=不一定!$</p>
+</blockquote>
+</li>
+<li>
+<p>在级数扣掉或加上有限项，不会改变级数敛散性</p>
+</li>
+<li>
+<p>若 $\sum\limits_{n=1}^{\infty}{U_n}$ 收敛，对任意项加括号后构成的新级数，敛散性不变</p>
+</li>
+<li>
+<p>级数收敛的结论：若 $\sum\limits_{n=1}^{\infty}{U_n}$ 收敛，则 $\sum\limits_{n=1}^{\infty}{U_n}=0$</p>
+</li>
 </ol>
-<h4 id=整型常量的表达形式>整型常量的表达形式</h4>
-<p>十进制、八进制、十六进制</p>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
 <ul class=listing>
-<li><a href=/higher_mathematics/2/>第二章 一元函数微分学</a></li>
-<li><a href=/data_structure/7/>第七章 散列表</a></li>
-<li><a href=/c/1/>第一章 程序设计与C语言</a></li>
-<li><a href=/higher_mathematics/1/>第一章 函数与极限</a></li>
-<li><a href=/post/2021/>2021 年度总结</a></li>
+<li><a href=/higher_mathematics/5/>第五章 常微分方程初步</a></li>
+<li><a href=/data_structure/10/>第十章 图</a></li>
+<li><a href=/higher_mathematics/4/>第四章 多元函数微积分学初步</a></li>
+<li><a href=/data_structure/9/>第九章 并集查</a></li>
+<li><a href=/higher_mathematics/3/>第三章 一元函数积分学</a></li>
 </ul>
 </div>
 <div class="post-meta meta-tags">
