@@ -74,7 +74,7 @@ menu:
       weight: 2
     -
       identifier: higher_mathematics
-      name: 高数
+      name: 高等数学
       url: /higher_mathematics/
       weight: 3
     -
