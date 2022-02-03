@@ -72,7 +72,7 @@ SliverHorn的博客
 <li><a href=#直接积分法>直接积分法</a></li>
 </ul>
 </li>
-<li><a href=#一阶线性微分方程的求解>一阶线性微分方程的求解</a>
+<li><a href=#一阶微分方程的求解>一阶微分方程的求解</a>
 <ul>
 <li><a href=#可分离变量微分方程的求解>可分离变量微分方程的求解</a></li>
 <li><a href=#一阶齐次微分方程的求解>一阶齐次微分方程的求解</a></li>
@@ -152,16 +152,29 @@ SliverHorn的博客
 <h2 id=微分方程的求解>微分方程的求解</h2>
 <h3 id=直接积分法>直接积分法</h3>
 <p>遇到 $y^{n}=Q(x)$ 时，如：$y^{''}=x+1$</p>
-<h2 id=一阶线性微分方程的求解>一阶线性微分方程的求解</h2>
+<h2 id=一阶微分方程的求解>一阶微分方程的求解</h2>
 <h3 id=可分离变量微分方程的求解>可分离变量微分方程的求解</h3>
 <p>当方程中 $x$ 相关函数和 $y$ 相关函数可分开成 $f(x)\text{d}{x}=g(y)\text{d}{y}$ 的形式，称这样的方程为可分离变量方程</p>
+<h4 id=解法>解法</h4>
+<ol>
+<li>通过移项，乘除，将方程变量分开：$f(x)\text{d}{x}=g(y)\text{d}{y}$</li>
+<li>两边同时积分 $\int{f(x)}\text{d}{x}=\int{g(y)}\text{d}{y}$</li>
+<li>整理化简</li>
+</ol>
+<h4 id=常见化简>常见化简</h4>
+<ol>
+<li>${C_1}\pm{C_2}=C$</li>
+<li>${C_1}\cdot{C_2}或者\frac{C_1}{C_2} = C$</li>
+<li>$C=\ln{c}$</li>
+<li>$\pm{e^{c}}=C$</li>
+</ol>
 <h3 id=一阶齐次微分方程的求解>一阶齐次微分方程的求解</h3>
 <h4 id=储备-1>储备</h4>
 <ol>
 <li>
 <p>”齐次“指 $x,y$ 各项次数或乘积次数相同</p>
 <blockquote>
-<p>${x^{2}}\cdot{y^{2}}$ ，$x,y$ 都叫2次</p>
+<p>${x^{2}},{y^{2}}$ ，${x}\cdot{y}$ 都叫2次</p>
 </blockquote>
 </li>
 <li>
@@ -173,7 +186,7 @@ SliverHorn的博客
 </ol>
 <h4 id=概念>概念</h4>
 <p>称 $\frac{\text{d}{y}}{\text{d}{x}}=\varphi(\frac{y}{x})$ 的方程叫齐次方程</p>
-<h4 id=解法>解法</h4>
+<h4 id=解法-1>解法</h4>
 <ol>
 <li>
 <p>将方程通过移项，乘除化为 $\frac{\text{d}{y}}{\text{d}{x}}=\varphi(\frac{y}{x})$ 的形式</p>
@@ -193,12 +206,18 @@ SliverHorn的博客
 <p>$$
 {y^{'}}+{{P(x)}\cdot{y}}=Q(x)
 $$</p>
-<p>解法：$y=e^{-\int{P(x)\text{d}{x}}}\cdot[\int{Q(x)}\text{d}{x}+C]$</p>
+<p>解法：$y=e^{-\int{P(x)\text{d}{x}}}\cdot[\int{Q(x)}\cdot{e^{\int{P(x)}\text{d}{x}}}\text{d}{x}+C]$</p>
 <h4 id=形式二>形式二</h4>
 <p>$$
 {x^{'}}+{P(y)}\cdot{x}=Q(y)
 $$</p>
-<p>解法：$x=e^{-\int{P(y)}\text{d}{y}}\cdot[\int{Q(y)}\cdot{e^{\int{P(y)}\text{d}{y}}}]$</p>
+<p>解法：$x=e^{-\int{P(y)}\text{d}{y}}\cdot[\int{Q(y)}\cdot{e^{\int{P(y)}\text{d}{y}}}\text{d}{y}+C]$</p>
+<h4 id=变限积分中的微分方程>变限积分中的微分方程</h4>
+<p>遇变限积分：</p>
+<ol>
+<li>求导</li>
+<li>用 $\int_{a}^{a}{f(t)}\text{d}{t}=0$ 求出一个初始条件</li>
+</ol>
 <h2 id=二阶微分方程>二阶微分方程</h2>
 <h4 id=定义>定义</h4>
 <p>称 $ay^{''}+by^{'}+cy=f(x)$ 为二阶微分方程</p>
@@ -211,7 +230,7 @@ $$</p>
 <p>$$
 ay^{''}+by^{'}+cy=0
 $$</p>
-<h4 id=解法-1>解法</h4>
+<h4 id=解法-2>解法</h4>
 <ol>
 <li>
 <p>写出特征方程：$ar^{2}+br+c=0$</p>
