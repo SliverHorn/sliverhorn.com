@@ -76,6 +76,14 @@ SliverHorn的博客
 <li><a href=#正项级数比值判别法>正项级数比值判别法</a></li>
 </ul>
 </li>
+<li><a href=#交错级数>交错级数</a>
+<ul>
+<li><a href=#定义>定义</a></li>
+<li><a href=#判别方法>判别方法</a></li>
+<li><a href=#注意>注意</a></li>
+<li><a href=#考试注意点>考试注意点</a></li>
+</ul>
+</li>
 </ul>
 </nav>
 </div>
@@ -228,7 +236,11 @@ $$</p>
 </blockquote>
 </li>
 <li>
-<p>放缩，遇 $\sin{\infty},\cos{\infty},(-1)^{\infty}$ $\le{1}$</p>
+<p>放缩</p>
+<ol>
+<li>遇 $\sin{\infty},\cos{\infty},(-1)^{\infty}$ $\le{1}$</li>
+<li>均值不等式：$a^2+b^2\ge2ab$ ，$a+b\ge2\sqrt{ab}$</li>
+</ol>
 </li>
 </ol>
 </li>
@@ -246,7 +258,31 @@ $$</p>
 <p>极值判别法：若 $n\rightarrow{\infty}$ 时，${U_n}\sim{V_n}$ ，且 $U_n,V_n$ 均有限，则 $\sum\limits_{n=1}^{\infty}{U_n}$ 与 $\sum\limits_{n=1}^{\infty}{V_n}$ 同敛散性</p>
 </li>
 </ol>
+<blockquote>
+<p>$n\rightarrow\infty$ 时， $\sqrt[n]{n} = 1$</p>
+</blockquote>
 </li>
+</ol>
+<h2 id=交错级数>交错级数</h2>
+<h3 id=定义>定义</h3>
+<p>称 $\sum\limits_{n=1}^{\infty}{(-1)^n}\cdot{U_n}$ 或 $\sum\limits_{n=1}^{\infty}{(-1)^{n-1}}\cdot{U_n}$ 为交错级数（$U_n$ 非负）</p>
+<h3 id=判别方法>判别方法</h3>
+<p>莱布尼茨判别法：若 $\sum\limits_{n=1}^{\infty}{(-1)^n}\cdot{U_n}$ 满足</p>
+<ol>
+<li>$\lim\limits_{n\rightarrow\infty}{U_n}=0$</li>
+<li>${U_n}\ge{U_{n+1}}$</li>
+</ol>
+<p>则 $\sum\limits_{n=1}^{\infty}{(-1)^n}\cdot{U_n}$ 收敛</p>
+<h3 id=注意>注意</h3>
+<ol>
+<li>交错级数可理解为：正项，负项交替出现的级数</li>
+<li>判断敛散性时，若 $\lim\limits_{n\rightarrow\infty}{U_n}\neq0$ 则里面判断级数发散</li>
+<li>${U_n}\ge{U_{n+1}}$ 等同于 ${U_n}-{U_{n+1}}\ge{0}\Longrightarrow\frac{U_{n+1}}{U_n}\le{1}$ ，$U_n$ 是个单减数列</li>
+</ol>
+<h3 id=考试注意点>考试注意点</h3>
+<ol>
+<li>若求 $\lim\limits_{n\rightarrow\infty}{U_n}=0$ 时，出现洛必达求 $U_n$ 极限时，不能直接求导，需要把 $n$ 改为 $x$ 后再求导</li>
+<li>有时用导数判断单调性时，也需要把 $n$ 变为 $x$ 后才可求导</li>
 </ol>
 </div>
 <div class=post-archive>
