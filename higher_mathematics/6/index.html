@@ -68,6 +68,14 @@ SliverHorn的博客
 </li>
 <li><a href=#裂项相消>裂项相消</a></li>
 <li><a href=#收敛级数性质>收敛级数性质</a></li>
+<li><a href=#级数敛散性判别的方法>级数敛散性判别的方法</a>
+<ul>
+<li><a href=#第-n-项判别法>第 $n$ 项判别法</a></li>
+<li><a href=#等比级数几何级数判敛方法>等比级数(几何级数)判敛方法</a></li>
+<li><a href=#p级数判敛准则>P级数判敛准则</a></li>
+<li><a href=#正项级数比值判别法>正项级数比值判别法</a></li>
+</ul>
+</li>
 </ul>
 </nav>
 </div>
@@ -148,6 +156,96 @@ $$</p>
 </li>
 <li>
 <p>级数收敛的结论：若 $\sum\limits_{n=1}^{\infty}{U_n}$ 收敛，则 $\sum\limits_{n=1}^{\infty}{U_n}=0$</p>
+</li>
+</ol>
+<h2 id=级数敛散性判别的方法>级数敛散性判别的方法</h2>
+<h3 id=第-n-项判别法>第 $n$ 项判别法</h3>
+<p>$\lim\limits_{n\rightarrow\infty}{U_n}\neq0\Longrightarrow\sum\limits_{n=1}^{\infty}{U_n}$ 发散</p>
+<h3 id=等比级数几何级数判敛方法>等比级数(几何级数)判敛方法</h3>
+<ol>
+<li>标准式： $\sum\limits_{n=1}^{\infty}{{a}\cdot{q^n}}$</li>
+<li>方法： 看 ${|q|}$
+<ol>
+<li>${|q|}\lt{1}$ ：收敛</li>
+<li>${|q|}\gt{1}$ ：发散</li>
+</ol>
+</li>
+</ol>
+<h3 id=p级数判敛准则>P级数判敛准则</h3>
+<ol>
+<li>形式：$\sum\limits_{n=1}^{\infty}{\frac{1}{n^P}}(P\gt0,P为数字)$</li>
+<li>方法，看 $P$
+<ol>
+<li>$P\gt1$ ：收敛</li>
+<li>$P \lt 1$ ：发散</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p><strong>调和级数，$\sum\limits_{n=1}^{\infty}{\frac{1}{n^1}}$ ：发散！</strong></p>
+</blockquote>
+<h3 id=正项级数比值判别法>正项级数比值判别法</h3>
+<ol>
+<li>
+<p>形式：$\sum\limits_{n=1}^{\infty}{U_n}({U_n}\gt{0})$</p>
+</li>
+<li>
+<p>方法：</p>
+<ol>
+<li>
+<p>比值判别法（达朗贝尔判别法）</p>
+<ol>
+<li>
+<p>$\lim\limits_{n\rightarrow\infty}{\frac{U_{n+1}}{U_{n}}}\lt{1}$ ：收敛</p>
+</li>
+<li>
+<p>$\lim\limits_{n\rightarrow\infty}{\frac{U_{n+1}}{U_{n}}}\gt{1}$ ：发散</p>
+</li>
+<li>
+<p>使用对象：$U_n$ 中含 $n!,a^n,n^n$</p>
+</li>
+</ol>
+</li>
+<li>
+<p>比较判别法</p>
+<ol>
+<li>
+<p>思维过程：$\sum\limits_{n=1}^{\infty}{U_n}$ 本身难以判别，考虑通过某些方法找到更简单的级数 $\sum\limits_{n=1}^{\infty}{V_n}$ ，两相比较判别出 $\sum\limits_{n=1}^{\infty}{U_n}$ 的敛散性</p>
+<blockquote>
+<p><strong>&ldquo;大收则小收，小发则大发&rdquo;</strong></p>
+</blockquote>
+</li>
+<li>
+<p>找 $\sum\limits_{n=1}^{\infty}{V_n}$ 的方法</p>
+<ol>
+<li>
+<p>等价(极值判别法)</p>
+</li>
+<li>
+<p>抓大头(针对分式 $\Longrightarrow$ 保留最大项判别)</p>
+<blockquote>
+<p><strong>存在放缩，分母越小值越大</strong></p>
+</blockquote>
+</li>
+<li>
+<p>放缩，遇 $\sin{\infty},\cos{\infty},(-1)^{\infty}$ $\le{1}$</p>
+</li>
+</ol>
+</li>
+<li>
+<p>公式：$\lim\limits_{x\rightarrow\infty}\frac{U_n}{V_n}=A$</p>
+<ol>
+<li>$A$ 为非零常数 $\Longrightarrow$ 同收敛性</li>
+<li>$0$ ，”大收则小收“ $\Longrightarrow$ $\sum\limits_{n=1}^{\infty}{V_n}$ 收敛则 $\sum\limits_{n=1}^{\infty}{U_n}$ 收敛</li>
+<li>$\infty$ ，”小发则大发“ $\Longrightarrow$ $\sum\limits_{n=1}^{\infty}{V_n}$ 发散则 $\sum\limits_{n=1}^{\infty}{U_n}$ 发散</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>极值判别法：若 $n\rightarrow{\infty}$ 时，${U_n}\sim{V_n}$ ，且 $U_n,V_n$ 均有限，则 $\sum\limits_{n=1}^{\infty}{U_n}$ 与 $\sum\limits_{n=1}^{\infty}{V_n}$ 同敛散性</p>
+</li>
+</ol>
 </li>
 </ol>
 </div>
