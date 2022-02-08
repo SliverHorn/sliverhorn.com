@@ -201,12 +201,10 @@ $$</p>
 $$</p>
 <h2 id=左导数与右导数>左导数与右导数</h2>
 <h3 id=定义>定义</h3>
-<p>$$
-左导数：f^{'}<em>{-}(x_0)=\lim\limits</em>{x \rightarrow x_0^-}\frac{f(x)-f(x_0)}{x-x_0} \
-右导数：f^{'}<em>{+}(x_0)=\lim\limits</em>{x \rightarrow x_0^+}\frac{f(x)-f(x_0)}{x-x_0}
-$$</p>
+<p>左导数：$f_{-}^{'}(x_0)=\lim\limits_{x\rightarrow x_0^-}{\frac{f(x)-f(x_0)}{x-x_0}}$</p>
+<p>右导数：$f_{+}^{'}(x_0)=\lim\limits_{x \rightarrow x_0^+}\frac{f(x)-f(x_0)}{x-x_0}$</p>
 <ul>
-<li>函数在某点 $x_0$ 的可导条件： $f^{'}<em>{-}(x_0) = f^{'}</em>{+}(x_0)$</li>
+<li>函数在某点 $x_0$ 的可导条件： $f_{-}^{'}(x_0) = f^{'}_{+}(x_0)$</li>
 </ul>
 <blockquote>
 <p>左导数等于右导数</p>
@@ -233,57 +231,58 @@ C^{'} = 0
 $$</p>
 <h3 id=幂函数>幂函数</h3>
 <p>$$
-(x^a) = ax^{a-1} \
-熟记：\begin{cases}
-(\frac{1}{x})^{'} = -\frac{1}{x^2} & \
-(\sqrt{x})^{'} = \frac{1}{2\sqrt{x}} &\
-\end{cases}
+(x^a) = ax^{a-1}
 $$</p>
+<blockquote>
+<p><strong>熟记：</strong></p>
+<ul>
+<li><strong>$(\frac{1}{x})^{'} = -\frac{1}{x^2}$</strong></li>
+<li><strong>$(\sqrt{x})^{'} = \frac{1}{2\sqrt{x}}$</strong></li>
+</ul>
+</blockquote>
 <h3 id=指数函数>指数函数</h3>
 <p>$$
-(a^x)^{'} = a^xlna \
-熟记：(e^x)^{'} = e^x
+(a^x)^{'} = a^xlna
 $$</p>
+<blockquote>
+<p><strong>熟记：$(e^x)^{'} = e^x$</strong></p>
+</blockquote>
 <h3 id=对数函数>对数函数</h3>
 <p>$$
-(log_a^x)^{'} = \frac{1}{xlna} \
-熟记：(lnx)^{'} = \frac{1}{x}
-$$</p>
-<h3 id=三角函数>三角函数</h3>
-<p>$$
-\begin{array}{l}
-(\sin x)^{'} = \cos x \
-(\cos x)^{'} = -\sin x \
-(\tan x)^{'} = \sec^2{x} \
-(\cot x)^{'} = -\csc^2{x} \
-(\sec x)^{'} = \sec x \cdot \tan x \
-(\csc x)^{'} = -\csc x \cdot \cot x \
-\end{array}
+(log_a^x)^{'} = \frac{1}{xlna}
 $$</p>
 <blockquote>
-<p>含 ”c“ 的三角函数的导出必含负号
-$$
-\sec x = \frac{1}{\cos x} \
-\csc x = \frac{1}{\sin x}
-$$</p>
+<p><strong>熟记：$(lnx)^{'} = \frac{1}{x}$</strong></p>
+</blockquote>
+<h3 id=三角函数>三角函数</h3>
+<ul>
+<li>$(\sin x)^{'} = \cos x$</li>
+<li>$(\cos x)^{'} = -\sin x$</li>
+<li>$(\tan x)^{'} = \sec^2{x}$</li>
+<li>$(\cot x)^{'} = -\csc^2{x}$</li>
+<li>$(\sec x)^{'} = \sec x \cdot \tan x$</li>
+<li>$(\csc x)^{'} = -\csc x \cdot \cot x$</li>
+</ul>
+<blockquote>
+<p>含 ”c“ 的三角函数的导出必含负号</p>
+<ul>
+<li>$\sec x = \frac{1}{\cos x}$</li>
+<li>$\csc x = \frac{1}{\sin x}$</li>
+</ul>
 </blockquote>
 <h3 id=反三角函数>反三角函数</h3>
-<p>$$
-\begin{array}{l}
-(\arcsin x)^{'} = \frac{1}{\sqrt{1-x^2}} \
-(\arccos x)^{'} = -\frac{1}{\sqrt{1-x^2}} \
-(\arctan x)^{'} = \frac{1}{1+x^2} \
-(\arccot x)^{'} = -\frac{1}{1+x^2} \
-\end{array}
-$$</p>
+<ul>
+<li>$(\arcsin x)^{'} = \frac{1}{\sqrt{1-x^2}}$</li>
+<li>$(\arccos x)^{'} = -\frac{1}{\sqrt{1-x^2}}$</li>
+<li>$(\arctan x)^{'} = \frac{1}{1+x^2}$</li>
+<li>$(arccot\ x)^{'} = -\frac{1}{1+x^2}$</li>
+</ul>
 <blockquote>
-<p>$$
-\begin{array}{l}
-ln\frac{b}{a} = lnb - lna \
-ln{a} \cdot {b} = lna + lnb \
-lna^b = blna \
-\end{array}
-$$</p>
+<ul>
+<li>$ln\frac{b}{a} = lnb - lna$</li>
+<li>$ln{a} \cdot {b} = lna + lnb$</li>
+<li>$lna^b = blna$</li>
+</ul>
 </blockquote>
 <h2 id=导数的四则运算>导数的四则运算</h2>
 <p>设 $u、v为函数$</p>
@@ -644,8 +643,8 @@ $$</p>
 <ul class=listing>
 <li><a href=/c/2/>第二章 数据的存储与运算</a></li>
 <li><a href=/old/7/>第七章 散列表</a></li>
-<li><a href=/higher_mathematics/1/>第一章 函数与极限</a></li>
 <li><a href=/c/1/>第一章 程序设计与C语言</a></li>
+<li><a href=/higher_mathematics/1/>第一章 函数与极限</a></li>
 <li><a href=/post/2021/>2021 年度总结</a></li>
 </ul>
 </div>
