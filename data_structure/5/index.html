@@ -4,16 +4,14 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=referrer content="no-referrer-when-downgrade">
-<title>第二章 线性表 | SliverHorn的博客</title>
-<meta property="og:title" content="第二章 线性表 - SliverHorn的博客">
+<title>第五章 树与二叉树 | SliverHorn的博客</title>
+<meta property="og:title" content="第五章 树与二叉树 - SliverHorn的博客">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2022-02-02T17:17:17+08:00">
-<meta property="article:modified_time" content="2022-02-02T17:17:17+08:00">
 <meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
 ">
-<meta name=description content="第二章 线性表">
+<meta name=description content="第五章 树与二叉树">
 <meta name=author content="SliverHorn">
-<meta property="og:url" content="https://sliverhorn.com/data_structure/2/">
+<meta property="og:url" content="https://sliverhorn.com/data_structure/5/">
 <link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
 <link rel=stylesheet href=/css/normalize.css>
 <link rel=stylesheet href=/css/style.css>
@@ -58,10 +56,18 @@ SliverHorn的博客
 <div class=post-toc-content>
 <nav id=TableOfContents>
 <ul>
-<li><a href=#线性表>线性表</a></li>
-<li><a href=#顺序表>顺序表</a></li>
-<li><a href=#单链表>单链表</a></li>
-<li><a href=#双链表>双链表</a></li>
+<li><a href=#树的定义>树的定义</a></li>
+<li><a href=#树的基本术语>树的基本术语</a></li>
+<li><a href=#二叉树>二叉树</a></li>
+<li><a href=#二叉树与树的区别>二叉树与树的区别</a></li>
+<li><a href=#二叉树的性质>二叉树的性质</a></li>
+<li><a href=#满二叉树>满二叉树</a></li>
+<li><a href=#完全二叉树>完全二叉树</a>
+<ul>
+<li><a href=#特点>特点</a></li>
+<li><a href=#性质>性质</a></li>
+</ul>
+</li>
 </ul>
 </nav>
 </div>
@@ -69,34 +75,122 @@ SliverHorn的博客
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
 <article class=post>
 <header>
-<h1 class=post-title>第二章 线性表</h1>
+<h1 class=post-title>第五章 树与二叉树</h1>
 </header>
 <date class="post-meta meta-date">
-2022年2月2日
+1年1月1日
 </date>
 <div class=post-meta>
 <span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
 阅读</span></span>
 </div>
 <div class=post-content>
-<h2 id=线性表>线性表</h2>
+<h2 id=树的定义>树的定义</h2>
+<p><strong>树</strong>（Tree）是 $n$ （ $n\ge0$ ）个结点的有限集，它或为空树（$n=0$）；或为非空树，对于非空书树 $T$ ：</p>
 <ol>
-<li>诸如此类由 $n$ （$n\ge0$）个数据特性相同的元素构成的有限序列称为<strong>线性表</strong></li>
-<li>线性表中元素的个数 $n$ （$n\ge0$）定义为线性表的长度，$n=0$ 时称为<strong>空表</strong></li>
+<li>有且仅有一个称为根的结点；</li>
+<li>除根结点以外的其余结点可分为 $m$ （ $m\gt0$ ）个互不相交的有限集 $T_1,T_2,&mldr;,T_m$ ，其中每一个集合本身又是一棵树，并且称为根的子树（SubTree）。</li>
 </ol>
-<h2 id=顺序表>顺序表</h2>
-<p>线性表的顺序表示指的是用一组地址连续的存储单元依次存储线性表的数据元素</p>
-<h2 id=单链表>单链表</h2>
-<h2 id=双链表>双链表</h2>
+<h2 id=树的基本术语>树的基本术语</h2>
+<ol>
+<li>
+<p><strong>结点</strong>：树中的一个独立单元。</p>
+</li>
+<li>
+<p><strong>结点的度</strong>：结点拥有的子树数。</p>
+</li>
+<li>
+<p><strong>树的度</strong>：树内各结点度的最大值。</p>
+</li>
+<li>
+<p><strong>叶子（终端结点）</strong>：度为 $0$ 的结点。</p>
+</li>
+<li>
+<p><strong>非终端结点（分支结点）</strong>：度不为 $0$ 的结点。</p>
+</li>
+<li>
+<p><strong>双亲和孩子</strong>：结点的子树的根称为该结点的孩子，相应的，该结点称为孩子的双亲。</p>
+</li>
+<li>
+<p><strong>兄弟</strong>：同一个双亲的孩子之间互称兄弟。</p>
+</li>
+<li>
+<p><strong>祖先</strong>：从根到该结点所经分支上的所有结点。</p>
+</li>
+<li>
+<p><strong>子孙</strong>：以某结点为根的子树中的任意结点都称为该结点的子孙。</p>
+</li>
+<li>
+<p><strong>层次</strong>：结点的层次从根开始定义起，根为第一层，根的孩子为第二层。树的任意结点的层次等于其双亲结点的层次加1。</p>
+</li>
+<li>
+<p><strong>堂兄弟</strong>：双亲在同一层的结点互为堂兄弟。</p>
+</li>
+<li>
+<p><strong>树的深度（高度）</strong>：树中结点的最大层次。</p>
+</li>
+<li>
+<p><strong>有序树和无序树</strong>：如果将树中结点的各子树看成从左至右是有次序的（即不能互换），则称该树为有序树，否则称为无序树。</p>
+</li>
+<li>
+<p><strong>森林</strong>：是 $m$ （ $m\ge0$ ）棵互不相交的树的集合。对树中每个结点而言，其子树的集合即为森林</p>
+</li>
+</ol>
+<h2 id=二叉树>二叉树</h2>
+<p><strong>二叉树</strong> （Binary Tree）是 $n$ （ $n\ge0$ ）个结点所构成的集合，它或为空树（$n=0$）；或为非空树，对于非空树 $T$ ：</p>
+<ol>
+<li>有且仅有一个称为根的结点；</li>
+<li>除根结点以外的其余结点分为两个互不相交的子集 $T_1$ 和 $T_2$ ，分别称为 $T$ 的左子树和右子树，且 $T_1$ 和 $T_2$ 本身又都是二叉树。</li>
+</ol>
+<h2 id=二叉树与树的区别>二叉树与树的区别</h2>
+<ol>
+<li>二叉树每个结点至多只有两棵子树（即二叉树不存在度大于2的结点）；</li>
+<li>二叉树的子树有左右之分，其次序不能任意颠倒。</li>
+</ol>
+<h2 id=二叉树的性质>二叉树的性质</h2>
+<ol>
+<li>在二叉树的第 $i$ 层上至多有 $2^{i-1}$ 个结点（ $i\ge1$ ）。</li>
+<li>深度为 $k$ 的二叉树至多有 $2^{k}-1$ 个结点 （ $k\ge1$ ）。</li>
+<li>对任何一棵二叉树 $T$ ，如果其终端结点为 $n_0$ ，度为 $2$ 的结点数为 $n_2$ ，则 $n_0=n_{2}+1$ 。</li>
+</ol>
+<h2 id=满二叉树>满二叉树</h2>
+<p>深度为 $k$ 且含有 $2^{k}-1$ 个结点的二叉树。图 5.6（a）所示是一棵深度为 $4$ 的满二叉树</p>
+<p>
+<a data-fancybox=gallery href=/data_structure/5.6.png>
+<img class=mx-auto alt=特殊形态的二叉树 src=/data_structure/5.6.png>
+</a>
+</p>
+<p>特点：每一层上的结点数都是最大结点数，即每一层 $i$ 的结点数都具有最大值 $2^{i-1}$ 。</p>
+<h2 id=完全二叉树>完全二叉树</h2>
+<p>深度为 $k$ 的，有 $n$ 个结点的二叉树，当且仅当其每一个结点都与深度为 $k$ 的满二叉树编号从 $1$ 至 $n$ 的结点一一对应时，称之为完全二叉树。图 5.6（b）所示为一棵深度为 $4$ 的完全二叉树</p>
+<p>
+<a data-fancybox=gallery href=/data_structure/5.6.png>
+<img class=mx-auto alt=特殊形态的二叉树 src=/data_structure/5.6.png>
+</a>
+</p>
+<h3 id=特点>特点</h3>
+<ol>
+<li>叶子结点只可能在层次最大的两层上出现</li>
+<li>对任一结点，若其右分支下的子孙的最大层次为 $l$ ，则其左分支下的字段的最大层次必为 $l$ 或 $l+1$ 。图 5.6（c）和（d）不是完全二叉树</li>
+</ol>
+<h3 id=性质>性质</h3>
+<ol>
+<li>具有 $n$ 个结点的完全二叉树的深度为 $\lfloor log_{2}{n} \rfloor+1$ 。</li>
+<li>如果对一棵有 $n$ 个结点的完全二叉树（其深度为 $\lfloor log_{2}n{} \rfloor+1$ ）的结点按层序编号（从第 $1$ 层到第 $\lfloor log_{2}n{} \rfloor+1$ ，每层从左到右），则对任一结点 $i$ （ ${1}\le{i}\le{n}$ ）有
+<ol>
+<li>如果 $i=1$ ，则结点 $i$ 是二叉树的根，无双亲；如果 $i > 1$ ，则其双亲 <code>PARENT(i)</code> 是改结点的 $\lfloor i/2 \rfloor$</li>
+</ol>
+</li>
+</ol>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
 <ul class=listing>
+<li><a href=/data_structure/2/>第二章 线性表</a></li>
 <li><a href=/data_structure/1/>第一章 绪论</a></li>
 <li><a href=/higher_mathematics/important/>重要公式</a></li>
 <li><a href=/post/aria2c/>Aria2c</a></li>
 <li><a href=/higher_mathematics/6/>第六章 常数项级数</a></li>
-<li><a href=/higher_mathematics/5/>第五章 常微分方程初步</a></li>
 </ul>
 </div>
 <div class="post-meta meta-tags">
