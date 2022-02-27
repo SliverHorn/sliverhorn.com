@@ -6,6 +6,18 @@ draft: false
 
 <!--more-->
 
+## 第一类重要极限
+
+$$
+\lim\limits_{x\rightarrow\infty} \frac{\sin{x}}{x} = 1
+$$
+
+## 第二类重要极限
+
+$$
+\lim\limits_{x\rightarrow\infty}(1+\frac{1}{x})^{x} = \lim\limits_{x\rightarrow\infty}{e}^x\ln{(1+\frac{1}{x})}=\lim\limits_{x\rightarrow\infty}e^{{x}\cdot{\frac{1}{x}}}=e
+$$
+
 ## $\frac{0}{0}$ 型等价无穷小量
 
 
