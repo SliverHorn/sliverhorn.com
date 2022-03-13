@@ -15,12 +15,10 @@ $$
 ## 第二类重要极限
 
 $$
-\lim\limits_{x\rightarrow\infty}(1+\frac{1}{x})^{x} = \lim\limits_{x\rightarrow\infty}{e}^x\ln{(1+\frac{1}{x})}=\lim\limits_{x\rightarrow\infty}e^{{x}\cdot{\frac{1}{x}}}=e
+\lim\limits_{x\rightarrow\infty}(1+\frac{1}{x})^{x} = \lim\limits_{x\rightarrow\infty}{e}^{x\cdot\ln{(1+\frac{1}{x})}}=\lim\limits_{x\rightarrow\infty}e^{{x}\cdot{\frac{1}{x}}}=e
 $$
 
 ## $\frac{0}{0}$ 型等价无穷小量
-
-
 
 | 等价公式                                                     | 广东普通专升本 |  重要程度  |
 | ------------------------------------------------------------ | :------------: | :--------: |
@@ -40,26 +38,26 @@ $$
 
 ## 导数公式
 
-| 导数公式                                             | 广东普通专升本 |  重要程度  |
-| ---------------------------------------------------- | :------------: | :--------: |
-| $C^{'} = 0\ (C为常数)$                               |       √        | $\bigstar$ |
-| $(x^a) = ax^{a-1}$                                   |       √        | $\bigstar$ |
-| $(\frac{1}{x})^{'} = -\frac{1}{x^2}$                 |       √        | $\bigstar$ |
-| $(\sqrt{x})^{'} = \frac{1}{2\sqrt{x}}$               |       √        | $\bigstar$ |
-| $(a^x)^{'} = a^x\ln a\ (a > 0 且 a \ne 1)$           |       √        | $\bigstar$ |
-| $(e^x)^{'} = e^x$                                    |       √        | $\bigstar$ |
-| $(log_a^x)^{'} = \frac{1}{xlna}\ (a > 0 且 a \ne 1)$ |       √        | $\bigstar$ |
-| $(lnx)^{'} = \frac{1}{x}$                            |       √        | $\bigstar$ |
-| $(\sin x)^{'} = \cos x$                              |       √        | $\bigstar$ |
-| $(\cos x)^{'} = -\sin x$                             |       √        | $\bigstar$ |
-| $(\tan x)^{'} = \sec^2{x}$                           |       √        | $\bigstar$ |
-| $(\cot x)^{'} = -\csc^2{x}$                          |       √        | $\bigstar$ |
-| $(\sec x)^{'} = \sec x \cdot \tan x$                 |       √        | $\bigstar$ |
-| $(\csc x)^{'} = -\csc x \cdot \cot x$                |       √        | $\bigstar$ |
-| $(\arcsin x)^{'} = \frac{1}{\sqrt{1-x^2}}$           |       √        | $\bigstar$ |
-| $(\arccos x)^{'} = -\frac{1}{\sqrt{1-x^2}}$          |       √        | $\bigstar$ |
-| $(\arctan x)^{'} = \frac{1}{1+x^2}$                  |       √        | $\bigstar$ |
-| $(arccot\ {x})^{'} = -\frac{1}{1+x^2}$               |       √        | $\bigstar$ |
+| 导数公式                                            | 广东普通专升本 |  重要程度  |
+| --------------------------------------------------- | :------------: | :--------: |
+| $C^{'} = 0\ (C为常数)$                              |       √        | $\bigstar$ |
+| $(x^a) = ax^{a-1}$                                  |       √        | $\bigstar$ |
+| $(\frac{1}{x})^{'} = -\frac{1}{x^2}$                |       √        | $\bigstar$ |
+| $(\sqrt{x})^{'} = \frac{1}{2\sqrt{x}}$              |       √        | $\bigstar$ |
+| $(a^x)^{'} = a^x\ln a\ (a > 0 且 a \ne 1)$          |       √        | $\bigstar$ |
+| $(e^x)^{'} = e^x$                                   |       √        | $\bigstar$ |
+| $(log_ax)^{'} = \frac{1}{xlna}\ (a > 0 且 a \ne 1)$ |       √        | $\bigstar$ |
+| $(lnx)^{'} = \frac{1}{x}$                           |       √        | $\bigstar$ |
+| $(\sin x)^{'} = \cos x$                             |       √        | $\bigstar$ |
+| $(\cos x)^{'} = -\sin x$                            |       √        | $\bigstar$ |
+| $(\tan x)^{'} = \sec^2{x}$                          |       √        | $\bigstar$ |
+| $(\cot x)^{'} = -\csc^2{x}$                         |       √        | $\bigstar$ |
+| $(\sec x)^{'} = \sec x \cdot \tan x$                |       √        | $\bigstar$ |
+| $(\csc x)^{'} = -\csc x \cdot \cot x$               |       √        | $\bigstar$ |
+| $(\arcsin x)^{'} = \frac{1}{\sqrt{1-x^2}}$          |       √        | $\bigstar$ |
+| $(\arccos x)^{'} = -\frac{1}{\sqrt{1-x^2}}$         |       √        | $\bigstar$ |
+| $(\arctan x)^{'} = \frac{1}{1+x^2}$                 |       √        | $\bigstar$ |
+| $(arccot\ {x})^{'} = -\frac{1}{1+x^2}$              |       √        | $\bigstar$ |
 
 ## 不定积分
 
@@ -87,6 +85,8 @@ $$
 | $\int\frac{1}{1+x^2}\text{d}x=\arctan{x}+C$                  |       √        | $\bigstar$ |
 | $-\int\frac{1}{1+x^2}\text{d}x=arccot\ {x}+C$                |       √        | $\bigstar$ |
 | $\int \frac{1}{x^2-a^2} \text{d}x = \frac{1}{2a}\ln\|\frac{x-1}{x+a}\|+C$ |                |            |
+| $\int\ln{x}\text{d}{x}=x\ln{x}-x+C$                          |                |            |
+| $\int{x}e^x\text{d}{x}=xe^x-e^x+C$                           |                |            |
 
 ## 直角三角形
 
