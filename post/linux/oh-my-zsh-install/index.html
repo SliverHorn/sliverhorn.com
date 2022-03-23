@@ -1,916 +1,709 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge">
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=referrer content="no-referrer-when-downgrade">
-<title>oh-my-zsh Mac 安装教程 | SliverHorn的博客</title>
-<meta property="og:title" content="oh-my-zsh Mac 安装教程 - SliverHorn的博客">
-<meta property="og:type" content="article">
-<meta property="article:published_time" content="2021-02-26T17:14:36+08:00">
-<meta property="article:modified_time" content="2021-02-26T17:14:36+08:00">
-<meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
-">
-<meta name=description content="本文针对的mac用户">
-<meta name=author content="SliverHorn">
-<meta property="og:url" content="https://sliverhorn.com/post/linux/oh-my-zsh-install/">
-<link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
-<link rel=stylesheet href=/css/normalize.css>
-<link rel=stylesheet href=/css/style.css>
-<script type=text/javascript src=//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js></script>
-<link href=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css rel=stylesheet>
-<link rel=stylesheet href=/css/douban.css>
-<link rel=stylesheet href=/css/other.css>
-</head>
-<body>
-<header id=header class=clearfix>
-<div class=container>
-<div class=col-group>
-<div class=site-name>
-<a id=logo href=https://sliverhorn.com>
-SliverHorn的博客
-</a>
-<p class=description>Golang 开发</p>
-</div>
-<div>
-<nav id=nav-menu class=clearfix>
-<a class=current href=https://sliverhorn.com>首页</a>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer-when-downgrade"><title>oh-my-zsh Mac 安装教程 | SliverHorn的博客</title><meta property="og:title" content="oh-my-zsh Mac 安装教程 - SliverHorn的博客"><meta property="og:type" content="article"><meta property="article:published_time" content="2021-02-26T17:14:36+08:00"><meta property="article:modified_time" content="2021-02-26T17:14:36+08:00"><meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
+"><meta name=description content="本文针对的mac用户"><meta name=author content="SliverHorn"><meta property="og:url" content="https://sliverhorn.com/post/linux/oh-my-zsh-install/"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=stylesheet href=/css/normalize.css><link rel=stylesheet href=/css/style.css><script type=text/javascript src=//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js></script>
+<link href=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css rel=stylesheet><link rel=stylesheet href=/css/douban.css><link rel=stylesheet href=/css/other.css></head><body><header id=header class=clearfix><div class=container><div class=col-group><div class=site-name><a id=logo href=https://sliverhorn.com>SliverHorn的博客</a><p class=description>Golang 开发</p></div><div><nav id=nav-menu class=clearfix><a class=current href=https://sliverhorn.com>首页</a>
 <a href=https://sliverhorn.com/c/ title=C语言>C语言</a>
 <a href=https://sliverhorn.com/data_structure/ title=数据结构>数据结构</a>
 <a href=https://sliverhorn.com/higher_mathematics/ title=高等数学>高等数学</a>
 <a href=https://sliverhorn.com/politics/ title=政治>政治</a>
 <a href=https://sliverhorn.com/tool/ title=工具>工具</a>
 <a href=https://sliverhorn.com/archives/ title=归档>归档</a>
-<a href=https://sliverhorn.com/about/ title=关于>关于</a>
-</nav>
-</div>
-</div>
-</div>
-</header>
-<div id=body>
-<div class=container>
-<div class=col-group>
-<div class=col-8 id=main>
-<div class=res-cons>
-<style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,7%);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style>
-<div class=post-toc style=position:absolute;top:188px>
-<h2 class=post-toc-title>文章目录</h2>
-<div class=post-toc-content>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#保存命令为文件>保存命令为文件</a></li>
-<li><a href=#安装oh-my-zsh>安装oh-my-zsh</a></li>
-<li><a href=#修改配置文件>修改配置文件</a></li>
-</ul>
-</nav>
-</div>
-</div>
-<script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
-<article class=post>
-<header>
-<h1 class=post-title>oh-my-zsh Mac 安装教程</h1>
-</header>
-<date class="post-meta meta-date">
-2021年2月26日
-</date>
-<div class=post-meta>
-<span>|</span>
-<span class=meta-category><a href=/categories/Linux>Linux</a></span>
-</div>
-<div class=post-meta>
-<span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
-阅读</span></span>
-</div>
-<div class=post-content>
-<p>这是针对Mac的教程, Windows用户慎用喔</p>
-<h2 id=保存命令为文件>保存命令为文件</h2>
-<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">126
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">127
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">128
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">129
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">130
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">131
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">132
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">133
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">134
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">135
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">136
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">137
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">138
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">139
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">140
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">141
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">142
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">143
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">144
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">145
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">146
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">147
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">148
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">149
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">150
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">151
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">152
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">153
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">154
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">155
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">156
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">157
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">158
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">159
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">160
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">161
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">162
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">163
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">164
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">165
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">166
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">167
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">168
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">169
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">170
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">171
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">172
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">173
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">174
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">175
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">176
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">177
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">178
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">179
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">180
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">181
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">182
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">183
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">184
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">185
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">186
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">187
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">188
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">189
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">190
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">191
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">192
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">193
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">194
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">195
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">196
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">197
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">198
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">199
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">200
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">201
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">202
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">203
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">204
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">205
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">206
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">207
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">208
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">209
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">210
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">211
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">212
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">213
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">214
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">215
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">216
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">217
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">218
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">219
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">220
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">221
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">222
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">223
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">224
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">225
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">226
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">227
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">228
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">229
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">230
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">231
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">232
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">233
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">234
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">235
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">236
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">237
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">238
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">239
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">240
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">241
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">242
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">243
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">244
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">245
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">246
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">247
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">248
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">249
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">250
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">251
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">252
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">253
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">254
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">255
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">256
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">257
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">258
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">259
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">260
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">261
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">262
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">263
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">264
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">265
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">266
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">267
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">268
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">269
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">270
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">271
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">272
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">273
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">274
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">275
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">276
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">277
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">278
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">279
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">280
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">281
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">282
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">283
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">284
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">285
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">286
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">287
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">288
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">289
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">290
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">291
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">292
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">293
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">294
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">295
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">296
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">297
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">298
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">299
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">300
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">301
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">302
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">303
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">304
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">305
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">306
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">307
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">308
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">309
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">310
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">311
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">312
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">313
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">314
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">315
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">316
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">317
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">318
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">319
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">320
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#999;font-weight:700;font-style:italic>#!/bin/sh
-</span><span style=color:#999;font-weight:700;font-style:italic></span><span style=color:#998;font-style:italic>#</span>
-<span style=color:#998;font-style:italic># This script should be run via curl:</span>
-<span style=color:#998;font-style:italic>#   sh -c &#34;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34;</span>
-<span style=color:#998;font-style:italic># or via wget:</span>
-<span style=color:#998;font-style:italic>#   sh -c &#34;$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34;</span>
-<span style=color:#998;font-style:italic># or via fetch:</span>
-<span style=color:#998;font-style:italic>#   sh -c &#34;$(fetch -o - https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34;</span>
-<span style=color:#998;font-style:italic>#</span>
-<span style=color:#998;font-style:italic># As an alternative, you can first download the install script and run it afterwards:</span>
-<span style=color:#998;font-style:italic>#   wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh</span>
-<span style=color:#998;font-style:italic>#   sh install.sh</span>
-<span style=color:#998;font-style:italic>#</span>
-<span style=color:#998;font-style:italic># You can tweak the install behavior by setting variables when running the script. For</span>
-<span style=color:#998;font-style:italic># example, to change the path to the Oh My Zsh repository:</span>
-<span style=color:#998;font-style:italic>#   ZSH=~/.zsh sh install.sh</span>
-<span style=color:#998;font-style:italic>#</span>
-<span style=color:#998;font-style:italic># Respects the following environment variables:</span>
-<span style=color:#998;font-style:italic>#   ZSH     - path to the Oh My Zsh repository folder (default: $HOME/.oh-my-zsh)</span>
-<span style=color:#998;font-style:italic>#   REPO    - name of the GitHub repo to install from (default: ohmyzsh/ohmyzsh)</span>
-<span style=color:#998;font-style:italic>#   REMOTE  - full remote URL of the git repo to install (default: GitHub via HTTPS)</span>
-<span style=color:#998;font-style:italic>#   BRANCH  - branch to check out immediately after install (default: master)</span>
-<span style=color:#998;font-style:italic>#</span>
-<span style=color:#998;font-style:italic># Other options:</span>
-<span style=color:#998;font-style:italic>#   CHSH       - &#39;no&#39; means the installer will not change the default shell (default: yes)</span>
-<span style=color:#998;font-style:italic>#   RUNZSH     - &#39;no&#39; means the installer will not run zsh after the install (default: yes)</span>
-<span style=color:#998;font-style:italic>#   KEEP_ZSHRC - &#39;yes&#39; means the installer will not replace an existing .zshrc (default: no)</span>
-<span style=color:#998;font-style:italic>#</span>
-<span style=color:#998;font-style:italic># You can also pass some arguments to the install script to set some these options:</span>
-<span style=color:#998;font-style:italic>#   --skip-chsh: has the same behavior as setting CHSH to &#39;no&#39;</span>
-<span style=color:#998;font-style:italic>#   --unattended: sets both CHSH and RUNZSH to &#39;no&#39;</span>
-<span style=color:#998;font-style:italic>#   --keep-zshrc: sets KEEP_ZSHRC to &#39;yes&#39;</span>
-<span style=color:#998;font-style:italic># For example:</span>
-<span style=color:#998;font-style:italic>#   sh install.sh --unattended</span>
-<span style=color:#998;font-style:italic># or:</span>
-<span style=color:#998;font-style:italic>#   sh -c &#34;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34; &#34;&#34; --unattended</span>
-<span style=color:#998;font-style:italic>#</span>
-<span style=color:#0086b3>set</span> -e
-
-<span style=color:#998;font-style:italic># Track if $ZSH was provided</span>
-<span style=color:teal>custom_zsh</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>ZSH</span>:+yes<span style=color:#d14>}</span>
-
-<span style=color:#998;font-style:italic># Default settings</span>
-<span style=color:teal>ZSH</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>ZSH</span><span style=color:#000;font-weight:700>:-</span>~/.oh-my-zsh<span style=color:#d14>}</span>
-<span style=color:teal>REPO</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>REPO</span><span style=color:#000;font-weight:700>:-</span><span style=color:teal>ohmyzsh</span>/ohmyzsh<span style=color:#d14>}</span>
-<span style=color:teal>REMOTE</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>REMOTE</span><span style=color:#000;font-weight:700>:-</span><span style=color:teal>https</span>://github.com/<span style=color:#d14>${</span><span style=color:teal>REPO</span><span style=color:#d14>}</span>.git<span style=color:#d14>}</span>
-<span style=color:teal>BRANCH</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>BRANCH</span><span style=color:#000;font-weight:700>:-</span><span style=color:teal>master</span><span style=color:#d14>}</span>
-
-<span style=color:#998;font-style:italic># Other options</span>
-<span style=color:teal>CHSH</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>CHSH</span><span style=color:#000;font-weight:700>:-</span><span style=color:teal>yes</span><span style=color:#d14>}</span>
-<span style=color:teal>RUNZSH</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>RUNZSH</span><span style=color:#000;font-weight:700>:-</span><span style=color:teal>yes</span><span style=color:#d14>}</span>
-<span style=color:teal>KEEP_ZSHRC</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>KEEP_ZSHRC</span><span style=color:#000;font-weight:700>:-</span><span style=color:teal>no</span><span style=color:#d14>}</span>
-
-
-command_exists<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
-	<span style=color:#0086b3>command</span> -v <span style=color:#d14>&#34;</span><span style=color:teal>$@</span><span style=color:#d14>&#34;</span> &gt;/dev/null 2&gt;&amp;<span style=color:#099>1</span>
-<span style=color:#000;font-weight:700>}</span>
-
-fmt_error<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
-  <span style=color:#0086b3>echo</span> <span style=color:#d14>${</span><span style=color:teal>RED</span><span style=color:#d14>}</span><span style=color:#d14>&#34;Error: </span><span style=color:teal>$@</span><span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span> &gt;&amp;<span style=color:#099>2</span>
-<span style=color:#000;font-weight:700>}</span>
-
-fmt_underline<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
-  <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[4m&#39;</span><span style=color:#000;font-weight:700>)</span><span style=color:teal>$@</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[24m&#39;</span><span style=color:#000;font-weight:700>)</span><span style=color:#d14>&#34;</span>
-<span style=color:#000;font-weight:700>}</span>
-
-fmt_code<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
-  <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;\`</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[38;5;247m&#39;</span><span style=color:#000;font-weight:700>)</span><span style=color:teal>$@</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>\`&#34;</span>
-<span style=color:#000;font-weight:700>}</span>
-
-setup_color<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
-	<span style=color:#998;font-style:italic># Only use colors if connected to a terminal</span>
-	<span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -t <span style=color:#099>1</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-		<span style=color:teal>RED</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[31m&#39;</span><span style=color:#000;font-weight:700>)</span>
-		<span style=color:teal>GREEN</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[32m&#39;</span><span style=color:#000;font-weight:700>)</span>
-		<span style=color:teal>YELLOW</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[33m&#39;</span><span style=color:#000;font-weight:700>)</span>
-		<span style=color:teal>BLUE</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[34m&#39;</span><span style=color:#000;font-weight:700>)</span>
-		<span style=color:teal>BOLD</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[1m&#39;</span><span style=color:#000;font-weight:700>)</span>
-		<span style=color:teal>RESET</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[m&#39;</span><span style=color:#000;font-weight:700>)</span>
-	<span style=color:#000;font-weight:700>else</span>
-		<span style=color:teal>RED</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;&#34;</span>
-		<span style=color:teal>GREEN</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;&#34;</span>
-		<span style=color:teal>YELLOW</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;&#34;</span>
-		<span style=color:teal>BLUE</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;&#34;</span>
-		<span style=color:teal>BOLD</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;&#34;</span>
-		<span style=color:teal>RESET</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;&#34;</span>
-	<span style=color:#000;font-weight:700>fi</span>
-<span style=color:#000;font-weight:700>}</span>
-
-setup_ohmyzsh<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
-  <span style=color:#998;font-style:italic># Prevent the cloned repository from having insecure permissions. Failing to do</span>
-  <span style=color:#998;font-style:italic># so causes compinit() calls to fail with &#34;command not found: compdef&#34; errors</span>
-  <span style=color:#998;font-style:italic># for users with insecure umasks (e.g., &#34;002&#34;, allowing group writability). Note</span>
-  <span style=color:#998;font-style:italic># that this will be ignored under Cygwin by default, as Windows ACLs take</span>
-  <span style=color:#998;font-style:italic># precedence over umasks except for filesystems mounted with option &#34;noacl&#34;.</span>
-  <span style=color:#0086b3>umask</span> g-w,o-w
-
-  <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>BLUE</span><span style=color:#d14>}</span><span style=color:#d14>Cloning Oh My Zsh...</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
-
-  command_exists git <span style=color:#000;font-weight:700>||</span> <span style=color:#000;font-weight:700>{</span>
-    fmt_error <span style=color:#d14>&#34;git is not installed&#34;</span>
-    <span style=color:#0086b3>exit</span> <span style=color:#099>1</span>
-  <span style=color:#000;font-weight:700>}</span>
-
-  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#d14>&#34;</span><span style=color:teal>$OSTYPE</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>=</span> cygwin <span style=color:#000;font-weight:700>]</span> <span style=color:#000;font-weight:700>&amp;&amp;</span> git --version | grep -q msysgit; <span style=color:#000;font-weight:700>then</span>
-    fmt_error <span style=color:#d14>&#34;Windows/MSYS Git is not supported on Cygwin&#34;</span>
-    fmt_error <span style=color:#d14>&#34;Make sure the Cygwin git package is installed and is first on the \$PATH&#34;</span>
-    <span style=color:#0086b3>exit</span> <span style=color:#099>1</span>
-  <span style=color:#000;font-weight:700>fi</span>
-
-  git clone -c core.eol<span style=color:#000;font-weight:700>=</span>lf -c core.autocrlf<span style=color:#000;font-weight:700>=</span><span style=color:#0086b3>false</span> <span style=color:#d14>\
-</span><span style=color:#d14></span>    -c fsck.zeroPaddedFilemode<span style=color:#000;font-weight:700>=</span>ignore <span style=color:#d14>\
-</span><span style=color:#d14></span>    -c fetch.fsck.zeroPaddedFilemode<span style=color:#000;font-weight:700>=</span>ignore <span style=color:#d14>\
-</span><span style=color:#d14></span>    -c receive.fsck.zeroPaddedFilemode<span style=color:#000;font-weight:700>=</span>ignore <span style=color:#d14>\
-</span><span style=color:#d14></span>    --depth<span style=color:#000;font-weight:700>=</span><span style=color:#099>1</span> --branch <span style=color:#d14>&#34;</span><span style=color:teal>$BRANCH</span><span style=color:#d14>&#34;</span> <span style=color:#d14>&#34;</span><span style=color:teal>$REMOTE</span><span style=color:#d14>&#34;</span> <span style=color:#d14>&#34;</span><span style=color:teal>$ZSH</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>||</span> <span style=color:#000;font-weight:700>{</span>
-    fmt_error <span style=color:#d14>&#34;git clone of oh-my-zsh repo failed&#34;</span>
-    <span style=color:#0086b3>exit</span> <span style=color:#099>1</span>
-  <span style=color:#000;font-weight:700>}</span>
-
-  <span style=color:#0086b3>echo</span>
-<span style=color:#000;font-weight:700>}</span>
-
-setup_zshrc<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
-  <span style=color:#998;font-style:italic># Keep most recent old .zshrc at .zshrc.pre-oh-my-zsh, and older ones</span>
-  <span style=color:#998;font-style:italic># with datestamp of installation that moved them aside, so we never actually</span>
-  <span style=color:#998;font-style:italic># destroy a user&#39;s original zshrc</span>
-  <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>BLUE</span><span style=color:#d14>}</span><span style=color:#d14>Looking for an existing zsh config...</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
-
-  <span style=color:#998;font-style:italic># Must use this exact name so uninstall.sh can find it</span>
-  <span style=color:teal>OLD_ZSHRC</span><span style=color:#000;font-weight:700>=</span>~/.zshrc.pre-oh-my-zsh
-  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -f ~/.zshrc <span style=color:#000;font-weight:700>]</span> <span style=color:#000;font-weight:700>||</span> <span style=color:#000;font-weight:700>[</span> -h ~/.zshrc <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-    <span style=color:#998;font-style:italic># Skip this if the user doesn&#39;t want to replace an existing .zshrc</span>
-    <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:teal>$KEEP_ZSHRC</span> <span style=color:#000;font-weight:700>=</span> yes <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-      <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>Found ~/.zshrc.</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14> </span><span style=color:#d14>${</span><span style=color:teal>GREEN</span><span style=color:#d14>}</span><span style=color:#d14>Keeping...</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
-      <span style=color:#000;font-weight:700>return</span>
-    <span style=color:#000;font-weight:700>fi</span>
-    <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -e <span style=color:#d14>&#34;</span><span style=color:teal>$OLD_ZSHRC</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-      <span style=color:teal>OLD_OLD_ZSHRC</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>OLD_ZSHRC</span><span style=color:#d14>}</span><span style=color:#d14>-</span><span style=color:#000;font-weight:700>$(</span>date +%Y-%m-%d_%H-%M-%S<span style=color:#000;font-weight:700>)</span><span style=color:#d14>&#34;</span>
-      <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -e <span style=color:#d14>&#34;</span><span style=color:teal>$OLD_OLD_ZSHRC</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-        fmt_error <span style=color:#d14>&#34;</span><span style=color:teal>$OLD_OLD_ZSHRC</span><span style=color:#d14> exists. Can&#39;t back up </span><span style=color:#d14>${</span><span style=color:teal>OLD_ZSHRC</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
-        fmt_error <span style=color:#d14>&#34;re-run the installer again in a couple of seconds&#34;</span>
-        <span style=color:#0086b3>exit</span> <span style=color:#099>1</span>
-      <span style=color:#000;font-weight:700>fi</span>
-      mv <span style=color:#d14>&#34;</span><span style=color:teal>$OLD_ZSHRC</span><span style=color:#d14>&#34;</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>OLD_OLD_ZSHRC</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
-
-      <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>Found old ~/.zshrc.pre-oh-my-zsh.&#34;</span> <span style=color:#d14>\
-</span><span style=color:#d14></span>        <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>GREEN</span><span style=color:#d14>}</span><span style=color:#d14>Backing up to </span><span style=color:#d14>${</span><span style=color:teal>OLD_OLD_ZSHRC</span><span style=color:#d14>}${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
-    <span style=color:#000;font-weight:700>fi</span>
-    <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>Found ~/.zshrc.</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14> </span><span style=color:#d14>${</span><span style=color:teal>GREEN</span><span style=color:#d14>}</span><span style=color:#d14>Backing up to </span><span style=color:#d14>${</span><span style=color:teal>OLD_ZSHRC</span><span style=color:#d14>}${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
-    mv ~/.zshrc <span style=color:#d14>&#34;</span><span style=color:teal>$OLD_ZSHRC</span><span style=color:#d14>&#34;</span>
-  <span style=color:#000;font-weight:700>fi</span>
-
-  <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>GREEN</span><span style=color:#d14>}</span><span style=color:#d14>Using the Oh My Zsh template file and adding it to ~/.zshrc.</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
-
-  sed <span style=color:#d14>&#34;/^export ZSH=/ c\\
-</span><span style=color:#d14>export ZSH=\&#34;</span><span style=color:teal>$ZSH</span><span style=color:#d14>\&#34;
-</span><span style=color:#d14>&#34;</span> <span style=color:#d14>&#34;</span><span style=color:teal>$ZSH</span><span style=color:#d14>/templates/zshrc.zsh-template&#34;</span> &gt; ~/.zshrc-omztemp
-	mv -f ~/.zshrc-omztemp ~/.zshrc
-
-	<span style=color:#0086b3>echo</span>
-<span style=color:#000;font-weight:700>}</span>
-
-setup_shell<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
-  <span style=color:#998;font-style:italic># Skip setup if the user wants or stdin is closed (not running interactively).</span>
-  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:teal>$CHSH</span> <span style=color:#000;font-weight:700>=</span> no <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-    <span style=color:#000;font-weight:700>return</span>
-  <span style=color:#000;font-weight:700>fi</span>
-
-  <span style=color:#998;font-style:italic># If this user&#39;s login shell is already &#34;zsh&#34;, do not attempt to switch.</span>
-  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#d14>&#34;</span><span style=color:#000;font-weight:700>$(</span>basename -- <span style=color:#d14>&#34;</span><span style=color:teal>$SHELL</span><span style=color:#d14>&#34;</span><span style=color:#000;font-weight:700>)</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#d14>&#34;zsh&#34;</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-    <span style=color:#000;font-weight:700>return</span>
-  <span style=color:#000;font-weight:700>fi</span>
-
-  <span style=color:#998;font-style:italic># If this platform doesn&#39;t provide a &#34;chsh&#34; command, bail out.</span>
-  <span style=color:#000;font-weight:700>if</span> ! command_exists chsh; <span style=color:#000;font-weight:700>then</span>
-    cat <span style=color:#d14>&lt;&lt;EOF
-</span><span style=color:#d14>I can&#39;t change your shell automatically because this system does not have chsh.
-</span><span style=color:#d14>${BLUE}Please manually change your default shell to zsh${RESET}
-</span><span style=color:#d14>EOF</span>
-    <span style=color:#000;font-weight:700>return</span>
-  <span style=color:#000;font-weight:700>fi</span>
-
-  <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>BLUE</span><span style=color:#d14>}</span><span style=color:#d14>Time to change your default shell to zsh:</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
-
-  <span style=color:#998;font-style:italic># Prompt for user choice on changing the default login shell</span>
-  <span style=color:#0086b3>printf</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>Do you want to change your default shell to zsh? [Y/n]</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14> &#34;</span>
-  <span style=color:#0086b3>read</span> opt
-  <span style=color:#000;font-weight:700>case</span> <span style=color:teal>$opt</span> in
-    y*|Y*|<span style=color:#d14>&#34;&#34;</span><span style=color:#000;font-weight:700>)</span> <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;Changing the shell...&#34;</span> ;;
-    n*|N*<span style=color:#000;font-weight:700>)</span> <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;Shell change skipped.&#34;</span>; <span style=color:#000;font-weight:700>return</span> ;;
-    *<span style=color:#000;font-weight:700>)</span> <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;Invalid choice. Shell change skipped.&#34;</span>; <span style=color:#000;font-weight:700>return</span> ;;
-  <span style=color:#000;font-weight:700>esac</span>
-
-  <span style=color:#998;font-style:italic># Check if we&#39;re running on Termux</span>
-  <span style=color:#000;font-weight:700>case</span> <span style=color:#d14>&#34;</span><span style=color:teal>$PREFIX</span><span style=color:#d14>&#34;</span> in
-    *com.termux*<span style=color:#000;font-weight:700>)</span> <span style=color:teal>termux</span><span style=color:#000;font-weight:700>=</span>true; <span style=color:teal>zsh</span><span style=color:#000;font-weight:700>=</span>zsh ;;
-    *<span style=color:#000;font-weight:700>)</span> <span style=color:teal>termux</span><span style=color:#000;font-weight:700>=</span><span style=color:#0086b3>false</span> ;;
-  <span style=color:#000;font-weight:700>esac</span>
-
-  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#d14>&#34;</span><span style=color:teal>$termux</span><span style=color:#d14>&#34;</span> !<span style=color:#000;font-weight:700>=</span> <span style=color:#0086b3>true</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-    <span style=color:#998;font-style:italic># Test for the right location of the &#34;shells&#34; file</span>
-    <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -f /etc/shells <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-      <span style=color:teal>shells_file</span><span style=color:#000;font-weight:700>=</span>/etc/shells
-    <span style=color:#000;font-weight:700>elif</span> <span style=color:#000;font-weight:700>[</span> -f /usr/share/defaults/etc/shells <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span> <span style=color:#998;font-style:italic># Solus OS</span>
-      <span style=color:teal>shells_file</span><span style=color:#000;font-weight:700>=</span>/usr/share/defaults/etc/shells
-    <span style=color:#000;font-weight:700>else</span>
-      fmt_error <span style=color:#d14>&#34;could not find /etc/shells file. Change your default shell manually.&#34;</span>
-      <span style=color:#000;font-weight:700>return</span>
-    <span style=color:#000;font-weight:700>fi</span>
-
-    <span style=color:#998;font-style:italic># Get the path to the right zsh binary</span>
-    <span style=color:#998;font-style:italic># 1. Use the most preceding one based on $PATH, then check that it&#39;s in the shells file</span>
-    <span style=color:#998;font-style:italic># 2. If that fails, get a zsh path from the shells file, then check it actually exists</span>
-    <span style=color:#000;font-weight:700>if</span> ! <span style=color:teal>zsh</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span>which zsh<span style=color:#000;font-weight:700>)</span> <span style=color:#000;font-weight:700>||</span> ! grep -qx <span style=color:#d14>&#34;</span><span style=color:teal>$zsh</span><span style=color:#d14>&#34;</span> <span style=color:#d14>&#34;</span><span style=color:teal>$shells_file</span><span style=color:#d14>&#34;</span>; <span style=color:#000;font-weight:700>then</span>
-      <span style=color:#000;font-weight:700>if</span> ! <span style=color:teal>zsh</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span>grep <span style=color:#d14>&#39;^/.*/zsh$&#39;</span> <span style=color:#d14>&#34;</span><span style=color:teal>$shells_file</span><span style=color:#d14>&#34;</span> | tail -1<span style=color:#000;font-weight:700>)</span> <span style=color:#000;font-weight:700>||</span> <span style=color:#000;font-weight:700>[</span> ! -f <span style=color:#d14>&#34;</span><span style=color:teal>$zsh</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-        fmt_error <span style=color:#d14>&#34;no zsh binary found or not present in &#39;</span><span style=color:teal>$shells_file</span><span style=color:#d14>&#39;&#34;</span>
-        fmt_error <span style=color:#d14>&#34;change your default shell manually.&#34;</span>
-        <span style=color:#000;font-weight:700>return</span>
-      <span style=color:#000;font-weight:700>fi</span>
-    <span style=color:#000;font-weight:700>fi</span>
-  <span style=color:#000;font-weight:700>fi</span>
-
-  <span style=color:#998;font-style:italic># We&#39;re going to change the default shell, so back up the current one</span>
-  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -n <span style=color:#d14>&#34;</span><span style=color:teal>$SHELL</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-    <span style=color:#0086b3>echo</span> <span style=color:teal>$SHELL</span> &gt; ~/.shell.pre-oh-my-zsh
-  <span style=color:#000;font-weight:700>else</span>
-    grep <span style=color:#d14>&#34;^</span><span style=color:teal>$USER</span><span style=color:#d14>:&#34;</span> /etc/passwd | awk -F: <span style=color:#d14>&#39;{print $7}&#39;</span> &gt; ~/.shell.pre-oh-my-zsh
-  <span style=color:#000;font-weight:700>fi</span>
-
-  <span style=color:#998;font-style:italic># Actually change the default shell to zsh</span>
-  <span style=color:#000;font-weight:700>if</span> ! chsh -s <span style=color:#d14>&#34;</span><span style=color:teal>$zsh</span><span style=color:#d14>&#34;</span>; <span style=color:#000;font-weight:700>then</span>
-    fmt_error <span style=color:#d14>&#34;chsh command unsuccessful. Change your default shell manually.&#34;</span>
-  <span style=color:#000;font-weight:700>else</span>
-    <span style=color:#0086b3>export</span> <span style=color:teal>SHELL</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;</span><span style=color:teal>$zsh</span><span style=color:#d14>&#34;</span>
-    <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>GREEN</span><span style=color:#d14>}</span><span style=color:#d14>Shell successfully changed to &#39;</span><span style=color:teal>$zsh</span><span style=color:#d14>&#39;.</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
-  <span style=color:#000;font-weight:700>fi</span>
-
-  <span style=color:#0086b3>echo</span>
-<span style=color:#000;font-weight:700>}</span>
-
-main<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
-  <span style=color:#998;font-style:italic># Run as unattended if stdin is not a tty</span>
-  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> ! -t <span style=color:#099>0</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-    <span style=color:teal>RUNZSH</span><span style=color:#000;font-weight:700>=</span>no
-    <span style=color:teal>CHSH</span><span style=color:#000;font-weight:700>=</span>no
-  <span style=color:#000;font-weight:700>fi</span>
-
-  <span style=color:#998;font-style:italic># Parse arguments</span>
-  <span style=color:#000;font-weight:700>while</span> <span style=color:#000;font-weight:700>[</span> <span style=color:teal>$#</span> -gt <span style=color:#099>0</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>do</span>
-    <span style=color:#000;font-weight:700>case</span> <span style=color:teal>$1</span> in
-      --unattended<span style=color:#000;font-weight:700>)</span> <span style=color:teal>RUNZSH</span><span style=color:#000;font-weight:700>=</span>no; <span style=color:teal>CHSH</span><span style=color:#000;font-weight:700>=</span>no ;;
-      --skip-chsh<span style=color:#000;font-weight:700>)</span> <span style=color:teal>CHSH</span><span style=color:#000;font-weight:700>=</span>no ;;
-      --keep-zshrc<span style=color:#000;font-weight:700>)</span> <span style=color:teal>KEEP_ZSHRC</span><span style=color:#000;font-weight:700>=</span>yes ;;
-    <span style=color:#000;font-weight:700>esac</span>
-    <span style=color:#0086b3>shift</span>
-  <span style=color:#000;font-weight:700>done</span>
-
-  setup_color
-
-  <span style=color:#000;font-weight:700>if</span> ! command_exists zsh; <span style=color:#000;font-weight:700>then</span>
-    <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>Zsh is not installed.</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14> Please install zsh first.&#34;</span>
-    <span style=color:#0086b3>exit</span> <span style=color:#099>1</span>
-  <span style=color:#000;font-weight:700>fi</span>
-
-  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -d <span style=color:#d14>&#34;</span><span style=color:teal>$ZSH</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-    <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>The \$ZSH folder already exists (</span><span style=color:teal>$ZSH</span><span style=color:#d14>).</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
-    <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#d14>&#34;</span><span style=color:teal>$custom_zsh</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>=</span> yes <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-      cat <span style=color:#d14>&lt;&lt;EOF
-</span><span style=color:#d14>
-</span><span style=color:#d14>You ran the installer with the \$ZSH setting or the \$ZSH variable is
-</span><span style=color:#d14>exported. You have 3 options:
-</span><span style=color:#d14>
-</span><span style=color:#d14>1. Unset the ZSH variable when calling the installer:
-</span><span style=color:#d14>   $(fmt_code &#34;ZSH= sh install.sh&#34;)
-</span><span style=color:#d14>2. Install Oh My Zsh to a directory that doesn&#39;t exist yet:
-</span><span style=color:#d14>   $(fmt_code &#34;ZSH=path/to/new/ohmyzsh/folder sh install.sh&#34;)
-</span><span style=color:#d14>3. (Caution) If the folder doesn&#39;t contain important information,
-</span><span style=color:#d14>   you can just remove it with $(fmt_code &#34;rm -r $ZSH&#34;)
-</span><span style=color:#d14>
-</span><span style=color:#d14>EOF</span>
-    <span style=color:#000;font-weight:700>else</span>
-      <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;You&#39;ll need to remove it if you want to reinstall.&#34;</span>
-    <span style=color:#000;font-weight:700>fi</span>
-    <span style=color:#0086b3>exit</span> <span style=color:#099>1</span>
-  <span style=color:#000;font-weight:700>fi</span>
-
-  setup_ohmyzsh
-  setup_zshrc
-  setup_shell
-
-  <span style=color:#0086b3>printf</span> <span style=color:#d14>&#34;</span><span style=color:teal>$GREEN</span><span style=color:#d14>&#34;</span>
-  cat <span style=color:#d14>&lt;&lt;&#39;EOF&#39;
-</span><span style=color:#d14>         __                                     __
-</span><span style=color:#d14>  ____  / /_     ____ ___  __  __   ____  _____/ /_
-</span><span style=color:#d14> / __ \/ __ \   / __ `__ \/ / / /  /_  / / ___/ __ \
-</span><span style=color:#d14>/ /_/ / / / /  / / / / / / /_/ /    / /_(__  ) / / /
-</span><span style=color:#d14>\____/_/ /_/  /_/ /_/ /_/\__, /    /___/____/_/ /_/
-</span><span style=color:#d14>                        /____/                       ....is now installed!
-</span><span style=color:#d14>
-</span><span style=color:#d14>
-</span><span style=color:#d14>EOF</span>
-  cat <span style=color:#d14>&lt;&lt;EOF
-</span><span style=color:#d14>Before you scream Oh My Zsh! please look over the ~/.zshrc file to select plugins, themes, and options.
-</span><span style=color:#d14>
-</span><span style=color:#d14>• Follow us on Twitter: $(fmt_underline https://twitter.com/ohmyzsh)
-</span><span style=color:#d14>• Join our Discord server: $(fmt_underline https://discord.gg/ohmyzsh)
-</span><span style=color:#d14>• Get stickers, shirts, coffee mugs and other swag: $(fmt_underline https://shop.planetargon.com/collections/oh-my-zsh)
-</span><span style=color:#d14>
-</span><span style=color:#d14>EOF</span>
-  <span style=color:#0086b3>printf</span> <span style=color:#d14>&#34;</span><span style=color:teal>$RESET</span><span style=color:#d14>&#34;</span>
-
-  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:teal>$RUNZSH</span> <span style=color:#000;font-weight:700>=</span> no <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
-    <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>Run zsh to try it out.</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
-    <span style=color:#0086b3>exit</span>
-  <span style=color:#000;font-weight:700>fi</span>
-
-  <span style=color:#0086b3>exec</span> zsh -l
-<span style=color:#000;font-weight:700>}</span>
-
-main <span style=color:#d14>&#34;</span><span style=color:teal>$@</span><span style=color:#d14>&#34;</span>
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=安装oh-my-zsh>安装oh-my-zsh</h2>
-<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#998;font-style:italic># 修改权限</span>
-chmod -x install.sh
-
-<span style=color:#998;font-style:italic># 执行安装命令</span>
-sh install.sh
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=修改配置文件>修改配置文件</h2>
-<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#0086b3>cd</span> <span style=color:#000;font-weight:700>&amp;&amp;</span> <span style=color:#0086b3>cd</span> .oh-my-zsh/plugins
-<span style=color:#998;font-style:italic># 高亮插件</span>
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
-<span style=color:#998;font-style:italic># 记录历史插件</span>
-git clone https://github.com/zsh-users/zsh-autosuggestions.git
-
-vi ~/.zshrc
-<span style=color:#998;font-style:italic># agnoster是内置主题，所以不需要安装</span>
-<span style=color:teal>ZSH_THEME</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;agnoster&#34;</span>
-<span style=color:#998;font-style:italic># 找到对应位置加上zsh-syntax-highlighting zsh-autosuggestions </span>
-<span style=color:teal>plugins</span><span style=color:#000;font-weight:700>=(</span>zsh-syntax-highlighting zsh-autosuggestions git<span style=color:#000;font-weight:700>)</span>
-<span style=color:#998;font-style:italic># 下面两句是没有相同配置项的，</span>
-<span style=color:#998;font-style:italic># 第一个是隐藏用户(有些主题会隐藏，agnoster内置主题不会隐藏)，</span>
-<span style=color:#998;font-style:italic># 第二是gf可能冲突，官方推荐这样做的</span>
-<span style=color:teal>DEFAULT_USER</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;sliverhorn&#34;</span>
-<span style=color:#998;font-style:italic># alias gf=gf</span>
-
-<span style=color:#998;font-style:italic># 使.zshrc配置文件生效</span>
-<span style=color:#0086b3>source</span> ~/.zshrc
-</code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<div class=post-archive>
-<ul class=post-copyright>
-<li><strong>原文作者：</strong><a rel=author href=https://sliverhorn.com>SliverHorn</a></li>
-<li style=word-break:break-all><strong>原文链接：</strong><a href=https://sliverhorn.com/post/linux/oh-my-zsh-install/>https://sliverhorn.com/post/linux/oh-my-zsh-install/</a></li>
-<li><strong>版权声明：</strong>本作品采用<a rel=license href=https://creativecommons.org/licenses/by-nc-nd/4.0/%0a>知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议
-</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
-</ul>
-</div>
-<br>
-<div class=post-archive>
-<h2>See Also</h2>
-<ul class=listing>
-<li><a href=/tool/mac/>Mac Tool</a></li>
-<li><a href=/about/>关于</a></li>
-<li><a href=/c/c/></a></li>
-<li><a href=/data_structure/3/></a></li>
-<li><a href=/archives/>归档</a></li>
-</ul>
-</div>
-<div class="post-meta meta-tags">
-<ul class=clearfix>
-<li><a href=/tags/oh-my-zsh>oh-my-zsh</a></li>
-</ul>
-</div>
-</article>
-<div class="post bg-white">
-<script src=https://utteranc.es/client.js repo="your github repo" issue-term=pathname theme=github-light crossorigin=anonymous async></script>
-</div>
-</div>
-<footer id=footer>
-<div>
-&copy; 2022 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
-| <a rel=nofollow target=_blank href=http://beian.miit.gov.cn/>粤ICP备19128176号</a>
-</div>
-<br>
-<div>
-<div class=github-badge>
-<a href=https://gohugo.io/ target=_black rel=nofollow><span class=badge-subject>Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
-</div>
-<div class=github-badge>
-<a href=https://www.flysnow.org/ target=_black><span class=badge-subject>Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
-</div>
-<div class=github-badge>
-<a href=https://github.com/flysnow-org/maupassant-hugo target=_black><span class=badge-subject>Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
-</div>
-</div>
-</footer>
-<script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[['$','$']],processEscapes:!0}}</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script src=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js></script>
+<a href=https://sliverhorn.com/about/ title=关于>关于</a></nav></div></div></div></header><div id=body><div class=container><div class=col-group><div class=col-8 id=main><div class=res-cons><style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,7%);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style><div class=post-toc style=position:absolute;top:188px><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><a href=#保存命令为文件>保存命令为文件</a></li><li><a href=#安装oh-my-zsh>安装oh-my-zsh</a></li><li><a href=#修改配置文件>修改配置文件</a></li></ul></nav></div></div><script type=text/javascript>$(document).ready(function(){if(e=$(".post-toc"),e.length){t=$("#main").offset().left,t<220&&e.css({width:t-10,"margin-left":0-t});var e,t,n=e.offset().top-20,s={start:{position:"absolute",top:n},process:{position:"fixed",top:20}};$(window).scroll(function(){var t=$(window).scrollTop();t<n?e.css(s.start):e.css(s.process)})}})</script><article class=post><header><h1 class=post-title>oh-my-zsh Mac 安装教程</h1></header><date class="post-meta meta-date">2021年2月26日</date><div class=post-meta><span>|</span>
+<span class=meta-category><a href=/categories/Linux>Linux</a></span></div><div class=post-meta><span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
+阅读</span></span></div><div class=post-content><p>这是针对Mac的教程, Windows用户慎用喔</p><h2 id=保存命令为文件>保存命令为文件</h2><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">114
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">115
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">116
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">117
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">118
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">119
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">120
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">121
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">122
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">123
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">124
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">125
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">126
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">127
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">128
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">129
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">130
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">131
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">132
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">133
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">134
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">135
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">136
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">137
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">138
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">139
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">140
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">141
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">142
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">143
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">144
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">145
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">146
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">147
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">148
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">149
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">150
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">151
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">152
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">153
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">154
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">155
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">156
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">157
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">158
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">159
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">160
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">161
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">162
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">163
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">164
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">165
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">166
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">167
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">168
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">169
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">170
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">171
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">172
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">173
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">174
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">175
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">176
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">177
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">178
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">179
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">180
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">181
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">182
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">183
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">184
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">185
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">186
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">187
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">188
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">189
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">190
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">191
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">192
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">193
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">194
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">195
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">196
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">197
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">198
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">199
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">200
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">201
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">202
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">203
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">204
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">205
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">206
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">207
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">208
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">209
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">210
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">211
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">212
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">213
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">214
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">215
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">216
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">217
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">218
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">219
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">220
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">221
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">222
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">223
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">224
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">225
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">226
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">227
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">228
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">229
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">230
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">231
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">232
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">233
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">234
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">235
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">236
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">237
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">238
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">239
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">240
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">241
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">242
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">243
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">244
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">245
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">246
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">247
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">248
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">249
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">250
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">251
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">252
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">253
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">254
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">255
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">256
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">257
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">258
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">259
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">260
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">261
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">262
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">263
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">264
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">265
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">266
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">267
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">268
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">269
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">270
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">271
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">272
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">273
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">274
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">275
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">276
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">277
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">278
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">279
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">280
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">281
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">282
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">283
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">284
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">285
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">286
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">287
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">288
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">289
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">290
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">291
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">292
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">293
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">294
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">295
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">296
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">297
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">298
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">299
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">300
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">301
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">302
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">303
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">304
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">305
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">306
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">307
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">308
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">309
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">310
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">311
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">312
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">313
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">314
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">315
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">316
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">317
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">318
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">319
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">320
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#!/bin/sh
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span><span style=color:#998;font-style:italic>#</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># This script should be run via curl:</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   sh -c &#34;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># or via wget:</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   sh -c &#34;$(wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># or via fetch:</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   sh -c &#34;$(fetch -o - https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># As an alternative, you can first download the install script and run it afterwards:</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   sh install.sh</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># You can tweak the install behavior by setting variables when running the script. For</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># example, to change the path to the Oh My Zsh repository:</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   ZSH=~/.zsh sh install.sh</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># Respects the following environment variables:</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   ZSH     - path to the Oh My Zsh repository folder (default: $HOME/.oh-my-zsh)</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   REPO    - name of the GitHub repo to install from (default: ohmyzsh/ohmyzsh)</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   REMOTE  - full remote URL of the git repo to install (default: GitHub via HTTPS)</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   BRANCH  - branch to check out immediately after install (default: master)</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># Other options:</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   CHSH       - &#39;no&#39; means the installer will not change the default shell (default: yes)</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   RUNZSH     - &#39;no&#39; means the installer will not run zsh after the install (default: yes)</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   KEEP_ZSHRC - &#39;yes&#39; means the installer will not replace an existing .zshrc (default: no)</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># You can also pass some arguments to the install script to set some these options:</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   --skip-chsh: has the same behavior as setting CHSH to &#39;no&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   --unattended: sets both CHSH and RUNZSH to &#39;no&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   --keep-zshrc: sets KEEP_ZSHRC to &#39;yes&#39;</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># For example:</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   sh install.sh --unattended</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># or:</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#   sh -c &#34;$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&#34; &#34;&#34; --unattended</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>#</span>
+</span></span><span style=display:flex><span><span style=color:#0086b3>set</span> -e
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># Track if $ZSH was provided</span>
+</span></span><span style=display:flex><span><span style=color:teal>custom_zsh</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>ZSH</span>:+yes<span style=color:#d14>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># Default settings</span>
+</span></span><span style=display:flex><span><span style=color:teal>ZSH</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>ZSH</span><span style=color:#000;font-weight:700>:-</span>~/.oh-my-zsh<span style=color:#d14>}</span>
+</span></span><span style=display:flex><span><span style=color:teal>REPO</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>REPO</span><span style=color:#000;font-weight:700>:-</span><span style=color:teal>ohmyzsh</span>/ohmyzsh<span style=color:#d14>}</span>
+</span></span><span style=display:flex><span><span style=color:teal>REMOTE</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>REMOTE</span><span style=color:#000;font-weight:700>:-</span><span style=color:teal>https</span>://github.com/<span style=color:#d14>${</span><span style=color:teal>REPO</span><span style=color:#d14>}</span>.git<span style=color:#d14>}</span>
+</span></span><span style=display:flex><span><span style=color:teal>BRANCH</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>BRANCH</span><span style=color:#000;font-weight:700>:-</span><span style=color:teal>master</span><span style=color:#d14>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># Other options</span>
+</span></span><span style=display:flex><span><span style=color:teal>CHSH</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>CHSH</span><span style=color:#000;font-weight:700>:-</span><span style=color:teal>yes</span><span style=color:#d14>}</span>
+</span></span><span style=display:flex><span><span style=color:teal>RUNZSH</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>RUNZSH</span><span style=color:#000;font-weight:700>:-</span><span style=color:teal>yes</span><span style=color:#d14>}</span>
+</span></span><span style=display:flex><span><span style=color:teal>KEEP_ZSHRC</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>${</span><span style=color:teal>KEEP_ZSHRC</span><span style=color:#000;font-weight:700>:-</span><span style=color:teal>no</span><span style=color:#d14>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>command_exists<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>	<span style=color:#0086b3>command</span> -v <span style=color:#d14>&#34;</span><span style=color:teal>$@</span><span style=color:#d14>&#34;</span> &gt;/dev/null 2&gt;&amp;<span style=color:#099>1</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>fmt_error<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>echo</span> <span style=color:#d14>${</span><span style=color:teal>RED</span><span style=color:#d14>}</span><span style=color:#d14>&#34;Error: </span><span style=color:teal>$@</span><span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span> &gt;&amp;<span style=color:#099>2</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>fmt_underline<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[4m&#39;</span><span style=color:#000;font-weight:700>)</span><span style=color:teal>$@</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[24m&#39;</span><span style=color:#000;font-weight:700>)</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>fmt_code<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;\`</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[38;5;247m&#39;</span><span style=color:#000;font-weight:700>)</span><span style=color:teal>$@</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>\`&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>setup_color<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>	<span style=color:#998;font-style:italic># Only use colors if connected to a terminal</span>
+</span></span><span style=display:flex><span>	<span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -t <span style=color:#099>1</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>		<span style=color:teal>RED</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[31m&#39;</span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>		<span style=color:teal>GREEN</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[32m&#39;</span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>		<span style=color:teal>YELLOW</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[33m&#39;</span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>		<span style=color:teal>BLUE</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[34m&#39;</span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>		<span style=color:teal>BOLD</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[1m&#39;</span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>		<span style=color:teal>RESET</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span><span style=color:#0086b3>printf</span> <span style=color:#d14>&#39;\033[m&#39;</span><span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span>	<span style=color:#000;font-weight:700>else</span>
+</span></span><span style=display:flex><span>		<span style=color:teal>RED</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		<span style=color:teal>GREEN</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		<span style=color:teal>YELLOW</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		<span style=color:teal>BLUE</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		<span style=color:teal>BOLD</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;&#34;</span>
+</span></span><span style=display:flex><span>		<span style=color:teal>RESET</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>setup_ohmyzsh<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># Prevent the cloned repository from having insecure permissions. Failing to do</span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># so causes compinit() calls to fail with &#34;command not found: compdef&#34; errors</span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># for users with insecure umasks (e.g., &#34;002&#34;, allowing group writability). Note</span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># that this will be ignored under Cygwin by default, as Windows ACLs take</span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># precedence over umasks except for filesystems mounted with option &#34;noacl&#34;.</span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>umask</span> g-w,o-w
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>BLUE</span><span style=color:#d14>}</span><span style=color:#d14>Cloning Oh My Zsh...</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  command_exists git <span style=color:#000;font-weight:700>||</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>    fmt_error <span style=color:#d14>&#34;git is not installed&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>exit</span> <span style=color:#099>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#d14>&#34;</span><span style=color:teal>$OSTYPE</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>=</span> cygwin <span style=color:#000;font-weight:700>]</span> <span style=color:#000;font-weight:700>&amp;&amp;</span> git --version | grep -q msysgit; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>    fmt_error <span style=color:#d14>&#34;Windows/MSYS Git is not supported on Cygwin&#34;</span>
+</span></span><span style=display:flex><span>    fmt_error <span style=color:#d14>&#34;Make sure the Cygwin git package is installed and is first on the \$PATH&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>exit</span> <span style=color:#099>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  git clone -c core.eol<span style=color:#000;font-weight:700>=</span>lf -c core.autocrlf<span style=color:#000;font-weight:700>=</span><span style=color:#0086b3>false</span> <span style=color:#d14>\
+</span></span></span><span style=display:flex><span><span style=color:#d14></span>    -c fsck.zeroPaddedFilemode<span style=color:#000;font-weight:700>=</span>ignore <span style=color:#d14>\
+</span></span></span><span style=display:flex><span><span style=color:#d14></span>    -c fetch.fsck.zeroPaddedFilemode<span style=color:#000;font-weight:700>=</span>ignore <span style=color:#d14>\
+</span></span></span><span style=display:flex><span><span style=color:#d14></span>    -c receive.fsck.zeroPaddedFilemode<span style=color:#000;font-weight:700>=</span>ignore <span style=color:#d14>\
+</span></span></span><span style=display:flex><span><span style=color:#d14></span>    --depth<span style=color:#000;font-weight:700>=</span><span style=color:#099>1</span> --branch <span style=color:#d14>&#34;</span><span style=color:teal>$BRANCH</span><span style=color:#d14>&#34;</span> <span style=color:#d14>&#34;</span><span style=color:teal>$REMOTE</span><span style=color:#d14>&#34;</span> <span style=color:#d14>&#34;</span><span style=color:teal>$ZSH</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>||</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>    fmt_error <span style=color:#d14>&#34;git clone of oh-my-zsh repo failed&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>exit</span> <span style=color:#099>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>echo</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>setup_zshrc<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># Keep most recent old .zshrc at .zshrc.pre-oh-my-zsh, and older ones</span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># with datestamp of installation that moved them aside, so we never actually</span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># destroy a user&#39;s original zshrc</span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>BLUE</span><span style=color:#d14>}</span><span style=color:#d14>Looking for an existing zsh config...</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># Must use this exact name so uninstall.sh can find it</span>
+</span></span><span style=display:flex><span>  <span style=color:teal>OLD_ZSHRC</span><span style=color:#000;font-weight:700>=</span>~/.zshrc.pre-oh-my-zsh
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -f ~/.zshrc <span style=color:#000;font-weight:700>]</span> <span style=color:#000;font-weight:700>||</span> <span style=color:#000;font-weight:700>[</span> -h ~/.zshrc <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>    <span style=color:#998;font-style:italic># Skip this if the user doesn&#39;t want to replace an existing .zshrc</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:teal>$KEEP_ZSHRC</span> <span style=color:#000;font-weight:700>=</span> yes <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>      <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>Found ~/.zshrc.</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14> </span><span style=color:#d14>${</span><span style=color:teal>GREEN</span><span style=color:#d14>}</span><span style=color:#d14>Keeping...</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000;font-weight:700>return</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -e <span style=color:#d14>&#34;</span><span style=color:teal>$OLD_ZSHRC</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>      <span style=color:teal>OLD_OLD_ZSHRC</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>OLD_ZSHRC</span><span style=color:#d14>}</span><span style=color:#d14>-</span><span style=color:#000;font-weight:700>$(</span>date +%Y-%m-%d_%H-%M-%S<span style=color:#000;font-weight:700>)</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -e <span style=color:#d14>&#34;</span><span style=color:teal>$OLD_OLD_ZSHRC</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>        fmt_error <span style=color:#d14>&#34;</span><span style=color:teal>$OLD_OLD_ZSHRC</span><span style=color:#d14> exists. Can&#39;t back up </span><span style=color:#d14>${</span><span style=color:teal>OLD_ZSHRC</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>        fmt_error <span style=color:#d14>&#34;re-run the installer again in a couple of seconds&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#0086b3>exit</span> <span style=color:#099>1</span>
+</span></span><span style=display:flex><span>      <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>      mv <span style=color:#d14>&#34;</span><span style=color:teal>$OLD_ZSHRC</span><span style=color:#d14>&#34;</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>OLD_OLD_ZSHRC</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>Found old ~/.zshrc.pre-oh-my-zsh.&#34;</span> <span style=color:#d14>\
+</span></span></span><span style=display:flex><span><span style=color:#d14></span>        <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>GREEN</span><span style=color:#d14>}</span><span style=color:#d14>Backing up to </span><span style=color:#d14>${</span><span style=color:teal>OLD_OLD_ZSHRC</span><span style=color:#d14>}${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>Found ~/.zshrc.</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14> </span><span style=color:#d14>${</span><span style=color:teal>GREEN</span><span style=color:#d14>}</span><span style=color:#d14>Backing up to </span><span style=color:#d14>${</span><span style=color:teal>OLD_ZSHRC</span><span style=color:#d14>}${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>    mv ~/.zshrc <span style=color:#d14>&#34;</span><span style=color:teal>$OLD_ZSHRC</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>GREEN</span><span style=color:#d14>}</span><span style=color:#d14>Using the Oh My Zsh template file and adding it to ~/.zshrc.</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  sed <span style=color:#d14>&#34;/^export ZSH=/ c\\
+</span></span></span><span style=display:flex><span><span style=color:#d14>export ZSH=\&#34;</span><span style=color:teal>$ZSH</span><span style=color:#d14>\&#34;
+</span></span></span><span style=display:flex><span><span style=color:#d14>&#34;</span> <span style=color:#d14>&#34;</span><span style=color:teal>$ZSH</span><span style=color:#d14>/templates/zshrc.zsh-template&#34;</span> &gt; ~/.zshrc-omztemp
+</span></span><span style=display:flex><span>	mv -f ~/.zshrc-omztemp ~/.zshrc
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#0086b3>echo</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>setup_shell<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># Skip setup if the user wants or stdin is closed (not running interactively).</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:teal>$CHSH</span> <span style=color:#000;font-weight:700>=</span> no <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># If this user&#39;s login shell is already &#34;zsh&#34;, do not attempt to switch.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#d14>&#34;</span><span style=color:#000;font-weight:700>$(</span>basename -- <span style=color:#d14>&#34;</span><span style=color:teal>$SHELL</span><span style=color:#d14>&#34;</span><span style=color:#000;font-weight:700>)</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>=</span> <span style=color:#d14>&#34;zsh&#34;</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># If this platform doesn&#39;t provide a &#34;chsh&#34; command, bail out.</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>if</span> ! command_exists chsh; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>    cat <span style=color:#d14>&lt;&lt;EOF
+</span></span></span><span style=display:flex><span><span style=color:#d14>I can&#39;t change your shell automatically because this system does not have chsh.
+</span></span></span><span style=display:flex><span><span style=color:#d14>${BLUE}Please manually change your default shell to zsh${RESET}
+</span></span></span><span style=display:flex><span><span style=color:#d14>EOF</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>BLUE</span><span style=color:#d14>}</span><span style=color:#d14>Time to change your default shell to zsh:</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># Prompt for user choice on changing the default login shell</span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>printf</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>Do you want to change your default shell to zsh? [Y/n]</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14> &#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>read</span> opt
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>case</span> <span style=color:teal>$opt</span> in
+</span></span><span style=display:flex><span>    y*|Y*|<span style=color:#d14>&#34;&#34;</span><span style=color:#000;font-weight:700>)</span> <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;Changing the shell...&#34;</span> ;;
+</span></span><span style=display:flex><span>    n*|N*<span style=color:#000;font-weight:700>)</span> <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;Shell change skipped.&#34;</span>; <span style=color:#000;font-weight:700>return</span> ;;
+</span></span><span style=display:flex><span>    *<span style=color:#000;font-weight:700>)</span> <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;Invalid choice. Shell change skipped.&#34;</span>; <span style=color:#000;font-weight:700>return</span> ;;
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>esac</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># Check if we&#39;re running on Termux</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>case</span> <span style=color:#d14>&#34;</span><span style=color:teal>$PREFIX</span><span style=color:#d14>&#34;</span> in
+</span></span><span style=display:flex><span>    *com.termux*<span style=color:#000;font-weight:700>)</span> <span style=color:teal>termux</span><span style=color:#000;font-weight:700>=</span>true; <span style=color:teal>zsh</span><span style=color:#000;font-weight:700>=</span>zsh ;;
+</span></span><span style=display:flex><span>    *<span style=color:#000;font-weight:700>)</span> <span style=color:teal>termux</span><span style=color:#000;font-weight:700>=</span><span style=color:#0086b3>false</span> ;;
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>esac</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#d14>&#34;</span><span style=color:teal>$termux</span><span style=color:#d14>&#34;</span> !<span style=color:#000;font-weight:700>=</span> <span style=color:#0086b3>true</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>    <span style=color:#998;font-style:italic># Test for the right location of the &#34;shells&#34; file</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -f /etc/shells <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>      <span style=color:teal>shells_file</span><span style=color:#000;font-weight:700>=</span>/etc/shells
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>elif</span> <span style=color:#000;font-weight:700>[</span> -f /usr/share/defaults/etc/shells <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span> <span style=color:#998;font-style:italic># Solus OS</span>
+</span></span><span style=display:flex><span>      <span style=color:teal>shells_file</span><span style=color:#000;font-weight:700>=</span>/usr/share/defaults/etc/shells
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>else</span>
+</span></span><span style=display:flex><span>      fmt_error <span style=color:#d14>&#34;could not find /etc/shells file. Change your default shell manually.&#34;</span>
+</span></span><span style=display:flex><span>      <span style=color:#000;font-weight:700>return</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#998;font-style:italic># Get the path to the right zsh binary</span>
+</span></span><span style=display:flex><span>    <span style=color:#998;font-style:italic># 1. Use the most preceding one based on $PATH, then check that it&#39;s in the shells file</span>
+</span></span><span style=display:flex><span>    <span style=color:#998;font-style:italic># 2. If that fails, get a zsh path from the shells file, then check it actually exists</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> ! <span style=color:teal>zsh</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span>which zsh<span style=color:#000;font-weight:700>)</span> <span style=color:#000;font-weight:700>||</span> ! grep -qx <span style=color:#d14>&#34;</span><span style=color:teal>$zsh</span><span style=color:#d14>&#34;</span> <span style=color:#d14>&#34;</span><span style=color:teal>$shells_file</span><span style=color:#d14>&#34;</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>      <span style=color:#000;font-weight:700>if</span> ! <span style=color:teal>zsh</span><span style=color:#000;font-weight:700>=</span><span style=color:#000;font-weight:700>$(</span>grep <span style=color:#d14>&#39;^/.*/zsh$&#39;</span> <span style=color:#d14>&#34;</span><span style=color:teal>$shells_file</span><span style=color:#d14>&#34;</span> | tail -1<span style=color:#000;font-weight:700>)</span> <span style=color:#000;font-weight:700>||</span> <span style=color:#000;font-weight:700>[</span> ! -f <span style=color:#d14>&#34;</span><span style=color:teal>$zsh</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>        fmt_error <span style=color:#d14>&#34;no zsh binary found or not present in &#39;</span><span style=color:teal>$shells_file</span><span style=color:#d14>&#39;&#34;</span>
+</span></span><span style=display:flex><span>        fmt_error <span style=color:#d14>&#34;change your default shell manually.&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#000;font-weight:700>return</span>
+</span></span><span style=display:flex><span>      <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># We&#39;re going to change the default shell, so back up the current one</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -n <span style=color:#d14>&#34;</span><span style=color:teal>$SHELL</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>echo</span> <span style=color:teal>$SHELL</span> &gt; ~/.shell.pre-oh-my-zsh
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>else</span>
+</span></span><span style=display:flex><span>    grep <span style=color:#d14>&#34;^</span><span style=color:teal>$USER</span><span style=color:#d14>:&#34;</span> /etc/passwd | awk -F: <span style=color:#d14>&#39;{print $7}&#39;</span> &gt; ~/.shell.pre-oh-my-zsh
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># Actually change the default shell to zsh</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>if</span> ! chsh -s <span style=color:#d14>&#34;</span><span style=color:teal>$zsh</span><span style=color:#d14>&#34;</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>    fmt_error <span style=color:#d14>&#34;chsh command unsuccessful. Change your default shell manually.&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>export</span> <span style=color:teal>SHELL</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;</span><span style=color:teal>$zsh</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>GREEN</span><span style=color:#d14>}</span><span style=color:#d14>Shell successfully changed to &#39;</span><span style=color:teal>$zsh</span><span style=color:#d14>&#39;.</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>echo</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>main<span style=color:#000;font-weight:700>()</span> <span style=color:#000;font-weight:700>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># Run as unattended if stdin is not a tty</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> ! -t <span style=color:#099>0</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>    <span style=color:teal>RUNZSH</span><span style=color:#000;font-weight:700>=</span>no
+</span></span><span style=display:flex><span>    <span style=color:teal>CHSH</span><span style=color:#000;font-weight:700>=</span>no
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic># Parse arguments</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>while</span> <span style=color:#000;font-weight:700>[</span> <span style=color:teal>$#</span> -gt <span style=color:#099>0</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>do</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>case</span> <span style=color:teal>$1</span> in
+</span></span><span style=display:flex><span>      --unattended<span style=color:#000;font-weight:700>)</span> <span style=color:teal>RUNZSH</span><span style=color:#000;font-weight:700>=</span>no; <span style=color:teal>CHSH</span><span style=color:#000;font-weight:700>=</span>no ;;
+</span></span><span style=display:flex><span>      --skip-chsh<span style=color:#000;font-weight:700>)</span> <span style=color:teal>CHSH</span><span style=color:#000;font-weight:700>=</span>no ;;
+</span></span><span style=display:flex><span>      --keep-zshrc<span style=color:#000;font-weight:700>)</span> <span style=color:teal>KEEP_ZSHRC</span><span style=color:#000;font-weight:700>=</span>yes ;;
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>esac</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>shift</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>done</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  setup_color
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>if</span> ! command_exists zsh; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>Zsh is not installed.</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14> Please install zsh first.&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>exit</span> <span style=color:#099>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> -d <span style=color:#d14>&#34;</span><span style=color:teal>$ZSH</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>The \$ZSH folder already exists (</span><span style=color:teal>$ZSH</span><span style=color:#d14>).</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:#d14>&#34;</span><span style=color:teal>$custom_zsh</span><span style=color:#d14>&#34;</span> <span style=color:#000;font-weight:700>=</span> yes <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>      cat <span style=color:#d14>&lt;&lt;EOF
+</span></span></span><span style=display:flex><span><span style=color:#d14>
+</span></span></span><span style=display:flex><span><span style=color:#d14>You ran the installer with the \$ZSH setting or the \$ZSH variable is
+</span></span></span><span style=display:flex><span><span style=color:#d14>exported. You have 3 options:
+</span></span></span><span style=display:flex><span><span style=color:#d14>
+</span></span></span><span style=display:flex><span><span style=color:#d14>1. Unset the ZSH variable when calling the installer:
+</span></span></span><span style=display:flex><span><span style=color:#d14>   $(fmt_code &#34;ZSH= sh install.sh&#34;)
+</span></span></span><span style=display:flex><span><span style=color:#d14>2. Install Oh My Zsh to a directory that doesn&#39;t exist yet:
+</span></span></span><span style=display:flex><span><span style=color:#d14>   $(fmt_code &#34;ZSH=path/to/new/ohmyzsh/folder sh install.sh&#34;)
+</span></span></span><span style=display:flex><span><span style=color:#d14>3. (Caution) If the folder doesn&#39;t contain important information,
+</span></span></span><span style=display:flex><span><span style=color:#d14>   you can just remove it with $(fmt_code &#34;rm -r $ZSH&#34;)
+</span></span></span><span style=display:flex><span><span style=color:#d14>
+</span></span></span><span style=display:flex><span><span style=color:#d14>EOF</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>else</span>
+</span></span><span style=display:flex><span>      <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;You&#39;ll need to remove it if you want to reinstall.&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>exit</span> <span style=color:#099>1</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  setup_ohmyzsh
+</span></span><span style=display:flex><span>  setup_zshrc
+</span></span><span style=display:flex><span>  setup_shell
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>printf</span> <span style=color:#d14>&#34;</span><span style=color:teal>$GREEN</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>  cat <span style=color:#d14>&lt;&lt;&#39;EOF&#39;
+</span></span></span><span style=display:flex><span><span style=color:#d14>         __                                     __
+</span></span></span><span style=display:flex><span><span style=color:#d14>  ____  / /_     ____ ___  __  __   ____  _____/ /_
+</span></span></span><span style=display:flex><span><span style=color:#d14> / __ \/ __ \   / __ `__ \/ / / /  /_  / / ___/ __ \
+</span></span></span><span style=display:flex><span><span style=color:#d14>/ /_/ / / / /  / / / / / / /_/ /    / /_(__  ) / / /
+</span></span></span><span style=display:flex><span><span style=color:#d14>\____/_/ /_/  /_/ /_/ /_/\__, /    /___/____/_/ /_/
+</span></span></span><span style=display:flex><span><span style=color:#d14>                        /____/                       ....is now installed!
+</span></span></span><span style=display:flex><span><span style=color:#d14>
+</span></span></span><span style=display:flex><span><span style=color:#d14>
+</span></span></span><span style=display:flex><span><span style=color:#d14>EOF</span>
+</span></span><span style=display:flex><span>  cat <span style=color:#d14>&lt;&lt;EOF
+</span></span></span><span style=display:flex><span><span style=color:#d14>Before you scream Oh My Zsh! please look over the ~/.zshrc file to select plugins, themes, and options.
+</span></span></span><span style=display:flex><span><span style=color:#d14>
+</span></span></span><span style=display:flex><span><span style=color:#d14>• Follow us on Twitter: $(fmt_underline https://twitter.com/ohmyzsh)
+</span></span></span><span style=display:flex><span><span style=color:#d14>• Join our Discord server: $(fmt_underline https://discord.gg/ohmyzsh)
+</span></span></span><span style=display:flex><span><span style=color:#d14>• Get stickers, shirts, coffee mugs and other swag: $(fmt_underline https://shop.planetargon.com/collections/oh-my-zsh)
+</span></span></span><span style=display:flex><span><span style=color:#d14>
+</span></span></span><span style=display:flex><span><span style=color:#d14>EOF</span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>printf</span> <span style=color:#d14>&#34;</span><span style=color:teal>$RESET</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>if</span> <span style=color:#000;font-weight:700>[</span> <span style=color:teal>$RUNZSH</span> <span style=color:#000;font-weight:700>=</span> no <span style=color:#000;font-weight:700>]</span>; <span style=color:#000;font-weight:700>then</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>echo</span> <span style=color:#d14>&#34;</span><span style=color:#d14>${</span><span style=color:teal>YELLOW</span><span style=color:#d14>}</span><span style=color:#d14>Run zsh to try it out.</span><span style=color:#d14>${</span><span style=color:teal>RESET</span><span style=color:#d14>}</span><span style=color:#d14>&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#0086b3>exit</span>
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#0086b3>exec</span> zsh -l
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>main <span style=color:#d14>&#34;</span><span style=color:teal>$@</span><span style=color:#d14>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=安装oh-my-zsh>安装oh-my-zsh</h2><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#998;font-style:italic># 修改权限</span>
+</span></span><span style=display:flex><span>chmod -x install.sh
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 执行安装命令</span>
+</span></span><span style=display:flex><span>sh install.sh
+</span></span></code></pre></td></tr></table></div></div><h2 id=修改配置文件>修改配置文件</h2><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#0086b3>cd</span> <span style=color:#000;font-weight:700>&amp;&amp;</span> <span style=color:#0086b3>cd</span> .oh-my-zsh/plugins
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 高亮插件</span>
+</span></span><span style=display:flex><span>git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 记录历史插件</span>
+</span></span><span style=display:flex><span>git clone https://github.com/zsh-users/zsh-autosuggestions.git
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>vi ~/.zshrc
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># agnoster是内置主题，所以不需要安装</span>
+</span></span><span style=display:flex><span><span style=color:teal>ZSH_THEME</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;agnoster&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 找到对应位置加上zsh-syntax-highlighting zsh-autosuggestions </span>
+</span></span><span style=display:flex><span><span style=color:teal>plugins</span><span style=color:#000;font-weight:700>=(</span>zsh-syntax-highlighting zsh-autosuggestions git<span style=color:#000;font-weight:700>)</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 下面两句是没有相同配置项的，</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 第一个是隐藏用户(有些主题会隐藏，agnoster内置主题不会隐藏)，</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 第二是gf可能冲突，官方推荐这样做的</span>
+</span></span><span style=display:flex><span><span style=color:teal>DEFAULT_USER</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;sliverhorn&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># alias gf=gf</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 使.zshrc配置文件生效</span>
+</span></span><span style=display:flex><span><span style=color:#0086b3>source</span> ~/.zshrc
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-archive><ul class=post-copyright><li><strong>原文作者：</strong><a rel=author href=https://sliverhorn.com>SliverHorn</a></li><li style=word-break:break-all><strong>原文链接：</strong><a href=https://sliverhorn.com/post/linux/oh-my-zsh-install/>https://sliverhorn.com/post/linux/oh-my-zsh-install/</a></li><li><strong>版权声明：</strong>本作品采用<a rel=license href=https://creativecommons.org/licenses/by-nc-nd/4.0/%0a>知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议
+</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li></ul></div><br><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/tool/mac/>Mac Tool</a></li><li><a href=/about/>关于</a></li><li><a href=/c/c/></a></li><li><a href=/data_structure/3/></a></li><li><a href=/post/politics/></a></li></ul></div><div class="post-meta meta-tags"><ul class=clearfix><li><a href=/tags/oh-my-zsh>oh-my-zsh</a></li></ul></div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo="your github repo" issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div><footer id=footer><div>&copy; 2022 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
+| <a rel=nofollow target=_blank href=http://beian.miit.gov.cn/>粤ICP备19128176号</a></div><br><div><div class=github-badge><a href=https://gohugo.io/ target=_black rel=nofollow><span class=badge-subject>Powered by</span><span class="badge-value bg-blue">Hugo</span></a></div><div class=github-badge><a href=https://www.flysnow.org/ target=_black><span class=badge-subject>Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a></div><div class=github-badge><a href=https://github.com/flysnow-org/maupassant-hugo target=_black><span class=badge-subject>Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a></div></div></footer><script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[["$","$"]],processEscapes:!0}}</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script src=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js></script>
 <a id=rocket href=#top></a>
 <script type=text/javascript src="/js/totop.js?v=0.0.0" async></script>
 <script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async></script>
-<script src=/js/douban.js></script>
-</div>
-<div id=secondary>
-<section class=widget>
-<form id=search action=https://sliverhorn.com/search/ method=get accept-charset=utf-8 target=_blank _lpchecked=1>
-<input type=text name=q maxlength=20 placeholder=Search>
+<script src=/js/douban.js></script></div><div id=secondary><section class=widget><form id=search action=https://sliverhorn.com/search/ method=get accept-charset=utf-8 target=_blank _lpchecked=1><input type=text name=q maxlength=20 placeholder=Search>
 <input type=hidden name=sitesearch value=https://sliverhorn.com>
-<button type=submit class="submit icon-search"></button>
-</form>
-</section>
-<section class=widget>
-<h3 class=widget-title>最近文章</h3>
-<ul class=widget-list>
-<li>
-<a href=https://sliverhorn.com/post/aria2c/ title=Aria2c>Aria2c</a>
-</li>
-<li>
-<a href=https://sliverhorn.com/post/2021/ title="2021 年度总结">2021 年度总结</a>
-</li>
-<li>
-<a href=https://sliverhorn.com/post/linux/oh-my-zsh-install/ title="oh-my-zsh Mac 安装教程">oh-my-zsh Mac 安装教程</a>
-</li>
-</ul>
-</section>
-<section class=widget>
-<h3 class=widget-title><a href=/categories/>分类</a></h3>
-<ul class=widget-list>
-<li><a href=https://sliverhorn.com/categories/DataStructure/>DataStructure (1)</a></li>
-<li><a href=https://sliverhorn.com/categories/Linux/>Linux (1)</a></li>
-<li><a href=https://sliverhorn.com/categories/Mac/>Mac (1)</a></li>
-</ul>
-</section>
-<section class=widget>
-<h3 class=widget-title><a href=/tags/>标签</a></h3>
-<div class=tagcloud>
-<a href=https://sliverhorn.com/tags/oh-my-zsh/>oh-my-zsh</a>
-<a href=https://sliverhorn.com/tags/tool/>tool</a>
-</div>
-</section>
-<section class=widget>
-<h3 class=widget-title>友情链接</h3>
-<ul class=widget-list>
-<li>
-<a target=_blank href=https://blog.leonardwang.cn/ title="牛逼哄哄 `王哥` 博客">牛逼哄哄 `王哥` 博客</a>
-</li>
-<li>
-<a target=_blank href=https://www.cnblogs.com/binHome/ title=songzhibin97的博客>songzhibin97的博客</a>
-</li>
-<li>
-<a target=_blank href=https://leixf.cn/ title="跃动指尖 – 悦动生活">跃动指尖 – 悦动生活</a>
-</li>
-<li>
-<a target=_blank href=https://www.treesystem.cn title=术习电报>术习电报</a>
-</li>
-</ul>
-</section>
-<section class=widget>
-<h3 class=widget-title>其它</h3>
-<ul class=widget-list>
-<li><a href=https://sliverhorn.com/index.xml>文章 RSS</a></li>
-</ul>
-</section>
-</div>
-</div>
-</div>
-</div>
-</body>
-</html>
+<button type=submit class="submit icon-search"></button></form></section><section class=widget><h3 class=widget-title>最近文章</h3><ul class=widget-list><li><a href=https://sliverhorn.com/post/aria2c/ title=Aria2c>Aria2c</a></li><li><a href=https://sliverhorn.com/post/2021/ title="2021 年度总结">2021 年度总结</a></li><li><a href=https://sliverhorn.com/post/linux/oh-my-zsh-install/ title="oh-my-zsh Mac 安装教程">oh-my-zsh Mac 安装教程</a></li><li><a href=https://sliverhorn.com/post/politics/ title></a></li></ul></section><section class=widget><h3 class=widget-title><a href=/categories/>分类</a></h3><ul class=widget-list><li><a href=https://sliverhorn.com/categories/DataStructure/>DataStructure (1)</a></li><li><a href=https://sliverhorn.com/categories/Linux/>Linux (1)</a></li><li><a href=https://sliverhorn.com/categories/Mac/>Mac (1)</a></li></ul></section><section class=widget><h3 class=widget-title><a href=/tags/>标签</a></h3><div class=tagcloud><a href=https://sliverhorn.com/tags/oh-my-zsh/>oh-my-zsh</a>
+<a href=https://sliverhorn.com/tags/tool/>tool</a></div></section><section class=widget><h3 class=widget-title>友情链接</h3><ul class=widget-list><li><a target=_blank href=https://blog.leonardwang.cn/ title="牛逼哄哄 `王哥` 博客">牛逼哄哄 `王哥` 博客</a></li><li><a target=_blank href=https://www.cnblogs.com/binHome/ title=songzhibin97的博客>songzhibin97的博客</a></li><li><a target=_blank href=https://leixf.cn/ title="跃动指尖 – 悦动生活">跃动指尖 – 悦动生活</a></li><li><a target=_blank href=https://www.treesystem.cn title=术习电报>术习电报</a></li></ul></section><section class=widget><h3 class=widget-title>其它</h3><ul class=widget-list><li><a href=https://sliverhorn.com/index.xml>文章 RSS</a></li></ul></section></div></div></div></div></body></html>

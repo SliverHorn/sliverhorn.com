@@ -1,734 +1,462 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge">
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=referrer content="no-referrer-when-downgrade">
-<title>第四章 队列 | SliverHorn的博客</title>
-<meta property="og:title" content="第四章 队列 - SliverHorn的博客">
-<meta property="og:type" content="article">
-<meta property="article:published_time" content="2021-12-29T17:17:17+08:00">
-<meta property="article:modified_time" content="2021-12-29T17:17:17+08:00">
-<meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
-">
-<meta name=description content="第四章 队列">
-<meta name=author content="SliverHorn">
-<meta property="og:url" content="https://sliverhorn.com/old/4/">
-<link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
-<link rel=stylesheet href=/css/normalize.css>
-<link rel=stylesheet href=/css/style.css>
-<script type=text/javascript src=//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js></script>
-<link href=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css rel=stylesheet>
-<link rel=stylesheet href=/css/douban.css>
-<link rel=stylesheet href=/css/other.css>
-</head>
-<body>
-<header id=header class=clearfix>
-<div class=container>
-<div class=col-group>
-<div class=site-name>
-<a id=logo href=https://sliverhorn.com>
-SliverHorn的博客
-</a>
-<p class=description>Golang 开发</p>
-</div>
-<div>
-<nav id=nav-menu class=clearfix>
-<a href=https://sliverhorn.com>首页</a>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer-when-downgrade"><title>第四章 队列 | SliverHorn的博客</title><meta property="og:title" content="第四章 队列 - SliverHorn的博客"><meta property="og:type" content="article"><meta property="article:published_time" content="2021-12-29T17:17:17+08:00"><meta property="article:modified_time" content="2021-12-29T17:17:17+08:00"><meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
+"><meta name=description content="第四章 队列"><meta name=author content="SliverHorn"><meta property="og:url" content="https://sliverhorn.com/old/4/"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=stylesheet href=/css/normalize.css><link rel=stylesheet href=/css/style.css><script type=text/javascript src=//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js></script>
+<link href=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css rel=stylesheet><link rel=stylesheet href=/css/douban.css><link rel=stylesheet href=/css/other.css></head><body><header id=header class=clearfix><div class=container><div class=col-group><div class=site-name><a id=logo href=https://sliverhorn.com>SliverHorn的博客</a><p class=description>Golang 开发</p></div><div><nav id=nav-menu class=clearfix><a href=https://sliverhorn.com>首页</a>
 <a href=https://sliverhorn.com/c/ title=C语言>C语言</a>
 <a href=https://sliverhorn.com/data_structure/ title=数据结构>数据结构</a>
 <a href=https://sliverhorn.com/higher_mathematics/ title=高等数学>高等数学</a>
 <a href=https://sliverhorn.com/politics/ title=政治>政治</a>
 <a href=https://sliverhorn.com/tool/ title=工具>工具</a>
 <a href=https://sliverhorn.com/archives/ title=归档>归档</a>
-<a href=https://sliverhorn.com/about/ title=关于>关于</a>
-</nav>
-</div>
-</div>
-</div>
-</header>
-<div id=body>
-<div class=container>
-<div class=col-group>
-<div class=col-8 id=main>
-<div class=res-cons>
-<style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,7%);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style>
-<div class=post-toc style=position:absolute;top:188px>
-<h2 class=post-toc-title>文章目录</h2>
-<div class=post-toc-content>
-<nav id=TableOfContents>
-<ul>
-<li><a href=#队列的基本概念>队列的基本概念</a></li>
-<li><a href=#用指针实现队列>用指针实现队列</a>
-<ul>
-<li><a href=#queue_pointerh>queue_pointer.h</a></li>
-<li><a href=#queue_pointerc>queue_pointer.c</a></li>
-</ul>
-</li>
-<li><a href=#用循环数组实现队列>用循环数组实现队列</a>
-<ul>
-<li><a href=#queue_cyclic_arrayh>queue_cyclic_array.h</a></li>
-<li><a href=#queue_cyclic_arrayc>queue_cyclic_array.c</a></li>
-</ul>
-</li>
-</ul>
-</nav>
-</div>
-</div>
-<script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)}))})</script>
-<article class=post>
-<header>
-<h1 class=post-title>第四章 队列</h1>
-</header>
-<date class="post-meta meta-date">
-2021年12月29日
-</date>
-<div class=post-meta>
-<span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
-阅读</span></span>
-</div>
-<div class=post-content>
-<h2 id=队列的基本概念>队列的基本概念</h2>
-<p>队列是另一种特殊的表,这种表只在表首(也称为队首)进行删除操作,只在表尾(也称为队尾)进行插入操作。由于队列的修改是按先进先出的规则进行的,所以队列又称为先进先出( First In First Out)表,简称FIFO表。</p>
-<p>
-<a data-fancybox=gallery href=/data_structure/4-1.png>
-<img class=mx-auto alt=image-20211231145839218 src=/data_structure/4-1.png>
-</a>
-</p>
-<p>假设队列为 $a(1),a(2), &mldr; , a(n)$ ，那么 $a(1)$ 就是队首元素， $a(n)$ 为队尾元素。队列中的元素是按 $a(1),a(2), &mldr; , a(n)$ 的顺序进入的，退出队列也只能按照这个次序依次退出。也就是说,只有在 $a(1)$ 离开队列之后， $a(2)$ 才能退出队列。只有在 $a(1),a(2), &mldr; , a(n)$ 都离开队列之后， $a(n)$ 才能退出队列。图4-1所示为队列示意图</p>
-<p>队列支持的6个基本运算如下。</p>
-<ul>
-<li>(1) Queueempty(Q):测试队列Q是否为空。</li>
-<li>(2) Queuefull(Q):测试队列Q是否已满。</li>
-<li>(3) Queuefirst():返回队列Q的队首元素。</li>
-<li>(4) Queue Last(O):返回队列Q的队尾元素。</li>
-<li>(5) Enterqueue(x,D:在队列Q的队尾插入元素x。</li>
-<li>(6) Deletequeue(Q):删除并返回队列Q的队首元素。</li>
-</ul>
-<h2 id=用指针实现队列>用指针实现队列</h2>
-<h3 id=queue_pointerh>queue_pointer.h</h3>
-<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#998;font-style:italic>// queuePointerElement 队列元素类型
-</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#458;font-weight:700>int</span> queuePointerElement;
-
-<span style=color:#998;font-style:italic>// QueuePointerElement 队列元素指针类型
-</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> queuePointerElement <span style=color:#000;font-weight:700>*</span>QueuePointerElement;
-
-<span style=color:#998;font-style:italic>// QueuePointerNode 队列结点指针类型
-</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> queuePointerNode <span style=color:#000;font-weight:700>*</span>QueuePointerNode;
-
-<span style=color:#998;font-style:italic>// queuePointerNode 队列
-</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>struct</span> queuePointerNode {
-    QueuePointerElement Element; <span style=color:#998;font-style:italic>// 队列元素
-</span><span style=color:#998;font-style:italic></span>    QueuePointerNode Next; <span style=color:#998;font-style:italic>// 指向下一个结点的指针
-</span><span style=color:#998;font-style:italic></span>} queuePointerNode;
-
-<span style=color:#998;font-style:italic>// QueuePointer 队列指针类型
-</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> queuePointer <span style=color:#000;font-weight:700>*</span>QueuePointer;
-
-<span style=color:#998;font-style:italic>// queuePointer 队列指针结构
-</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> queuePointer {
-    QueuePointerNode Front; <span style=color:#998;font-style:italic>// 队首指针
-</span><span style=color:#998;font-style:italic></span>    QueuePointerNode Rear; <span style=color:#998;font-style:italic>// 队尾指针
-</span><span style=color:#998;font-style:italic></span>} queuePointer;
-
-<span style=color:#999;font-weight:700;font-style:italic>#ifndef DATA_STRUCT_QUEUE_POINTER_H
-</span><span style=color:#999;font-weight:700;font-style:italic>#define DATA_STRUCT_QUEUE_POINTER_H
-</span><span style=color:#999;font-weight:700;font-style:italic></span>
-<span style=color:#998;font-style:italic>// QueuePointerElementShow 输出队列元素
-</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>QueuePointerElementShow</span>(queuePointerElement element);
-
-<span style=color:#998;font-style:italic>// NewQueuePointerNode 产生一个新队列结点
-</span><span style=color:#998;font-style:italic></span>QueuePointerNode <span style=color:#900;font-weight:700>NewQueuePointerNode</span>();
-
-<span style=color:#998;font-style:italic>// QueuePointerInit 通过将队首指针 Front 和队尾指针 Rear 置为空指针,创建一个空队列。
-</span><span style=color:#998;font-style:italic></span>QueuePointer <span style=color:#900;font-weight:700>QueuePointerInit</span>();
-
-<span style=color:#998;font-style:italic>// QueuePointerEmpty 检测 Front 是否为空指针
-</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>QueuePointerEmpty</span>(QueuePointer queue);
-
-<span style=color:#998;font-style:italic>// QueuePointerFirst 返回队列 queue 的队首结点中的元素
-</span><span style=color:#998;font-style:italic></span>QueuePointerElement <span style=color:#900;font-weight:700>QueuePointerFirst</span>(QueuePointer queue);
-
-<span style=color:#998;font-style:italic>// QueuePointerLast 返回队列 queue 的队尾结点中的元素
-</span><span style=color:#998;font-style:italic></span>QueuePointerElement <span style=color:#900;font-weight:700>QueuePointerLast</span>(QueuePointer queue);
-
-<span style=color:#998;font-style:italic>// QueuePointerEnter 先为元素 node 创建一个新结点,然后修改队列 queue 的队尾结点指针,在队尾插入新结点,使新结点成为新队尾结点。
-</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>QueuePointerEnter</span>(QueuePointer queue, QueuePointerElement element);
-
-<span style=color:#998;font-style:italic>// QueuePointerDelete 先将队首元素存于 element 中,然后修改队列 queue 的队首结点指针使其指向队首结点的下一个结点,从而删除队首结点; 最后返回 element
-</span><span style=color:#998;font-style:italic></span>QueuePointerElement <span style=color:#900;font-weight:700>QueuePointerDelete</span>(QueuePointer queue);
-
-<span style=color:#999;font-weight:700;font-style:italic>#endif </span><span style=color:#998;font-style:italic>//DATA_STRUCT_QUEUE_POINTER_H
-</span></code></pre></td></tr></table>
-</div>
-</div><h3 id=queue_pointerc>queue_pointer.c</h3>
-<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
-</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
-</span><span style=color:#999;font-weight:700;font-style:italic></span>
-<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;queue_pointer.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
-</span><span style=color:#999;font-weight:700;font-style:italic></span>
-<span style=color:#998;font-style:italic>// QueuePointerElementShow 输出队列元素
-</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>QueuePointerElementShow</span>(queuePointerElement element) {
-    printf(<span style=color:#d14>&#34;%d&#34;</span>, element);
-}
-
-<span style=color:#998;font-style:italic>// NewQueuePointerNode 产生一个新队列结点
-</span><span style=color:#998;font-style:italic></span>QueuePointerNode <span style=color:#900;font-weight:700>NewQueuePointerNode</span>() {
-    <span style=color:#000;font-weight:700>return</span> (QueuePointerNode) malloc(<span style=color:#000;font-weight:700>sizeof</span>(QueuePointerNode));
-}
-
-<span style=color:#998;font-style:italic>// QueuePointerInit 通过将队首指针 Front 和队尾指针 Rear 置为空指针,创建一个空队列。
-</span><span style=color:#998;font-style:italic></span>QueuePointer <span style=color:#900;font-weight:700>QueuePointerInit</span>() {
-    QueuePointer queue <span style=color:#000;font-weight:700>=</span> (QueuePointer) malloc(<span style=color:#000;font-weight:700>sizeof</span> <span style=color:#000;font-weight:700>*</span>queue);
-    queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>=</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Rear <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
-    <span style=color:#000;font-weight:700>return</span> queue;
-}
-
-<span style=color:#998;font-style:italic>// QueuePointerEmpty 检测 Front 是否为空指针
-</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>QueuePointerEmpty</span>(QueuePointer queue) {
-    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>==</span> <span style=color:#0086b3>NULL</span>;
-}
-
-<span style=color:#998;font-style:italic>// QueuePointerFirst 返回队列 queue 的队首结点中的元素
-</span><span style=color:#998;font-style:italic></span>QueuePointerElement <span style=color:#900;font-weight:700>QueuePointerFirst</span>(QueuePointer queue) {
-    <span style=color:#000;font-weight:700>if</span> (QueuePointerEmpty(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为空
-</span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
-    }
-    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front<span style=color:#000;font-weight:700>-&gt;</span>Element;
-}
-
-<span style=color:#998;font-style:italic>// QueuePointerLast 返回队列 queue 的队尾结点中的元素
-</span><span style=color:#998;font-style:italic></span>QueuePointerElement <span style=color:#900;font-weight:700>QueuePointerLast</span>(QueuePointer queue) {
-    <span style=color:#000;font-weight:700>if</span> (QueuePointerEmpty(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为空
-</span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
-    }
-    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Rear<span style=color:#000;font-weight:700>-&gt;</span>Element;
-}
-
-<span style=color:#998;font-style:italic>// QueuePointerEnter 先为元素 node 创建一个新结点,然后修改队列 queue 的队尾结点指针,在队尾插入新结点,使新结点成为新队尾结点。
-</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>QueuePointerEnter</span>(QueuePointer queue, QueuePointerElement element) {
-    QueuePointerNode node <span style=color:#000;font-weight:700>=</span> NewQueuePointerNode();
-    node<span style=color:#000;font-weight:700>-&gt;</span>Element <span style=color:#000;font-weight:700>=</span> element;
-    node<span style=color:#000;font-weight:700>-&gt;</span>Next <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
-    <span style=color:#000;font-weight:700>if</span> (queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>==</span> <span style=color:#0086b3>NULL</span>) { <span style=color:#998;font-style:italic>// 队列不为空
-</span><span style=color:#998;font-style:italic></span>        queue<span style=color:#000;font-weight:700>-&gt;</span>Rear<span style=color:#000;font-weight:700>-&gt;</span>Next <span style=color:#000;font-weight:700>=</span> node;
-    } <span style=color:#000;font-weight:700>else</span> {
-        queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>=</span> node; <span style=color:#998;font-style:italic>// 队列为空
-</span><span style=color:#998;font-style:italic></span>    }
-    queue<span style=color:#000;font-weight:700>-&gt;</span>Rear <span style=color:#000;font-weight:700>=</span> node;
-}
-
-<span style=color:#998;font-style:italic>// QueuePointerDelete 先将队首元素存于 element 中,然后修改队列 queue 的队首结点指针使其指向队首结点的下一个结点,从而删除队首结点; 最后返回 element
-</span><span style=color:#998;font-style:italic></span>QueuePointerElement <span style=color:#900;font-weight:700>QueuePointerDelete</span>(QueuePointer queue) {
-    <span style=color:#000;font-weight:700>if</span> (QueuePointerEmpty(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为空
-</span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
-    }
-    QueuePointerElement element <span style=color:#000;font-weight:700>=</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front<span style=color:#000;font-weight:700>-&gt;</span>Element; <span style=color:#998;font-style:italic>// 将队首元素存于 element 中
-</span><span style=color:#998;font-style:italic></span>    QueuePointerNode node <span style=color:#000;font-weight:700>=</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front; <span style=color:#998;font-style:italic>// 将队首结点存于 node 中
-</span><span style=color:#998;font-style:italic></span>    queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>=</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front<span style=color:#000;font-weight:700>-&gt;</span>Next; <span style=color:#998;font-style:italic>// 修改队列 queue 的队首结点指针使其指向队首结点的下一个结点
-</span><span style=color:#998;font-style:italic></span>    free(node); <span style=color:#998;font-style:italic>// 回收队首结点内存
-</span><span style=color:#998;font-style:italic></span>    node <span style=color:#000;font-weight:700>=</span> <span style=color:#0086b3>NULL</span>;
-    <span style=color:#000;font-weight:700>return</span> element;
-}
-</code></pre></td></tr></table>
-</div>
-</div><h2 id=用循环数组实现队列>用循环数组实现队列</h2>
-<p>用数组实现表的方法同样可用于实现队列，但这样做的效果并不好。尽管可以用一个游标来指示队尾，使得 <code>EnterQueue</code> 运算在 $O(1)$ 时间内完成，但是在执行 <code>DeleteQueue</code> 时，为了删除队首元素，必须将数组中其他所有元素都向前移动一个位置。这样当队列中有 $n$ 个元素时，执行 <code>DeleteOueue</code> 就需要 $O(n)$ 时间。</p>
-<p>为了提高运算的效率，采用另一种观点来处理数组中各单元的位置关系。设想数组 <code>queue[0:maxsize-1]</code> 中的单元不是排成一行，而是围成一个圆环，即 <code>queue[0]</code> 接在 <code>queue[maxsize-1]</code> 的后面。这种意义下的数组称为循环数组，如图4-3 所示。</p>
-<p>
-<a data-fancybox=gallery href=/data_structure/4-3.png>
-<img class=mx-auto alt=image-20211231175535877 src=/data_structure/4-3.png>
-</a>
-</p>
-<p>用循环数组实现队列时，将队列中从队首到队尾的元素按顺时针方向存放在循环数组的一段连续的单元中。当需要将新元素入队时，可将队尾游标 rear 按顺时针方向移一位，并在这个单元中存入新元素。出队运算也很简单，只要将队首游标 <code>front</code> 按顺时针方向移一位即可。容易看出，用循环数组来实现队列可以在 $O(1)$ 时间内完成 <code>EnterQueue</code> 和 <code>DeleteQueue</code> 运算。执行一系列的入队与出队运算，将使整个队列在循环数组中按顺时针方向移动。</p>
-<p>在图 4-3 中，直接用队首游标front 指向队首元素所在的单元，用队尾游标 <code>rear</code> 指向队尾元素所在的单元。另</p>
-<p>外，也可以用队首游标 <code>front</code> 指向队首元素所在单元的前一个单元或用队尾游标 rear 指向队尾元素所在单元的下有一个单元的方法来表示队列在循环数组中的位置，如图4-4所示。</p>
-<p>
-<a data-fancybox=gallery href=/data_structure/4-4.png>
-<img class=mx-auto alt=image-20211231175902555 src=/data_structure/4-4.png>
-</a>
-</p>
-<p>在循环数组中，不论用哪一种方式来指示队首与队尾元素，都要解决一个细节问题，即如何表示满队列和空队列。例如，在图4-5中，<code>maxsize=6</code> ，队列中已有3个元素，分别用上述了3种方法来表示队首和队尾元素，如图 4-5 (a),(b)和(c)所示。</p>
-<p>
-<a data-fancybox=gallery href=/data_structure/4-5.png>
-<img class=mx-auto alt=image-20211231180133913 src=/data_structure/4-5.png>
-</a>
-</p>
-<p>现在又有3个元素 $a(4),a(5),a(6)$ 相继入队，使队列呈“满”的状态，如图 4-6 (a),(b)和(c)所示。</p>
-<p>
-<a data-fancybox=gallery href=/data_structure/4-6.png>
-<img class=mx-auto alt=image-20211231180133913 src=/data_structure/4-6.png>
-</a>
-</p>
-<p>如果在图 4-5 中，3个元素 $a(1),a(2),a(3)$ 相继出队，使队列呈“空” 的状态，如图 4-7 (a),(b)和(c)所示。</p>
-<p>
-<a data-fancybox=gallery href=/data_structure/4-7.png>
-<img class=mx-auto alt=image-20211231180133913 src=/data_structure/4-7.png>
-</a>
-</p>
-<p>比较图 4-6 和图 4-7可以看出，不论采用哪一种方式表示队首和队尾元素的位置，都需要附加说明或约定才能区分满队列和空队列。
-通常有两种处理方法来解决这个问题。</p>
-<ul>
-<li>其一是另设一个布尔量来注明队列是空还是满。</li>
-<li>其二是约定当循环数组中元素个数达到 <code>maxsize-1</code> 时队列为满。这样，就可以用队列满和队列空时的队首和队尾游标的不同状态来区分这两种情况。例如，在图4-5中，当元素 $a(4)和a(5)$ 相继入队后，就使队列呈”满”的状态，如图 4-8 (a),(b)和(c)所示。</li>
-</ul>
-<p>
-<a data-fancybox=gallery href=/data_structure/4-8.png>
-<img class=mx-auto alt=image-20211231180133913 src=/data_structure/4-8.png>
-</a>
-</p>
-<h3 id=queue_cyclic_arrayh>queue_cyclic_array.h</h3>
-<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#998;font-style:italic>// queueCyclicArrayElement 队列元素类型
-</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#458;font-weight:700>int</span> queueCyclicArrayElement;
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayElement 队列元素指针类型
-</span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> queueCyclicArrayElement <span style=color:#000;font-weight:700>*</span>QueueCyclicArrayElement;
-
-<span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> queueCyclicArray <span style=color:#000;font-weight:700>*</span>QueueCyclicArray;
-
-<span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> queueCyclicArray {
-    <span style=color:#458;font-weight:700>int</span> MaxSize; <span style=color:#998;font-style:italic>// 循环数组大小
-</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>int</span> Front; <span style=color:#998;font-style:italic>// 队首游标
-</span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>int</span> Rear; <span style=color:#998;font-style:italic>// 队尾游标
-</span><span style=color:#998;font-style:italic></span>    QueueCyclicArrayElement <span style=color:#000;font-weight:700>*</span>Queue; <span style=color:#998;font-style:italic>// 循环数组
-</span><span style=color:#998;font-style:italic></span>} queueCyclicArray;
-
-<span style=color:#999;font-weight:700;font-style:italic>#ifndef DATA_STRUCT_QUEUE_CYCLIC_ARRAY_H
-</span><span style=color:#999;font-weight:700;font-style:italic>#define DATA_STRUCT_QUEUE_CYCLIC_ARRAY_H
-</span><span style=color:#999;font-weight:700;font-style:italic></span>
-<span style=color:#998;font-style:italic>// QueueCyclicArrayInit 为队列分配一个容量为 size 的循环数组 queue ,并将队首游标 Font 和队尾游标 Rear 均置为0,创建一个空队列。
-</span><span style=color:#998;font-style:italic></span>QueueCyclicArray <span style=color:#900;font-weight:700>QueueCyclicArrayInit</span>(<span style=color:#458;font-weight:700>int</span> size);
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayEmpty 通过检测队列 queue 的队首游标 Front 与队尾游标 Rear 是否重合来判断队列 queue 是否为空队列。
-</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>QueueCyclicArrayEmpty</span>(QueueCyclicArray queue);
-
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayFull 通过检测在队列Q的队尾插入一个元素后队首游标 Front 与队尾游标 Rear 是否重合来判断队列 queue 是否为满队列
-</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>QueueCyclicArrayFull</span>(QueueCyclicArray queue);
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayElement 返回队列Q的队首元素。由于队首游标 Front 指向队首元素的前一位置,所以队首元素在循环数组 queue 中的下标是 (Front+1) % maxsize。
-</span><span style=color:#998;font-style:italic></span>QueueCyclicArrayElement <span style=color:#900;font-weight:700>QueueCyclicArrayFirst</span>(QueueCyclicArray queue);
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayLast 返回存储在队列 queue 的 queue[Rear] 中的队尾元素。
-</span><span style=color:#998;font-style:italic></span>QueueCyclicArrayElement <span style=color:#900;font-weight:700>QueueCyclicArrayLast</span>(QueueCyclicArray queue);
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayEnter 先计算出在循环的意义下队列 queue 的队尾元素在循环数组 Queue 中的下一位置 (Rear+1) % MaxSize 然后在该位置插入元素
-</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>QueueCyclicArrayEnter</span>(QueueCyclicArray queue, QueueCyclicArrayElement element);
-
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayDelete 先将队列 queue 的队首游标 Front 修改为在循环的意义下队首元素在循环数组 Queue 中的下一位置(Front)% MaxSize,然后返回该位置的元素,即队首元素。
-</span><span style=color:#998;font-style:italic></span>QueueCyclicArrayElement <span style=color:#900;font-weight:700>QueueCyclicArrayDelete</span>(QueueCyclicArray queue);
-
-<span style=color:#999;font-weight:700;font-style:italic>#endif </span><span style=color:#998;font-style:italic>//DATA_STRUCT_QUEUE_CYCLIC_ARRAY_H
-</span></code></pre></td></tr></table>
-</div>
-</div><h3 id=queue_cyclic_arrayc>queue_cyclic_array.c</h3>
-<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
-</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
-</span></code></pre></td>
-<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
-<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
-</span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
-</span><span style=color:#999;font-weight:700;font-style:italic></span>
-<span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;queue_cyclic_array.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
-</span><span style=color:#999;font-weight:700;font-style:italic></span>
-<span style=color:#998;font-style:italic>// QueueCyclicArrayInit 为队列分配一个容量为 size 的循环数组 queue ,并将队首游标 Font 和队尾游标 Rear 均置为0,创建一个空队列。
-</span><span style=color:#998;font-style:italic></span>QueueCyclicArray <span style=color:#900;font-weight:700>QueueCyclicArrayInit</span>(<span style=color:#458;font-weight:700>int</span> size) {
-    QueueCyclicArray queue <span style=color:#000;font-weight:700>=</span> (QueueCyclicArray) malloc(<span style=color:#000;font-weight:700>sizeof</span> <span style=color:#000;font-weight:700>*</span>queue);
-    queue<span style=color:#000;font-weight:700>-&gt;</span>Queue <span style=color:#000;font-weight:700>=</span> (QueueCyclicArrayElement <span style=color:#000;font-weight:700>*</span>) malloc(size <span style=color:#000;font-weight:700>*</span> <span style=color:#000;font-weight:700>sizeof</span>(QueueCyclicArrayElement));
-    queue<span style=color:#000;font-weight:700>-&gt;</span>MaxSize <span style=color:#000;font-weight:700>=</span> size;
-    queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>=</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Rear <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
-    <span style=color:#000;font-weight:700>return</span> queue;
-}
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayEmpty 通过检测队列 queue 的队首游标 Front 与队尾游标 Rear 是否重合来判断队列 queue 是否为空队列。
-</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>QueueCyclicArrayEmpty</span>(QueueCyclicArray queue) {
-    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>==</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Rear;
-}
-
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayFull 通过检测在队列Q的队尾插入一个元素后队首游标 Front 与队尾游标 Rear 是否重合来判断队列 queue 是否为满队列
-</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>QueueCyclicArrayFull</span>(QueueCyclicArray queue) {
-    <span style=color:#000;font-weight:700>return</span> (((queue<span style=color:#000;font-weight:700>-&gt;</span>Rear <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>) <span style=color:#000;font-weight:700>%</span> queue<span style=color:#000;font-weight:700>-&gt;</span>MaxSize <span style=color:#000;font-weight:700>==</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front) <span style=color:#000;font-weight:700>?</span> <span style=color:#099>1</span> <span style=color:#000;font-weight:700>:</span> <span style=color:#099>0</span>);
-}
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayElement 返回队列Q的队首元素。由于队首游标 Front 指向队首元素的前一位置,所以队首元素在循环数组 queue 中的下标是 (Front+1) % maxsize。
-</span><span style=color:#998;font-style:italic></span>QueueCyclicArrayElement <span style=color:#900;font-weight:700>QueueCyclicArrayFirst</span>(QueueCyclicArray queue) {
-    <span style=color:#000;font-weight:700>if</span> (QueueCyclicArrayEmpty(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为空
-</span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
-    }
-    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Queue[(queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>) <span style=color:#000;font-weight:700>%</span> queue<span style=color:#000;font-weight:700>-&gt;</span>MaxSize];
-}
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayLast 返回存储在队列 queue 的 queue[Rear] 中的队尾元素。
-</span><span style=color:#998;font-style:italic></span>QueueCyclicArrayElement <span style=color:#900;font-weight:700>QueueCyclicArrayLast</span>(QueueCyclicArray queue) {
-    <span style=color:#000;font-weight:700>if</span> (QueueCyclicArrayEmpty(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为空
-</span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
-    }
-    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Queue[queue<span style=color:#000;font-weight:700>-&gt;</span>Rear];
-}
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayEnter 先计算出在循环的意义下队列 queue 的队尾元素在循环数组 Queue 中的下一位置 (Rear+1) % MaxSize 然后在该位置插入元素
-</span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>QueueCyclicArrayEnter</span>(QueueCyclicArray queue, QueueCyclicArrayElement element) {
-    <span style=color:#000;font-weight:700>if</span> (QueueCyclicArrayFull(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为满
-</span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
-    }
-    queue<span style=color:#000;font-weight:700>-&gt;</span>Rear <span style=color:#000;font-weight:700>=</span> (queue<span style=color:#000;font-weight:700>-&gt;</span>Rear <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>) <span style=color:#000;font-weight:700>%</span> queue<span style=color:#000;font-weight:700>-&gt;</span>MaxSize;
-    queue<span style=color:#000;font-weight:700>-&gt;</span>Queue[queue<span style=color:#000;font-weight:700>-&gt;</span>Rear] <span style=color:#000;font-weight:700>=</span> element;
-}
-
-
-<span style=color:#998;font-style:italic>// QueueCyclicArrayDelete 先将队列 queue 的队首游标 Front 修改为在循环的意义下队首元素在循环数组 Queue 中的下一位置(Front)% MaxSize,然后返回该位置的元素,即队首元素。
-</span><span style=color:#998;font-style:italic></span>QueueCyclicArrayElement <span style=color:#900;font-weight:700>QueueCyclicArrayDelete</span>(QueueCyclicArray queue) {
-    <span style=color:#000;font-weight:700>if</span> (QueueCyclicArrayEmpty(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为空
-</span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
-    }
-    queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>=</span> (queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>) <span style=color:#000;font-weight:700>%</span> queue<span style=color:#000;font-weight:700>-&gt;</span>MaxSize;
-    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Queue[queue<span style=color:#000;font-weight:700>-&gt;</span>Front];
-}
-</code></pre></td></tr></table>
-</div>
-</div>
-</div>
-<div class=post-archive>
-<h2>See Also</h2>
-<ul class=listing>
-<li><a href=/old/3/>第三章 栈</a></li>
-<li><a href=/old/2/>第二章 线性表</a></li>
-<li><a href=/old/1/>第一章 绪论</a></li>
-<li><a href=/politics/14/>第十四章 坚持和加强党的领导</a></li>
-<li><a href=/politics/13/>第十三章 中国特色大国外交</a></li>
-</ul>
-</div>
-<div class="post-meta meta-tags">
-没有标签
-</div>
-</article>
-<div class="post bg-white">
-<script src=https://utteranc.es/client.js repo="your github repo" issue-term=pathname theme=github-light crossorigin=anonymous async></script>
-</div>
-</div>
-<footer id=footer>
-<div>
-&copy; 2022 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
-| <a rel=nofollow target=_blank href=http://beian.miit.gov.cn/>粤ICP备19128176号</a>
-</div>
-<br>
-<div>
-<div class=github-badge>
-<a href=https://gohugo.io/ target=_black rel=nofollow><span class=badge-subject>Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
-</div>
-<div class=github-badge>
-<a href=https://www.flysnow.org/ target=_black><span class=badge-subject>Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
-</div>
-<div class=github-badge>
-<a href=https://github.com/flysnow-org/maupassant-hugo target=_black><span class=badge-subject>Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
-</div>
-</div>
-</footer>
-<script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[['$','$']],processEscapes:!0}}</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script src=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js></script>
+<a href=https://sliverhorn.com/about/ title=关于>关于</a></nav></div></div></div></header><div id=body><div class=container><div class=col-group><div class=col-8 id=main><div class=res-cons><style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,7%);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style><div class=post-toc style=position:absolute;top:188px><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><a href=#队列的基本概念>队列的基本概念</a></li><li><a href=#用指针实现队列>用指针实现队列</a><ul><li><a href=#queue_pointerh>queue_pointer.h</a></li><li><a href=#queue_pointerc>queue_pointer.c</a></li></ul></li><li><a href=#用循环数组实现队列>用循环数组实现队列</a><ul><li><a href=#queue_cyclic_arrayh>queue_cyclic_array.h</a></li><li><a href=#queue_cyclic_arrayc>queue_cyclic_array.c</a></li></ul></li></ul></nav></div></div><script type=text/javascript>$(document).ready(function(){if(e=$(".post-toc"),e.length){t=$("#main").offset().left,t<220&&e.css({width:t-10,"margin-left":0-t});var e,t,n=e.offset().top-20,s={start:{position:"absolute",top:n},process:{position:"fixed",top:20}};$(window).scroll(function(){var t=$(window).scrollTop();t<n?e.css(s.start):e.css(s.process)})}})</script><article class=post><header><h1 class=post-title>第四章 队列</h1></header><date class="post-meta meta-date">2021年12月29日</date><div class=post-meta><span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
+阅读</span></span></div><div class=post-content><h2 id=队列的基本概念>队列的基本概念</h2><p>队列是另一种特殊的表,这种表只在表首(也称为队首)进行删除操作,只在表尾(也称为队尾)进行插入操作。由于队列的修改是按先进先出的规则进行的,所以队列又称为先进先出( First In First Out)表,简称FIFO表。</p><p><a data-fancybox=gallery href=/data_structure/4-1.png><img class=mx-auto alt=image-20211231145839218 src=/data_structure/4-1.png></a></p><p>假设队列为 $a(1),a(2), &mldr; , a(n)$ ，那么 $a(1)$ 就是队首元素， $a(n)$ 为队尾元素。队列中的元素是按 $a(1),a(2), &mldr; , a(n)$ 的顺序进入的，退出队列也只能按照这个次序依次退出。也就是说,只有在 $a(1)$ 离开队列之后， $a(2)$ 才能退出队列。只有在 $a(1),a(2), &mldr; , a(n)$ 都离开队列之后， $a(n)$ 才能退出队列。图4-1所示为队列示意图</p><p>队列支持的6个基本运算如下。</p><ul><li>(1) Queueempty(Q):测试队列Q是否为空。</li><li>(2) Queuefull(Q):测试队列Q是否已满。</li><li>(3) Queuefirst():返回队列Q的队首元素。</li><li>(4) Queue Last(O):返回队列Q的队尾元素。</li><li>(5) Enterqueue(x,D:在队列Q的队尾插入元素x。</li><li>(6) Deletequeue(Q):删除并返回队列Q的队首元素。</li></ul><h2 id=用指针实现队列>用指针实现队列</h2><h3 id=queue_pointerh>queue_pointer.h</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#998;font-style:italic>// queuePointerElement 队列元素类型
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#458;font-weight:700>int</span> queuePointerElement;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerElement 队列元素指针类型
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> queuePointerElement <span style=color:#000;font-weight:700>*</span>QueuePointerElement;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerNode 队列结点指针类型
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> queuePointerNode <span style=color:#000;font-weight:700>*</span>QueuePointerNode;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// queuePointerNode 队列
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>struct</span> queuePointerNode {
+</span></span><span style=display:flex><span>    QueuePointerElement Element; <span style=color:#998;font-style:italic>// 队列元素
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    QueuePointerNode Next; <span style=color:#998;font-style:italic>// 指向下一个结点的指针
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>} queuePointerNode;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointer 队列指针类型
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> queuePointer <span style=color:#000;font-weight:700>*</span>QueuePointer;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// queuePointer 队列指针结构
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> queuePointer {
+</span></span><span style=display:flex><span>    QueuePointerNode Front; <span style=color:#998;font-style:italic>// 队首指针
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    QueuePointerNode Rear; <span style=color:#998;font-style:italic>// 队尾指针
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>} queuePointer;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#ifndef DATA_STRUCT_QUEUE_POINTER_H
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define DATA_STRUCT_QUEUE_POINTER_H
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerElementShow 输出队列元素
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>QueuePointerElementShow</span>(queuePointerElement element);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// NewQueuePointerNode 产生一个新队列结点
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueuePointerNode <span style=color:#900;font-weight:700>NewQueuePointerNode</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerInit 通过将队首指针 Front 和队尾指针 Rear 置为空指针,创建一个空队列。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueuePointer <span style=color:#900;font-weight:700>QueuePointerInit</span>();
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerEmpty 检测 Front 是否为空指针
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>QueuePointerEmpty</span>(QueuePointer queue);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerFirst 返回队列 queue 的队首结点中的元素
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueuePointerElement <span style=color:#900;font-weight:700>QueuePointerFirst</span>(QueuePointer queue);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerLast 返回队列 queue 的队尾结点中的元素
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueuePointerElement <span style=color:#900;font-weight:700>QueuePointerLast</span>(QueuePointer queue);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerEnter 先为元素 node 创建一个新结点,然后修改队列 queue 的队尾结点指针,在队尾插入新结点,使新结点成为新队尾结点。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>QueuePointerEnter</span>(QueuePointer queue, QueuePointerElement element);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerDelete 先将队首元素存于 element 中,然后修改队列 queue 的队首结点指针使其指向队首结点的下一个结点,从而删除队首结点; 最后返回 element
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueuePointerElement <span style=color:#900;font-weight:700>QueuePointerDelete</span>(QueuePointer queue);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#endif </span><span style=color:#998;font-style:italic>//DATA_STRUCT_QUEUE_POINTER_H
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=queue_pointerc>queue_pointer.c</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">62
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">63
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">64
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">65
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">66
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">67
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">68
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;queue_pointer.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerElementShow 输出队列元素
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>QueuePointerElementShow</span>(queuePointerElement element) {
+</span></span><span style=display:flex><span>    printf(<span style=color:#d14>&#34;%d&#34;</span>, element);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// NewQueuePointerNode 产生一个新队列结点
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueuePointerNode <span style=color:#900;font-weight:700>NewQueuePointerNode</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span> (QueuePointerNode) malloc(<span style=color:#000;font-weight:700>sizeof</span>(QueuePointerNode));
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerInit 通过将队首指针 Front 和队尾指针 Rear 置为空指针,创建一个空队列。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueuePointer <span style=color:#900;font-weight:700>QueuePointerInit</span>() {
+</span></span><span style=display:flex><span>    QueuePointer queue <span style=color:#000;font-weight:700>=</span> (QueuePointer) malloc(<span style=color:#000;font-weight:700>sizeof</span> <span style=color:#000;font-weight:700>*</span>queue);
+</span></span><span style=display:flex><span>    queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>=</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Rear <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span> queue;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerEmpty 检测 Front 是否为空指针
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>QueuePointerEmpty</span>(QueuePointer queue) {
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>==</span> <span style=color:#0086b3>NULL</span>;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerFirst 返回队列 queue 的队首结点中的元素
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueuePointerElement <span style=color:#900;font-weight:700>QueuePointerFirst</span>(QueuePointer queue) {
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> (QueuePointerEmpty(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为空
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front<span style=color:#000;font-weight:700>-&gt;</span>Element;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerLast 返回队列 queue 的队尾结点中的元素
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueuePointerElement <span style=color:#900;font-weight:700>QueuePointerLast</span>(QueuePointer queue) {
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> (QueuePointerEmpty(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为空
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Rear<span style=color:#000;font-weight:700>-&gt;</span>Element;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerEnter 先为元素 node 创建一个新结点,然后修改队列 queue 的队尾结点指针,在队尾插入新结点,使新结点成为新队尾结点。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>QueuePointerEnter</span>(QueuePointer queue, QueuePointerElement element) {
+</span></span><span style=display:flex><span>    QueuePointerNode node <span style=color:#000;font-weight:700>=</span> NewQueuePointerNode();
+</span></span><span style=display:flex><span>    node<span style=color:#000;font-weight:700>-&gt;</span>Element <span style=color:#000;font-weight:700>=</span> element;
+</span></span><span style=display:flex><span>    node<span style=color:#000;font-weight:700>-&gt;</span>Next <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> (queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>==</span> <span style=color:#0086b3>NULL</span>) { <span style=color:#998;font-style:italic>// 队列不为空
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>        queue<span style=color:#000;font-weight:700>-&gt;</span>Rear<span style=color:#000;font-weight:700>-&gt;</span>Next <span style=color:#000;font-weight:700>=</span> node;
+</span></span><span style=display:flex><span>    } <span style=color:#000;font-weight:700>else</span> {
+</span></span><span style=display:flex><span>        queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>=</span> node; <span style=color:#998;font-style:italic>// 队列为空
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    }
+</span></span><span style=display:flex><span>    queue<span style=color:#000;font-weight:700>-&gt;</span>Rear <span style=color:#000;font-weight:700>=</span> node;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueuePointerDelete 先将队首元素存于 element 中,然后修改队列 queue 的队首结点指针使其指向队首结点的下一个结点,从而删除队首结点; 最后返回 element
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueuePointerElement <span style=color:#900;font-weight:700>QueuePointerDelete</span>(QueuePointer queue) {
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> (QueuePointerEmpty(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为空
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    QueuePointerElement element <span style=color:#000;font-weight:700>=</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front<span style=color:#000;font-weight:700>-&gt;</span>Element; <span style=color:#998;font-style:italic>// 将队首元素存于 element 中
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    QueuePointerNode node <span style=color:#000;font-weight:700>=</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front; <span style=color:#998;font-style:italic>// 将队首结点存于 node 中
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>=</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front<span style=color:#000;font-weight:700>-&gt;</span>Next; <span style=color:#998;font-style:italic>// 修改队列 queue 的队首结点指针使其指向队首结点的下一个结点
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    free(node); <span style=color:#998;font-style:italic>// 回收队首结点内存
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    node <span style=color:#000;font-weight:700>=</span> <span style=color:#0086b3>NULL</span>;
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span> element;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=用循环数组实现队列>用循环数组实现队列</h2><p>用数组实现表的方法同样可用于实现队列，但这样做的效果并不好。尽管可以用一个游标来指示队尾，使得 <code>EnterQueue</code> 运算在 $O(1)$ 时间内完成，但是在执行 <code>DeleteQueue</code> 时，为了删除队首元素，必须将数组中其他所有元素都向前移动一个位置。这样当队列中有 $n$ 个元素时，执行 <code>DeleteOueue</code> 就需要 $O(n)$ 时间。</p><p>为了提高运算的效率，采用另一种观点来处理数组中各单元的位置关系。设想数组 <code>queue[0:maxsize-1]</code> 中的单元不是排成一行，而是围成一个圆环，即 <code>queue[0]</code> 接在 <code>queue[maxsize-1]</code> 的后面。这种意义下的数组称为循环数组，如图4-3 所示。</p><p><a data-fancybox=gallery href=/data_structure/4-3.png><img class=mx-auto alt=image-20211231175535877 src=/data_structure/4-3.png></a></p><p>用循环数组实现队列时，将队列中从队首到队尾的元素按顺时针方向存放在循环数组的一段连续的单元中。当需要将新元素入队时，可将队尾游标 rear 按顺时针方向移一位，并在这个单元中存入新元素。出队运算也很简单，只要将队首游标 <code>front</code> 按顺时针方向移一位即可。容易看出，用循环数组来实现队列可以在 $O(1)$ 时间内完成 <code>EnterQueue</code> 和 <code>DeleteQueue</code> 运算。执行一系列的入队与出队运算，将使整个队列在循环数组中按顺时针方向移动。</p><p>在图 4-3 中，直接用队首游标front 指向队首元素所在的单元，用队尾游标 <code>rear</code> 指向队尾元素所在的单元。另</p><p>外，也可以用队首游标 <code>front</code> 指向队首元素所在单元的前一个单元或用队尾游标 rear 指向队尾元素所在单元的下有一个单元的方法来表示队列在循环数组中的位置，如图4-4所示。</p><p><a data-fancybox=gallery href=/data_structure/4-4.png><img class=mx-auto alt=image-20211231175902555 src=/data_structure/4-4.png></a></p><p>在循环数组中，不论用哪一种方式来指示队首与队尾元素，都要解决一个细节问题，即如何表示满队列和空队列。例如，在图4-5中，<code>maxsize=6</code> ，队列中已有3个元素，分别用上述了3种方法来表示队首和队尾元素，如图 4-5 (a),(b)和(c)所示。</p><p><a data-fancybox=gallery href=/data_structure/4-5.png><img class=mx-auto alt=image-20211231180133913 src=/data_structure/4-5.png></a></p><p>现在又有3个元素 $a(4),a(5),a(6)$ 相继入队，使队列呈“满”的状态，如图 4-6 (a),(b)和(c)所示。</p><p><a data-fancybox=gallery href=/data_structure/4-6.png><img class=mx-auto alt=image-20211231180133913 src=/data_structure/4-6.png></a></p><p>如果在图 4-5 中，3个元素 $a(1),a(2),a(3)$ 相继出队，使队列呈“空” 的状态，如图 4-7 (a),(b)和(c)所示。</p><p><a data-fancybox=gallery href=/data_structure/4-7.png><img class=mx-auto alt=image-20211231180133913 src=/data_structure/4-7.png></a></p><p>比较图 4-6 和图 4-7可以看出，不论采用哪一种方式表示队首和队尾元素的位置，都需要附加说明或约定才能区分满队列和空队列。
+通常有两种处理方法来解决这个问题。</p><ul><li>其一是另设一个布尔量来注明队列是空还是满。</li><li>其二是约定当循环数组中元素个数达到 <code>maxsize-1</code> 时队列为满。这样，就可以用队列满和队列空时的队首和队尾游标的不同状态来区分这两种情况。例如，在图4-5中，当元素 $a(4)和a(5)$ 相继入队后，就使队列呈”满”的状态，如图 4-8 (a),(b)和(c)所示。</li></ul><p><a data-fancybox=gallery href=/data_structure/4-8.png><img class=mx-auto alt=image-20211231180133913 src=/data_structure/4-8.png></a></p><h3 id=queue_cyclic_arrayh>queue_cyclic_array.h</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#998;font-style:italic>// queueCyclicArrayElement 队列元素类型
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#458;font-weight:700>int</span> queueCyclicArrayElement;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayElement 队列元素指针类型
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#000;font-weight:700>typedef</span> queueCyclicArrayElement <span style=color:#000;font-weight:700>*</span>QueueCyclicArrayElement;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> queueCyclicArray <span style=color:#000;font-weight:700>*</span>QueueCyclicArray;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>struct</span> queueCyclicArray {
+</span></span><span style=display:flex><span>    <span style=color:#458;font-weight:700>int</span> MaxSize; <span style=color:#998;font-style:italic>// 循环数组大小
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>int</span> Front; <span style=color:#998;font-style:italic>// 队首游标
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    <span style=color:#458;font-weight:700>int</span> Rear; <span style=color:#998;font-style:italic>// 队尾游标
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    QueueCyclicArrayElement <span style=color:#000;font-weight:700>*</span>Queue; <span style=color:#998;font-style:italic>// 循环数组
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>} queueCyclicArray;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#ifndef DATA_STRUCT_QUEUE_CYCLIC_ARRAY_H
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define DATA_STRUCT_QUEUE_CYCLIC_ARRAY_H
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayInit 为队列分配一个容量为 size 的循环数组 queue ,并将队首游标 Font 和队尾游标 Rear 均置为0,创建一个空队列。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueueCyclicArray <span style=color:#900;font-weight:700>QueueCyclicArrayInit</span>(<span style=color:#458;font-weight:700>int</span> size);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayEmpty 通过检测队列 queue 的队首游标 Front 与队尾游标 Rear 是否重合来判断队列 queue 是否为空队列。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>QueueCyclicArrayEmpty</span>(QueueCyclicArray queue);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayFull 通过检测在队列Q的队尾插入一个元素后队首游标 Front 与队尾游标 Rear 是否重合来判断队列 queue 是否为满队列
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>QueueCyclicArrayFull</span>(QueueCyclicArray queue);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayElement 返回队列Q的队首元素。由于队首游标 Front 指向队首元素的前一位置,所以队首元素在循环数组 queue 中的下标是 (Front+1) % maxsize。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueueCyclicArrayElement <span style=color:#900;font-weight:700>QueueCyclicArrayFirst</span>(QueueCyclicArray queue);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayLast 返回存储在队列 queue 的 queue[Rear] 中的队尾元素。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueueCyclicArrayElement <span style=color:#900;font-weight:700>QueueCyclicArrayLast</span>(QueueCyclicArray queue);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayEnter 先计算出在循环的意义下队列 queue 的队尾元素在循环数组 Queue 中的下一位置 (Rear+1) % MaxSize 然后在该位置插入元素
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>QueueCyclicArrayEnter</span>(QueueCyclicArray queue, QueueCyclicArrayElement element);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayDelete 先将队列 queue 的队首游标 Front 修改为在循环的意义下队首元素在循环数组 Queue 中的下一位置(Front)% MaxSize,然后返回该位置的元素,即队首元素。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueueCyclicArrayElement <span style=color:#900;font-weight:700>QueueCyclicArrayDelete</span>(QueueCyclicArray queue);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#endif </span><span style=color:#998;font-style:italic>//DATA_STRUCT_QUEUE_CYCLIC_ARRAY_H
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=queue_cyclic_arrayc>queue_cyclic_array.c</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdlib.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&#34;queue_cyclic_array.h&#34;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayInit 为队列分配一个容量为 size 的循环数组 queue ,并将队首游标 Font 和队尾游标 Rear 均置为0,创建一个空队列。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueueCyclicArray <span style=color:#900;font-weight:700>QueueCyclicArrayInit</span>(<span style=color:#458;font-weight:700>int</span> size) {
+</span></span><span style=display:flex><span>    QueueCyclicArray queue <span style=color:#000;font-weight:700>=</span> (QueueCyclicArray) malloc(<span style=color:#000;font-weight:700>sizeof</span> <span style=color:#000;font-weight:700>*</span>queue);
+</span></span><span style=display:flex><span>    queue<span style=color:#000;font-weight:700>-&gt;</span>Queue <span style=color:#000;font-weight:700>=</span> (QueueCyclicArrayElement <span style=color:#000;font-weight:700>*</span>) malloc(size <span style=color:#000;font-weight:700>*</span> <span style=color:#000;font-weight:700>sizeof</span>(QueueCyclicArrayElement));
+</span></span><span style=display:flex><span>    queue<span style=color:#000;font-weight:700>-&gt;</span>MaxSize <span style=color:#000;font-weight:700>=</span> size;
+</span></span><span style=display:flex><span>    queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>=</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Rear <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span> queue;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayEmpty 通过检测队列 queue 的队首游标 Front 与队尾游标 Rear 是否重合来判断队列 queue 是否为空队列。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>QueueCyclicArrayEmpty</span>(QueueCyclicArray queue) {
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>==</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Rear;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayFull 通过检测在队列Q的队尾插入一个元素后队首游标 Front 与队尾游标 Rear 是否重合来判断队列 queue 是否为满队列
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>QueueCyclicArrayFull</span>(QueueCyclicArray queue) {
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span> (((queue<span style=color:#000;font-weight:700>-&gt;</span>Rear <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>) <span style=color:#000;font-weight:700>%</span> queue<span style=color:#000;font-weight:700>-&gt;</span>MaxSize <span style=color:#000;font-weight:700>==</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Front) <span style=color:#000;font-weight:700>?</span> <span style=color:#099>1</span> <span style=color:#000;font-weight:700>:</span> <span style=color:#099>0</span>);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayElement 返回队列Q的队首元素。由于队首游标 Front 指向队首元素的前一位置,所以队首元素在循环数组 queue 中的下标是 (Front+1) % maxsize。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueueCyclicArrayElement <span style=color:#900;font-weight:700>QueueCyclicArrayFirst</span>(QueueCyclicArray queue) {
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> (QueueCyclicArrayEmpty(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为空
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Queue[(queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>) <span style=color:#000;font-weight:700>%</span> queue<span style=color:#000;font-weight:700>-&gt;</span>MaxSize];
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayLast 返回存储在队列 queue 的 queue[Rear] 中的队尾元素。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueueCyclicArrayElement <span style=color:#900;font-weight:700>QueueCyclicArrayLast</span>(QueueCyclicArray queue) {
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> (QueueCyclicArrayEmpty(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为空
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Queue[queue<span style=color:#000;font-weight:700>-&gt;</span>Rear];
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayEnter 先计算出在循环的意义下队列 queue 的队尾元素在循环数组 Queue 中的下一位置 (Rear+1) % MaxSize 然后在该位置插入元素
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>void</span> <span style=color:#900;font-weight:700>QueueCyclicArrayEnter</span>(QueueCyclicArray queue, QueueCyclicArrayElement element) {
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> (QueueCyclicArrayFull(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为满
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    queue<span style=color:#000;font-weight:700>-&gt;</span>Rear <span style=color:#000;font-weight:700>=</span> (queue<span style=color:#000;font-weight:700>-&gt;</span>Rear <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>) <span style=color:#000;font-weight:700>%</span> queue<span style=color:#000;font-weight:700>-&gt;</span>MaxSize;
+</span></span><span style=display:flex><span>    queue<span style=color:#000;font-weight:700>-&gt;</span>Queue[queue<span style=color:#000;font-weight:700>-&gt;</span>Rear] <span style=color:#000;font-weight:700>=</span> element;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// QueueCyclicArrayDelete 先将队列 queue 的队首游标 Front 修改为在循环的意义下队首元素在循环数组 Queue 中的下一位置(Front)% MaxSize,然后返回该位置的元素,即队首元素。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>QueueCyclicArrayElement <span style=color:#900;font-weight:700>QueueCyclicArrayDelete</span>(QueueCyclicArray queue) {
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> (QueueCyclicArrayEmpty(queue)) { <span style=color:#998;font-style:italic>// 判断队列是否为空
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>        exit(<span style=color:#099>1</span>);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>=</span> (queue<span style=color:#000;font-weight:700>-&gt;</span>Front <span style=color:#000;font-weight:700>+</span> <span style=color:#099>1</span>) <span style=color:#000;font-weight:700>%</span> queue<span style=color:#000;font-weight:700>-&gt;</span>MaxSize;
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>return</span> queue<span style=color:#000;font-weight:700>-&gt;</span>Queue[queue<span style=color:#000;font-weight:700>-&gt;</span>Front];
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div></div><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/old/3/>第三章 栈</a></li><li><a href=/old/2/>第二章 线性表</a></li><li><a href=/old/1/>第一章 绪论</a></li><li><a href=/politics/14/>第十四章 坚持和加强党的领导</a></li><li><a href=/politics/13/>第十三章 中国特色大国外交</a></li></ul></div><div class="post-meta meta-tags">没有标签</div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo="your github repo" issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div><footer id=footer><div>&copy; 2022 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
+| <a rel=nofollow target=_blank href=http://beian.miit.gov.cn/>粤ICP备19128176号</a></div><br><div><div class=github-badge><a href=https://gohugo.io/ target=_black rel=nofollow><span class=badge-subject>Powered by</span><span class="badge-value bg-blue">Hugo</span></a></div><div class=github-badge><a href=https://www.flysnow.org/ target=_black><span class=badge-subject>Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a></div><div class=github-badge><a href=https://github.com/flysnow-org/maupassant-hugo target=_black><span class=badge-subject>Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a></div></div></footer><script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[["$","$"]],processEscapes:!0}}</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script src=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js></script>
 <a id=rocket href=#top></a>
 <script type=text/javascript src="/js/totop.js?v=0.0.0" async></script>
 <script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async></script>
-<script src=/js/douban.js></script>
-</div>
-<div id=secondary>
-<section class=widget>
-<form id=search action=https://sliverhorn.com/search/ method=get accept-charset=utf-8 target=_blank _lpchecked=1>
-<input type=text name=q maxlength=20 placeholder=Search>
+<script src=/js/douban.js></script></div><div id=secondary><section class=widget><form id=search action=https://sliverhorn.com/search/ method=get accept-charset=utf-8 target=_blank _lpchecked=1><input type=text name=q maxlength=20 placeholder=Search>
 <input type=hidden name=sitesearch value=https://sliverhorn.com>
-<button type=submit class="submit icon-search"></button>
-</form>
-</section>
-<section class=widget>
-<h3 class=widget-title>最近文章</h3>
-<ul class=widget-list>
-<li>
-<a href=https://sliverhorn.com/post/aria2c/ title=Aria2c>Aria2c</a>
-</li>
-<li>
-<a href=https://sliverhorn.com/post/2021/ title="2021 年度总结">2021 年度总结</a>
-</li>
-<li>
-<a href=https://sliverhorn.com/post/linux/oh-my-zsh-install/ title="oh-my-zsh Mac 安装教程">oh-my-zsh Mac 安装教程</a>
-</li>
-</ul>
-</section>
-<section class=widget>
-<h3 class=widget-title><a href=/categories/>分类</a></h3>
-<ul class=widget-list>
-<li><a href=https://sliverhorn.com/categories/DataStructure/>DataStructure (1)</a></li>
-<li><a href=https://sliverhorn.com/categories/Linux/>Linux (1)</a></li>
-<li><a href=https://sliverhorn.com/categories/Mac/>Mac (1)</a></li>
-</ul>
-</section>
-<section class=widget>
-<h3 class=widget-title><a href=/tags/>标签</a></h3>
-<div class=tagcloud>
-<a href=https://sliverhorn.com/tags/oh-my-zsh/>oh-my-zsh</a>
-<a href=https://sliverhorn.com/tags/tool/>tool</a>
-</div>
-</section>
-<section class=widget>
-<h3 class=widget-title>友情链接</h3>
-<ul class=widget-list>
-<li>
-<a target=_blank href=https://blog.leonardwang.cn/ title="牛逼哄哄 `王哥` 博客">牛逼哄哄 `王哥` 博客</a>
-</li>
-<li>
-<a target=_blank href=https://www.cnblogs.com/binHome/ title=songzhibin97的博客>songzhibin97的博客</a>
-</li>
-<li>
-<a target=_blank href=https://leixf.cn/ title="跃动指尖 – 悦动生活">跃动指尖 – 悦动生活</a>
-</li>
-<li>
-<a target=_blank href=https://www.treesystem.cn title=术习电报>术习电报</a>
-</li>
-</ul>
-</section>
-<section class=widget>
-<h3 class=widget-title>其它</h3>
-<ul class=widget-list>
-<li><a href=https://sliverhorn.com/index.xml>文章 RSS</a></li>
-</ul>
-</section>
-</div>
-</div>
-</div>
-</div>
-</body>
-</html>
+<button type=submit class="submit icon-search"></button></form></section><section class=widget><h3 class=widget-title>最近文章</h3><ul class=widget-list><li><a href=https://sliverhorn.com/post/aria2c/ title=Aria2c>Aria2c</a></li><li><a href=https://sliverhorn.com/post/2021/ title="2021 年度总结">2021 年度总结</a></li><li><a href=https://sliverhorn.com/post/linux/oh-my-zsh-install/ title="oh-my-zsh Mac 安装教程">oh-my-zsh Mac 安装教程</a></li><li><a href=https://sliverhorn.com/post/politics/ title></a></li></ul></section><section class=widget><h3 class=widget-title><a href=/categories/>分类</a></h3><ul class=widget-list><li><a href=https://sliverhorn.com/categories/DataStructure/>DataStructure (1)</a></li><li><a href=https://sliverhorn.com/categories/Linux/>Linux (1)</a></li><li><a href=https://sliverhorn.com/categories/Mac/>Mac (1)</a></li></ul></section><section class=widget><h3 class=widget-title><a href=/tags/>标签</a></h3><div class=tagcloud><a href=https://sliverhorn.com/tags/oh-my-zsh/>oh-my-zsh</a>
+<a href=https://sliverhorn.com/tags/tool/>tool</a></div></section><section class=widget><h3 class=widget-title>友情链接</h3><ul class=widget-list><li><a target=_blank href=https://blog.leonardwang.cn/ title="牛逼哄哄 `王哥` 博客">牛逼哄哄 `王哥` 博客</a></li><li><a target=_blank href=https://www.cnblogs.com/binHome/ title=songzhibin97的博客>songzhibin97的博客</a></li><li><a target=_blank href=https://leixf.cn/ title="跃动指尖 – 悦动生活">跃动指尖 – 悦动生活</a></li><li><a target=_blank href=https://www.treesystem.cn title=术习电报>术习电报</a></li></ul></section><section class=widget><h3 class=widget-title>其它</h3><ul class=widget-list><li><a href=https://sliverhorn.com/index.xml>文章 RSS</a></li></ul></section></div></div></div></div></body></html>
