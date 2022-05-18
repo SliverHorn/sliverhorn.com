@@ -247,11 +247,11 @@ $\infty$ 表示计算机允许的、 大于所有边上权值的数。例如， 
 
 #### 最小生成树
 
-1. **普里姆算法**（最小连通）
+1. **普里姆(Prim)算法**（最小连通）
 
    ![普里姆算法](https://blog.sliverhorn.com/data_structure/6/6.19.png)
 
-2. **克鲁斯卡尔算法**
+2. **克鲁斯卡尔(Kruskal)算法**
 
    ![克鲁斯卡尔算法](https://blog.sliverhorn.com/data_structure/6/6.20.png)
 
