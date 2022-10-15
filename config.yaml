@@ -28,6 +28,10 @@ params:
   toc: true
   links:
     -
+      title: 榨汁
+      name: 榨汁
+      url: https://www.SqueezeJuice.com/
+    -
       title: 牛逼哄哄 `王哥` 博客
       name: 牛逼哄哄 `王哥` 博客
       url: https://blog.leonardwang.cn/
