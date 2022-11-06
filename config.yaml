@@ -67,25 +67,10 @@ markup:
 menu:
   main:
     -
-      identifier: c
-      name: C语言
-      url: /c/
+      identifier: linux
+      name: Linux
+      url: /linux/
       weight: 1
-    -
-      identifier: data_structure
-      name: 数据结构
-      url: /data_structure/
-      weight: 2
-    -
-      identifier: higher_mathematics
-      name: 高等数学
-      url: /higher_mathematics/
-      weight: 3
-    -
-      identifier: politics
-      name: 政治
-      url: /politics/
-      weight: 4
     -
       identifier: tool
       name: 工具
