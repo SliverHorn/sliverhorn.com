@@ -68,21 +68,21 @@ menu:
   main:
     -
       identifier: linux
-      name: Linux
+      name: linux
       url: /linux/
       weight: 1
     -
       identifier: tool
       name: 工具
       url: /tool/
-      weight: 5
+      weight: 2
     -
       identifier: archives
       name: 归档
       url: /archives/
-      weight: 6
+      weight: 3
     -
       identifier: about
       name: 关于
       url: /about/
-      weight: 7
+      weight: 3
