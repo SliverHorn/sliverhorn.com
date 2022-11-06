@@ -6,6 +6,10 @@ draft: false
 
 <!--more-->
 
+## 本文说明
+
+本文所有内容来自于 [AceId](https://github.com/aceld) 如有侵权，联系作者删除！
+
 ## 基本概念
 
 ### 流
@@ -39,7 +43,7 @@ draft: false
    1. CPU在大量的做判读，while 和 for
    2. CPU的利用率不高
 
-```
+```c
 while true {
 	for i in 流[] {
 		if i has 数据 {
@@ -53,7 +57,7 @@ while true {
    1. 监听的IO数量有限，默认是1024个
    2. 不会精准的告诉开发者，哪些IO是可读可写的，需要遍历
 
-```
+```c
 while true {
 	select(流[]); // 阻塞
 	// 有消息抵达
@@ -70,7 +74,7 @@ while true {
    2. 只关心“活跃”的链接，无需遍历全部描述集合
    3. 能够处理大量的链接请求(系统可以打开的文件数目， 可以通过/proc/sys/fd/file-max查看)
 
-```
+```c
 while true {
 	可处理的流[] = epoll_wait(epoll_fd) // 阻塞
 	
@@ -81,3 +85,129 @@ while true {
 }
 ```
 
+## Epoll 的API
+
+### 创建EPOLL
+
+```c
+// epoll_create 创建一个EPOLL实例。返回新实例的FD。“Size”参数是一个提示，指定要与新实例关联的文件描述符的数量。
+// EPOLL_CREATE()返回的FD应该用Close()关闭。
+// size 内核监听的数目
+// return 返回一个epoll句柄(即一个文件描述符)
+int epoll_create (int __size);
+```
+
+### 控制EPOLL
+
+```c
+/* Valid opcodes ( "op" parameter ) to issue to epoll_ctl().  */
+#define EPOLL_CTL_ADD 1	/* Add a file descriptor to the interface.  */
+#define EPOLL_CTL_DEL 2	/* Remove a file descriptor from the interface.  */
+#define EPOLL_CTL_MOD 3	/* Change file descriptor epoll_event structure.  */
+/* 
+	 Manipulate an epoll instance "epfd". Returns 0 in case of success,
+   -1 in case of error ( the "errno" variable will contain the
+   specific error code ) The "op" parameter is one of the EPOLL_CTL_*
+   constants defined above. The "fd" parameter is the target of the
+   operation. The "event" parameter describes which events the caller
+   is interested in and any associated user data.
+*/
+extern int epoll_ctl (int __epfd, int __op, int __fd, struct epoll_event *__event)
+
+enum EPOLL_EVENTS
+  {
+    EPOLLIN = 0x001,
+#define EPOLLIN EPOLLIN
+    EPOLLPRI = 0x002,
+#define EPOLLPRI EPOLLPRI
+    EPOLLOUT = 0x004,
+#define EPOLLOUT EPOLLOUT
+    EPOLLRDNORM = 0x040,
+#define EPOLLRDNORM EPOLLRDNORM
+    EPOLLRDBAND = 0x080,
+#define EPOLLRDBAND EPOLLRDBAND
+    EPOLLWRNORM = 0x100,
+#define EPOLLWRNORM EPOLLWRNORM
+    EPOLLWRBAND = 0x200,
+#define EPOLLWRBAND EPOLLWRBAND
+    EPOLLMSG = 0x400,
+#define EPOLLMSG EPOLLMSG
+    EPOLLERR = 0x008,
+#define EPOLLERR EPOLLERR
+    EPOLLHUP = 0x010,
+#define EPOLLHUP EPOLLHUP
+    EPOLLRDHUP = 0x2000,
+#define EPOLLRDHUP EPOLLRDHUP
+    EPOLLEXCLUSIVE = 1u << 28,
+#define EPOLLEXCLUSIVE EPOLLEXCLUSIVE
+    EPOLLWAKEUP = 1u << 29,
+#define EPOLLWAKEUP EPOLLWAKEUP
+    EPOLLONESHOT = 1u << 30,
+#define EPOLLONESHOT EPOLLONESHOT
+    EPOLLET = 1u << 31
+#define EPOLLET EPOLLET
+  };
+
+struct epoll_event
+{
+  uint32_t events;	/* Epoll events */
+  epoll_data_t data;	/* User data variable */
+} __EPOLL_PACKED;
+  
+typedef union epoll_data
+{
+  void *ptr;
+  int fd;
+  uint32_t u32;
+  uint64_t u64;
+} epoll_data_t;
+```
+
+### 等待EPOLL
+
+```c
+/* Same as epoll_wait, but the thread's signal mask is temporarily
+   and atomically replaced with the one provided as parameter.
+   This function is a cancellation point and therefore not marked with
+   __THROW.  */
+extern int epoll_pwait (int __epfd, struct epoll_event *__events, int __maxevents, int __timeout, const __sigset_t *__ss);
+```
+
+### 使⽤用epoll编程主流程⻣骨架
+
+```c
+// 创建epoll
+int epfd = epoll_create(1000);
+
+// 将listen_fd 添加进 epoll 中
+epoll_ctl(epfd, EPOLL_CTL_ADD, listen_fd, &listen_event);
+
+
+while (1) {
+  // 阻塞等待epoll中的fd触发
+  int artive_cnt = epoll_wait(epfd, events, 1000, -1);
+  for (i = 0; i < active_cnt; i++) {
+    if (event[i].data.fd == listen_fd) {
+      // accept. 并且将accept的fd加进epoll中。
+    } else if (event[i].events & EPOLLIN) {
+      // 对此fd 进行读操作
+    } else if (event[i].events & EPOLLOUT) {
+      // 对此fd 进行写操作
+    }
+  }
+}
+```
+
+## 触发模式
+
+> 默认是水平触发模式，如果要边缘触发模式，要在给事件进行绑定的时候通过 `EPOOLET` 来设置
+
+### 水平触发
+
+如果用户在监听 `epoll` 事件，当内核有事件的时候，会拷贝给用户态事件，但是如果用户只处理了一次，那么剩下没有处理的会在下一次 `epoll_wait` 再次返回该事件。
+
+### 边缘触发
+
+相比跟水平触发相反，当内核有事件达到，只会通知用户一次，至于用户处理还是不处理，以后将不会再通知，这样减少了拷贝过程，增加了性能，但是相对来说，如果用户马虎忘记处理，将会产生事件丢的情况
+
+ 
