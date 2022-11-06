@@ -4,32 +4,238 @@
 <a href=https://sliverhorn.com/linux/ title=linux>linux</a>
 <a href=https://sliverhorn.com/tool/ title=工具>工具</a>
 <a href=https://sliverhorn.com/about/ title=关于>关于</a>
-<a href=https://sliverhorn.com/archives/ title=归档>归档</a></nav></div></div></div></header><div id=body><div class=container><div class=col-group><div class=col-8 id=main><div class=res-cons><style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,7%);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style><div class=post-toc style=position:absolute;top:188px><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><a href=#基本概念>基本概念</a><ul><li><a href=#流>流</a></li><li><a href=#io操作>I/O操作</a></li><li><a href=#阻塞>阻塞</a></li><li><a href=#多路io复用>多路IO复用</a></li></ul></li><li><a href=#解决阻塞死等待的缺点>解决阻塞死等待的缺点</a></li></ul></nav></div></div><script type=text/javascript>$(document).ready(function(){if(e=$(".post-toc"),e.length){t=$("#main").offset().left,t<220&&e.css({width:t-10,"margin-left":0-t});var e,t,n=e.offset().top-20,s={start:{position:"absolute",top:n},process:{position:"fixed",top:20}};$(window).scroll(function(){var t=$(window).scrollTop();t<n?e.css(s.start):e.css(s.process)})}$("#TableOfContents").children().length<1&&$(".post-toc").remove()})</script><article class=post><header><h1 class=post-title>深入理解Linux中网络I/O复用并发模型</h1></header><date class="post-meta meta-date">2022年11月5日</date><div class=post-meta><span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
-阅读</span></span></div><div class=post-content><h2 id=基本概念>基本概念</h2><h3 id=流>流</h3><ul><li>可以进行I/O操作的内核对象</li><li>文件、管道、套接字&mldr;&mldr;</li><li>流的入口：文件描述符(fd)</li></ul><h3 id=io操作>I/O操作</h3><p>所有对流的读写操作，都可以称之为I/O操作</p><h3 id=阻塞>阻塞</h3><ul><li>阻塞等待：不占用CPU宝贵的时间片<ul><li>缺点：不能够很好的处理多个(I/O)请求的问题</li><li>同一个阻塞，同一时刻只能处理一个流的阻塞监听</li></ul></li><li>非阻塞忙轮询 ：占用CPU，系统资源</li></ul><blockquote><p>在处理意见数据的接收场景时，建议优先使用阻塞等待的方式，不浪费性能资源</p></blockquote><h3 id=多路io复用>多路IO复用</h3><ul><li>既能够阻塞等待，不浪费资源</li><li>也能够同一时刻监听多个IO请求的状态</li></ul><h2 id=解决阻塞死等待的缺点>解决阻塞死等待的缺点</h2><ol><li>阻塞等待+多进程/多线程：需要开辟线程浪费资源</li><li>非阻塞+忙轮询：<ol><li>CPU在大量的做判读，while 和 for</li><li>CPU的利用率不高</li></ol></li></ol><pre tabindex=0><code>while true {
-	for i in 流[] {
-		if i has 数据 {
-			读 或者 其他处理
-		}
-	}
-}
-</code></pre><ol start=3><li>多路IO复用机制 &ndash; select<ol><li>监听的IO数量有限，默认是1024个</li><li>不会精准的告诉开发者，哪些IO是可读可写的，需要遍历</li></ol></li></ol><pre tabindex=0><code>while true {
-	select(流[]); // 阻塞
-	// 有消息抵达
-	for i in 流[] {
-		if i has 数据 {
-			读 或者 其他处理
-		}
-	}
-}
-</code></pre><ol start=3><li>多路IO复用机制 &ndash; epoll<ol><li>与 select，poll 一样，对I/O多路复用的技术</li><li>只关心“活跃”的链接，无需遍历全部描述集合</li><li>能够处理大量的链接请求(系统可以打开的文件数目， 可以通过/proc/sys/fd/file-max查看)</li></ol></li></ol><pre tabindex=0><code>while true {
-	可处理的流[] = epoll_wait(epoll_fd) // 阻塞
-	
-	// 有消息抵达,全部放在 “可处理的流[]”中
-	for i in 可处理的流[] {
-		读 或者 其他处理
-	}
-}
-</code></pre></div><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/c/c/>广东普通专升本计算机基础与程序设计2022考纲</a></li><li><a href=/data_structure/data_stucture/>广东普通专升本计算机基础与程序设计2022考纲</a></li><li><a href=/data_structure/important/>概念及结论</a></li><li><a href=/data_structure/8/>第八章 排序</a></li><li><a href=/data_structure/7/>第七章 查找</a></li></ul></div><div class="post-meta meta-tags">没有标签</div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo="your github repo" issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div><footer id=footer><div>&copy; 2022 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
+<a href=https://sliverhorn.com/archives/ title=归档>归档</a></nav></div></div></div></header><div id=body><div class=container><div class=col-group><div class=col-8 id=main><div class=res-cons><style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,7%);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style><div class=post-toc style=position:absolute;top:188px><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><a href=#本文说明>本文说明</a></li><li><a href=#基本概念>基本概念</a><ul><li><a href=#流>流</a></li><li><a href=#io操作>I/O操作</a></li><li><a href=#阻塞>阻塞</a></li><li><a href=#多路io复用>多路IO复用</a></li></ul></li><li><a href=#解决阻塞死等待的缺点>解决阻塞死等待的缺点</a></li><li><a href=#epoll-的api>Epoll 的API</a><ul><li><a href=#创建epoll>创建EPOLL</a></li><li><a href=#控制epoll>控制EPOLL</a></li><li><a href=#等待epoll>等待EPOLL</a></li><li><a href=#使用epoll编程主流程骨架>使⽤用epoll编程主流程⻣骨架</a></li></ul></li><li><a href=#触发模式>触发模式</a><ul><li><a href=#水平触发>水平触发</a></li><li><a href=#边缘触发>边缘触发</a></li></ul></li></ul></nav></div></div><script type=text/javascript>$(document).ready(function(){if(e=$(".post-toc"),e.length){t=$("#main").offset().left,t<220&&e.css({width:t-10,"margin-left":0-t});var e,t,n=e.offset().top-20,s={start:{position:"absolute",top:n},process:{position:"fixed",top:20}};$(window).scroll(function(){var t=$(window).scrollTop();t<n?e.css(s.start):e.css(s.process)})}$("#TableOfContents").children().length<1&&$(".post-toc").remove()})</script><article class=post><header><h1 class=post-title>深入理解Linux中网络I/O复用并发模型</h1></header><date class="post-meta meta-date">2022年11月5日</date><div class=post-meta><span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
+阅读</span></span></div><div class=post-content><h2 id=本文说明>本文说明</h2><p>本文所有内容来自于 <a href=https://github.com/aceld>AceId</a> 如有侵权，联系作者删除！</p><h2 id=基本概念>基本概念</h2><h3 id=流>流</h3><ul><li>可以进行I/O操作的内核对象</li><li>文件、管道、套接字&mldr;&mldr;</li><li>流的入口：文件描述符(fd)</li></ul><h3 id=io操作>I/O操作</h3><p>所有对流的读写操作，都可以称之为I/O操作</p><h3 id=阻塞>阻塞</h3><ul><li>阻塞等待：不占用CPU宝贵的时间片<ul><li>缺点：不能够很好的处理多个(I/O)请求的问题</li><li>同一个阻塞，同一时刻只能处理一个流的阻塞监听</li></ul></li><li>非阻塞忙轮询 ：占用CPU，系统资源</li></ul><blockquote><p>在处理意见数据的接收场景时，建议优先使用阻塞等待的方式，不浪费性能资源</p></blockquote><h3 id=多路io复用>多路IO复用</h3><ul><li>既能够阻塞等待，不浪费资源</li><li>也能够同一时刻监听多个IO请求的状态</li></ul><h2 id=解决阻塞死等待的缺点>解决阻塞死等待的缺点</h2><ol><li>阻塞等待+多进程/多线程：需要开辟线程浪费资源</li><li>非阻塞+忙轮询：<ol><li>CPU在大量的做判读，while 和 for</li><li>CPU的利用率不高</li></ol></li></ol><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#000;font-weight:700>while</span> <span style=color:#0086b3>true</span> {
+</span></span><span style=display:flex><span>	<span style=color:#000;font-weight:700>for</span> i in <span style=color:#a61717;background-color:#e3d2d2>流</span>[] {
+</span></span><span style=display:flex><span>		<span style=color:#000;font-weight:700>if</span> i has <span style=color:#a61717;background-color:#e3d2d2>数据</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a61717;background-color:#e3d2d2>读</span> <span style=color:#a61717;background-color:#e3d2d2>或者</span> <span style=color:#a61717;background-color:#e3d2d2>其他处理</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><ol start=3><li>多路IO复用机制 &ndash; select<ol><li>监听的IO数量有限，默认是1024个</li><li>不会精准的告诉开发者，哪些IO是可读可写的，需要遍历</li></ol></li></ol><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#000;font-weight:700>while</span> <span style=color:#0086b3>true</span> {
+</span></span><span style=display:flex><span>	select(<span style=color:#a61717;background-color:#e3d2d2>流</span>[]); <span style=color:#998;font-style:italic>// 阻塞
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>	<span style=color:#998;font-style:italic>// 有消息抵达
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>	<span style=color:#000;font-weight:700>for</span> i in <span style=color:#a61717;background-color:#e3d2d2>流</span>[] {
+</span></span><span style=display:flex><span>		<span style=color:#000;font-weight:700>if</span> i has <span style=color:#a61717;background-color:#e3d2d2>数据</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a61717;background-color:#e3d2d2>读</span> <span style=color:#a61717;background-color:#e3d2d2>或者</span> <span style=color:#a61717;background-color:#e3d2d2>其他处理</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><ol start=3><li>多路IO复用机制 &ndash; epoll<ol><li>与 select，poll 一样，对I/O多路复用的技术</li><li>只关心“活跃”的链接，无需遍历全部描述集合</li><li>能够处理大量的链接请求(系统可以打开的文件数目， 可以通过/proc/sys/fd/file-max查看)</li></ol></li></ol><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#000;font-weight:700>while</span> <span style=color:#0086b3>true</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a61717;background-color:#e3d2d2>可处理的流</span>[] <span style=color:#000;font-weight:700>=</span> epoll_wait(epoll_fd) <span style=color:#998;font-style:italic>// 阻塞
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>	
+</span></span><span style=display:flex><span>	<span style=color:#998;font-style:italic>// 有消息抵达,全部放在 “可处理的流[]”中
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>	<span style=color:#000;font-weight:700>for</span> i in <span style=color:#a61717;background-color:#e3d2d2>可处理的流</span>[] {
+</span></span><span style=display:flex><span>		<span style=color:#a61717;background-color:#e3d2d2>读</span> <span style=color:#a61717;background-color:#e3d2d2>或者</span> <span style=color:#a61717;background-color:#e3d2d2>其他处理</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=epoll-的api>Epoll 的API</h2><h3 id=创建epoll>创建EPOLL</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#998;font-style:italic>// epoll_create 创建一个EPOLL实例。返回新实例的FD。“Size”参数是一个提示，指定要与新实例关联的文件描述符的数量。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// EPOLL_CREATE()返回的FD应该用Close()关闭。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// size 内核监听的数目
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// return 返回一个epoll句柄(即一个文件描述符)
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>epoll_create</span> (<span style=color:#458;font-weight:700>int</span> __size);
+</span></span></code></pre></td></tr></table></div></div><h3 id=控制epoll>控制EPOLL</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">45
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">46
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">47
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">48
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">49
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">50
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">51
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">52
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">53
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">54
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">55
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">56
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">57
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">58
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">59
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">60
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">61
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#998;font-style:italic>/* Valid opcodes ( &#34;op&#34; parameter ) to issue to epoll_ctl().  */</span>
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLL_CTL_ADD 1	</span><span style=color:#998;font-style:italic>/* Add a file descriptor to the interface.  */</span><span style=color:#999;font-weight:700;font-style:italic>
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLL_CTL_DEL 2	</span><span style=color:#998;font-style:italic>/* Remove a file descriptor from the interface.  */</span><span style=color:#999;font-weight:700;font-style:italic>
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLL_CTL_MOD 3	</span><span style=color:#998;font-style:italic>/* Change file descriptor epoll_event structure.  */</span><span style=color:#999;font-weight:700;font-style:italic>
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span><span style=color:#998;font-style:italic>/* 
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>	 Manipulate an epoll instance &#34;epfd&#34;. Returns 0 in case of success,
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>   -1 in case of error ( the &#34;errno&#34; variable will contain the
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>   specific error code ) The &#34;op&#34; parameter is one of the EPOLL_CTL_*
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>   constants defined above. The &#34;fd&#34; parameter is the target of the
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>   operation. The &#34;event&#34; parameter describes which events the caller
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>   is interested in and any associated user data.
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>*/</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>extern</span> <span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>epoll_ctl</span> (<span style=color:#458;font-weight:700>int</span> __epfd, <span style=color:#458;font-weight:700>int</span> __op, <span style=color:#458;font-weight:700>int</span> __fd, <span style=color:#000;font-weight:700>struct</span> epoll_event <span style=color:#000;font-weight:700>*</span>__event)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>enum</span> EPOLL_EVENTS
+</span></span><span style=display:flex><span>  {
+</span></span><span style=display:flex><span>    EPOLLIN <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0x001</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLIN EPOLLIN
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLPRI <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0x002</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLPRI EPOLLPRI
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLOUT <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0x004</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLOUT EPOLLOUT
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLRDNORM <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0x040</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLRDNORM EPOLLRDNORM
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLRDBAND <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0x080</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLRDBAND EPOLLRDBAND
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLWRNORM <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0x100</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLWRNORM EPOLLWRNORM
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLWRBAND <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0x200</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLWRBAND EPOLLWRBAND
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLMSG <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0x400</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLMSG EPOLLMSG
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLERR <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0x008</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLERR EPOLLERR
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLHUP <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0x010</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLHUP EPOLLHUP
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLRDHUP <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0x2000</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLRDHUP EPOLLRDHUP
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLEXCLUSIVE <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1u</span> <span style=color:#000;font-weight:700>&lt;&lt;</span> <span style=color:#099>28</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLEXCLUSIVE EPOLLEXCLUSIVE
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLWAKEUP <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1u</span> <span style=color:#000;font-weight:700>&lt;&lt;</span> <span style=color:#099>29</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLWAKEUP EPOLLWAKEUP
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLONESHOT <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1u</span> <span style=color:#000;font-weight:700>&lt;&lt;</span> <span style=color:#099>30</span>,
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLONESHOT EPOLLONESHOT
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>    EPOLLET <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1u</span> <span style=color:#000;font-weight:700>&lt;&lt;</span> <span style=color:#099>31</span>
+</span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic>#define EPOLLET EPOLLET
+</span></span></span><span style=display:flex><span><span style=color:#999;font-weight:700;font-style:italic></span>  };
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>struct</span> epoll_event
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#458;font-weight:700>uint32_t</span> events;	<span style=color:#998;font-style:italic>/* Epoll events */</span>
+</span></span><span style=display:flex><span>  epoll_data_t data;	<span style=color:#998;font-style:italic>/* User data variable */</span>
+</span></span><span style=display:flex><span>} __EPOLL_PACKED;
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>typedef</span> <span style=color:#000;font-weight:700>union</span> epoll_data
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#458;font-weight:700>void</span> <span style=color:#000;font-weight:700>*</span>ptr;
+</span></span><span style=display:flex><span>  <span style=color:#458;font-weight:700>int</span> fd;
+</span></span><span style=display:flex><span>  <span style=color:#458;font-weight:700>uint32_t</span> u32;
+</span></span><span style=display:flex><span>  <span style=color:#458;font-weight:700>uint64_t</span> u64;
+</span></span><span style=display:flex><span>} epoll_data_t;
+</span></span></code></pre></td></tr></table></div></div><h3 id=等待epoll>等待EPOLL</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#998;font-style:italic>/* Same as epoll_wait, but the thread&#39;s signal mask is temporarily
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>   and atomically replaced with the one provided as parameter.
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>   This function is a cancellation point and therefore not marked with
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic>   __THROW.  */</span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>extern</span> <span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>epoll_pwait</span> (<span style=color:#458;font-weight:700>int</span> __epfd, <span style=color:#000;font-weight:700>struct</span> epoll_event <span style=color:#000;font-weight:700>*</span>__events, <span style=color:#458;font-weight:700>int</span> __maxevents, <span style=color:#458;font-weight:700>int</span> __timeout, <span style=color:#000;font-weight:700>const</span> __sigset_t <span style=color:#000;font-weight:700>*</span>__ss);
+</span></span></code></pre></td></tr></table></div></div><h3 id=使用epoll编程主流程骨架>使⽤用epoll编程主流程⻣骨架</h3><div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="white-space:pre;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#998;font-style:italic>// 创建epoll
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span><span style=color:#458;font-weight:700>int</span> epfd <span style=color:#000;font-weight:700>=</span> epoll_create(<span style=color:#099>1000</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic>// 将listen_fd 添加进 epoll 中
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>epoll_ctl(epfd, EPOLL_CTL_ADD, listen_fd, <span style=color:#000;font-weight:700>&amp;</span>listen_event);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#000;font-weight:700>while</span> (<span style=color:#099>1</span>) {
+</span></span><span style=display:flex><span>  <span style=color:#998;font-style:italic>// 阻塞等待epoll中的fd触发
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>  <span style=color:#458;font-weight:700>int</span> artive_cnt <span style=color:#000;font-weight:700>=</span> epoll_wait(epfd, events, <span style=color:#099>1000</span>, <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>);
+</span></span><span style=display:flex><span>  <span style=color:#000;font-weight:700>for</span> (i <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>; i <span style=color:#000;font-weight:700>&lt;</span> active_cnt; i<span style=color:#000;font-weight:700>++</span>) {
+</span></span><span style=display:flex><span>    <span style=color:#000;font-weight:700>if</span> (event[i].data.fd <span style=color:#000;font-weight:700>==</span> listen_fd) {
+</span></span><span style=display:flex><span>      <span style=color:#998;font-style:italic>// accept. 并且将accept的fd加进epoll中。
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    } <span style=color:#000;font-weight:700>else</span> <span style=color:#000;font-weight:700>if</span> (event[i].events <span style=color:#000;font-weight:700>&amp;</span> EPOLLIN) {
+</span></span><span style=display:flex><span>      <span style=color:#998;font-style:italic>// 对此fd 进行读操作
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    } <span style=color:#000;font-weight:700>else</span> <span style=color:#000;font-weight:700>if</span> (event[i].events <span style=color:#000;font-weight:700>&amp;</span> EPOLLOUT) {
+</span></span><span style=display:flex><span>      <span style=color:#998;font-style:italic>// 对此fd 进行写操作
+</span></span></span><span style=display:flex><span><span style=color:#998;font-style:italic></span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></td></tr></table></div></div><h2 id=触发模式>触发模式</h2><blockquote><p>默认是水平触发模式，如果要边缘触发模式，要在给事件进行绑定的时候通过 <code>EPOOLET</code> 来设置</p></blockquote><h3 id=水平触发>水平触发</h3><p>如果用户在监听 <code>epoll</code> 事件，当内核有事件的时候，会拷贝给用户态事件，但是如果用户只处理了一次，那么剩下没有处理的会在下一次 <code>epoll_wait</code> 再次返回该事件。</p><h3 id=边缘触发>边缘触发</h3><p>相比跟水平触发相反，当内核有事件达到，只会通知用户一次，至于用户处理还是不处理，以后将不会再通知，这样减少了拷贝过程，增加了性能，但是相对来说，如果用户马虎忘记处理，将会产生事件丢的情况</p></div><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/c/c/>广东普通专升本计算机基础与程序设计2022考纲</a></li><li><a href=/data_structure/data_stucture/>广东普通专升本计算机基础与程序设计2022考纲</a></li><li><a href=/data_structure/important/>概念及结论</a></li><li><a href=/data_structure/8/>第八章 排序</a></li><li><a href=/data_structure/7/>第七章 查找</a></li></ul></div><div class="post-meta meta-tags">没有标签</div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo="your github repo" issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div><footer id=footer><div>&copy; 2022 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
 | <a rel=nofollow target=_blank href=http://beian.miit.gov.cn/>粤ICP备19128176号</a></div><br><div><div class=github-badge><a href=https://gohugo.io/ target=_black rel=nofollow><span class=badge-subject>Powered by</span><span class="badge-value bg-blue">Hugo</span></a></div><div class=github-badge><a href=https://www.flysnow.org/ target=_black><span class=badge-subject>Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a></div><div class=github-badge><a href=https://github.com/flysnow-org/maupassant-hugo target=_black><span class=badge-subject>Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a></div></div></footer><script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[["$","$"]],processEscapes:!0}}</script><script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script><script src=//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js></script>
 <a id=rocket href=#top></a>
 <script type=text/javascript src='/js/totop.js?v=0.0.0' async></script>
