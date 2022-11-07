@@ -297,3 +297,28 @@ socket编程流程清晰简单那，适合学习使用，了解socket基本编�
 
 1. 读写依旧是main thread单独处理，最高的读写并行通道依然为1
 2. 虽然多个worker线程处理业务，但是最后返回给客户端依旧也需要排队。因为出口还是main thread的read+write 1个通道
+
+## 单线程IO复用+多线程IO复⽤(链接线程池)
+
+![epoll_5](/linux/epoll_5.png)
+
+### 模型分析
+
+1. Server在启动监听之间，开辟固定数量(N)的线程，用Thread Pool线程池管理
+2. 主线程main thread 创建listenFd之后，采用多路I/O复用机制(select，epoll)进行IO状态阻塞监控。有Client1客户端Connect请求，I/O复用机制检测到ListenFd触发读事件，则进行Accept建立连接，并将新生成的connFd1分发给Thread Pool中的某个线程进行监听。
+3. Thread Pool中的每个thread都启动多路I/O复用机制(select、epoll)，用来监听main thread 建立成功并且分发下来的socket套接字
+4. 如图，thread1监听ConnFd1、ConnFd2，thread2监听ConnFd3，thread3监听ConnFd4， 当对应的ConnFd有读写事件，对应的线程处理该套接字的读写及业务。
+
+### 优点
+
+1. 将之前  [单线程多路io复⽤](#单线程多路io复) ，分散到多线程类完成，这样就增加了同一时刻读写的并行通道，并行通道的数量N，N是线程池线程的数量
+
+2. Server同事监听ConnFd套接字的数量，几乎是成倍增加，之前的全部的监控数量取决于main thread的多路IO复用机制的最大限制(select 1024, epoll默认与内存大小有关，约3 ~ 6w不等)，所以理论单点Server最高响应并发数量N*(3 ~ 6w) 
+
+   > N是线程池的线程数量，建议线程的数量和CPU核心的数量比例是1:1
+
+3. 如果良好的线程池数量和CPU核心数适配，那么可以尝试CPU核心与Thread进行绑定，从而减低CPU的切换频率，提升每个Thread处理合理业务的效率，降低CPU的切换成本
+
+### 缺点
+
+1. 虽然监听的并发数量提升，但是最高的读写并行通道依然为N，并且多个身处与同一个Thread的客户端，会出现读写延迟现象。实际上每个Thread模型的特征与  [单线程多路io复⽤](#单线程多路io复) 单线程多路IO复用机制是一致的。
