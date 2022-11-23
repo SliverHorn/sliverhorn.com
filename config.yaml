@@ -72,17 +72,22 @@ menu:
       url: /linux/
       weight: 1
     -
+      identifier: operating_system
+      name: 操作系统
+      url: /operating_system/
+      weight: 2
+    -
       identifier: tool
       name: 工具
       url: /tool/
-      weight: 2
+      weight: 3
     -
       identifier: archives
       name: 归档
       url: /archives/
-      weight: 3
+      weight: 4
     -
       identifier: about
       name: 关于
       url: /about/
-      weight: 3
+      weight: 5
