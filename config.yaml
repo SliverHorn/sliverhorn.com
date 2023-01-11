@@ -72,9 +72,9 @@ menu:
       url: /linux/
       weight: 1
     -
-      identifier: operating_system
-      name: 操作系统
-      url: /operating_system/
+      identifier: software_designer
+      name: 软件设计师
+      url: /software_designer/
       weight: 2
     -
       identifier: tool
