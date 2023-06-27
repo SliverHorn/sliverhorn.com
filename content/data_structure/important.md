@@ -44,7 +44,7 @@ draft: false
 
 **循环链表**：采用链式存储结构的线性表，表中最后一个结点的指针域指向头结点，整个链表形成一个环
 
-单链表某结点p有**后继结点**的条件是：==p.next != NULL==
+单链表某结点p有**后继结点**的条件是：`p.next != NULL`
 
 ## 栈与队列
 
@@ -58,22 +58,22 @@ draft: false
 
 > front始终指向队首元素，rear指向队尾元素的下一个位置
 
-1. 队空条件：==front == rear==
-2. 队满条件：==(rear+1)%MaxSize == front==
+1. 队空条件：`front == rear`
+2. 队满条件：`(rear+1)%MaxSize == front`
+3. 入队: `rear = (rear+1) % (m+1)`
+4. 出队: `front = (front+1) % maxSize`
 
 循环队列的长度计算：
 
-1. rear=front： ==0==
-2. rear>front：==rear-front==
-3. rear<front：==(rear-front+maxSize)% maxSize==
+1. rear=front： `0`
+2. rear>front：`rear-front`
+3. rear<front：`(rear-front+maxSize) % maxSize`
 
 **链队**：
 
 > front始终指向队首元素，rear指向队尾元素的下一个位置
 
-队空条件：==front == rear==
-
-队满条件：
+队空条件：`front == rear`
 
 ## 串、数组和广义表
 
