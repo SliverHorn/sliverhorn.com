@@ -39,26 +39,20 @@
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
 </span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
-</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#0086b3>cd</span> <span style=color:#000;font-weight:700>&amp;&amp;</span> <span style=color:#0086b3>cd</span> .oh-my-zsh/plugins
 </span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 高亮插件</span>
-</span></span><span style=display:flex><span>git clone https://gitee.com/sliverhorn/zsh-syntax-highlighting.git
+</span></span><span style=display:flex><span>git clone https://gitee.com/mirrors/zsh-syntax-highlighting.git
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 记录历史插件</span>
-</span></span><span style=display:flex><span>git clone https://gitee.com/sliverhorn/zsh-autosuggestions.git
+</span></span><span style=display:flex><span>git clone https://gitee.com/mirrors/zsh-autosuggestions.git
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>vi ~/.zshrc
 </span></span><span style=display:flex><span><span style=color:#998;font-style:italic># agnoster是内置主题，所以不需要安装</span>
 </span></span><span style=display:flex><span><span style=color:teal>ZSH_THEME</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;agnoster&#34;</span>
 </span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 找到对应位置加上zsh-syntax-highlighting zsh-autosuggestions </span>
 </span></span><span style=display:flex><span><span style=color:teal>plugins</span><span style=color:#000;font-weight:700>=(</span>zsh-syntax-highlighting zsh-autosuggestions git<span style=color:#000;font-weight:700>)</span>
-</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 下面两句是没有相同配置项的，</span>
-</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 第一个是隐藏用户(有些主题会隐藏，agnoster内置主题不会隐藏)，</span>
-</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 第二是gf可能冲突，官方推荐这样做的</span>
+</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 第一个是隐藏用户(有些主题会隐藏，agnoster内置主题不会隐藏)</span>
 </span></span><span style=display:flex><span><span style=color:teal>DEFAULT_USER</span><span style=color:#000;font-weight:700>=</span><span style=color:#d14>&#34;sliverhorn&#34;</span>
-</span></span><span style=display:flex><span><span style=color:#998;font-style:italic># alias gf=gf</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span><span style=color:#998;font-style:italic># 使.zshrc配置文件生效</span>
 </span></span><span style=display:flex><span><span style=color:#0086b3>source</span> ~/.zshrc
