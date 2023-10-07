@@ -28,21 +28,18 @@ sh -c "$(wget https://gitee.com/Devkings/oh_my_zsh_install/raw/master/install.sh
 ```shell
 cd && cd .oh-my-zsh/plugins
 # 高亮插件
-git clone https://gitee.com/sliverhorn/zsh-syntax-highlighting.git
+git clone https://gitee.com/mirrors/zsh-syntax-highlighting.git
 
 # 记录历史插件
-git clone https://gitee.com/sliverhorn/zsh-autosuggestions.git
+git clone https://gitee.com/mirrors/zsh-autosuggestions.git
 
 vi ~/.zshrc
 # agnoster是内置主题，所以不需要安装
 ZSH_THEME="agnoster"
 # 找到对应位置加上zsh-syntax-highlighting zsh-autosuggestions 
 plugins=(zsh-syntax-highlighting zsh-autosuggestions git)
-# 下面两句是没有相同配置项的，
-# 第一个是隐藏用户(有些主题会隐藏，agnoster内置主题不会隐藏)，
-# 第二是gf可能冲突，官方推荐这样做的
+# 第一个是隐藏用户(有些主题会隐藏，agnoster内置主题不会隐藏)
 DEFAULT_USER="sliverhorn"
-# alias gf=gf
 
 # 使.zshrc配置文件生效
 source ~/.zshrc
