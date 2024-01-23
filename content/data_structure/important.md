@@ -157,21 +157,21 @@ draft: false
 
 #### 双亲表示法
 
-![双亲表示法](https://blog.sliverhorn.com/data_structure/5/5.19.png)
+![双亲表示法](/data_structure/5/5.19.png)
 
 #### 孩子表示法
 
-![孩子兄弟表示法](https://blog.sliverhorn.com/data_structure/5/5.21.png)
+![孩子兄弟表示法](/data_structure/5/5.21.png)
 
 #### 孩子兄弟表示法(二叉树表示法)
 
-![孩子兄弟表示法](https://blog.sliverhorn.com/data_structure/5/5.23.png)
+![孩子兄弟表示法](/data_structure/5/5.23.png)
 
 
 
 ### 森林与二叉树的转换
 
-![森林与二叉树的转换](https://blog.sliverhorn.com/data_structure/5/5.24.png)
+![森林与二叉树的转换](/data_structure/5/5.24.png)
 
 > 森林转二叉树：==拼接右子树==
 >
@@ -187,11 +187,11 @@ draft: false
 
 构建：
 
-![哈夫曼树构建](https://blog.sliverhorn.com/data_structure/5/5.26.png)
+![哈夫曼树构建](/data_structure/5/5.26.png)
 
 WPL(带权路径长度)最小的二叉树称为哈夫曼树，也称为最优二叉树
 
-![WPL](https://blog.sliverhorn.com/data_structure/5/5.28.png)
+![WPL](/data_structure/5/5.28.png)
 
 哈夫曼编码：==左 0 右 1==
 
@@ -211,37 +211,37 @@ WPL(带权路径长度)最小的二叉树称为哈夫曼树，也称为最优二
 
 **邻接矩阵表示法**：表示顶点之间相邻关系的矩阵
 
-![图的示例](https://blog.sliverhorn.com/data_structure/6/6.1.png)
+![图的示例](/data_structure/6/6.1.png)
 
-![图的其邻接矩阵](https://blog.sliverhorn.com/data_structure/6/6.9.png)
+![图的其邻接矩阵](/data_structure/6/6.9.png)
 
 $\infty$ 表示计算机允许的、 大于所有边上权值的数。例如， 图 6.10 所示 为一个有向网和它的邻接矩阵。
 
-![网及其邻接矩阵](https://blog.sliverhorn.com/data_structure/6/6.10.png)
+![网及其邻接矩阵](/data_structure/6/6.10.png)
 
 **邻接表表示法**：图的一种链式存储结构。邻接表由两部分组成:表头结点表和边表。
 
-![图的示例](https://blog.sliverhorn.com/data_structure/6/6.1.png)
+![图的示例](/data_structure/6/6.1.png)
 
-![邻接表和逆邻接表](https://blog.sliverhorn.com/data_structure/6/6.12.png)
+![邻接表和逆邻接表](/data_structure/6/6.12.png)
 
 **邻接多重表**: 无向图的另一种链式存储结构
 
-![图的示例](https://blog.sliverhorn.com/data_structure/6/6.1.png)
+![图的示例](/data_structure/6/6.1.png)
 
-![无向图G2的邻接表](https://blog.sliverhorn.com/data_structure/6/6.16.png)
+![无向图G2的邻接表](/data_structure/6/6.16.png)
 
 **十字链表**: 有向图的另一种链式存储结构
 
-![十字链表](https://blog.sliverhorn.com/data_structure/6/6.14.png)
+![十字链表](/data_structure/6/6.14.png)
 
 ### 图的遍历
 
-![深度优先搜索](https://blog.sliverhorn.com/data_structure/6/6.5.1.png)
+![深度优先搜索](/data_structure/6/6.5.1.png)
 
 **广度优先搜索**：遍历类似于树的按层次遍历的过程
 
-![广度优先搜索](https://blog.sliverhorn.com/data_structure/6/6.5.2.png)
+![广度优先搜索](/data_structure/6/6.5.2.png)
 
 ### 图的应用
 
@@ -249,25 +249,25 @@ $\infty$ 表示计算机允许的、 大于所有边上权值的数。例如， 
 
 1. **普里姆(Prim)算法**（最小连通）
 
-   ![普里姆算法](https://blog.sliverhorn.com/data_structure/6/6.19.png)
+   ![普里姆算法](/data_structure/6/6.19.png)
 
 2. **克鲁斯卡尔(Kruskal)算法**
 
-   ![克鲁斯卡尔算法](https://blog.sliverhorn.com/data_structure/6/6.20.png)
+   ![克鲁斯卡尔算法](/data_structure/6/6.20.png)
 
 #### 最短路径
 
-![迪杰斯特拉算法](https://blog.sliverhorn.com/data_structure/6/6.6.2.png)
+![迪杰斯特拉算法](/data_structure/6/6.6.2.png)
 
 #### 拓扑排序
 
-![拓扑排序](https://blog.sliverhorn.com/data_structure/6/6.27.png)
+![拓扑排序](/data_structure/6/6.27.png)
 
 
 
 #### 关键路径
 
-![关键路径](https://blog.sliverhorn.com/data_structure/6/6.6.4.png)
+![关键路径](/data_structure/6/6.6.4.png)
 
 关键路径：$v_1 \rightarrow v_3 \rightarrow v_4 \rightarrow v_6$
 
