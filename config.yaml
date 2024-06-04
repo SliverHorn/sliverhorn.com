@@ -69,7 +69,7 @@ menu:
       weight: 1
     -
       identifier: csapp
-      name: "Computer Systems: A Programmer's Perspective"
+      name: csapp
       url: /csapp/
       weight: 2
     -
