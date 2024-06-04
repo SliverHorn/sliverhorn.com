@@ -58,6 +58,25 @@ SliverHorn的博客
 <ul>
 <li><a href=#c语言整数数据类型的典型取值范围>C语言整数数据类型的典型取值范围</a></li>
 <li><a href=#unsigned-encodings>Unsigned Encodings</a></li>
+<li><a href=#twos-complement-encodeings>Two’s Complement Encodeings</a></li>
+<li><a href=#unsigned-vs--signed>Unsigned Vs Signed</a>
+<ul>
+<li><a href=#unsigned-maximum>Unsigned Maximum</a></li>
+<li><a href=#signed-maximum>Signed Maximum</a></li>
+<li><a href=#signed-minimum>Signed Minimum</a></li>
+<li><a href=#special-numeric>Special Numeric</a></li>
+</ul>
+</li>
+<li><a href=#conversion-between-signed-and-unsigned>Conversion between Signed and Unsigned</a></li>
+<li><a href=#twos-complement-to-unsigned>Two’s Complement to Unsigned</a>
+<ul>
+<li><a href=#t2u_wx>$T2U_{w}(x)$</a></li>
+<li><a href=#u2t_wu>$U2T_{w}(u)$</a></li>
+</ul>
+</li>
+<li><a href=#signed-versus-unsigned-in-c>Signed versus Unsigned in C</a></li>
+<li><a href=#expanding-the-bit-representation-of-a-number>Expanding the bit Representation of a Number</a></li>
+<li><a href=#signed-extension>Signed Extension</a></li>
 </ul>
 </nav>
 </div>
@@ -86,12 +105,12 @@ SliverHorn的博客
 <thead>
 <tr>
 <th>C data type</th>
-<th>Minimum_32bit</th>
-<th>Minimum_64bit</th>
-<th>Maximum_32bit</th>
-<th>Maximum_64bit</th>
-<th>Bytes_32bit</th>
-<th>Bytes_64bit</th>
+<th>Minimum32bit</th>
+<th>Minimum64bit</th>
+<th>Maximum32bit</th>
+<th>Maximum64bit</th>
+<th>Bytes32bit</th>
+<th>Bytes64bit</th>
 </tr>
 </thead>
 <tbody>
@@ -210,7 +229,511 @@ SliverHorn的博客
 <p>$$
 B2U_{w}(\vec{x})\stackrel{.}{=}x_{w-1}{\cdot}2^{w-1}+x_{w-2}{\cdot}2^{w-2}+&mldr;+x_{0}{\cdot}2^{0}=\sum_{i=0}^{w-1}{x_{i}2^{i}}
 $$</p>
-<p>s</p>
+<p>for example:</p>
+<p>$$
+B2U_{4}([0101])=0{\cdot}2^3+1{\cdot}2^2+0{\cdot}2^1+1{\cdot}2^0=5
+$$</p>
+<p>$$
+B2U_{4}([1011])=1{\cdot}2^3+0{\cdot}2^2+1{\cdot}2^1+1{\cdot}2^0=11
+$$</p>
+<p>十进制：</p>
+<p>$$
+B10U_{w}(\vec{y})\stackrel{.}{=}y_{w-1}{\cdot}10^{w-1}+y_{w-2}{\cdot}10^{w-2}+&mldr;+y_{0}{\cdot}10^{0}=\sum_{i=0}^{w-1}{y_{i}10^{i}}
+$$</p>
+<p>
+<a data-fancybox=gallery href=/csapp/2-2-1.png>
+<img class=mx-auto alt=2-2-1 src=/csapp/2-2-1.png>
+</a>
+</p>
+<h2 id=twos-complement-encodeings>Two’s Complement Encodeings</h2>
+<blockquote>
+<p>补码编码</p>
+</blockquote>
+<p>For vector $\vec{x} = [x_{w-1},x_{w-2},&mldr;,x_0]$</p>
+<p>$$
+B2T_{w}(\vec{x})\stackrel{.}{=}x_{w-1}{\cdot}-2^{w-1}+x_{w-2}{\cdot}2^{w-2}+&mldr;+x_{0}{\cdot}2^{0}=-x_{w-1}2^{w-1}+\sum_{i=0}^{w-2}{x_{i}2^{i}}
+$$</p>
+<p>for example:</p>
+<p>$$
+B2U_{4}([0101])=-0{\cdot}2^3+1{\cdot}2^2+0{\cdot}2^1+1{\cdot}2^0=5
+$$</p>
+<p>$$
+B2U_{4}([1011])=-1{\cdot}2^3+0{\cdot}2^2+1{\cdot}2^1+1{\cdot}2^0=-11
+$$</p>
+<h2 id=unsigned-vs--signed>Unsigned Vs Signed</h2>
+<h3 id=unsigned-maximum>Unsigned Maximum</h3>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>work size</th>
+<th style=text-align:center>Binary</th>
+<th style=text-align:center>Hexadecimal</th>
+<th style=text-align:center>Decimal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>8</td>
+<td style=text-align:center>1111 1111</td>
+<td style=text-align:center>0xFF</td>
+<td style=text-align:center>$2^8-1$</td>
+</tr>
+<tr>
+<td style=text-align:center>16</td>
+<td style=text-align:center>$\underbrace{1111&mldr;1111}_{16}$</td>
+<td style=text-align:center>0xFFF</td>
+<td style=text-align:center>$2^{16}-1$</td>
+</tr>
+<tr>
+<td style=text-align:center>32</td>
+<td style=text-align:center>$\underbrace{1111&mldr;1111}_{32}$</td>
+<td style=text-align:center>0xFFFFFFFF</td>
+<td style=text-align:center>$2^{32}-1$</td>
+</tr>
+<tr>
+<td style=text-align:center>64</td>
+<td style=text-align:center>$\underbrace{1111&mldr;1111}_{64}$</td>
+<td style=text-align:center>$0x\underbrace{FFF&mldr;FFF}_{16}$</td>
+<td style=text-align:center>$2^{64}-1$</td>
+</tr>
+</tbody>
+</table>
+<h3 id=signed-maximum>Signed Maximum</h3>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>work size</th>
+<th style=text-align:center>Binary</th>
+<th style=text-align:center>Hexadecimal</th>
+<th style=text-align:center>Decimal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>8</td>
+<td style=text-align:center>0111 1111</td>
+<td style=text-align:center>0x7F</td>
+<td style=text-align:center>$2^7-1$</td>
+</tr>
+<tr>
+<td style=text-align:center>16</td>
+<td style=text-align:center>$0\underbrace{111&mldr;1111}_{15}$</td>
+<td style=text-align:center>0x7FF</td>
+<td style=text-align:center>$2^{15}-1$</td>
+</tr>
+<tr>
+<td style=text-align:center>32</td>
+<td style=text-align:center>$0\underbrace{111&mldr;1111}_{31}$</td>
+<td style=text-align:center>0x7FFFFFFF</td>
+<td style=text-align:center>$2^{31}-1$</td>
+</tr>
+<tr>
+<td style=text-align:center>64</td>
+<td style=text-align:center>$0\underbrace{111&mldr;1111}_{63}$</td>
+<td style=text-align:center>$0x7\underbrace{FF&mldr;FFF}_{15}$</td>
+<td style=text-align:center>$2^{63}-1$</td>
+</tr>
+</tbody>
+</table>
+<h3 id=signed-minimum>Signed Minimum</h3>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>work size</th>
+<th style=text-align:center>Binary</th>
+<th style=text-align:center>Hexadecimal</th>
+<th style=text-align:center>Decimal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>8</td>
+<td style=text-align:center>1000 0000</td>
+<td style=text-align:center>0x80</td>
+<td style=text-align:center>$-2^7$</td>
+</tr>
+<tr>
+<td style=text-align:center>16</td>
+<td style=text-align:center>$1\underbrace{000&mldr;0000}_{15}$</td>
+<td style=text-align:center>0x8000</td>
+<td style=text-align:center>$-2^{15}$</td>
+</tr>
+<tr>
+<td style=text-align:center>32</td>
+<td style=text-align:center>$1\underbrace{000&mldr;0000}_{31}$</td>
+<td style=text-align:center>0x80000000</td>
+<td style=text-align:center>$-2^{31}$</td>
+</tr>
+<tr>
+<td style=text-align:center>64</td>
+<td style=text-align:center>$1\underbrace{111&mldr;1111}_{63}$</td>
+<td style=text-align:center>$0x8\underbrace{00&mldr;000}_{15}$</td>
+<td style=text-align:center>$-2^{63}$</td>
+</tr>
+</tbody>
+</table>
+<h3 id=special-numeric>Special Numeric</h3>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>8</th>
+<th>16</th>
+<th>32</th>
+<th>64</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-1</td>
+<td>1111 1111</td>
+<td>$\underbrace{1111&mldr;1111}_{16}$</td>
+<td>$\underbrace{1111&mldr;1111}_{32}$</td>
+<td>$\underbrace{1111&mldr;1111}_{64}$</td>
+</tr>
+<tr>
+<td>UMax</td>
+<td>1111 1111</td>
+<td>$\underbrace{1111&mldr;1111}_{16}$</td>
+<td>$\underbrace{1111&mldr;1111}_{32}$</td>
+<td>$\underbrace{1111&mldr;1111}_{64}$</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Error : 1000 0001</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>weight</th>
+<th style=text-align:center>$\pm2^{15}$</th>
+<th style=text-align:center>$2^{14}$</th>
+<th style=text-align:center>$2^{13}$</th>
+<th style=text-align:center>$2^{12}$</th>
+<th style=text-align:center>$2^{11}$</th>
+<th style=text-align:center>$2^{10}$</th>
+<th style=text-align:center>$2^{9}$</th>
+<th style=text-align:center>$2^{8}$</th>
+<th style=text-align:center>$2^{7}$</th>
+<th style=text-align:center>$2^{6}$</th>
+<th style=text-align:center>$2^{5}$</th>
+<th style=text-align:center>$2^{4}$</th>
+<th style=text-align:center>$2^{3}$</th>
+<th style=text-align:center>$2^{2}$</th>
+<th style=text-align:center>$2^{1}$</th>
+<th style=text-align:center>$2^{0}$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>$12345_2$</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>1</td>
+</tr>
+<tr>
+<td style=text-align:center>$12345_{10}$</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>8192</td>
+<td style=text-align:center>4096</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>32</td>
+<td style=text-align:center>16</td>
+<td style=text-align:center>8</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>1</td>
+</tr>
+<tr>
+<td style=text-align:center>$-12345_2$</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+</tr>
+<tr>
+<td style=text-align:center>$-12345_{10}$</td>
+<td style=text-align:center>-32768</td>
+<td style=text-align:center>16384</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>2048</td>
+<td style=text-align:center>1024</td>
+<td style=text-align:center>512</td>
+<td style=text-align:center>256</td>
+<td style=text-align:center>128</td>
+<td style=text-align:center>64</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>4</td>
+<td style=text-align:center>2</td>
+<td style=text-align:center>1</td>
+</tr>
+<tr>
+<td style=text-align:center>$53191_2$</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+</tr>
+<tr>
+<td style=text-align:center>$53191_{10}$</td>
+<td style=text-align:center>32768</td>
+<td style=text-align:center>16384</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>2048</td>
+<td style=text-align:center>1024</td>
+<td style=text-align:center>512</td>
+<td style=text-align:center>256</td>
+<td style=text-align:center>128</td>
+<td style=text-align:center>64</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>4</td>
+<td style=text-align:center>2</td>
+<td style=text-align:center>1</td>
+</tr>
+</tbody>
+</table>
+<h2 id=conversion-between-signed-and-unsigned>Conversion between Signed and Unsigned</h2>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
+    <span style=color:#458;font-weight:700>short</span> <span style=color:#458;font-weight:700>int</span> a <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>12345</span>;
+    <span style=color:#458;font-weight:700>unsigned</span> <span style=color:#458;font-weight:700>short</span> b <span style=color:#000;font-weight:700>=</span> (<span style=color:#458;font-weight:700>unsigned</span> <span style=color:#458;font-weight:700>short</span>) a;
+    printf(<span style=color:#d14>&#34;a = %d, b = %u&#34;</span>, a, b);
+    <span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>运行结果</p>
+<p>a = -12345, b = 53191</p>
+<p>-12345: 1100 1111 1100 0111</p>
+<p>53191: 1100 1111 1100 0111</p>
+</blockquote>
+<h2 id=twos-complement-to-unsigned>Two’s Complement to Unsigned</h2>
+<p>$$
+B2U_{w}(\vec{x})\stackrel{.}{=}x_{w-1}{\cdot}2^{w-1}+x_{w-2}{\cdot}2^{w-2}+&mldr;+x_{0}{\cdot}2^{0}
+$$</p>
+<p>$$
+B2T_{w}(\vec{x})\stackrel{.}{=}x_{w-1}{\cdot}-2^{w-1}+x_{w-2}{\cdot}2^{w-2}+&mldr;+x_{0}{\cdot}2^{0}
+$$</p>
+<p>$$
+B2U_{w}-B2T_{w}=x_{w-1}{\cdot}2^{w-1}-x_{w-1}{\cdot}-2^{w-1}=x_{w-1}{\cdot}2^{w}
+$$</p>
+<h3 id=t2u_wx>$T2U_{w}(x)$</h3>
+<p>$$
+B2U_{w}(\vec{x})=B2T_{w}(\vec{x})+x_{w-1}{\cdot}2^{w}
+$$</p>
+<p>$$
+T2U_{w}(x)= \begin{cases} x+2^w, & \text {x &lt; 0 } \\ x, & \text{ x $\geq$ 0} \end{cases}
+$$</p>
+<h3 id=u2t_wu>$U2T_{w}(u)$</h3>
+<p>$$
+B2T_w=B2U_w-x_{w-1}{\cdot}2^w
+$$</p>
+<p>$$
+U2T^w(u)= \begin{cases} u, & \text {u $\leq$ $TMax_w$ } \\ u-2^w, & \text{ u > $TMax_w$} \end{cases}
+$$</p>
+<h2 id=signed-versus-unsigned-in-c>Signed versus Unsigned in C</h2>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
+    <span style=color:#458;font-weight:700>int</span> a <span style=color:#000;font-weight:700>=</span> <span style=color:#000;font-weight:700>-</span><span style=color:#099>1</span>;
+    <span style=color:#458;font-weight:700>unsigned</span> <span style=color:#458;font-weight:700>int</span> b <span style=color:#000;font-weight:700>=</span> <span style=color:#099>0</span>;
+    <span style=color:#000;font-weight:700>if</span> (a <span style=color:#000;font-weight:700>&lt;</span> b) { <span style=color:#998;font-style:italic>// 隐式转换， 无符号数a会转换为无符号数，即-1 = 2^{32} -1 = 4294967295, 所以if (4294967295 &lt; 0) 不成立输出 -1 &gt; 0
+</span><span style=color:#998;font-style:italic></span>        printf(<span style=color:#d14>&#34;-1 &lt; 0&#34;</span>);
+    } <span style=color:#000;font-weight:700>else</span> {
+        printf(<span style=color:#d14>&#34;-1 &gt; 0&#34;</span>);
+    }
+    <span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=expanding-the-bit-representation-of-a-number>Expanding the bit Representation of a Number</h2>
+<p><code>unsigned char a;</code></p>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>$x_7$</th>
+<th style=text-align:center>$x_6$</th>
+<th style=text-align:center>$x_5$</th>
+<th style=text-align:center>$x_4$</th>
+<th style=text-align:center>$x_3$</th>
+<th style=text-align:center>$x_2$</th>
+<th style=text-align:center>$x_1$</th>
+<th style=text-align:center>$x_0$</th>
+</tr>
+</thead>
+</table>
+<p><code>unsigned short b;</code></p>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>$x_7$</th>
+<th style=text-align:center>$x_6$</th>
+<th style=text-align:center>$x_5$</th>
+<th style=text-align:center>$x_4$</th>
+<th style=text-align:center>$x_3$</th>
+<th style=text-align:center>$x_2$</th>
+<th style=text-align:center>$x_1$</th>
+<th style=text-align:center>$x_0$</th>
+</tr>
+</thead>
+</table>
+<h2 id=signed-extension>Signed Extension</h2>
+<blockquote>
+<p>有符号数 符号扩展</p>
+</blockquote>
+<p><code>char b;</code></p>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>$x_7$</th>
+<th style=text-align:center>$x_6$</th>
+<th style=text-align:center>$x_5$</th>
+<th style=text-align:center>$x_4$</th>
+<th style=text-align:center>$x_3$</th>
+<th style=text-align:center>$x_2$</th>
+<th style=text-align:center>$x_1$</th>
+<th style=text-align:center>$x_0$</th>
+</tr>
+</thead>
+</table>
+<p><code>short b;</code></p>
+<p>$$
+\underbrace{x_{7}|x_{7}|x_{7}|x_{7}|x_{7}|x_{7}|x_{7}|x_{7}}<em>{sign \ extension}|x</em>{7}|x_{6}|x_{5}|x_{4}|x_{3}|x_{2}|x_{1}
+$$</p>
+<p>$x_7 = 0$</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>0</th>
+<th style=text-align:center>$x_7$</th>
+<th style=text-align:center>$x_6$</th>
+<th style=text-align:center>$x_5$</th>
+<th style=text-align:center>$x_4$</th>
+<th style=text-align:center>$x_3$</th>
+<th style=text-align:center>$x_2$</th>
+<th style=text-align:center>$x_1$</th>
+<th style=text-align:center>$x_0$</th>
+</tr>
+</thead>
+</table>
+<p>$x_7=1$</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>1</th>
+<th style=text-align:center>1</th>
+<th style=text-align:center>1</th>
+<th style=text-align:center>1</th>
+<th style=text-align:center>1</th>
+<th style=text-align:center>1</th>
+<th style=text-align:center>1</th>
+<th style=text-align:center>1</th>
+<th style=text-align:center>$x_7$</th>
+<th style=text-align:center>$x_6$</th>
+<th style=text-align:center>$x_5$</th>
+<th style=text-align:center>$x_4$</th>
+<th style=text-align:center>$x_3$</th>
+<th style=text-align:center>$x_2$</th>
+<th style=text-align:center>$x_1$</th>
+<th style=text-align:center>$x_0$</th>
+</tr>
+</thead>
+</table>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
