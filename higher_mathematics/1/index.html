@@ -1,44 +1,296 @@
-<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer-when-downgrade"><title>第一章 函数与极限 | SliverHorn的博客</title>
-<meta property="og:title" content="第一章 函数与极限 - SliverHorn的博客"><meta property="og:type" content="article"><meta property="article:published_time" content="2022-01-01T17:17:17+08:00"><meta property="article:modified_time" content="2022-01-01T17:17:17+08:00"><meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
-"><meta name=description content="第一章 函数与极限"><meta name=author content="SliverHorn"><meta property="og:url" content="https://sliverhorn.com/higher_mathematics/1/"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=stylesheet href=/css/normalize.css><link rel=stylesheet href=/css/style.css><script type=text/javascript src=//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js></script><link href=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css rel=stylesheet><link rel=stylesheet href=/css/douban.css><link rel=stylesheet href=/css/other.css></head><body><header id=header class=clearfix><div class=container><div class=col-group><div class=site-name><a id=logo href=https://sliverhorn.com>SliverHorn的博客</a><p class=description>Golang 开发</p></div><div><nav id=nav-menu class=clearfix><a href=https://sliverhorn.com>首页</a>
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer-when-downgrade">
+<title>第一章 函数与极限 | SliverHorn的博客</title>
+<meta property="og:title" content="第一章 函数与极限 - SliverHorn的博客">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-01-01T17:17:17+08:00">
+<meta property="article:modified_time" content="2022-01-01T17:17:17+08:00">
+<meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
+">
+<meta name=description content="第一章 函数与极限">
+<meta name=author content="SliverHorn">
+<meta property="og:url" content="https://sliverhorn.com/higher_mathematics/1/">
+<link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
+<link rel=stylesheet href=/css/normalize.css>
+<link rel=stylesheet href=/css/style.css>
+<script type=text/javascript src=//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js></script>
+<link href=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css rel=stylesheet>
+<link rel=stylesheet href=/css/douban.css>
+<link rel=stylesheet href=/css/other.css>
+</head>
+<body>
+<header id=header class=clearfix>
+<div class=container>
+<div class=col-group>
+<div class=site-name>
+<a id=logo href=https://sliverhorn.com>
+SliverHorn的博客
+</a>
+<p class=description>Golang 开发</p>
+</div>
+<div>
+<nav id=nav-menu class=clearfix>
+<a href=https://sliverhorn.com>Home</a>
 <a href=https://sliverhorn.com/linux/ title=linux>linux</a>
-<a href=https://sliverhorn.com/higher_mathematics/ title=高等数学>高等数学</a>
-<a href=https://sliverhorn.com/data_structure/ title=数据结构>数据结构</a>
+<a href=https://sliverhorn.com/csapp/ title=csapp>csapp</a>
 <a href=https://sliverhorn.com/tool/ title=工具>工具</a>
 <a href=https://sliverhorn.com/archives/ title=归档>归档</a>
-<a href=https://sliverhorn.com/about/ title=关于>关于</a></nav></div></div></div></header><div id=body><div class=container><div class=col-group><div class=col-8 id=main><div class=res-cons><style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,7%);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style><div class=post-toc style=position:absolute;top:188px><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><a href=#奇偶性>奇偶性</a><ul><li><a href=#偶函数>偶函数</a></li><li><a href=#奇函数>奇函数</a></li><li><a href=#常见的奇函数和偶函数>常见的奇函数和偶函数</a></li><li><a href=#奇偶函数四则运算性质>奇偶函数四则运算性质</a></li><li><a href=#复合函数的奇偶性>复合函数的奇偶性</a></li></ul></li><li><a href=#有界性>有界性</a></li><li><a href=#单调性>单调性</a></li><li><a href=#周期性>周期性</a></li></ul><ul><li><a href=#函数极限>函数极限</a><ul><li><a href=#四则运算>四则运算</a></li></ul></li><li><a href=#两个重要的极限>两个重要的极限</a><ul><li><a href=#第一类重要极限>第一类重要极限</a></li><li><a href=#第二类重要极限>第二类重要极限</a></li></ul></li><li><a href=#数列极限>数列极限</a></li><li><a href=#左右极限>左右极限</a></li><li><a href=#极限存在>极限存在</a></li><li><a href=#极限七兄弟>极限七兄弟</a><ul><li><a href=#fracinftyinfty-型>$\frac{\infty}{\infty}$ 型</a></li><li><a href=#frac00-型>$\frac{0}{0}$ 型</a></li><li><a href=#0-cdot-infty-型>$0 \cdot \infty$ 型</a></li><li><a href=#infty---infty-型>$\infty - \infty$ 型</a></li><li><a href=#uv-型>$u^v$ 型</a></li></ul></li><li><a href=#易错考点-0-cdot-有界--0>易错考点=> $0 \cdot 有界 = 0$</a></li><li><a href=#洛必达法则>洛必达法则</a></li><li><a href=#夹逼定理>夹逼定理</a><ul><li><a href=#定义>定义</a></li><li><a href=#使用条件>使用条件</a></li><li><a href=#使用步骤>使用步骤</a></li></ul></li><li><a href=#函数的左右极限>函数的左右极限</a><ul><li><a href=#与左右极限相关的函数>与左右极限相关的函数</a></li><li><a href=#常考虑左右极限的类型>常考虑左右极限的类型</a></li></ul></li></ul><ul><li><a href=#函数的连续>函数的连续</a></li><li><a href=#函数的间断点及其类型>函数的间断点及其类型</a><ul><li><a href=#第一类间断点指函数左右极限均存在的间断>第一类间断点：指函数左右极限均存在的间断</a></li></ul></li><li><a href=#考点间断点的判断>考点：间断点的判断</a></li><li><a href=#解题>解题</a></li><li><a href=#无穷小量及其比较>无穷小量及其比较</a><ul><li><a href=#无穷小量与无穷大量>无穷小量与无穷大量</a></li><li><a href=#无穷小量与无穷大量的关系>无穷小量与无穷大量的关系</a></li><li><a href=#无穷小量的比较>无穷小量的比较</a></li></ul></li></ul></nav></div></div><script type=text/javascript>$(document).ready(function(){if(e=$(".post-toc"),e.length){t=$("#main").offset().left,t<220&&e.css({width:t-10,"margin-left":0-t});var e,t,n=e.offset().top-20,s={start:{position:"absolute",top:n},process:{position:"fixed",top:20}};$(window).scroll(function(){var t=$(window).scrollTop();t<n?e.css(s.start):e.css(s.process)})}$("#TableOfContents").children().length<1&&$(".post-toc").remove()})</script><article class=post><header><h1 class=post-title>第一章 函数与极限</h1></header><date class="post-meta meta-date">2022年1月1日</date><div class=post-meta><span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
-阅读</span></span></div><div class=post-content><h1 id=函数的四大性质>函数的四大性质</h1><h2 id=奇偶性>奇偶性</h2><h3 id=偶函数>偶函数</h3><p>$$
+<a href=https://sliverhorn.com/about/ title=关于>关于</a>
+</nav>
+</div>
+</div>
+</div>
+</header>
+<div id=body>
+<div class=container>
+<div class=col-group>
+<div class=col-8 id=main>
+<div class=res-cons>
+<style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,7%);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style>
+<div class=post-toc style=position:absolute;top:188px>
+<h2 class=post-toc-title>Table of Contents</h2>
+<div class=post-toc-content>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#奇偶性>奇偶性</a>
+<ul>
+<li><a href=#偶函数>偶函数</a></li>
+<li><a href=#奇函数>奇函数</a></li>
+<li><a href=#常见的奇函数和偶函数>常见的奇函数和偶函数</a></li>
+<li><a href=#奇偶函数四则运算性质>奇偶函数四则运算性质</a></li>
+<li><a href=#复合函数的奇偶性>复合函数的奇偶性</a></li>
+</ul>
+</li>
+<li><a href=#有界性>有界性</a></li>
+<li><a href=#单调性>单调性</a></li>
+<li><a href=#周期性>周期性</a></li>
+</ul>
+<ul>
+<li><a href=#函数极限>函数极限</a>
+<ul>
+<li><a href=#四则运算>四则运算</a></li>
+</ul>
+</li>
+<li><a href=#两个重要的极限>两个重要的极限</a>
+<ul>
+<li><a href=#第一类重要极限>第一类重要极限</a></li>
+<li><a href=#第二类重要极限>第二类重要极限</a></li>
+</ul>
+</li>
+<li><a href=#数列极限>数列极限</a></li>
+<li><a href=#左右极限>左右极限</a></li>
+<li><a href=#极限存在>极限存在</a></li>
+<li><a href=#极限七兄弟>极限七兄弟</a>
+<ul>
+<li><a href=#fracinftyinfty-型>$\frac{\infty}{\infty}$ 型</a></li>
+<li><a href=#frac00-型>$\frac{0}{0}$ 型</a></li>
+<li><a href=#0-cdot-infty-型>$0 \cdot \infty$ 型</a></li>
+<li><a href=#infty---infty-型>$\infty - \infty$ 型</a></li>
+<li><a href=#uv-型>$u^v$ 型</a></li>
+</ul>
+</li>
+<li><a href=#易错考点-0-cdot-有界--0>易错考点=> $0 \cdot 有界 = 0$</a></li>
+<li><a href=#洛必达法则>洛必达法则</a></li>
+<li><a href=#夹逼定理>夹逼定理</a>
+<ul>
+<li><a href=#定义>定义</a></li>
+<li><a href=#使用条件>使用条件</a></li>
+<li><a href=#使用步骤>使用步骤</a></li>
+</ul>
+</li>
+<li><a href=#函数的左右极限>函数的左右极限</a>
+<ul>
+<li><a href=#与左右极限相关的函数>与左右极限相关的函数</a></li>
+<li><a href=#常考虑左右极限的类型>常考虑左右极限的类型</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href=#函数的连续>函数的连续</a></li>
+<li><a href=#函数的间断点及其类型>函数的间断点及其类型</a>
+<ul>
+<li><a href=#第一类间断点指函数左右极限均存在的间断>第一类间断点：指函数左右极限均存在的间断</a></li>
+</ul>
+</li>
+<li><a href=#考点间断点的判断>考点：间断点的判断</a></li>
+<li><a href=#解题>解题</a></li>
+<li><a href=#无穷小量及其比较>无穷小量及其比较</a>
+<ul>
+<li><a href=#无穷小量与无穷大量>无穷小量与无穷大量</a></li>
+<li><a href=#无穷小量与无穷大量的关系>无穷小量与无穷大量的关系</a></li>
+<li><a href=#无穷小量的比较>无穷小量的比较</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)})),$("#TableOfContents").children().length<1&&$(".post-toc").remove()})</script>
+<article class=post>
+<header>
+<h1 class=post-title>第一章 函数与极限</h1>
+</header>
+<time datetime=2022-01-01T00:00:17Z class="post-meta meta-date dt-published">
+2022-01-01
+</time>
+<div class=post-meta>
+<span id=busuanzi_container_page_pv>&nbsp;|
+<span id=busuanzi_value_page_pv></span> <span>reads</span>
+</span>
+</div>
+<div class=post-content>
+<h1 id=函数的四大性质>函数的四大性质</h1>
+<h2 id=奇偶性>奇偶性</h2>
+<h3 id=偶函数>偶函数</h3>
+<p>$$
 f(-x) = f(x)
-$$</p><p>$$
+$$</p>
+<p>$$
 f(x) + f(-x) => 偶函数
-$$</p><h3 id=奇函数>奇函数</h3><p>$$
+$$</p>
+<h3 id=奇函数>奇函数</h3>
+<p>$$
 f(-x) = -f(x)
-$$</p><p>$$
+$$</p>
+<p>$$
 f(x) - f(-x) => 奇函数
-$$</p><h3 id=常见的奇函数和偶函数>常见的奇函数和偶函数</h3><ol><li>奇函数</li></ol><p>$$
+$$</p>
+<h3 id=常见的奇函数和偶函数>常见的奇函数和偶函数</h3>
+<ol>
+<li>奇函数</li>
+</ol>
+<p>$$
 x^{奇数}、sinx、arcsinx、tanx、arctanx
-$$</p><ol start=2><li>偶函数</li></ol><p>$$
+$$</p>
+<ol start=2>
+<li>偶函数</li>
+</ol>
+<p>$$
 x^{偶数}、cosx、|x|、常数c
-$$</p><h3 id=奇偶函数四则运算性质>奇偶函数四则运算性质</h3><ul><li><input disabled type=checkbox> $奇 \pm 奇 = 奇$</li><li><input disabled type=checkbox> $偶 \pm 偶 = 偶$</li><li><input checked disabled type=checkbox> $奇 \pm 偶 = 非奇非偶$</li><li><input checked disabled type=checkbox> $奇 \times / \div 奇 = 偶$</li><li><input checked disabled type=checkbox> $奇 \times / \div 偶 = 奇$</li><li><input disabled type=checkbox> $偶 \times / \div 偶 = 偶$</li></ul><h3 id=复合函数的奇偶性>复合函数的奇偶性</h3><ul><li><input disabled type=checkbox> $奇(奇) = 奇$</li><li><input disabled type=checkbox> $奇(偶) = 偶$</li><li><input disabled type=checkbox> $偶(奇) = 偶$</li></ul><blockquote><p><strong>全奇则奇，遇偶则偶</strong></p></blockquote><h2 id=有界性>有界性</h2><h2 id=单调性>单调性</h2><p>有一函数 $f(x)$</p><ul><li>当 $x_1 \lt x_2$ 时， $f(x_1) \lt f(x_2)$ 则 $f(x)$ 是单调递增函数</li><li>当 $x_1 \lt x_2$ 时， $f(x_1) \gt f(x_2)$ 则 $f(x)$ 是单调递减函数</li></ul><h2 id=周期性>周期性</h2><h1 id=极限>极限</h1><h2 id=函数极限>函数极限</h2><p>$$
+$$</p>
+<h3 id=奇偶函数四则运算性质>奇偶函数四则运算性质</h3>
+<ul>
+<li><input disabled type=checkbox> $奇 \pm 奇 = 奇$</li>
+<li><input disabled type=checkbox> $偶 \pm 偶 = 偶$</li>
+<li><input checked disabled type=checkbox> $奇 \pm 偶 = 非奇非偶$</li>
+<li><input checked disabled type=checkbox> $奇 \times / \div 奇 = 偶$</li>
+<li><input checked disabled type=checkbox> $奇 \times / \div 偶 = 奇$</li>
+<li><input disabled type=checkbox> $偶 \times / \div 偶 = 偶$</li>
+</ul>
+<h3 id=复合函数的奇偶性>复合函数的奇偶性</h3>
+<ul>
+<li><input disabled type=checkbox> $奇(奇) = 奇$</li>
+<li><input disabled type=checkbox> $奇(偶) = 偶$</li>
+<li><input disabled type=checkbox> $偶(奇) = 偶$</li>
+</ul>
+<blockquote>
+<p><strong>全奇则奇，遇偶则偶</strong></p>
+</blockquote>
+<h2 id=有界性>有界性</h2>
+<h2 id=单调性>单调性</h2>
+<p>有一函数 $f(x)$</p>
+<ul>
+<li>当 $x_1 \lt x_2$ 时， $f(x_1) \lt f(x_2)$ 则 $f(x)$ 是单调递增函数</li>
+<li>当 $x_1 \lt x_2$ 时， $f(x_1) \gt f(x_2)$ 则 $f(x)$ 是单调递减函数</li>
+</ul>
+<h2 id=周期性>周期性</h2>
+<h1 id=极限>极限</h1>
+<h2 id=函数极限>函数极限</h2>
+<p>$$
 \lim\limits_{x\rightarrow{x_0}}f(x) = A
-$$</p><blockquote><p>A 为确定的数</p></blockquote><h3 id=四则运算>四则运算</h3><p>设 $\lim\limits_{}f(x) = A$ 和 $\lim\limits_{}g(x) = B$
+$$</p>
+<blockquote>
+<p>A 为确定的数</p>
+</blockquote>
+<h3 id=四则运算>四则运算</h3>
+<p>设 $\lim\limits_{}f(x) = A$ 和 $\lim\limits_{}g(x) = B$
 $$
 \lim\limits_{}[f(x) \pm g(x)] = \lim\limits_{}f(x) \pm \lim\limits_{}g(x) = A \pm B
-$$</p><p>$$
+$$</p>
+<p>$$
 \lim\limits_{}[f(x) \cdot g(x)] = \lim\limits_{}f(x) \cdot \lim\limits_{}g(x) = A \cdot B
-$$</p><p>$$
+$$</p>
+<p>$$
 \lim\limits_{}\frac{f(x)}{g(x)} = \frac{\lim\limits_{}f(x)}{\lim\limits_{}g(x)} = \frac{A}{B} (B \ne 0)
-$$</p><blockquote><p>前提条件：极限存在</p></blockquote><h2 id=两个重要的极限>两个重要的极限</h2><h3 id=第一类重要极限>第一类重要极限</h3><p>$$
+$$</p>
+<blockquote>
+<p>前提条件：极限存在</p>
+</blockquote>
+<h2 id=两个重要的极限>两个重要的极限</h2>
+<h3 id=第一类重要极限>第一类重要极限</h3>
+<p>$$
 \lim\limits_{x\rightarrow{0}} \frac{\sin{x}}{x} = 1
-$$</p><h3 id=第二类重要极限>第二类重要极限</h3><p>$$
+$$</p>
+<h3 id=第二类重要极限>第二类重要极限</h3>
+<p>$$
 \lim\limits_{x\rightarrow\infty}(1+\frac{1}{x})^{x} = \lim\limits_{x\rightarrow\infty}{e}^x\ln{(1+\frac{1}{x})}=\lim\limits_{x\rightarrow\infty}e^{{x}\cdot{\frac{1}{x}}}=e
-$$</p><h2 id=数列极限>数列极限</h2><p>$$
+$$</p>
+<h2 id=数列极限>数列极限</h2>
+<p>$$
 \lim\limits_{x\rightarrow\infty}x_n = B
-$$</p><blockquote><p>B 为确定的数</p><p>$x_n\rightarrow\infty$ => $x_n\rightarrow{A}$ 则 $x_{2n+1}\rightarrow {A}$ 、 $x_{2n}\rightarrow {A}$</p></blockquote><h2 id=左右极限>左右极限</h2><ul><li>左极限</li></ul><p>$$
+$$</p>
+<blockquote>
+<p>B 为确定的数</p>
+<p>$x_n\rightarrow\infty$ => $x_n\rightarrow{A}$ 则 $x_{2n+1}\rightarrow {A}$ 、 $x_{2n}\rightarrow {A}$</p>
+</blockquote>
+<h2 id=左右极限>左右极限</h2>
+<ul>
+<li>左极限</li>
+</ul>
+<p>$$
 \lim\limits_{x\rightarrow x_0^-}f(x)
-$$</p><ul><li>右极限</li></ul><p>$$
+$$</p>
+<ul>
+<li>右极限</li>
+</ul>
+<p>$$
 \lim\limits_{x\rightarrow x_0^+}f(x)
-$$</p><h2 id=极限存在>极限存在</h2><p>左右极限存在且相等</p><blockquote><p><strong>$f(x)$ 在某点 $x_0$ 处的极限值，与 $f(x)$ 在该店无定义/ $f(x_0)$ 无关</strong></p></blockquote><h2 id=极限七兄弟>极限七兄弟</h2><h3 id=fracinftyinfty-型>$\frac{\infty}{\infty}$ 型</h3><ul><li><p>定义：分子 $\rightarrow\infty$ ， 分母 $\rightarrow\infty$ 的极限</p></li><li><p>解法：抓大头</p></li><li><p>题型</p><ul><li>幂函数：指数越大值越大</li><li>指数函数：底数越大值越大</li><li>通过抓大头求参数<ul><li>分母最高次 = 分子最高次 值为非零常数</li><li>分母最高次 > 分子最高次 值为0</li></ul></li></ul></li></ul><h3 id=frac00-型>$\frac{0}{0}$ 型</h3><ul><li><p>定义：分子 $\rightarrow 0 $ ， 分母 $\rightarrow 0 $ 的极限</p></li><li><p>解法：利用等价无穷小量求解</p></li><li><p>常见等价公式</p></li></ul><p>$$
+$$</p>
+<h2 id=极限存在>极限存在</h2>
+<p>左右极限存在且相等</p>
+<blockquote>
+<p><strong>$f(x)$ 在某点 $x_0$ 处的极限值，与 $f(x)$ 在该店无定义/ $f(x_0)$ 无关</strong></p>
+</blockquote>
+<h2 id=极限七兄弟>极限七兄弟</h2>
+<h3 id=fracinftyinfty-型>$\frac{\infty}{\infty}$ 型</h3>
+<ul>
+<li>
+<p>定义：分子 $\rightarrow\infty$ ， 分母 $\rightarrow\infty$ 的极限</p>
+</li>
+<li>
+<p>解法：抓大头</p>
+</li>
+<li>
+<p>题型</p>
+<ul>
+<li>幂函数：指数越大值越大</li>
+<li>指数函数：底数越大值越大</li>
+<li>通过抓大头求参数
+<ul>
+<li>分母最高次 = 分子最高次 值为非零常数</li>
+<li>分母最高次 > 分子最高次 值为0</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id=frac00-型>$\frac{0}{0}$ 型</h3>
+<ul>
+<li>
+<p>定义：分子 $\rightarrow 0 $ ， 分母 $\rightarrow 0 $ 的极限</p>
+</li>
+<li>
+<p>解法：利用等价无穷小量求解</p>
+</li>
+<li>
+<p>常见等价公式</p>
+</li>
+</ul>
+<p>$$
 \left {
 \begin{array}{c}
 sinx \sim x \
@@ -59,11 +311,14 @@ e^x-1 \sim x \
 ln(1+x) \sim x \
 \end{array}
 \right.
-$$</p><p>$$
+$$</p>
+<p>$$
 1-cosx \sim \frac{1}{2}x^2
-$$</p><p>$$
+$$</p>
+<p>$$
 \sqrt[n]{1+x}-1 \sim \frac{x}{n} \iff (1+ax)^b-1 \sim abx (特点是 -1)
-$$</p><p>$$
+$$</p>
+<p>$$
 \left {
 \begin{array}{c}
 x-sinx \sim \frac{1}{6}x^3 \
@@ -71,14 +326,18 @@ tanx-x \sim \frac{1}{3}x^3 \
 tanx-sinx \sim \frac{1}{2}x^3 \
 \end{array}
 \right.
-$$</p><p>$$
+$$</p>
+<p>$$
 \left {
 \begin{array}{c}
 a^x-1 \sim xlna \
 ln(1+x)-x \sim -\frac{1}{2}x^2\
 \end{array}
 \right.
-$$</p><p>​</p><h3 id=0-cdot-infty-型>$0 \cdot \infty$ 型</h3><p>$$
+$$</p>
+<p>​</p>
+<h3 id=0-cdot-infty-型>$0 \cdot \infty$ 型</h3>
+<p>$$
 0 \cdot \infty \Rightarrow
 \left {
 \begin{array}{c}
@@ -86,7 +345,13 @@ $$</p><p>​</p><h3 id=0-cdot-infty-型>$0 \cdot \infty$ 型</h3><p>$$
 对 \infty 取倒数，下放分母： 0 \cdot \infty = \frac{\infty}{\frac{1}{\infty}} = \frac{0}{0} & \
 \end{array}
 \right.
-$$</p><h4 id=下放原则>下放原则</h4><ol><li>一般来讲，下放简单易求导的函数</li><li>遇到有三角函数( $tanx, cotx$ ), 先化简</li></ol><p>$$
+$$</p>
+<h4 id=下放原则>下放原则</h4>
+<ol>
+<li>一般来讲，下放简单易求导的函数</li>
+<li>遇到有三角函数( $tanx, cotx$ ), 先化简</li>
+</ol>
+<p>$$
 \left {
 \begin{array}{c}
 tanx = \frac{sinx}{cosx} \
@@ -94,61 +359,351 @@ cotx = \frac{cosx}{sinx} \
 secx = \frac{1}{cosx} \
 \end{array}
 \right.
-$$</p><blockquote><p>$$
+$$</p>
+<blockquote>
+<p>$$
 幂 \cdot 对数 \Rightarrow x^a \cdot ln x = 0
-$$</p></blockquote><h3 id=infty---infty-型>$\infty - \infty$ 型</h3><ul><li>分式 =》 通分</li><li>根式 =》有理化（利用 $(a+b)(a-b)=a^2-b^2$ 去根号）</li></ul><h3 id=uv-型>$u^v$ 型</h3><ul><li><p>$1^\infty$</p><ul><li><p>第二极限：$\lim\limits_{x\rightarrow 0}(1+x)^{\frac{1}{x}} = e$</p></li><li><p>解法</p><ul><li><p>$$
+$$</p>
+</blockquote>
+<h3 id=infty---infty-型>$\infty - \infty$ 型</h3>
+<ul>
+<li>分式 =》 通分</li>
+<li>根式 =》有理化（利用 $(a+b)(a-b)=a^2-b^2$ 去根号）</li>
+</ul>
+<h3 id=uv-型>$u^v$ 型</h3>
+<ul>
+<li>
+<p>$1^\infty$</p>
+<ul>
+<li>
+<p>第二极限：$\lim\limits_{x\rightarrow 0}(1+x)^{\frac{1}{x}} = e$</p>
+</li>
+<li>
+<p>解法</p>
+<ul>
+<li>
+<p>$$
 u^v \Rightarrow e^{\lim\limits_{}(u-1) \cdot v}
-$$</p></li><li><p>$$
+$$</p>
+</li>
+<li>
+<p>$$
 次方很多 \Rightarrow e^{lnx} = x \Leftrightarrow u^v = e^{v \cdot lnu}(幂指函数对数化)
-$$</p></li></ul></li></ul></li><li><p>不是 $1^\infty (0^0,\infty^0)$</p><ul><li>$$
+$$</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>不是 $1^\infty (0^0,\infty^0)$</p>
+<ul>
+<li>$$
 u^v = e^{v \cdot \ln{u}}(复合型极限)
-$$</li></ul></li></ul><h2 id=易错考点-0-cdot-有界--0>易错考点=> $0 \cdot 有界 = 0$</h2><p>遇到 $sin\infty,cos\infty,arctan\infty$ ，优先考虑 $0 \cdot 有界 = 0$</p><h2 id=洛必达法则>洛必达法则</h2><blockquote><p>$\lim\frac{f(x)}{g(x)}$ 是 $\frac{0}{0},\frac{\infty}{\infty}$</p></blockquote><p>$$
-\lim\frac{f(x)}{g(x)} => \lim\frac{f(x)^{&rsquo;}}{g(x)^{&rsquo;}} => \lim\frac{f(x)^{&rsquo;&rsquo;}}{g(x)^{&rsquo;&rsquo;}}= &mldr; = A
-$$</p><blockquote><ol><li>分子分母各自同事求导</li><li>洛必达法则，一般会配合等价使用(万事不对洛必达！)</li></ol></blockquote><h2 id=夹逼定理>夹逼定理</h2><h3 id=定义>定义</h3><p>若函数 $f(x)、g(x)、h(x)$ ，在 $x_0$ 的领域范围内有
+$$</li>
+</ul>
+</li>
+</ul>
+<h2 id=易错考点-0-cdot-有界--0>易错考点=> $0 \cdot 有界 = 0$</h2>
+<p>遇到 $sin\infty,cos\infty,arctan\infty$ ，优先考虑 $0 \cdot 有界 = 0$</p>
+<h2 id=洛必达法则>洛必达法则</h2>
+<blockquote>
+<p>$\lim\frac{f(x)}{g(x)}$ 是 $\frac{0}{0},\frac{\infty}{\infty}$</p>
+</blockquote>
+<p>$$
+\lim\frac{f(x)}{g(x)} => \lim\frac{f(x)^{'}}{g(x)^{'}} => \lim\frac{f(x)^{''}}{g(x)^{''}}= &mldr; = A
+$$</p>
+<blockquote>
+<ol>
+<li>分子分母各自同事求导</li>
+<li>洛必达法则，一般会配合等价使用(万事不对洛必达！)</li>
+</ol>
+</blockquote>
+<h2 id=夹逼定理>夹逼定理</h2>
+<h3 id=定义>定义</h3>
+<p>若函数 $f(x)、g(x)、h(x)$ ，在 $x_0$ 的领域范围内有
 $$
 f(x) \leq g(x) \leq h(x)
 $$
-当 $\lim\limits_{x\rightarrow x_0}f(x)=\lim\limits_{x\rightarrow x_0}g(x)=A$ 时，则 $\lim\limits_{x\rightarrow x_0}g(x)=A$</p><h3 id=使用条件>使用条件</h3><h3 id=使用步骤>使用步骤</h3><ol><li>确认极限项数 $n$</li><li>确定最小项，确定最大项</li><li>去极限</li></ol><p>$$
+当 $\lim\limits_{x\rightarrow x_0}f(x)=\lim\limits_{x\rightarrow x_0}g(x)=A$ 时，则 $\lim\limits_{x\rightarrow x_0}g(x)=A$</p>
+<h3 id=使用条件>使用条件</h3>
+<h3 id=使用步骤>使用步骤</h3>
+<ol>
+<li>确认极限项数 $n$</li>
+<li>确定最小项，确定最大项</li>
+<li>去极限</li>
+</ol>
+<p>$$
 n \cdot 最小项极限 \leq 待求极限 \leq n \cdot 最大项极限
-$$</p><ol start=4><li>由夹逼定理出结果</li></ol><h2 id=函数的左右极限>函数的左右极限</h2><p>左极限：$\lim\limits_{x\rightarrow x_0^-}f(x)$ ，右极限：$\lim\limits_{x\rightarrow x_0^+}f(x)$ ，极限存在 $\Longleftrightarrow$ 左右极限存在且相等</p><h3 id=与左右极限相关的函数>与左右极限相关的函数</h3><ol><li>分段函数：以分段点为界，左边一个函数，右边一个函数</li></ol><blockquote><p>遇到分段函数 => 考虑左右极限</p></blockquote><ol start=2><li>$y=\frac{1}{x}$</li></ol><p><a data-fancybox=gallery href=/higher_mathematics/%5cfrac%7b1%7d%7bx%7d.png><img class=mx-auto alt src=/higher_mathematics/%5cfrac%7b1%7d%7bx%7d.png>
-</a>$$
+$$</p>
+<ol start=4>
+<li>由夹逼定理出结果</li>
+</ol>
+<h2 id=函数的左右极限>函数的左右极限</h2>
+<p>左极限：$\lim\limits_{x\rightarrow x_0^-}f(x)$ ，右极限：$\lim\limits_{x\rightarrow x_0^+}f(x)$ ，极限存在 $\Longleftrightarrow$ 左右极限存在且相等</p>
+<h3 id=与左右极限相关的函数>与左右极限相关的函数</h3>
+<ol>
+<li>分段函数：以分段点为界，左边一个函数，右边一个函数</li>
+</ol>
+<blockquote>
+<p>遇到分段函数 => 考虑左右极限</p>
+</blockquote>
+<ol start=2>
+<li>$y=\frac{1}{x}$</li>
+</ol>
+<p>
+<a data-fancybox=gallery href=/higher_mathematics/%5cfrac%7b1%7d%7bx%7d.png>
+<img class=mx-auto alt src=/higher_mathematics/%5cfrac%7b1%7d%7bx%7d.png>
+</a>
+$$
 x \rightarrow 0 \
 x \rightarrow 0^+ \Longrightarrow \frac{1}{x} \rightarrow +\infty \
 x \rightarrow 0^- \Longrightarrow \frac{1}{x} \rightarrow -\infty
-$$</p><ol start=3><li>指数函数 $y=e^x$</li></ol><p><a data-fancybox=gallery href="/higher_mathematics/y=e%5ex.png"><img class=mx-auto alt src="/higher_mathematics/y=e%5ex.png">
-</a>$$
+$$</p>
+<ol start=3>
+<li>指数函数 $y=e^x$</li>
+</ol>
+<p>
+<a data-fancybox=gallery href="/higher_mathematics/y=e%5ex.png">
+<img class=mx-auto alt src="/higher_mathematics/y=e%5ex.png">
+</a>
+$$
 x \rightarrow \infty \
 x \rightarrow +\infty \Longrightarrow e^x \rightarrow +\infty \Longrightarrow e^{+\infty} \rightarrow +\infty\
 x \rightarrow -\infty \Longrightarrow e^x \rightarrow 0 \Longrightarrow e^{-\infty} \rightarrow 0
-$$</p><ol start=4><li>$arctanx$</li></ol><p><a data-fancybox=gallery href="/higher_mathematics/y=arctanx.png"><img class=mx-auto alt src="/higher_mathematics/y=arctanx.png">
-</a>$$
+$$</p>
+<ol start=4>
+<li>$arctanx$</li>
+</ol>
+<p>
+<a data-fancybox=gallery href="/higher_mathematics/y=arctanx.png">
+<img class=mx-auto alt src="/higher_mathematics/y=arctanx.png">
+</a>
+$$
 x \rightarrow \infty \
 x \rightarrow +\infty \Longrightarrow arctanx \rightarrow \frac{\pi}{2} \
 x \rightarrow -\infty \Longrightarrow arctanx \rightarrow -\frac{\pi}{2}
-$$</p><h3 id=常考虑左右极限的类型>常考虑左右极限的类型</h3><ol><li>分段函数分段点 -> 分段点</li><li>含绝对值的函数</li></ol><p>$$
+$$</p>
+<h3 id=常考虑左右极限的类型>常考虑左右极限的类型</h3>
+<ol>
+<li>分段函数分段点 -> 分段点</li>
+<li>含绝对值的函数</li>
+</ol>
+<p>$$
 \mid x \mid =
 \begin{cases}
 x & x \gt 0 \
 -x & x \leq 0 \
 \end{cases}
-$$</p><ol start=3><li>遇 $e^\infty, \frac{C}{0}, arctan\infty, e^{\frac{1}{x}}$</li></ol><p>$$
+$$</p>
+<ol start=3>
+<li>遇 $e^\infty, \frac{C}{0}, arctan\infty, e^{\frac{1}{x}}$</li>
+</ol>
+<p>$$
 \lim\limits_{x\rightarrow x_0}e^{\frac{1}{x}} \
 x \rightarrow 0^+ \rightarrow \frac{1}{x} \rightarrow \frac{1}{0^+} \rightarrow +\infty \Longrightarrow e^{\frac{1}{x}} \rightarrow e^{+\infty} \rightarrow +\infty \
 x \rightarrow 0^- \rightarrow \frac{1}{x} \rightarrow \frac{1}{0^-} \rightarrow -\infty \Longrightarrow e^{\frac{1}{x}} \rightarrow e^{-\infty} \rightarrow 0
-$$</p><h1 id=间断>间断</h1><h2 id=函数的连续>函数的连续</h2><p>连续：在 $x_0$ 某领域， 有 左极限 = 右极限 = 函数值</p><blockquote><p>极限值 = 函数值</p></blockquote><h2 id=函数的间断点及其类型>函数的间断点及其类型</h2><ul><li>定义：函数在定义区间不再连续 => 间断</li><li>间断点：指函数不连续的点</li><li>间断点的分类<ul><li>分类标准：以间断点的左右极限是否存在作为划分依据</li></ul></li></ul><h3 id=第一类间断点指函数左右极限均存在的间断>第一类间断点：指函数左右极限均存在的间断</h3><ol><li>跳跃间断点：左极限 $\neq$ 右极限</li><li>可去间断点：左极限 $=$ 右极限</li></ol><p>第二类间断点：左右极限不存在的间断点</p><ol><li><p>无穷间断点：指左右极限为 $\infty$</p></li><li><p>振荡间断点：指 $x \rightarrow x_0$ 时， 函数 $f(x)$ 剧烈波动，无定值</p></li></ol><blockquote><p>$x = 0$ 是 $f(x) = sin{\frac{1}{x}}$ 的振荡间断点</p><p><a data-fancybox=gallery href=/higher_mathematics/1-sin%7b%5cfrac%7b1%7d%7bx%7d%7d.png><img class=mx-auto alt src=/higher_mathematics/1-sin%7b%5cfrac%7b1%7d%7bx%7d%7d.png></a></p></blockquote><h2 id=考点间断点的判断>考点：间断点的判断</h2><ol><li>分式中， 分母 = 0 的点 => 必间断</li><li>分段函数的分段点 => 可能间断点</li><li>函数的无定义点 => 必间断</li></ol><h2 id=解题>解题</h2><ol><li>找到可疑间断点</li><li>分别找到间断点的左右极限</li><li>根据左右极限情况定出间断点类型</li></ol><h2 id=无穷小量及其比较>无穷小量及其比较</h2><h3 id=无穷小量与无穷大量>无穷小量与无穷大量</h3><ul><li>无穷小量：若 $\lim\limits_{}f(x) = 0$ ，称此时的 $f(x)$ 为无穷小量。</li><li>无穷大量：若 $\lim\limits_{}f(x) = \infty$ ，称此时的 $f(x)$ 为无穷大量。</li></ul><h3 id=无穷小量与无穷大量的关系>无穷小量与无穷大量的关系</h3><p>$$
+$$</p>
+<h1 id=间断>间断</h1>
+<h2 id=函数的连续>函数的连续</h2>
+<p>连续：在 $x_0$ 某领域， 有 左极限 = 右极限 = 函数值</p>
+<blockquote>
+<p>极限值 = 函数值</p>
+</blockquote>
+<h2 id=函数的间断点及其类型>函数的间断点及其类型</h2>
+<ul>
+<li>定义：函数在定义区间不再连续 => 间断</li>
+<li>间断点：指函数不连续的点</li>
+<li>间断点的分类
+<ul>
+<li>分类标准：以间断点的左右极限是否存在作为划分依据</li>
+</ul>
+</li>
+</ul>
+<h3 id=第一类间断点指函数左右极限均存在的间断>第一类间断点：指函数左右极限均存在的间断</h3>
+<ol>
+<li>跳跃间断点：左极限 $\neq$ 右极限</li>
+<li>可去间断点：左极限 $=$ 右极限</li>
+</ol>
+<p>第二类间断点：左右极限不存在的间断点</p>
+<ol>
+<li>
+<p>无穷间断点：指左右极限为 $\infty$</p>
+</li>
+<li>
+<p>振荡间断点：指 $x \rightarrow x_0$ 时， 函数 $f(x)$ 剧烈波动，无定值</p>
+</li>
+</ol>
+<blockquote>
+<p>$x = 0$ 是 $f(x) = sin{\frac{1}{x}}$ 的振荡间断点</p>
+<p>
+<a data-fancybox=gallery href=/higher_mathematics/1-sin%7b%5cfrac%7b1%7d%7bx%7d%7d.png>
+<img class=mx-auto alt src=/higher_mathematics/1-sin%7b%5cfrac%7b1%7d%7bx%7d%7d.png>
+</a>
+</p>
+</blockquote>
+<h2 id=考点间断点的判断>考点：间断点的判断</h2>
+<ol>
+<li>分式中， 分母 = 0 的点 => 必间断</li>
+<li>分段函数的分段点 => 可能间断点</li>
+<li>函数的无定义点 => 必间断</li>
+</ol>
+<h2 id=解题>解题</h2>
+<ol>
+<li>找到可疑间断点</li>
+<li>分别找到间断点的左右极限</li>
+<li>根据左右极限情况定出间断点类型</li>
+</ol>
+<h2 id=无穷小量及其比较>无穷小量及其比较</h2>
+<h3 id=无穷小量与无穷大量>无穷小量与无穷大量</h3>
+<ul>
+<li>无穷小量：若 $\lim\limits_{}f(x) = 0$ ，称此时的 $f(x)$ 为无穷小量。</li>
+<li>无穷大量：若 $\lim\limits_{}f(x) = \infty$ ，称此时的 $f(x)$ 为无穷大量。</li>
+</ul>
+<h3 id=无穷小量与无穷大量的关系>无穷小量与无穷大量的关系</h3>
+<p>$$
 \frac{1}{无穷大量}=无穷小量
-$$</p><p>$$
+$$</p>
+<p>$$
 \frac{1}{不为0的无穷小量} = 无穷大量
-$$</p><blockquote><p><strong>无穷小量加法运算：取次方最低。</strong></p></blockquote><h3 id=无穷小量的比较>无穷小量的比较</h3><p>指比较无穷小量靠近0的速度快慢</p><p>无穷小量的阶：指 $x$ 的次方</p><p>设 $\alpha，\beta$ 是两个无穷小量</p><ol><li>若 $\lim{}\frac{\beta}{\alpha} = C(常数) \neq 0$ ，则 $\alpha$ 与 $\beta$ 同阶</li></ol><p>$$
+$$</p>
+<blockquote>
+<p><strong>无穷小量加法运算：取次方最低。</strong></p>
+</blockquote>
+<h3 id=无穷小量的比较>无穷小量的比较</h3>
+<p>指比较无穷小量靠近0的速度快慢</p>
+<p>无穷小量的阶：指 $x$ 的次方</p>
+<p>设 $\alpha，\beta$ 是两个无穷小量</p>
+<ol>
+<li>若 $\lim{}\frac{\beta}{\alpha} = C(常数) \neq 0$ ，则 $\alpha$ 与 $\beta$ 同阶</li>
+</ol>
+<p>$$
 \lim\limits_{x\rightarrow 0}\frac{2x^4}{3x^4} = \frac{2}{3}
-$$</p><ol start=2><li>若 $\lim{}\frac{\beta}{\alpha} = 1$ ，则 $\alpha$ $\sim$ $\beta$</li><li>若 $\lim{}\frac{\beta}{\alpha} = \infty$ ，则 $\alpha$ 比 $\beta$ 低阶</li></ol><p>$$
+$$</p>
+<ol start=2>
+<li>若 $\lim{}\frac{\beta}{\alpha} = 1$ ，则 $\alpha$ $\sim$ $\beta$</li>
+<li>若 $\lim{}\frac{\beta}{\alpha} = \infty$ ，则 $\alpha$ 比 $\beta$ 低阶</li>
+</ol>
+<p>$$
 \lim\limits_{x\rightarrow 0}\frac{2x^3}{4x^6} = \frac{1}{2}\lim\limits_{x\rightarrow 0}\frac{1}{x^3} = \infty
-$$</p><ol start=4><li>若 $\lim{}\frac{\beta}{\alpha} = 0$ ，则 $\alpha$ 比 $\beta$ 高阶</li></ol><p>$$
+$$</p>
+<ol start=4>
+<li>若 $\lim{}\frac{\beta}{\alpha} = 0$ ，则 $\alpha$ 比 $\beta$ 高阶</li>
+</ol>
+<p>$$
 \lim\limits_{x\rightarrow 0}\frac{4x^4}{x^3} = \lim\limits_{x\rightarrow 0}4x = 0
-$$</p><ol start=5><li>若 $\lim{}\frac{\beta}{\alpha^{k}} = C(常数)$ ，则 $\beta$ 是 $\alpha$ 的 $k$ 阶无穷小</li></ol><p>$$
+$$</p>
+<ol start=5>
+<li>若 $\lim{}\frac{\beta}{\alpha^{k}} = C(常数)$ ，则 $\beta$ 是 $\alpha$ 的 $k$ 阶无穷小</li>
+</ol>
+<p>$$
 x^3 是 x 的3阶
-$$</p></div><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/higher_mathematics/higher_mathematics/>考试范围</a></li><li><a href=/post/linux/oh-my-zsh-install/>oh-my-zsh Mac 安装教程</a></li><li><a href=/tool/mac/>Mac Tool</a></li><li><a href=/about/>关于</a></li><li><a href=/data_structure/3/></a></li></ul></div><div class="post-meta meta-tags">没有标签</div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo="your github repo" issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div><footer id=footer><div>&copy; 2024 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
-| <a rel=nofollow target=_blank href=http://beian.miit.gov.cn/>粤ICP备19128176号</a></div><br><div><div class=github-badge><a href=https://gohugo.io/ target=_black rel=nofollow><span class=badge-subject>Powered by</span><span class="badge-value bg-blue">Hugo</span></a></div><div class=github-badge><a href=https://www.flysnow.org/ target=_black><span class=badge-subject>Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a></div><div class=github-badge><a href=https://github.com/flysnow-org/maupassant-hugo target=_black><span class=badge-subject>Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a></div></div></footer><script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[["$","$"]],processEscapes:!0}}</script><script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script><script src=//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js></script><a id=rocket href=#top></a><script type=text/javascript src='/js/totop.js?v=0.0.0' async></script><script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async></script><script src=/js/douban.js></script></div><div id=secondary><section class=widget><form id=search action=https://sliverhorn.com/search method=get accept-charset=utf-8 target=_blank _lpchecked=1><input type=text name=q maxlength=20 placeholder=Search>
+$$</p>
+</div>
+<div class=post-archive>
+<h2>See Also</h2>
+<ul class=listing>
+<li><a href=/higher_mathematics/higher_mathematics/>考试范围</a></li>
+<li><a href=/csapp/2.2/>Integer Representations</a></li>
+<li><a href=/post/linux/oh-my-zsh-install/>oh-my-zsh Mac 安装教程</a></li>
+<li><a href=/tool/mac/>Mac Tool</a></li>
+<li><a href=/about/>关于</a></li>
+</ul>
+</div>
+<div class="post-meta meta-tags">
+No tags
+</div>
+</article>
+<div class="post bg-white">
+<script src=https://utteranc.es/client.js repo="your github repo" issue-term=pathname theme=github-light crossorigin=anonymous async></script>
+</div>
+</div>
+<footer id=footer>
+<div>
+&copy; 2024 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
+| <a rel=nofollow target=_blank href=http://beian.miit.gov.cn/>粤ICP备19128176号</a>
+</div>
+<br>
+<div>
+<div class=github-badge>
+<a href=https://gohugo.io/ target=_black rel=nofollow><span class=badge-subject>Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+</div>
+<div class=github-badge>
+<a href=https://www.flysnow.org/ target=_black><span class=badge-subject>Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+</div>
+<div class=github-badge>
+<a href=https://github.com/flysnow-org/maupassant-hugo target=_black><span class=badge-subject>Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+</div>
+</div>
+</footer>
+<script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[['$','$']],processEscapes:!0}}</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script src=//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js></script>
+<a id=rocket href=#top></a>
+<script type=text/javascript src="/js/totop.js?v=0.0.0" async></script>
+<script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async></script>
+<script src=/js/douban.js></script>
+</div>
+<div id=secondary>
+<section class=widget>
+<form id=search action=https://sliverhorn.com/search method=get accept-charset=utf-8 target=_blank _lpchecked=1>
+<input type=text name=q maxlength=20 placeholder=Search>
 <input type=hidden name=sitesearch value=https://sliverhorn.com>
-<button type=submit class="submit icon-search"></button></form></section><section class=widget><h3 class=widget-title>最近文章</h3><ul class=widget-list><li><a href=https://sliverhorn.com/post/aria2c/ title=Aria2c>Aria2c</a></li><li><a href=https://sliverhorn.com/post/linux/oh-my-zsh-install/ title="oh-my-zsh Mac 安装教程">oh-my-zsh Mac 安装教程</a></li></ul></section><section class=widget><h3 class=widget-title><a href=/categories/>分类</a></h3><ul class=widget-list><li><a href=https://sliverhorn.com/categories/Linux/>Linux (1)</a></li><li><a href=https://sliverhorn.com/categories/Mac/>Mac (1)</a></li></ul></section><section class=widget><h3 class=widget-title><a href=/tags/>标签</a></h3><div class=tagcloud><a href=https://sliverhorn.com/tags/oh-my-zsh/>oh-my-zsh</a>
-<a href=https://sliverhorn.com/tags/tool/>tool</a></div></section><section class=widget><h3 class=widget-title>友情链接</h3><ul class=widget-list><li><a target=_blank href=https://blog.leonardwang.cn/ title="牛逼哄哄 `王哥` 博客">牛逼哄哄 `王哥` 博客</a></li><li><a target=_blank href=https://www.cnblogs.com/binHome/ title=songzhibin97的博客>songzhibin97的博客</a></li><li><a target=_blank href=https://leixf.cn/ title="跃动指尖 – 悦动生活">跃动指尖 – 悦动生活</a></li><li><a target=_blank href=https://www.treesystem.cn title=术习电报>术习电报</a></li></ul></section><section class=widget><h3 class=widget-title>其它</h3><ul class=widget-list><li><a href=https://sliverhorn.com/index.xml>文章 RSS</a></li></ul></section></div></div></div></div></body></html>
+<button type=submit class="submit icon-search"></button>
+</form>
+</section>
+<section class=widget>
+<h3 class=widget-title>Latest articles</h3>
+<ul class=widget-list>
+<li>
+<a href=https://sliverhorn.com/post/aria2c/ title=Aria2c target=_blank>Aria2c</a>
+</li>
+<li>
+<a href=https://sliverhorn.com/post/linux/oh-my-zsh-install/ title="oh-my-zsh Mac 安装教程" target=_blank>oh-my-zsh Mac 安装教程</a>
+</li>
+</ul>
+</section>
+<section class=widget>
+<h3 class=widget-title><a href=/categories/>Categories</a></h3>
+<ul class=widget-list>
+<li><a href=https://sliverhorn.com/categories/Linux/>Linux (1)</a></li>
+<li><a href=https://sliverhorn.com/categories/Mac/>Mac (1)</a></li>
+<li><a href=https://sliverhorn.com/categories/csapp/>csapp (2)</a></li>
+</ul>
+</section>
+<section class=widget>
+<h3 class=widget-title><a href=/tags/>Tags</a></h3>
+<div class=tagcloud>
+<a href=https://sliverhorn.com/tags/csapp/>csapp</a>
+<a href=https://sliverhorn.com/tags/oh-my-zsh/>oh-my-zsh</a>
+<a href=https://sliverhorn.com/tags/tool/>tool</a>
+</div>
+</section>
+<section class=widget>
+<h3 class=widget-title>Links</h3>
+<ul class=widget-list>
+<li>
+<a target=_blank href=https://blog.leonardwang.cn/ title="牛逼哄哄 `王哥` 博客">牛逼哄哄 `王哥` 博客</a>
+</li>
+<li>
+<a target=_blank href=https://www.cnblogs.com/binHome/ title=songzhibin97的博客>songzhibin97的博客</a>
+</li>
+<li>
+<a target=_blank href=https://leixf.cn/ title="跃动指尖 – 悦动生活">跃动指尖 – 悦动生活</a>
+</li>
+<li>
+<a target=_blank href=https://www.treesystem.cn title=术习电报>术习电报</a>
+</li>
+</ul>
+</section>
+<section class=widget>
+<h3 class=widget-title>Meta</h3>
+<ul class=widget-list>
+<li><a href=https://sliverhorn.com/index.xml>RSS</a></li>
+</ul>
+</section>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

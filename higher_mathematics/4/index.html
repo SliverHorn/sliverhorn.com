@@ -1,24 +1,197 @@
-<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><meta name=referrer content="no-referrer-when-downgrade"><title>第四章 多元函数微积分学初步 | SliverHorn的博客</title>
-<meta property="og:title" content="第四章 多元函数微积分学初步 - SliverHorn的博客"><meta property="og:type" content="article"><meta property="article:published_time" content="2022-01-04T17:17:17+08:00"><meta property="article:modified_time" content="2022-01-04T17:17:17+08:00"><meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
-"><meta name=description content="第四章 多元函数微积分学初步"><meta name=author content="SliverHorn"><meta property="og:url" content="https://sliverhorn.com/higher_mathematics/4/"><link rel="shortcut icon" href=/favicon.ico type=image/x-icon><link rel=stylesheet href=/css/normalize.css><link rel=stylesheet href=/css/style.css><script type=text/javascript src=//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js></script><link href=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css rel=stylesheet><link rel=stylesheet href=/css/douban.css><link rel=stylesheet href=/css/other.css></head><body><header id=header class=clearfix><div class=container><div class=col-group><div class=site-name><a id=logo href=https://sliverhorn.com>SliverHorn的博客</a><p class=description>Golang 开发</p></div><div><nav id=nav-menu class=clearfix><a href=https://sliverhorn.com>首页</a>
+<!doctype html><html lang=zh-cn>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=referrer content="no-referrer-when-downgrade">
+<title>第四章 多元函数微积分学初步 | SliverHorn的博客</title>
+<meta property="og:title" content="第四章 多元函数微积分学初步 - SliverHorn的博客">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-01-04T17:17:17+08:00">
+<meta property="article:modified_time" content="2022-01-04T17:17:17+08:00">
+<meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
+">
+<meta name=description content="第四章 多元函数微积分学初步">
+<meta name=author content="SliverHorn">
+<meta property="og:url" content="https://sliverhorn.com/higher_mathematics/4/">
+<link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
+<link rel=stylesheet href=/css/normalize.css>
+<link rel=stylesheet href=/css/style.css>
+<script type=text/javascript src=//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js></script>
+<link href=https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css rel=stylesheet>
+<link rel=stylesheet href=/css/douban.css>
+<link rel=stylesheet href=/css/other.css>
+</head>
+<body>
+<header id=header class=clearfix>
+<div class=container>
+<div class=col-group>
+<div class=site-name>
+<a id=logo href=https://sliverhorn.com>
+SliverHorn的博客
+</a>
+<p class=description>Golang 开发</p>
+</div>
+<div>
+<nav id=nav-menu class=clearfix>
+<a href=https://sliverhorn.com>Home</a>
 <a href=https://sliverhorn.com/linux/ title=linux>linux</a>
-<a href=https://sliverhorn.com/higher_mathematics/ title=高等数学>高等数学</a>
-<a href=https://sliverhorn.com/data_structure/ title=数据结构>数据结构</a>
+<a href=https://sliverhorn.com/csapp/ title=csapp>csapp</a>
 <a href=https://sliverhorn.com/tool/ title=工具>工具</a>
 <a href=https://sliverhorn.com/archives/ title=归档>归档</a>
-<a href=https://sliverhorn.com/about/ title=关于>关于</a></nav></div></div></div></header><div id=body><div class=container><div class=col-group><div class=col-8 id=main><div class=res-cons><style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,7%);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style><div class=post-toc style=position:absolute;top:188px><h2 class=post-toc-title>文章目录</h2><div class=post-toc-content><nav id=TableOfContents><ul><li><a href=#多元函数定义>多元函数定义</a></li><li><a href=#多元函数定义域>多元函数定义域</a></li><li><a href=#二元函数对应法则>二元函数对应法则</a></li><li><a href=#二元函数极限>二元函数极限</a></li><li><a href=#二元函数偏导数>二元函数偏导数</a><ul><li><a href=#一阶偏导的写法>一阶偏导的写法</a></li><li><a href=#一阶偏导的计算>一阶偏导的计算</a></li></ul></li><li><a href=#全微分>全微分</a><ul><li><a href=#全微分形式的不变性>全微分形式的不变性</a></li></ul></li><li><a href=#可微与偏导的关系>可微与偏导的关系</a></li><li><a href=#可微的本质>可微的本质</a><ul><li><a href=#可微>可微</a></li><li><a href=#一元函数>一元函数</a></li><li><a href=#二元函数>二元函数</a></li></ul></li><li><a href=#二阶偏导>二阶偏导</a></li><li><a href=#二元隐函数偏导>二元隐函数偏导</a><ul><li><a href=#隐函数>隐函数</a></li><li><a href=#一阶偏导>一阶偏导</a></li><li><a href=#二阶偏导-1>二阶偏导</a></li></ul></li><li><a href=#多元复合函数求导>多元复合函数求导</a><ul><li><a href=#求导原则>求导原则</a></li><li><a href=#链式法则>链式法则</a></li><li><a href=#题型>题型</a></li></ul></li></ul><ul><li><a href=#定义>定义</a></li><li><a href=#性质>性质</a><ul><li><a href=#补充表达式>补充表达式</a></li></ul></li><li><a href=#二重积分直角坐标系下的计算公式>二重积分直角坐标系下的计算公式</a><ul><li><a href=#x型图>X型图</a></li><li><a href=#y型图>Y型图</a></li><li><a href=#定限口诀>定限口诀</a></li><li><a href=#求解过程>求解过程</a></li></ul></li><li><a href=#超越积分>超越积分</a></li><li><a href=#交换积分次序>交换积分次序</a><ul><li><a href=#定义-1>定义</a></li><li><a href=#交换次序思路>交换次序思路</a></li><li><a href=#交换次序的题型>交换次序的题型</a></li></ul></li><li><a href=#极坐标系的二重积分>极坐标系的二重积分</a><ul><li><a href=#极坐标与坐标系互换>极坐标与坐标系互换</a></li><li><a href=#极坐标系下二重积分计算>极坐标系下二重积分计算</a></li><li><a href=#上线限的确定方法>上线限的确定方法</a></li><li><a href=#常见的积分图像>常见的积分图像</a></li></ul></li><li><a href=#二重积分对称性>二重积分对称性</a><ul><li><a href=#二重积分偶倍奇零>二重积分偶倍奇零</a></li></ul></li></ul></nav></div></div><script type=text/javascript>$(document).ready(function(){if(e=$(".post-toc"),e.length){t=$("#main").offset().left,t<220&&e.css({width:t-10,"margin-left":0-t});var e,t,n=e.offset().top-20,s={start:{position:"absolute",top:n},process:{position:"fixed",top:20}};$(window).scroll(function(){var t=$(window).scrollTop();t<n?e.css(s.start):e.css(s.process)})}$("#TableOfContents").children().length<1&&$(".post-toc").remove()})</script><article class=post><header><h1 class=post-title>第四章 多元函数微积分学初步</h1></header><date class="post-meta meta-date">2022年1月4日</date><div class=post-meta><span id=busuanzi_container_page_pv>|<span id=busuanzi_value_page_pv></span><span>
-阅读</span></span></div><div class=post-content><h1 id=多元函数微分学>多元函数微分学</h1><h2 id=多元函数定义>多元函数定义</h2><p>由多个变量确定的函数</p><h2 id=多元函数定义域>多元函数定义域</h2><ul><li>某个函数 $Z$ ，由两个变量同时确定是，称 $Z=f(x,y)$ 为二元函数</li><li>二元函数定义域：$x,y$ 的取值范围</li><li>二元函数定义域写法：${(x,y)|x,y需要满足的条件}$</li></ul><h2 id=二元函数对应法则>二元函数对应法则</h2><p>解法：</p><ol><li>换元</li><li>配凑</li></ol><h2 id=二元函数极限>二元函数极限</h2><p>若点 $P(x,y)$ 以任意方式趋于点 $P_0(x_0,y_0)$ 时，f(x,y)趋于一个常数 $A$ ，称 $A$ 为 $f(x,y)$ 的极限，记为 $\lim\limits_{(x,y)\rightarrow(x_0,y_0))}f(x,y)$ 或 $\lim\limits_{x\rightarrow{x_0},y\rightarrow{y_0}}f(x,y)$</p><h2 id=二元函数偏导数>二元函数偏导数</h2><p>当 $y_0$ 固定而 $x$ 在 $x_0$ 处有增量 $\triangle{x}$ 时，称 $\lim\limits_{\triangle{x}\rightarrow0}\frac{f(x_0+\triangle{x},y_0)-f(x_0-y_0)}{\triangle{x}}$ 为二元函数对 $x$ 的偏导数，反之，称 $\lim\limits_{\triangle{y}\rightarrow0}\frac{f(x_0,y_0+\triangle{y})-f(x_0-y_0)}{\triangle{y}}$ 为二元函数对 $y$ 的偏导数</p><h3 id=一阶偏导的写法>一阶偏导的写法</h3><p>设二元函数 $Z=f(x,y)$ ，</p><p>记：$\frac{\partial{Z}}{\partial{x}}$ 或 $\frac{\partial{f}}{\partial{x}}$ ，$Z_x$ ，$f_{x}(x,y)$ 为对 $x$ 的偏导</p><p>记：$\frac{\partial{Z}}{\partial{y}}$ 或 $\frac{\partial{f}}{\partial{x}}$ ，$Z_y$ ，$f_{y}(x,y)$ 为对 $y$ 的偏导</p><h3 id=一阶偏导的计算>一阶偏导的计算</h3><p>$\frac{\partial{Z}}{\partial{x}}$ ：指对 $x$ 求偏导，$y$ 固定为一个常数（暂时看为常数）</p><p>$\frac{\partial{Z}}{\partial{y}}$ ：指对 $y$ 求偏导，$x$ 固定为一个常数（暂时看为常数）</p><h2 id=全微分>全微分</h2><p>$$
+<a href=https://sliverhorn.com/about/ title=关于>关于</a>
+</nav>
+</div>
+</div>
+</div>
+</header>
+<div id=body>
+<div class=container>
+<div class=col-group>
+<div class=col-8 id=main>
+<div class=res-cons>
+<style type=text/css>.post-toc{position:fixed;width:200px;margin-left:-210px;padding:5px 10px;font-family:Athelas,STHeiti,Microsoft Yahei,serif;font-size:12px;border:1px solid rgba(0,0,0,7%);border-radius:5px;background-color:rgba(255,255,255,.98);background-clip:padding-box;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,.125);box-shadow:1px 1px 2px rgba(0,0,0,.125);word-wrap:break-word;white-space:nowrap;-webkit-box-sizing:border-box;box-sizing:border-box;z-index:999;cursor:pointer;max-height:70%;overflow-y:auto;overflow-x:hidden}.post-toc .post-toc-title{width:100%;margin:0 auto;font-size:20px;font-weight:400;text-transform:uppercase;text-align:center}.post-toc .post-toc-content{font-size:15px}.post-toc .post-toc-content>nav>ul{margin:10px 0}.post-toc .post-toc-content ul{padding-left:20px;list-style:square;margin:.5em;line-height:1.8em}.post-toc .post-toc-content ul ul{padding-left:15px;display:none}@media print,screen and (max-width:1057px){.post-toc{display:none}}</style>
+<div class=post-toc style=position:absolute;top:188px>
+<h2 class=post-toc-title>Table of Contents</h2>
+<div class=post-toc-content>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#多元函数定义>多元函数定义</a></li>
+<li><a href=#多元函数定义域>多元函数定义域</a></li>
+<li><a href=#二元函数对应法则>二元函数对应法则</a></li>
+<li><a href=#二元函数极限>二元函数极限</a></li>
+<li><a href=#二元函数偏导数>二元函数偏导数</a>
+<ul>
+<li><a href=#一阶偏导的写法>一阶偏导的写法</a></li>
+<li><a href=#一阶偏导的计算>一阶偏导的计算</a></li>
+</ul>
+</li>
+<li><a href=#全微分>全微分</a>
+<ul>
+<li><a href=#全微分形式的不变性>全微分形式的不变性</a></li>
+</ul>
+</li>
+<li><a href=#可微与偏导的关系>可微与偏导的关系</a></li>
+<li><a href=#可微的本质>可微的本质</a>
+<ul>
+<li><a href=#可微>可微</a></li>
+<li><a href=#一元函数>一元函数</a></li>
+<li><a href=#二元函数>二元函数</a></li>
+</ul>
+</li>
+<li><a href=#二阶偏导>二阶偏导</a></li>
+<li><a href=#二元隐函数偏导>二元隐函数偏导</a>
+<ul>
+<li><a href=#隐函数>隐函数</a></li>
+<li><a href=#一阶偏导>一阶偏导</a></li>
+<li><a href=#二阶偏导-1>二阶偏导</a></li>
+</ul>
+</li>
+<li><a href=#多元复合函数求导>多元复合函数求导</a>
+<ul>
+<li><a href=#求导原则>求导原则</a></li>
+<li><a href=#链式法则>链式法则</a></li>
+<li><a href=#题型>题型</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href=#定义>定义</a></li>
+<li><a href=#性质>性质</a>
+<ul>
+<li><a href=#补充表达式>补充表达式</a></li>
+</ul>
+</li>
+<li><a href=#二重积分直角坐标系下的计算公式>二重积分直角坐标系下的计算公式</a>
+<ul>
+<li><a href=#x型图>X型图</a></li>
+<li><a href=#y型图>Y型图</a></li>
+<li><a href=#定限口诀>定限口诀</a></li>
+<li><a href=#求解过程>求解过程</a></li>
+</ul>
+</li>
+<li><a href=#超越积分>超越积分</a></li>
+<li><a href=#交换积分次序>交换积分次序</a>
+<ul>
+<li><a href=#定义-1>定义</a></li>
+<li><a href=#交换次序思路>交换次序思路</a></li>
+<li><a href=#交换次序的题型>交换次序的题型</a></li>
+</ul>
+</li>
+<li><a href=#极坐标系的二重积分>极坐标系的二重积分</a>
+<ul>
+<li><a href=#极坐标与坐标系互换>极坐标与坐标系互换</a></li>
+<li><a href=#极坐标系下二重积分计算>极坐标系下二重积分计算</a></li>
+<li><a href=#上线限的确定方法>上线限的确定方法</a></li>
+<li><a href=#常见的积分图像>常见的积分图像</a></li>
+</ul>
+</li>
+<li><a href=#二重积分对称性>二重积分对称性</a>
+<ul>
+<li><a href=#二重积分偶倍奇零>二重积分偶倍奇零</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)})),$("#TableOfContents").children().length<1&&$(".post-toc").remove()})</script>
+<article class=post>
+<header>
+<h1 class=post-title>第四章 多元函数微积分学初步</h1>
+</header>
+<time datetime=2022-01-04T00:00:17Z class="post-meta meta-date dt-published">
+2022-01-04
+</time>
+<div class=post-meta>
+<span id=busuanzi_container_page_pv>&nbsp;|
+<span id=busuanzi_value_page_pv></span> <span>reads</span>
+</span>
+</div>
+<div class=post-content>
+<h1 id=多元函数微分学>多元函数微分学</h1>
+<h2 id=多元函数定义>多元函数定义</h2>
+<p>由多个变量确定的函数</p>
+<h2 id=多元函数定义域>多元函数定义域</h2>
+<ul>
+<li>某个函数 $Z$ ，由两个变量同时确定是，称 $Z=f(x,y)$ 为二元函数</li>
+<li>二元函数定义域：$x,y$ 的取值范围</li>
+<li>二元函数定义域写法：${(x,y)|x,y需要满足的条件}$</li>
+</ul>
+<h2 id=二元函数对应法则>二元函数对应法则</h2>
+<p>解法：</p>
+<ol>
+<li>换元</li>
+<li>配凑</li>
+</ol>
+<h2 id=二元函数极限>二元函数极限</h2>
+<p>若点 $P(x,y)$ 以任意方式趋于点 $P_0(x_0,y_0)$ 时，f(x,y)趋于一个常数 $A$ ，称 $A$ 为 $f(x,y)$ 的极限，记为 $\lim\limits_{(x,y)\rightarrow(x_0,y_0))}f(x,y)$ 或 $\lim\limits_{x\rightarrow{x_0},y\rightarrow{y_0}}f(x,y)$</p>
+<h2 id=二元函数偏导数>二元函数偏导数</h2>
+<p>当 $y_0$ 固定而 $x$ 在 $x_0$ 处有增量 $\triangle{x}$ 时，称 $\lim\limits_{\triangle{x}\rightarrow0}\frac{f(x_0+\triangle{x},y_0)-f(x_0-y_0)}{\triangle{x}}$ 为二元函数对 $x$ 的偏导数，反之，称 $\lim\limits_{\triangle{y}\rightarrow0}\frac{f(x_0,y_0+\triangle{y})-f(x_0-y_0)}{\triangle{y}}$ 为二元函数对 $y$ 的偏导数</p>
+<h3 id=一阶偏导的写法>一阶偏导的写法</h3>
+<p>设二元函数 $Z=f(x,y)$ ，</p>
+<p>记：$\frac{\partial{Z}}{\partial{x}}$ 或 $\frac{\partial{f}}{\partial{x}}$ ，$Z_x$ ，$f_{x}(x,y)$ 为对 $x$ 的偏导</p>
+<p>记：$\frac{\partial{Z}}{\partial{y}}$ 或 $\frac{\partial{f}}{\partial{x}}$ ，$Z_y$ ，$f_{y}(x,y)$ 为对 $y$ 的偏导</p>
+<h3 id=一阶偏导的计算>一阶偏导的计算</h3>
+<p>$\frac{\partial{Z}}{\partial{x}}$ ：指对 $x$ 求偏导，$y$ 固定为一个常数（暂时看为常数）</p>
+<p>$\frac{\partial{Z}}{\partial{y}}$ ：指对 $y$ 求偏导，$x$ 固定为一个常数（暂时看为常数）</p>
+<h2 id=全微分>全微分</h2>
+<p>$$
 \text{d}Z=\frac{\partial{Z}}{\partial{x}}\text{d}{x}+\frac{\partial{Z}}{\partial{y}}\text{d}{y}\tag{1}\label{1}
-$$</p><h3 id=全微分形式的不变性>全微分形式的不变性</h3><p>设函数 $Z=f(u,v)$ 具有 <strong>连续</strong> 偏导数，则有全微分
+$$</p>
+<h3 id=全微分形式的不变性>全微分形式的不变性</h3>
+<p>设函数 $Z=f(u,v)$ 具有 <strong>连续</strong> 偏导数，则有全微分
 $$
 \text{d}Z=\frac{\partial{Z}}{\partial{x}}\text{d}{x}+\frac{\partial{Z}}{\partial{y}}\text{d}{y}
 $$
 如果 $u$ 和 $v$ 是中间变量，即 $u = \varphi(x,y)$ ，$v=\psi(x,y)$ 且这两个函数也具有连续的偏导数，
 $$
 \text{d}{u}=\frac{\partial{u}}{\partial{x}}\text{d}{x}+\frac{\partial{u}}{\partial{y}}\text{d}{y}
-$$</p><p>$$
+$$</p>
+<p>$$
 \text{d}{v}=\frac{\partial{v}}{\partial{x}}\text{d}{x}+\frac{\partial{v}}{\partial{y}}\text{d}{y}
-$$</p><p>那么复合函数
+$$</p>
+<p>那么复合函数
 $$
 Z=f(\varphi(x,y),\psi(x,y))
 $$
@@ -29,22 +202,402 @@ $$
 根据复合函数求导，有
 $$
 \frac{\partial{Z}}{\partial{x}}=\frac{\partial{Z}}{\partial{u}}\frac{\partial{u}}{\partial{x}}+\frac{\partial{Z}}{\partial{v}}\frac{\partial{v}}{\partial{x}}
-$$</p><p>$$
+$$</p>
+<p>$$
 \frac{\partial{Z}}{\partial{y}}=\frac{\partial{Z}}{\partial{u}}\frac{\partial{u}}{\partial{y}}+\frac{\partial{Z}}{\partial{v}}\frac{\partial{v}}{\partial{y}}
-$$</p><h2 id=可微与偏导的关系>可微与偏导的关系</h2><ul><li><p>可微 $\Longleftrightarrow$ 可导 $\Longrightarrow$ 连续 $\Longrightarrow$ 极限</p><blockquote><p>极限 不能推出 函数值</p></blockquote></li><li><p>$Z=f(x,y)$ ，<strong>偏导存在</strong>且<strong>连续</strong> $\Longrightarrow$ $f(x,y)$ 可微($\ref{1}$)</p></li><li><p>$Z=f(x,y)$ ，可微 $\Longrightarrow$ 连续 $\Longrightarrow$ 极限</p></li><li><p>$Z=f(x,y)$ ，可微 $\Longrightarrow$ 偏导存在</p></li><li><p><strong>偏导存在，与连续无关</strong></p></li></ul><h2 id=可微的本质>可微的本质</h2><h3 id=可微>可微</h3><p>指用 $f(x,y)$ ，在 $(x_0,y_0)$ 处切线上的增量 $\triangle{y}$ 来代替了曲线 $f(x)$ 本身的增量 $\triangle{y}$</p><blockquote><p><strong>若 $\triangle{y_{切}}=\triangle{y}$ ，则称可微</strong> ，条件 $\triangle{y}-\triangle{y_{切}}=\triangle{y}-f^{&rsquo;}(x_0)\cdot\triangle{x}\Longrightarrow{0}$ ，且 $\triangle{x}$ 的高阶无穷小量</p></blockquote><h3 id=一元函数>一元函数</h3><ol><li>写增量：$\triangle{y}=f(x_0+\triangle{x})-f(x_0)$</li><li>写线性增量：${A}\triangle{x}=f^{&rsquo;}{x_0}\triangle{x}$</li><li>作极限：$\lim\limits_{\triangle{x}\rightarrow0}{\frac{\triangle{y}-{A}\triangle{x}}{\triangle{x}}}$ 趋于0，即可微</li></ol><h3 id=二元函数>二元函数</h3><blockquote><p>$Z=f(x,y)$</p></blockquote><ol><li>全增量：$\triangle{Z}={f({x_0}+{\triangle{x}},{y_0}+{\triangle{y}})}-{f({x_0},{y_0})}$</li><li>线性增量：$\triangle{Z_{线}}=A\triangle{x}+B\triangle{y}$</li><li>作极限：$\lim\limits_{\triangle{x}\rightarrow0}{\frac{\triangle{Z}-\triangle{Z_{线}}}{\sqrt{\triangle{x^2}}+\triangle{y^2}}}$<ol><li>$\triangle{Z}=A\triangle{x}+B\triangle{y}+0(\rho)$<ol><li>$\rho=\sqrt{\triangle{x^2}+\triangle{y^2}}$</li><li>$A=\frac{\partial{Z}}{\partial{x}}$</li><li>$B=\frac{\partial{Z}}{\partial{y}}$</li></ol></li></ol></li></ol><h2 id=二阶偏导>二阶偏导</h2><ol><li><p>$\frac{\partial^{2}{Z}}{\partial{x^2}}$ ：指 $Z$ 对 $x$ 求两次偏导</p></li><li><p>$\frac{\partial^{2}{Z}}{\partial{y^2}}$ ：指 $Z$ 对 $y$ 求两次偏导</p></li><li><p>$\frac{\partial^{2}{Z}}{\partial{y}\partial{x}}$ ：指 $Z$ 先对 $y$ 后对 $x$ 的二阶混合偏导</p></li><li><p>$\frac{\partial^{2}{Z}}{\partial{x}\partial{y}}$ ：指 $Z$ 先对 $x$ 后对 $y$ 的二阶混合偏导</p></li></ol><blockquote><p>$Z=f(x,y)$ 的两个混合偏导 $\frac{\partial^{2}{Z}}{\partial{y}\partial{x}}$ ，$\frac{\partial^{2}{Z}}{\partial{x}\partial{y}}$ 在闭区间 $D$ 内连续，则有以下结论
+$$</p>
+<h2 id=可微与偏导的关系>可微与偏导的关系</h2>
+<ul>
+<li>
+<p>可微 $\Longleftrightarrow$ 可导 $\Longrightarrow$ 连续 $\Longrightarrow$ 极限</p>
+<blockquote>
+<p>极限 不能推出 函数值</p>
+</blockquote>
+</li>
+<li>
+<p>$Z=f(x,y)$ ，<strong>偏导存在</strong>且<strong>连续</strong> $\Longrightarrow$ $f(x,y)$ 可微($\ref{1}$)</p>
+</li>
+<li>
+<p>$Z=f(x,y)$ ，可微 $\Longrightarrow$ 连续 $\Longrightarrow$ 极限</p>
+</li>
+<li>
+<p>$Z=f(x,y)$ ，可微 $\Longrightarrow$ 偏导存在</p>
+</li>
+<li>
+<p><strong>偏导存在，与连续无关</strong></p>
+</li>
+</ul>
+<h2 id=可微的本质>可微的本质</h2>
+<h3 id=可微>可微</h3>
+<p>指用 $f(x,y)$ ，在 $(x_0,y_0)$ 处切线上的增量 $\triangle{y}$ 来代替了曲线 $f(x)$ 本身的增量 $\triangle{y}$</p>
+<blockquote>
+<p><strong>若 $\triangle{y_{切}}=\triangle{y}$ ，则称可微</strong> ，条件 $\triangle{y}-\triangle{y_{切}}=\triangle{y}-f^{'}(x_0)\cdot\triangle{x}\Longrightarrow{0}$ ，且 $\triangle{x}$ 的高阶无穷小量</p>
+</blockquote>
+<h3 id=一元函数>一元函数</h3>
+<ol>
+<li>写增量：$\triangle{y}=f(x_0+\triangle{x})-f(x_0)$</li>
+<li>写线性增量：${A}\triangle{x}=f^{'}{x_0}\triangle{x}$</li>
+<li>作极限：$\lim\limits_{\triangle{x}\rightarrow0}{\frac{\triangle{y}-{A}\triangle{x}}{\triangle{x}}}$ 趋于0，即可微</li>
+</ol>
+<h3 id=二元函数>二元函数</h3>
+<blockquote>
+<p>$Z=f(x,y)$</p>
+</blockquote>
+<ol>
+<li>全增量：$\triangle{Z}={f({x_0}+{\triangle{x}},{y_0}+{\triangle{y}})}-{f({x_0},{y_0})}$</li>
+<li>线性增量：$\triangle{Z_{线}}=A\triangle{x}+B\triangle{y}$</li>
+<li>作极限：$\lim\limits_{\triangle{x}\rightarrow0}{\frac{\triangle{Z}-\triangle{Z_{线}}}{\sqrt{\triangle{x^2}}+\triangle{y^2}}}$
+<ol>
+<li>$\triangle{Z}=A\triangle{x}+B\triangle{y}+0(\rho)$
+<ol>
+<li>$\rho=\sqrt{\triangle{x^2}+\triangle{y^2}}$</li>
+<li>$A=\frac{\partial{Z}}{\partial{x}}$</li>
+<li>$B=\frac{\partial{Z}}{\partial{y}}$</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h2 id=二阶偏导>二阶偏导</h2>
+<ol>
+<li>
+<p>$\frac{\partial^{2}{Z}}{\partial{x^2}}$ ：指 $Z$ 对 $x$ 求两次偏导</p>
+</li>
+<li>
+<p>$\frac{\partial^{2}{Z}}{\partial{y^2}}$ ：指 $Z$ 对 $y$ 求两次偏导</p>
+</li>
+<li>
+<p>$\frac{\partial^{2}{Z}}{\partial{y}\partial{x}}$ ：指 $Z$ 先对 $y$ 后对 $x$ 的二阶混合偏导</p>
+</li>
+<li>
+<p>$\frac{\partial^{2}{Z}}{\partial{x}\partial{y}}$ ：指 $Z$ 先对 $x$ 后对 $y$ 的二阶混合偏导</p>
+</li>
+</ol>
+<blockquote>
+<p>$Z=f(x,y)$ 的两个混合偏导 $\frac{\partial^{2}{Z}}{\partial{y}\partial{x}}$ ，$\frac{\partial^{2}{Z}}{\partial{x}\partial{y}}$ 在闭区间 $D$ 内连续，则有以下结论
 $$
 \frac{\partial^{2}{Z}}{\partial{y}\partial{x}}=\frac{\partial^{2}{Z}}{\partial{x}\partial{y}}
-$$</p></blockquote><h2 id=二元隐函数偏导>二元隐函数偏导</h2><h3 id=隐函数>隐函数</h3><p>不是 $Z=f(x,y)$ 的二元函数</p><h3 id=一阶偏导>一阶偏导</h3><ol><li>令 $F(x,y,Z)$</li><li>求 $F_x,F_y,F_Z$</li><li>套公式 $\frac{\partial{Z}}{\partial{x}}=-\frac{F_x}{F_{Z}},\frac{\partial{Z}}{\partial{y}}=-\frac{F_y}{F_{Z}}$</li></ol><h3 id=二阶偏导-1>二阶偏导</h3><ol><li>先用公式法求一阶导</li><li>用导数公式直接求二阶导</li></ol><blockquote><p>在求二阶导时，切记 $Z$ 是关于 $x,y$ 的函数需要求导的</p></blockquote><h2 id=多元复合函数求导>多元复合函数求导</h2><h3 id=求导原则>求导原则</h3><p>从外向里，层层求导并相乘</p><h3 id=链式法则>链式法则</h3><p>将每层函数关系罗列（树状图）</p><blockquote><p>分线相加，连线相乘</p></blockquote><h3 id=题型>题型</h3><ol><li><p>具体多元复合函数求导：直接代入法</p></li><li><p>抽象的复合函数求导：面向含 $f(\Box,\triangle)$ 的复合求导</p><blockquote><ol><li>从外向量逐层求导</li><li>勿忘 $f$ 要导为 $f^{&rsquo;}$</li><li>&ldquo;$\Box$&rdquo; 用 &ldquo;$1$&rdquo; 代替，"$\triangle$" 用 &ldquo;2&rdquo; 代替</li><li>计算结果内容可省略不写括号</li></ol></blockquote></li></ol><h1 id=二重积分>二重积分</h1><h2 id=定义>定义</h2><p>二重积分是用来求解曲顶柱体的工具，记为 $\iint_{D}{f(x,y)}\text{d}x\text{d}y$ ，其中 $f(x, y)$ 叫被积函数，$\text{d}x\text{d}y$ 叫面积元素，$D$ 为积分区域（底面积）</p><h2 id=性质>性质</h2><ol><li><p>$\iint_{D}{f(x,y)}\pm{g(x,y)}\text{d}x\text{d}y=\iint_{D}{f(x,y)}\text{d}x\text{d}y\pm\iint_{D}{g(x,y)}\text{d}x\text{d}y$</p></li><li><p>当 $D=D_1+D_2$ 时，$\iint_{D_1}{f(x,y)}\text{d}x\text{d}y+\iint_{D_2}{f(x,y)}\text{d}x\text{d}y$</p></li><li><p>$\iint_{D}{k\cdot}{f(x,y)}\text{d}x\text{d}y = k\cdot\iint_{D}{f(x,y)}\text{d}x\text{d}y$</p></li><li><p>$\iint_{D}{1}\text{d}x\text{d}y = \iint_{D}\text{d}x\text{d}y=S_D$</p></li><li><p>比较定理：设 ${f(x)}\ge{g(x)}$ ，则 $\iint_{D}{f(x,y)}\text{d}x\text{d}y \ge \iint_{D}{g(x,y)}\text{d}x\text{d}y$</p><blockquote><p>如果要比较二重积分大小可以对比被积函数的大小</p></blockquote></li><li><p>估值定理：设 $f(x)$ 在 $D$ 上有最大值 $M$ ，最小值 $m$ 。</p><ol><li>$m \le f(x, y) \le M$</li><li>$\Longrightarrow \iint_{D}{m}\text{d}x\text{d}y \le \iint_{D}{f(x,y)}\text{d}x\text{d}y \le \iint_{D}{M}\text{d}x\text{d}y$</li><li>$\Longrightarrow m\cdot\iint_{D}\text{d}x\text{d}y \le \iint_{D}{f(x,y)}\text{d}x\text{d}y \le D\cdot\iint_{D}\text{d}x\text{d}y$</li><li>$\Longrightarrow m\cdot{S_{D}} \le \iint_{D}{f(x,y)}\text{d}x\text{d}y \le M\cdot{S_{D}}$</li></ol></li></ol><h3 id=补充表达式>补充表达式</h3><ol><li><p>圆的表达式: $(x-a)^{2}+(y-b)^{2}=r^{2}$ ，其中 $(a, b)$ 为圆心，$r$ 为圆的半径，$S_{圆}=\pi{r}^{2}$</p></li><li><p>椭圆的表达式：$\frac{x^2}{a^2} + \frac{y^2}{b^2}=1$ , $S_{椭圆} = \pi\cdot{a}\cdot{b}$</p></li></ol><h2 id=二重积分直角坐标系下的计算公式>二重积分直角坐标系下的计算公式</h2><ol><li><p>$\iint_D{f(x,y)}\text{d}x\text{d}y = \int_{a}^{b}\text{d}x\int_{c}^{d}f(x, y)\text{d}y$</p></li><li><p>$\iint_D{f(x,y)}\text{d}x\text{d}y = \int_{c}^{d}\text{d}y\int_{a}^{b}f(x, y)\text{d}x$</p></li></ol><blockquote><p><strong>求解顺序：先求导屁股后面的，右→左</strong></p></blockquote><h3 id=x型图>X型图</h3><p>函数图像，由上，下两函数夹击而成
+$$</p>
+</blockquote>
+<h2 id=二元隐函数偏导>二元隐函数偏导</h2>
+<h3 id=隐函数>隐函数</h3>
+<p>不是 $Z=f(x,y)$ 的二元函数</p>
+<h3 id=一阶偏导>一阶偏导</h3>
+<ol>
+<li>令 $F(x,y,Z)$</li>
+<li>求 $F_x,F_y,F_Z$</li>
+<li>套公式 $\frac{\partial{Z}}{\partial{x}}=-\frac{F_x}{F_{Z}},\frac{\partial{Z}}{\partial{y}}=-\frac{F_y}{F_{Z}}$</li>
+</ol>
+<h3 id=二阶偏导-1>二阶偏导</h3>
+<ol>
+<li>先用公式法求一阶导</li>
+<li>用导数公式直接求二阶导</li>
+</ol>
+<blockquote>
+<p>在求二阶导时，切记 $Z$ 是关于 $x,y$ 的函数需要求导的</p>
+</blockquote>
+<h2 id=多元复合函数求导>多元复合函数求导</h2>
+<h3 id=求导原则>求导原则</h3>
+<p>从外向里，层层求导并相乘</p>
+<h3 id=链式法则>链式法则</h3>
+<p>将每层函数关系罗列（树状图）</p>
+<blockquote>
+<p>分线相加，连线相乘</p>
+</blockquote>
+<h3 id=题型>题型</h3>
+<ol>
+<li>
+<p>具体多元复合函数求导：直接代入法</p>
+</li>
+<li>
+<p>抽象的复合函数求导：面向含 $f(\Box,\triangle)$ 的复合求导</p>
+<blockquote>
+<ol>
+<li>从外向量逐层求导</li>
+<li>勿忘 $f$ 要导为 $f^{'}$</li>
+<li>&ldquo;$\Box$&rdquo; 用 &ldquo;$1$&rdquo; 代替，"$\triangle$" 用 &ldquo;2&rdquo; 代替</li>
+<li>计算结果内容可省略不写括号</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<h1 id=二重积分>二重积分</h1>
+<h2 id=定义>定义</h2>
+<p>二重积分是用来求解曲顶柱体的工具，记为 $\iint_{D}{f(x,y)}\text{d}x\text{d}y$ ，其中 $f(x, y)$ 叫被积函数，$\text{d}x\text{d}y$ 叫面积元素，$D$ 为积分区域（底面积）</p>
+<h2 id=性质>性质</h2>
+<ol>
+<li>
+<p>$\iint_{D}{f(x,y)}\pm{g(x,y)}\text{d}x\text{d}y=\iint_{D}{f(x,y)}\text{d}x\text{d}y\pm\iint_{D}{g(x,y)}\text{d}x\text{d}y$</p>
+</li>
+<li>
+<p>当 $D=D_1+D_2$ 时，$\iint_{D_1}{f(x,y)}\text{d}x\text{d}y+\iint_{D_2}{f(x,y)}\text{d}x\text{d}y$</p>
+</li>
+<li>
+<p>$\iint_{D}{k\cdot}{f(x,y)}\text{d}x\text{d}y = k\cdot\iint_{D}{f(x,y)}\text{d}x\text{d}y$</p>
+</li>
+<li>
+<p>$\iint_{D}{1}\text{d}x\text{d}y = \iint_{D}\text{d}x\text{d}y=S_D$</p>
+</li>
+<li>
+<p>比较定理：设 ${f(x)}\ge{g(x)}$ ，则 $\iint_{D}{f(x,y)}\text{d}x\text{d}y \ge \iint_{D}{g(x,y)}\text{d}x\text{d}y$</p>
+<blockquote>
+<p>如果要比较二重积分大小可以对比被积函数的大小</p>
+</blockquote>
+</li>
+<li>
+<p>估值定理：设 $f(x)$ 在 $D$ 上有最大值 $M$ ，最小值 $m$ 。</p>
+<ol>
+<li>$m \le f(x, y) \le M$</li>
+<li>$\Longrightarrow \iint_{D}{m}\text{d}x\text{d}y \le \iint_{D}{f(x,y)}\text{d}x\text{d}y \le \iint_{D}{M}\text{d}x\text{d}y$</li>
+<li>$\Longrightarrow m\cdot\iint_{D}\text{d}x\text{d}y \le \iint_{D}{f(x,y)}\text{d}x\text{d}y \le D\cdot\iint_{D}\text{d}x\text{d}y$</li>
+<li>$\Longrightarrow m\cdot{S_{D}} \le \iint_{D}{f(x,y)}\text{d}x\text{d}y \le M\cdot{S_{D}}$</li>
+</ol>
+</li>
+</ol>
+<h3 id=补充表达式>补充表达式</h3>
+<ol>
+<li>
+<p>圆的表达式: $(x-a)^{2}+(y-b)^{2}=r^{2}$ ，其中 $(a, b)$ 为圆心，$r$ 为圆的半径，$S_{圆}=\pi{r}^{2}$</p>
+</li>
+<li>
+<p>椭圆的表达式：$\frac{x^2}{a^2} + \frac{y^2}{b^2}=1$ , $S_{椭圆} = \pi\cdot{a}\cdot{b}$</p>
+</li>
+</ol>
+<h2 id=二重积分直角坐标系下的计算公式>二重积分直角坐标系下的计算公式</h2>
+<ol>
+<li>
+<p>$\iint_D{f(x,y)}\text{d}x\text{d}y = \int_{a}^{b}\text{d}x\int_{c}^{d}f(x, y)\text{d}y$</p>
+</li>
+<li>
+<p>$\iint_D{f(x,y)}\text{d}x\text{d}y = \int_{c}^{d}\text{d}y\int_{a}^{b}f(x, y)\text{d}x$</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>求解顺序：先求导屁股后面的，右→左</strong></p>
+</blockquote>
+<h3 id=x型图>X型图</h3>
+<p>函数图像，由上，下两函数夹击而成
 $$
 \iint_{D}{f(x,y)}\text{d}x\text{d}y = \int_{a}^{b}\text{d}x\int_{f_{下}(x)}^{f_{上}(x)}f(x, y)\text{d}y
-$$</p><h3 id=y型图>Y型图</h3><p>函数图像，由左，右两函数夹击而成
+$$</p>
+<h3 id=y型图>Y型图</h3>
+<p>函数图像，由左，右两函数夹击而成
 $$
 \iint_D{f(x,y)}\text{d}x\text{d}y = \int_{c}^{d}\text{d}y\int_{f_{左}(y)}^{f_{右}(y)}f(x, y)\text{d}x
-$$</p><blockquote><p>改函数，由 $y = f(x)$ 改为 $x=f(y)$</p></blockquote><h3 id=定限口诀>定限口诀</h3><p><strong>后积先定限，限内画直线，先交写下限后交下上限</strong></p><h3 id=求解过程>求解过程</h3><ol><li>画：画图，联立方程解出交点</li><li>定：判断积分区域类型</li><li>式：套公式<ol><li>X型图: $\int_{a}^{b}\text{d}x\int_{f_{下}(x)}^{f_{上}(x)}f(x, y)\text{d}y$</li><li>Y型图：$\int_{c}^{d}\text{d}y\int_{f_{左}(y)}^{f_{右}(y)}f(x, y)\text{d}x$</li></ol></li></ol><h2 id=超越积分>超越积分</h2><ol><li>$\frac{\sin{x}}{x}, \frac{\cos{x}}{x},\frac{\arctan{x}}{x},\sin{x^2},cos{x^2},e^{x^2},e^{-x^2}$ => X型</li><li>$\frac{\sin{y}}{y}, \frac{\cos{y}}{y},\frac{\arctan{y}}{y},\sin{y^2},cos{y^2},e^{y^2},e^{-y^2}$ => X型</li></ol><h2 id=交换积分次序>交换积分次序</h2><h3 id=定义-1>定义</h3><p>X型与Y型顺序互换</p><p>$\int\text{d}x\int{f(x,y)}\text{d}y \Longleftrightarrow \int\text{d}y\int{f(x,y)}\text{d}x$</p><h3 id=交换次序思路>交换次序思路</h3><ol><li>根据积分上下限，画出积分区域</li><li>交换次序</li></ol><h3 id=交换次序的题型>交换次序的题型</h3><ol><li>题目要求</li><li>遇积分上下限定好的二重积分计算</li></ol><h2 id=极坐标系的二重积分>极坐标系的二重积分</h2><h3 id=极坐标与坐标系互换>极坐标与坐标系互换</h3><ol><li>$x=r\cos\theta$</li><li>$y=r\sin\theta$</li><li>$x^2+y^2=r^2$</li></ol><h3 id=极坐标系下二重积分计算>极坐标系下二重积分计算</h3><ol><li><p>条件 => 当遇到与圆相关的积分区域相关的积分区域；</p></li><li><p>考虑：利用极坐标求解；</p></li><li><p>转换：$x=r\cos\theta$ ， $y=r\sin\theta$ ，$x^2+y^2=r^2$</p></li><li><p>公式：
+$$</p>
+<blockquote>
+<p>改函数，由 $y = f(x)$ 改为 $x=f(y)$</p>
+</blockquote>
+<h3 id=定限口诀>定限口诀</h3>
+<p><strong>后积先定限，限内画直线，先交写下限后交下上限</strong></p>
+<h3 id=求解过程>求解过程</h3>
+<ol>
+<li>画：画图，联立方程解出交点</li>
+<li>定：判断积分区域类型</li>
+<li>式：套公式
+<ol>
+<li>X型图: $\int_{a}^{b}\text{d}x\int_{f_{下}(x)}^{f_{上}(x)}f(x, y)\text{d}y$</li>
+<li>Y型图：$\int_{c}^{d}\text{d}y\int_{f_{左}(y)}^{f_{右}(y)}f(x, y)\text{d}x$</li>
+</ol>
+</li>
+</ol>
+<h2 id=超越积分>超越积分</h2>
+<ol>
+<li>$\frac{\sin{x}}{x}, \frac{\cos{x}}{x},\frac{\arctan{x}}{x},\sin{x^2},cos{x^2},e^{x^2},e^{-x^2}$ => X型</li>
+<li>$\frac{\sin{y}}{y}, \frac{\cos{y}}{y},\frac{\arctan{y}}{y},\sin{y^2},cos{y^2},e^{y^2},e^{-y^2}$ => X型</li>
+</ol>
+<h2 id=交换积分次序>交换积分次序</h2>
+<h3 id=定义-1>定义</h3>
+<p>X型与Y型顺序互换</p>
+<p>$\int\text{d}x\int{f(x,y)}\text{d}y \Longleftrightarrow \int\text{d}y\int{f(x,y)}\text{d}x$</p>
+<h3 id=交换次序思路>交换次序思路</h3>
+<ol>
+<li>根据积分上下限，画出积分区域</li>
+<li>交换次序</li>
+</ol>
+<h3 id=交换次序的题型>交换次序的题型</h3>
+<ol>
+<li>题目要求</li>
+<li>遇积分上下限定好的二重积分计算</li>
+</ol>
+<h2 id=极坐标系的二重积分>极坐标系的二重积分</h2>
+<h3 id=极坐标与坐标系互换>极坐标与坐标系互换</h3>
+<ol>
+<li>$x=r\cos\theta$</li>
+<li>$y=r\sin\theta$</li>
+<li>$x^2+y^2=r^2$</li>
+</ol>
+<h3 id=极坐标系下二重积分计算>极坐标系下二重积分计算</h3>
+<ol>
+<li>
+<p>条件 => 当遇到与圆相关的积分区域相关的积分区域；</p>
+</li>
+<li>
+<p>考虑：利用极坐标求解；</p>
+</li>
+<li>
+<p>转换：$x=r\cos\theta$ ， $y=r\sin\theta$ ，$x^2+y^2=r^2$</p>
+</li>
+<li>
+<p>公式：
 $$
 \iint_{D}{f(x,y)}\text{d}x\text{d}y \Longrightarrow 极坐标 \Longrightarrow \int_{\theta_1}^{\theta_2}\text{d}\theta\int_{r_1}^{r_2}f(r\cdot\cos{\theta}, r\cdot\sin{\theta})\cdot{r}\cdot\text{d}r
-$$</p></li></ol><h3 id=上线限的确定方法>上线限的确定方法</h3><h4 id=夹角-theta-的取值范围>夹角 $\theta$ 的取值范围</h4><p>从原点出发逆时针作积分区域的两条切线，取第一条触碰积分区域的切线与 $x$ 正半轴的夹角为 $\theta_1$ ，取第二条即将离开区域的切线与 $x$ 正半轴的夹角为 $\theta_2$ 。</p><h4 id=半径-r-的取值范围>半径 $r$ 的取值范围</h4><p>将 $x=r\cos\theta$ ， $y=r\sin\theta$ ，$x^2+y^2=r^2$ 代入题干函数表达式中，求解出来</p><blockquote><p>${r}\ge{0}$</p></blockquote><h3 id=常见的积分图像>常见的积分图像</h3><h4 id=圆>圆</h4><ol><li>方程：$(x-a)^{2}+(y-b)^{2}=r^{2}$ ，圆心为 $(a, b)$ ，半径为 $r$ ，$\theta$ 取值范围为${0}\le{\theta}\le{2\pi}$ ，$r$ 取值范围为 ${0}\le{r}\le{r}$</li><li>方程：$(x-a)^{2}+(y)^{2}=r^{2}$ ，圆心为 $(a, 0)$ ，半径为 $r$ ，$\theta$ 取值范围为${-\frac{\pi}{2}}\le{\theta}\le{\frac{\pi}{2}}$ ，$r$ 取值范围为 ${0}\le{r}\le{2a\cos\theta}$</li><li>方程：$(x)^{2}+(y-b)^{2}=r^{2}$ ，圆心为 $(0, b)$ ，半径为 $r$ ，$\theta$ 取值范围为${0}\le{\theta}\le{\pi}$ ，$r$ 取值范围为 ${0}\le{r}\le{2a\sin\theta}$</li></ol><h2 id=二重积分对称性>二重积分对称性</h2><ol><li>当 $f(-x,y)=f(x,y)$ 时，$\iint_{D}{f(x,y)}\text{d}x\text{d}y=2\iint_{D_{1}}{f(x,y)\text{d}x\text{d}y}$</li><li>当 $f(-x,y)=-f(x,y)$ 时，$\iint_{D}{f(x,y)}\text{d}x\text{d}y=0$</li></ol><h3 id=二重积分偶倍奇零>二重积分偶倍奇零</h3><ol><li><p>积分区域 $D$ : 关于 $y$ 轴对称，看 $x$ 的奇偶性</p><ol><li>$\iint_{D}{f(x,y)}\text{d}{x}\text{d}{y}$<ol><li>$=2\iint_{D_1}{f(x,y)}\text{d}x\text{d}y$ ，关于 $x$ 函数为偶函数</li><li>$=0$ ，关于 $x$ 函数为奇函数</li></ol></li></ol></li><li><p>积分区域 $D$ : 关于 $x$ 轴对称，看 $y$ 的奇偶性</p><ol><li>$\iint_{D}{f(x,y)}\text{d}{x}\text{d}{y}$<ol><li>$=2\iint_{D_1}{f(x,y)}\text{d}x\text{d}y$ ，关于 $y$ 函数为偶函数</li><li>$=0$ ，关于 $y$ 函数为奇函数</li></ol></li></ol></li></ol><blockquote><p>若 $D$ 对称，首选对称性</p></blockquote></div><div class=post-archive><h2>See Also</h2><ul class=listing><li><a href=/higher_mathematics/3/>第三章 一元函数积分学</a></li><li><a href=/higher_mathematics/2/>第二章 一元函数微分学</a></li><li><a href=/higher_mathematics/1/>第一章 函数与极限</a></li><li><a href=/higher_mathematics/higher_mathematics/>考试范围</a></li><li><a href=/post/linux/oh-my-zsh-install/>oh-my-zsh Mac 安装教程</a></li></ul></div><div class="post-meta meta-tags">没有标签</div></article><div class="post bg-white"><script src=https://utteranc.es/client.js repo="your github repo" issue-term=pathname theme=github-light crossorigin=anonymous async></script></div></div><footer id=footer><div>&copy; 2024 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
-| <a rel=nofollow target=_blank href=http://beian.miit.gov.cn/>粤ICP备19128176号</a></div><br><div><div class=github-badge><a href=https://gohugo.io/ target=_black rel=nofollow><span class=badge-subject>Powered by</span><span class="badge-value bg-blue">Hugo</span></a></div><div class=github-badge><a href=https://www.flysnow.org/ target=_black><span class=badge-subject>Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a></div><div class=github-badge><a href=https://github.com/flysnow-org/maupassant-hugo target=_black><span class=badge-subject>Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a></div></div></footer><script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[["$","$"]],processEscapes:!0}}</script><script src='//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script><script src=//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js></script><a id=rocket href=#top></a><script type=text/javascript src='/js/totop.js?v=0.0.0' async></script><script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async></script><script src=/js/douban.js></script></div><div id=secondary><section class=widget><form id=search action=https://sliverhorn.com/search method=get accept-charset=utf-8 target=_blank _lpchecked=1><input type=text name=q maxlength=20 placeholder=Search>
+$$</p>
+</li>
+</ol>
+<h3 id=上线限的确定方法>上线限的确定方法</h3>
+<h4 id=夹角-theta-的取值范围>夹角 $\theta$ 的取值范围</h4>
+<p>从原点出发逆时针作积分区域的两条切线，取第一条触碰积分区域的切线与 $x$ 正半轴的夹角为 $\theta_1$ ，取第二条即将离开区域的切线与 $x$ 正半轴的夹角为 $\theta_2$ 。</p>
+<h4 id=半径-r-的取值范围>半径 $r$ 的取值范围</h4>
+<p>将 $x=r\cos\theta$ ， $y=r\sin\theta$ ，$x^2+y^2=r^2$ 代入题干函数表达式中，求解出来</p>
+<blockquote>
+<p>${r}\ge{0}$</p>
+</blockquote>
+<h3 id=常见的积分图像>常见的积分图像</h3>
+<h4 id=圆>圆</h4>
+<ol>
+<li>方程：$(x-a)^{2}+(y-b)^{2}=r^{2}$ ，圆心为 $(a, b)$ ，半径为 $r$ ，$\theta$ 取值范围为${0}\le{\theta}\le{2\pi}$ ，$r$ 取值范围为 ${0}\le{r}\le{r}$</li>
+<li>方程：$(x-a)^{2}+(y)^{2}=r^{2}$ ，圆心为 $(a, 0)$ ，半径为 $r$ ，$\theta$ 取值范围为${-\frac{\pi}{2}}\le{\theta}\le{\frac{\pi}{2}}$ ，$r$ 取值范围为 ${0}\le{r}\le{2a\cos\theta}$</li>
+<li>方程：$(x)^{2}+(y-b)^{2}=r^{2}$ ，圆心为 $(0, b)$ ，半径为 $r$ ，$\theta$ 取值范围为${0}\le{\theta}\le{\pi}$ ，$r$ 取值范围为 ${0}\le{r}\le{2a\sin\theta}$</li>
+</ol>
+<h2 id=二重积分对称性>二重积分对称性</h2>
+<ol>
+<li>当 $f(-x,y)=f(x,y)$ 时，$\iint_{D}{f(x,y)}\text{d}x\text{d}y=2\iint_{D_{1}}{f(x,y)\text{d}x\text{d}y}$</li>
+<li>当 $f(-x,y)=-f(x,y)$ 时，$\iint_{D}{f(x,y)}\text{d}x\text{d}y=0$</li>
+</ol>
+<h3 id=二重积分偶倍奇零>二重积分偶倍奇零</h3>
+<ol>
+<li>
+<p>积分区域 $D$ : 关于 $y$ 轴对称，看 $x$ 的奇偶性</p>
+<ol>
+<li>$\iint_{D}{f(x,y)}\text{d}{x}\text{d}{y}$
+<ol>
+<li>$=2\iint_{D_1}{f(x,y)}\text{d}x\text{d}y$ ，关于 $x$ 函数为偶函数</li>
+<li>$=0$ ，关于 $x$ 函数为奇函数</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>积分区域 $D$ : 关于 $x$ 轴对称，看 $y$ 的奇偶性</p>
+<ol>
+<li>$\iint_{D}{f(x,y)}\text{d}{x}\text{d}{y}$
+<ol>
+<li>$=2\iint_{D_1}{f(x,y)}\text{d}x\text{d}y$ ，关于 $y$ 函数为偶函数</li>
+<li>$=0$ ，关于 $y$ 函数为奇函数</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>若 $D$ 对称，首选对称性</p>
+</blockquote>
+</div>
+<div class=post-archive>
+<h2>See Also</h2>
+<ul class=listing>
+<li><a href=/higher_mathematics/3/>第三章 一元函数积分学</a></li>
+<li><a href=/higher_mathematics/2/>第二章 一元函数微分学</a></li>
+<li><a href=/higher_mathematics/1/>第一章 函数与极限</a></li>
+<li><a href=/higher_mathematics/higher_mathematics/>考试范围</a></li>
+<li><a href=/csapp/2.2/>Integer Representations</a></li>
+</ul>
+</div>
+<div class="post-meta meta-tags">
+No tags
+</div>
+</article>
+<div class="post bg-white">
+<script src=https://utteranc.es/client.js repo="your github repo" issue-term=pathname theme=github-light crossorigin=anonymous async></script>
+</div>
+</div>
+<footer id=footer>
+<div>
+&copy; 2024 <a href=https://sliverhorn.com>SliverHorn的博客 By SliverHorn</a>
+| <a rel=nofollow target=_blank href=http://beian.miit.gov.cn/>粤ICP备19128176号</a>
+</div>
+<br>
+<div>
+<div class=github-badge>
+<a href=https://gohugo.io/ target=_black rel=nofollow><span class=badge-subject>Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+</div>
+<div class=github-badge>
+<a href=https://www.flysnow.org/ target=_black><span class=badge-subject>Design by</span><span class="badge-value bg-brightgreen">飞雪无情</span></a>
+</div>
+<div class=github-badge>
+<a href=https://github.com/flysnow-org/maupassant-hugo target=_black><span class=badge-subject>Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+</div>
+</div>
+</footer>
+<script type=text/javascript>window.MathJax={tex2jax:{inlineMath:[['$','$']],processEscapes:!0}}</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script><script src=//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js></script>
+<a id=rocket href=#top></a>
+<script type=text/javascript src="/js/totop.js?v=0.0.0" async></script>
+<script type=text/javascript src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js async></script>
+<script src=/js/douban.js></script>
+</div>
+<div id=secondary>
+<section class=widget>
+<form id=search action=https://sliverhorn.com/search method=get accept-charset=utf-8 target=_blank _lpchecked=1>
+<input type=text name=q maxlength=20 placeholder=Search>
 <input type=hidden name=sitesearch value=https://sliverhorn.com>
-<button type=submit class="submit icon-search"></button></form></section><section class=widget><h3 class=widget-title>最近文章</h3><ul class=widget-list><li><a href=https://sliverhorn.com/post/aria2c/ title=Aria2c>Aria2c</a></li><li><a href=https://sliverhorn.com/post/linux/oh-my-zsh-install/ title="oh-my-zsh Mac 安装教程">oh-my-zsh Mac 安装教程</a></li></ul></section><section class=widget><h3 class=widget-title><a href=/categories/>分类</a></h3><ul class=widget-list><li><a href=https://sliverhorn.com/categories/Linux/>Linux (1)</a></li><li><a href=https://sliverhorn.com/categories/Mac/>Mac (1)</a></li></ul></section><section class=widget><h3 class=widget-title><a href=/tags/>标签</a></h3><div class=tagcloud><a href=https://sliverhorn.com/tags/oh-my-zsh/>oh-my-zsh</a>
-<a href=https://sliverhorn.com/tags/tool/>tool</a></div></section><section class=widget><h3 class=widget-title>友情链接</h3><ul class=widget-list><li><a target=_blank href=https://blog.leonardwang.cn/ title="牛逼哄哄 `王哥` 博客">牛逼哄哄 `王哥` 博客</a></li><li><a target=_blank href=https://www.cnblogs.com/binHome/ title=songzhibin97的博客>songzhibin97的博客</a></li><li><a target=_blank href=https://leixf.cn/ title="跃动指尖 – 悦动生活">跃动指尖 – 悦动生活</a></li><li><a target=_blank href=https://www.treesystem.cn title=术习电报>术习电报</a></li></ul></section><section class=widget><h3 class=widget-title>其它</h3><ul class=widget-list><li><a href=https://sliverhorn.com/index.xml>文章 RSS</a></li></ul></section></div></div></div></div></body></html>
+<button type=submit class="submit icon-search"></button>
+</form>
+</section>
+<section class=widget>
+<h3 class=widget-title>Latest articles</h3>
+<ul class=widget-list>
+<li>
+<a href=https://sliverhorn.com/post/aria2c/ title=Aria2c target=_blank>Aria2c</a>
+</li>
+<li>
+<a href=https://sliverhorn.com/post/linux/oh-my-zsh-install/ title="oh-my-zsh Mac 安装教程" target=_blank>oh-my-zsh Mac 安装教程</a>
+</li>
+</ul>
+</section>
+<section class=widget>
+<h3 class=widget-title><a href=/categories/>Categories</a></h3>
+<ul class=widget-list>
+<li><a href=https://sliverhorn.com/categories/Linux/>Linux (1)</a></li>
+<li><a href=https://sliverhorn.com/categories/Mac/>Mac (1)</a></li>
+<li><a href=https://sliverhorn.com/categories/csapp/>csapp (2)</a></li>
+</ul>
+</section>
+<section class=widget>
+<h3 class=widget-title><a href=/tags/>Tags</a></h3>
+<div class=tagcloud>
+<a href=https://sliverhorn.com/tags/csapp/>csapp</a>
+<a href=https://sliverhorn.com/tags/oh-my-zsh/>oh-my-zsh</a>
+<a href=https://sliverhorn.com/tags/tool/>tool</a>
+</div>
+</section>
+<section class=widget>
+<h3 class=widget-title>Links</h3>
+<ul class=widget-list>
+<li>
+<a target=_blank href=https://blog.leonardwang.cn/ title="牛逼哄哄 `王哥` 博客">牛逼哄哄 `王哥` 博客</a>
+</li>
+<li>
+<a target=_blank href=https://www.cnblogs.com/binHome/ title=songzhibin97的博客>songzhibin97的博客</a>
+</li>
+<li>
+<a target=_blank href=https://leixf.cn/ title="跃动指尖 – 悦动生活">跃动指尖 – 悦动生活</a>
+</li>
+<li>
+<a target=_blank href=https://www.treesystem.cn title=术习电报>术习电报</a>
+</li>
+</ul>
+</section>
+<section class=widget>
+<h3 class=widget-title>Meta</h3>
+<ul class=widget-list>
+<li><a href=https://sliverhorn.com/index.xml>RSS</a></li>
+</ul>
+</section>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
