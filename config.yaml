@@ -68,8 +68,8 @@ menu:
       url: /linux/
       weight: 1
     -
-      identifier: Computer Systems A Programmer's Perspective
-      name:
+      identifier: csapp
+      name: "Computer Systems: A Programmer's Perspective"
       url: /csapp/
       weight: 2
     -
