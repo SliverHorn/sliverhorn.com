@@ -1,7 +1,7 @@
 baseURL: https://sliverhorn.com
 languageCode: zh-CN
 title: SliverHorn的博客
-theme: maupassant
+theme: maupassant-hugo
 googleAnalytics: ""
 preserveTaxonomyNames: true
 disablePathToLower: true
