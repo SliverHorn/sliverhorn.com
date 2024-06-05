@@ -52,7 +52,19 @@ SliverHorn的博客
 <div class=post-toc style=position:absolute;top:188px>
 <h2 class=post-toc-title>Table of Contents</h2>
 <div class=post-toc-content>
-<nav id=TableOfContents></nav>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#boolean-algebra>Boolean Algebra</a>
+<ul>
+<li><a href=#sim--not非>$\sim$ => NOT(非)</a></li>
+<li><a href=#--and与>$&$ => AND(与)</a></li>
+<li><a href=#--or或>$|$ => OR(或)</a></li>
+<li><a href=#--exclusive-or异或>^ => EXCLUSIVE-OR(异或)</a></li>
+</ul>
+</li>
+<li><a href=#shift-operation-in-c>Shift Operation in C</a></li>
+</ul>
+</nav>
 </div>
 </div>
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)})),$("#TableOfContents").children().length<1&&$(".post-toc").remove()})</script>
@@ -71,6 +83,92 @@ SliverHorn的博客
 </div>
 <div class=post-content>
 <p>Information Storage(信息存储)</p>
+<h2 id=boolean-algebra>Boolean Algebra</h2>
+<h3 id=sim--not非>$\sim$ => NOT(非)</h3>
+<p>$$
+\begin{array}{c|lcr} \sim & \text{} & \text{example} \\ \hline 0 & 1 & \sim0=1 \\ 1 & 0 & \sim1=0 \end{array}
+$$</p>
+<h3 id=--and与>$&$ => AND(与)</h3>
+<p>$$
+\begin{array}{c|lcr} & & 0 & 1 \\ \hline 0 & 0 & 0 \\ 1 & 0 & 1 \end{array}
+$$</p>
+<h4 id=example>example</h4>
+<ul>
+<li>
+<p>0 & 0 = 0</p>
+</li>
+<li>
+<p>0 & 1 = 0</p>
+</li>
+<li>
+<p>1 & 0 = 0</p>
+</li>
+<li>
+<p>1 & 1 = 1</p>
+</li>
+</ul>
+<h3 id=--or或>$|$ => OR(或)</h3>
+<p>$$
+\begin{array}{c|lcr} | & 0 & 1 \\ \hline 0 & 0 & 1 \\ 1 & 1 & 1 \end{array}
+$$</p>
+<h4 id=example-1>example</h4>
+<ul>
+<li>0 | 0 = 0</li>
+<li>0 | 1 = 1</li>
+<li>1 | 0 = 1</li>
+<li>1 | 1 = 1</li>
+</ul>
+<h3 id=--exclusive-or异或>^ => EXCLUSIVE-OR(异或)</h3>
+<p>$$
+\begin{array}{c|lcr} ^{} & 0 & 1 \\ \hline 0 & 0 & 1 \\ 1 & 1 & 0 \end{array}
+$$</p>
+<h4 id=example-2>example</h4>
+<ul>
+<li>
+<p>0 ^ 0 = 0</p>
+</li>
+<li>
+<p>0 ^ 1 = 1</p>
+</li>
+<li>
+<p>1 ^ 0 = 1</p>
+</li>
+<li>
+<p>1 ^ 1 = 0</p>
+</li>
+</ul>
+<h2 id=shift-operation-in-c>Shift Operation in C</h2>
+<table>
+<thead>
+<tr>
+<th>Operation(操作)</th>
+<th>Value1</th>
+<th>Value2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x</td>
+<td>$[0110\ 0011]$</td>
+<td>$[1001\ 0101]$</td>
+</tr>
+<tr>
+<td>x &#171; 4</td>
+<td>$[0011\ 0000]$</td>
+<td>$[0101\ 0000]$</td>
+</tr>
+<tr>
+<td>x &#187; 4(logical)</td>
+<td>$[0000\ 0110]$</td>
+<td>$[0000\ 1001]$</td>
+</tr>
+<tr>
+<td>x &#187; 4(arithmetic)</td>
+<td>$[0000\ 0110]$</td>
+<td>$[1111\ 1001]$</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
