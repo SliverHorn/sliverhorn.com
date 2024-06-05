@@ -56,11 +56,23 @@ SliverHorn的博客
 <div class=post-toc-content>
 <nav id=TableOfContents>
 <ul>
-<li><a href=#unsigned-addition>Unsigned Addition</a></li>
-<li><a href=#additive-inverse>Additive Inverse</a></li>
-<li><a href=#twos-complement-addition>Two&rsquo;s Complement Addition</a></li>
-<li><a href=#twos-complement-addition-code>Two&rsquo;s Complement Addition Code</a></li>
-<li><a href=#twos--complement-negation>Two&rsquo;s Complement Negation</a></li>
+<li><a href=#unsigned>Unsigned</a>
+<ul>
+<li><a href=#addition>Addition</a></li>
+<li><a href=#inverse>Inverse</a></li>
+<li><a href=#multiplication>Multiplication</a></li>
+</ul>
+</li>
+<li><a href=#twos-complement>Two&rsquo;s Complement</a>
+<ul>
+<li><a href=#addition-1>Addition</a></li>
+<li><a href=#code>Code</a></li>
+<li><a href=#negation>Negation</a></li>
+<li><a href=#multiplication-1>Multiplication</a></li>
+<li><a href=#three-bit-multiplication-example>Three-bit Multiplication Example</a></li>
+</ul>
+</li>
+<li><a href=#multiplying-by-constants>Multiplying by Constants</a></li>
 </ul>
 </nav>
 </div>
@@ -84,12 +96,13 @@ SliverHorn的博客
 </div>
 <div class=post-content>
 <p>Integer Arithmetic(整数运算)</p>
-<h2 id=unsigned-addition>Unsigned Addition</h2>
+<h2 id=unsigned>Unsigned</h2>
+<h3 id=addition>Addition</h3>
 <p>For x and y $0 \leq x \leq 2^w$ , $0 \leq y \leq 2^w$</p>
 <p>$$
 x+_{w}^{u}y= \begin{cases} x+y, & \text {x + y &lt; $2^w$} \\ 3n+1, & \text{$2^{w}\leq{x+y}{\leq}2^{w+1}$} \end{cases}
 $$</p>
-<h2 id=additive-inverse>Additive Inverse</h2>
+<h3 id=inverse>Inverse</h3>
 <p>For x，$0 \leq x \leq 2^w$</p>
 <p>$$
 x + x^{'} = x^{'} + x = 0
@@ -104,12 +117,35 @@ $$</p>
 <p>$$
 -_{w}^{u}y= \begin{cases} x, & \text {x = 0} \\ 2^{w}-x, & \text{x $\geq$ 0} \end{cases}
 $$</p>
-<h2 id=twos-complement-addition>Two&rsquo;s Complement Addition</h2>
+<h3 id=multiplication>Multiplication</h3>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>x</th>
+<th>$x_{w-1},x_{w-2}&mldr;x_{0}$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>y</td>
+<td>$y_{w-1},y_{w-2}&mldr;y_{0}$</td>
+</tr>
+<tr>
+<td style=text-align:center>$z=x{\cdot}y$</td>
+<td>$\underbrace{Z_{w-1},Z_{w-2}&mldr;Z_0}_{w}$</td>
+</tr>
+</tbody>
+</table>
+<p>$$
+x *_{w}^{u}y= (x{\cdot}y) mod 2^w
+$$</p>
+<h2 id=twos-complement>Two&rsquo;s Complement</h2>
+<h3 id=addition-1>Addition</h3>
 <p>For x and y $-2^{w-1}{\leq}{x}{\leq}2^{w-1}-1, -2^{w-1}{\leq}{y}{\leq}2^{w-1}-1$</p>
 <p>$$
 x+_{w}^{t}y= \begin{cases} x+y-2^{w}, & \text {$2^{w-1}{\leq}{x+y}$(Positive overflow)} \\ x+y, & \text{$-2^{w-1}\leq{x+y}{&lt;}2^{w-1}$} \\ x+y+2^{w}, & \text{x+y&lt;$-2^{w-1}$(Negative overflow)} \end{cases}
 $$</p>
-<h2 id=twos-complement-addition-code>Two&rsquo;s Complement Addition Code</h2>
+<h3 id=code>Code</h3>
 <div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
 <table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
 <pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
@@ -134,7 +170,7 @@ $$</p>
 }
 </code></pre></td></tr></table>
 </div>
-</div><h2 id=twos--complement-negation>Two&rsquo;s Complement Negation</h2>
+</div><h3 id=negation>Negation</h3>
 <p>For x $-2^{w-1}{\leq}x&lt;2^{w-1}-1$</p>
 <p>$$
 -<em>{w}^{t}x= \begin{cases} -x, & \text {$x > TMin_w$} \\ TMin</em>{w}, & \text{$x=TMin_{w}$} \end{cases}
@@ -147,6 +183,110 @@ Tmin_w + Tmin_w = -2^{w-1}+(-2^{w-1})=-2^{w}
 $$</p>
 <p>$$
 Tmin_w+_{w}^{t}Tmain_w = -2^w+2^w=0
+$$</p>
+<h3 id=multiplication-1>Multiplication</h3>
+<p>$$
+x *_{w}^{t}y=U2T_w((x{\cdot}y)\mod{2^w})
+$$</p>
+<h3 id=three-bit-multiplication-example>Three-bit Multiplication Example</h3>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>Mode</th>
+<th style=text-align:left>x</th>
+<th style=text-align:left>y</th>
+<th style=text-align:left>${x}{\cdot}{y}$</th>
+<th style=text-align:left>Truncated ${x}{\cdot}{y}$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>Unsigned</td>
+<td style=text-align:left>$5[101]$</td>
+<td style=text-align:left>$3[011]$</td>
+<td style=text-align:left>$15[001 111]$</td>
+<td style=text-align:left>$7[111]$</td>
+</tr>
+<tr>
+<td style=text-align:center>Two&rsquo;s Complement</td>
+<td style=text-align:left>$-3[101]$</td>
+<td style=text-align:left>$3[011]$</td>
+<td style=text-align:left>$-9[110 111]$</td>
+<td style=text-align:left>$-1[111]$</td>
+</tr>
+<tr>
+<td style=text-align:center>Unsigned</td>
+<td style=text-align:left>$4[100]$</td>
+<td style=text-align:left>$7[111]$</td>
+<td style=text-align:left>$28[001 100]$</td>
+<td style=text-align:left>$4[100]$</td>
+</tr>
+<tr>
+<td style=text-align:center>Two&rsquo;s Complement</td>
+<td style=text-align:left>$-4[100]$</td>
+<td style=text-align:left>$-1[111]$</td>
+<td style=text-align:left>$4[000 100]$</td>
+<td style=text-align:left>$-4[100]$</td>
+</tr>
+<tr>
+<td style=text-align:center>Unsigned</td>
+<td style=text-align:left>$3[011]$</td>
+<td style=text-align:left>$3[011]$</td>
+<td style=text-align:left>$9[001 001]$</td>
+<td style=text-align:left>$1[001]$</td>
+</tr>
+<tr>
+<td style=text-align:center>Two&rsquo;s Complement</td>
+<td style=text-align:left>$3[011]$</td>
+<td style=text-align:left>$3[011]$</td>
+<td style=text-align:left>$9[001 001]$</td>
+<td style=text-align:left>$1[001]$</td>
+</tr>
+</tbody>
+</table>
+<p>For signed integer x, y and unsigned integer $x^{'}, y^{'}$</p>
+<p>$$
+B2U_w(x^{'})=x_{w-1}{\cdot}2^{w-1}+x_{w-2}{\cdot}2^{w-2}+&mldr;+x_{0}{\cdot}2^{0} \\
+B2T_w(x)=x_{w-1}{\cdot}-2^{w-1}+x_{w-2}{\cdot}2^{w-2}+&mldr;+x_{0}{\cdot}2^{0} \\
+B2U_w(x^{'})-B2T_w(x)=x^{w-1}{\cdot}2^{w} \\
+x^{'} = x + x_{w-1}{\cdot}2^{w} \\
+y^{'}=y+{y_{w-1}}{\cdot}2^w \\
+({x^{'}}{\cdot}{y^{'}})\mod{2^w} = [(x+x_{w-1}{\cdot}{2^w}){\cdot}(y+{y_{w-1}}{\cdot}{2^w})] \mod 2^w \\
+({x^{'}}{\cdot}{y^{'}})\mod{2^w} = [x{\cdot}y+(x_{w-1}y+y_{w-1}x)2^w]+x_{w-1}y_{w-1}2^{2w}] \mod 2^w \\
+({x^{'}}{\cdot}{y^{'}})\mod{2^w} = (x{\cdot}y\mod2^w)
+$$</p>
+<h2 id=multiplying-by-constants>Multiplying by Constants</h2>
+<table>
+<thead>
+<tr>
+<th>$x{\cdot}2$</th>
+<th>$x&#171;1$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$x{\cdot}4$</td>
+<td>$x&#171;2$</td>
+</tr>
+<tr>
+<td>&mldr;</td>
+<td>&mldr;</td>
+</tr>
+<tr>
+<td>$x{\cdot}2^{k}$</td>
+<td>$x&#171;k$</td>
+</tr>
+</tbody>
+</table>
+<p>For unsigned integer x</p>
+<p>$$
+x_{w-1}|x_{w-2}|&mldr;|x_0 \\
+B2U_w(x)=x_{w-1}{\cdot}2^{w-1}+x_{w-2}{\cdot}2^{w-2}+&mldr;+x_0{\cdot}2^0=\sum_{i=0}^{w-1}x_{i}2^{i} \\
+x_{w-1}|x_{w-2}|&mldr;|x_0|\underbrace{0|&mldr;|0}_{k} \\
+$$</p>
+<p>$$
+B2U_{w+k}(x^{'})=x_{w-1}{\cdot}2^{w-1+k}+x_{w-2}{\cdot}2^{w-2+k}+&mldr;+x_0{\cdot}2^k+0{\cdot}2^{k-1}+0{\cdot}2^{k-2}+&mldr;+0{\cdot}2^{0} \\
+B2U_{w+k}(x^{'})=\sum_{i=0}^{w-1}x_{i}2^{i}{\cdot}2^k=x2^k
 $$</p>
 </div>
 <div class=post-archive>
