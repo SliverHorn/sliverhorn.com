@@ -4,16 +4,16 @@
 <meta http-equiv=x-ua-compatible content="IE=edge">
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=referrer content="no-referrer-when-downgrade">
-<title>广东普通专升本计算机基础与程序设计2022考纲 | SliverHorn的博客</title>
-<meta property="og:title" content="广东普通专升本计算机基础与程序设计2022考纲 - SliverHorn的博客">
+<title>Integer Arithmetic | SliverHorn的博客</title>
+<meta property="og:title" content="Integer Arithmetic - SliverHorn的博客">
 <meta property="og:type" content="article">
-<meta property="article:published_time" content="2022-04-18T17:17:17+08:00">
-<meta property="article:modified_time" content="2022-04-18T17:17:17+08:00">
+<meta property="article:published_time" content="2021-06-04T17:17:17+08:00">
+<meta property="article:modified_time" content="2021-06-04T17:17:17+08:00">
 <meta name=Keywords content="golang,SliverHorn,gin-vue-admin,gf-vue-admin
 ">
-<meta name=description content="广东普通专升本计算机基础与程序设计2022考纲">
+<meta name=description content="Integer Arithmetic">
 <meta name=author content="SliverHorn">
-<meta property="og:url" content="https://sliverhorn.com/data_structure/data_stucture/">
+<meta property="og:url" content="https://sliverhorn.com/csapp/2.3/">
 <link rel="shortcut icon" href=/favicon.ico type=image/x-icon>
 <link rel=stylesheet href=/css/normalize.css>
 <link rel=stylesheet href=/css/style.css>
@@ -54,138 +54,115 @@ SliverHorn的博客
 <div class=post-toc style=position:absolute;top:188px>
 <h2 class=post-toc-title>Table of Contents</h2>
 <div class=post-toc-content>
-<nav id=TableOfContents></nav>
+<nav id=TableOfContents>
+<ul>
+<li><a href=#unsigned-addition>Unsigned Addition</a></li>
+<li><a href=#additive-inverse>Additive Inverse</a></li>
+<li><a href=#twos-complement-addition>Two&rsquo;s Complement Addition</a></li>
+<li><a href=#twos-complement-addition-code>Two&rsquo;s Complement Addition Code</a></li>
+<li><a href=#twos--complement-negation>Two&rsquo;s Complement Negation</a></li>
+</ul>
+</nav>
 </div>
 </div>
 <script type=text/javascript>$(document).ready(function(){var a=$(".post-toc"),b,c,d;a.length&&(b=$("#main").offset().left,b<220&&a.css({width:b-10,"margin-left":0-b}),c=a.offset().top-20,d={start:{position:"absolute",top:c},process:{position:"fixed",top:20}},$(window).scroll(function(){var b=$(window).scrollTop();b<c?a.css(d.start):a.css(d.process)})),$("#TableOfContents").children().length<1&&$(".post-toc").remove()})</script>
 <article class=post>
 <header>
-<h1 class=post-title>广东普通专升本计算机基础与程序设计2022考纲</h1>
+<h1 class=post-title>Integer Arithmetic</h1>
 </header>
-<time datetime=2022-04-18T09:17:17Z class="post-meta meta-date dt-published">
-2022-04-18
+<time datetime=2021-06-04T10:17:17Z class="post-meta meta-date dt-published">
+2021-06-04
 </time>
+<div class="post-meta meta-category">
+<span>&nbsp;|</span>
+<a href=/categories/csapp target=_blank>csapp</a>
+</div>
 <div class=post-meta>
 <span id=busuanzi_container_page_pv>&nbsp;|
 <span id=busuanzi_value_page_pv></span> <span>reads</span>
 </span>
 </div>
 <div class=post-content>
-<table>
-<thead>
-<tr>
-<th style=text-align:center></th>
-<th style=text-align:center>分数</th>
-<th style=text-align:center>题目数量</th>
-<th style=text-align:center>C占比</th>
-<th style=text-align:center>C 占的分数</th>
-<th style=text-align:center>数据结构占比</th>
-<th style=text-align:center>数据结构占比分数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style=text-align:center>选择题</td>
-<td style=text-align:center>60</td>
-<td style=text-align:center>20</td>
-<td style=text-align:center>40%</td>
-<td style=text-align:center>24</td>
-<td style=text-align:center>60%</td>
-<td style=text-align:center>36</td>
-</tr>
-<tr>
-<td style=text-align:center>判断题</td>
-<td style=text-align:center>20</td>
-<td style=text-align:center>10</td>
-<td style=text-align:center>50%</td>
-<td style=text-align:center>10</td>
-<td style=text-align:center>50%</td>
-<td style=text-align:center>10</td>
-</tr>
-<tr>
-<td style=text-align:center>填空题</td>
-<td style=text-align:center>20</td>
-<td style=text-align:center>5</td>
-<td style=text-align:center>60%</td>
-<td style=text-align:center>12</td>
-<td style=text-align:center>40%</td>
-<td style=text-align:center>8</td>
-</tr>
-<tr>
-<td style=text-align:center>简答题</td>
-<td style=text-align:center>40</td>
-<td style=text-align:center>4</td>
-<td style=text-align:center>25%</td>
-<td style=text-align:center>10</td>
-<td style=text-align:center>75%</td>
-<td style=text-align:center>30</td>
-</tr>
-<tr>
-<td style=text-align:center>编程题</td>
-<td style=text-align:center>60</td>
-<td style=text-align:center>6</td>
-<td style=text-align:center>67%</td>
-<td style=text-align:center>40</td>
-<td style=text-align:center>33%</td>
-<td style=text-align:center>20</td>
-</tr>
-<tr>
-<td style=text-align:center></td>
-<td style=text-align:center></td>
-<td style=text-align:center></td>
-<td style=text-align:center></td>
-<td style=text-align:center></td>
-<td style=text-align:center></td>
-<td style=text-align:center></td>
-</tr>
-<tr>
-<td style=text-align:center>总分数</td>
-<td style=text-align:center>200</td>
-<td style=text-align:center>45</td>
-<td style=text-align:center></td>
-<td style=text-align:center>96</td>
-<td style=text-align:center></td>
-<td style=text-align:center>104</td>
-</tr>
-</tbody>
-</table>
-<p>一、程序设计与C 语言</p>
-<p>二、数据的存储与运算</p>
-<p>三、顺序程序设计</p>
-<p>四、选择结构程序设计</p>
-<p>五、循环结构程序设计</p>
-<p>六、利用数组处理批量数据</p>
-<p>七、用函数实现模块化程序设计</p>
-<p>八、指针</p>
-<p>九、使用结构体类型处理组合数据 —— 用户自定义数据类型</p>
-<p>十、利用文件保存数据</p>
-<p>十二、线性表</p>
-<p>十三、栈</p>
-<p>十四、队列</p>
-<p>十五、算法及复杂度</p>
-<p>十六、树</p>
-<p>十七、散列表</p>
-<p>十八、优先队列</p>
-<p>十九、排序算法</p>
-<p>二十、图</p>
-<p>参考书目</p>
-<ol>
-<li>谭浩强编：《C语言程序设计》（第4版)，北京：清华大学出版社，2020年</li>
-<li>严蔚敏、李冬梅、昊伟民编著：《数据结构（C 语言版 附微课视频）》（第2版），北京：人民邮电出版社，2017年。</li>
-</ol>
+<p>Integer Arithmetic(整数运算)</p>
+<h2 id=unsigned-addition>Unsigned Addition</h2>
+<p>For x and y $0 \leq x \leq 2^w$ , $0 \leq y \leq 2^w$</p>
+<p>$$
+x+_{w}^{u}y= \begin{cases} x+y, & \text {x + y &lt; $2^w$} \\ 3n+1, & \text{$2^{w}\leq{x+y}{\leq}2^{w+1}$} \end{cases}
+$$</p>
+<h2 id=additive-inverse>Additive Inverse</h2>
+<p>For x，$0 \leq x \leq 2^w$</p>
+<p>$$
+x + x^{'} = x^{'} + x = 0
+$$</p>
+<p>$$
+y - x => y + x^{'}
+$$</p>
+<p>For $x, x^{'} => 0 \leq x \leq 2^{w}, 0 \leq x^{'} &lt; 2^{w}$</p>
+<p>$$
+x + x^{'} = 2^{w} = 0
+$$</p>
+<p>$$
+-_{w}^{u}y= \begin{cases} x, & \text {x = 0} \\ 2^{w}-x, & \text{x $\geq$ 0} \end{cases}
+$$</p>
+<h2 id=twos-complement-addition>Two&rsquo;s Complement Addition</h2>
+<p>For x and y $-2^{w-1}{\leq}{x}{\leq}2^{w-1}-1, -2^{w-1}{\leq}{y}{\leq}2^{w-1}-1$</p>
+<p>$$
+x+_{w}^{t}y= \begin{cases} x+y-2^{w}, & \text {$2^{w-1}{\leq}{x+y}$(Positive overflow)} \\ x+y, & \text{$-2^{w-1}\leq{x+y}{&lt;}2^{w-1}$} \\ x+y+2^{w}, & \text{x+y&lt;$-2^{w-1}$(Negative overflow)} \end{cases}
+$$</p>
+<h2 id=twos-complement-addition-code>Two&rsquo;s Complement Addition Code</h2>
+<div class=highlight><div style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
+<table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td>
+<td style=vertical-align:top;padding:0;margin:0;border:0;width:100%>
+<pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#999;font-weight:700;font-style:italic>#include</span> <span style=color:#999;font-weight:700;font-style:italic>&lt;stdio.h&gt;</span><span style=color:#999;font-weight:700;font-style:italic>
+</span><span style=color:#999;font-weight:700;font-style:italic></span>
+<span style=color:#458;font-weight:700>int</span> <span style=color:#900;font-weight:700>main</span>() {
+    <span style=color:#458;font-weight:700>char</span> x <span style=color:#000;font-weight:700>=</span> <span style=color:#099>127</span>;
+    <span style=color:#458;font-weight:700>char</span> y <span style=color:#000;font-weight:700>=</span> <span style=color:#099>1</span>;
+    <span style=color:#458;font-weight:700>char</span> z <span style=color:#000;font-weight:700>=</span> x <span style=color:#000;font-weight:700>+</span> y;
+    printf(<span style=color:#d14>&#34;z=%d&#34;</span>,z);
+    <span style=color:#000;font-weight:700>return</span> <span style=color:#099>0</span>;
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=twos--complement-negation>Two&rsquo;s Complement Negation</h2>
+<p>For x $-2^{w-1}{\leq}x&lt;2^{w-1}-1$</p>
+<p>$$
+-<em>{w}^{t}x= \begin{cases} -x, & \text {$x > TMin_w$} \\ TMin</em>{w}, & \text{$x=TMin_{w}$} \end{cases}
+$$</p>
+<p>$$
+|Tmin_x| = |Tmax_w| +1
+$$</p>
+<p>$$
+Tmin_w + Tmin_w = -2^{w-1}+(-2^{w-1})=-2^{w}
+$$</p>
+<p>$$
+Tmin_w+_{w}^{t}Tmain_w = -2^w+2^w=0
+$$</p>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
 <ul class=listing>
-<li><a href=/data_structure/important/>概念及结论</a></li>
-<li><a href=/data_structure/8/>第八章 排序</a></li>
-<li><a href=/data_structure/7/>第七章 查找</a></li>
-<li><a href=/data_structure/6/>第六章 图</a></li>
-<li><a href=/data_structure/5/>第五章 树与二叉树</a></li>
+<li><a href=/csapp/2.2/>Integer Representations</a></li>
+<li><a href=/csapp/2.1/>Information Storage</a></li>
+<li><a href=/post/linux/oh-my-zsh-install/>oh-my-zsh Mac 安装教程</a></li>
+<li><a href=/tool/mac/>Mac Tool</a></li>
+<li><a href=/about/>关于</a></li>
 </ul>
 </div>
 <div class="post-meta meta-tags">
-No tags
+<ul class=clearfix>
+<li><a href=/tags/csapp target=_blank>csapp</a></li>
+</ul>
 </div>
 </article>
 <div class="post bg-white">
