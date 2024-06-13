@@ -61,6 +61,7 @@ SliverHorn的博客
 <li><a href=#register>Register</a></li>
 <li><a href=#instruction>Instruction</a></li>
 <li><a href=#memory-reference>Memory Reference</a></li>
+<li><a href=#sign-extending>Sign-extending</a></li>
 </ul>
 </nav>
 </div>
@@ -342,6 +343,42 @@ SliverHorn的博客
 </tbody>
 </table>
 <h2 id=instruction>Instruction</h2>
+<table>
+<thead>
+<tr>
+<th>Operation code(操作码)</th>
+<th>Operands(操作数)</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>movq</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>addq</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>subq</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>xorq</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>ret</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h2 id=memory-reference>Memory Reference</h2>
 <p>$$
 Imm(r_b,r_i,s) => Imm + R[r_b]+R[r_i]{\cdot}s
@@ -377,6 +414,61 @@ $$</p>
 </tr>
 </tbody>
 </table>
+<h2 id=sign-extending>Sign-extending</h2>
+<table>
+<thead>
+<tr>
+<th>Instruction</th>
+<th>Effect</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MOVES S R</td>
+<td>R &lt;- SignExtend（S）</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>资料由 <code>九曲阑干</code> 视频提供，如有侵权，联系 <code>sliver_horn@qq.com</code> 删！</p>
+</blockquote>
 </div>
 <div class=post-archive>
 <h2>See Also</h2>
