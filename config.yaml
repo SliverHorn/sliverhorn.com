@@ -18,7 +18,7 @@ params:
   busuanzi: true
   googleAd: ""
   localSearch: true
-  beian: 粤ICP备19128176号
+  beian: ''
   fancybox: true
   customCSS:
     - douban.css
